@@ -14,10 +14,14 @@ Route::controller('home', 'HomeController');
 Route::controller('shop', 'ShopController');
 Route::controller('news', 'NewsController');
 Route::controller('products', 'ProductsController');
+Route::controller('artist', 'ArtistController');
+Route::controller('music', 'MusicController');
+Route::controller('album', 'AlbumController');
+
+Route::controller('upload', 'UploadController');
 Route::controller('ajax', 'AjaxController');
 
-
-Route::get('/', 'HomeController@getIndex');
+Route::get('/','MusicController@getIndex');
 
 Route::get('hashme/{mypass}',function($mypass){
 

@@ -13,10 +13,18 @@
     {{ HTML::style('bootstrap/css/bootstrap.min.css') }}
     {{ HTML::style('bootstrap/css/font-awesome.min.css') }}
 
+    {{ HTML::style('css/datatables.css') }}
+
     <!-- Custom styles for this template -->
     {{ HTML::style('css/typography.css') }}
     {{ HTML::style('css/sticky-footer-navbar.css') }}
     {{ HTML::style('css/app.css') }}
+
+    {{ HTML::style('css/editor.css') }}
+    {{ HTML::style('css/jquery.tagsinput.css') }}
+
+    {{ HTML::style('css/jquery-fileupload/css/jquery.fileupload-ui.css') }}
+
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -24,8 +32,12 @@
         <script src="../../assets/js/respond.min.js"></script>
         <![endif]-->
 
-    {{ HTML::script('js/jquery-1.9.1.js')}}
+    {{ HTML::script('js/jquery-1.8.3.min.js')}}
     {{ HTML::script('js/jquery-ui-1.9.2.custom.min.js')}}
+
+    <script type="text/javascript">
+        var base = '{{ URL::to('/') }}';
+    </script>
 
 </head>
 
@@ -36,11 +48,11 @@
         <!-- topmost header -->
         <div id="tm-head" class="visible-md visible-lg">
             <div class="container">
-                <div class="col-lg-8">
-                    <a href="{{ URL::to('/') }}"><img class="img-responsive" src="{{ URL::to('images/').'/tmlogo_med.png' }}"></a>
+                <div class="col-lg-9">
+                    <a href="{{ URL::to('/') }}"><img class="img-responsive" src="{{ URL::to('images/').'/mumomu_logo.png' }}"></a>
                 </div>
-                <div class="col-lg-4" id="tm-side-head">
-                    <p><a href="#">Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom HTML and CSS. A fixed navbar has been added within</a></p>
+                <div class="col-lg-3" id="tm-side-head">
+                    @include('partials.identity')
                 </div>
             </div>
         </div>
@@ -80,7 +92,44 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-{{ HTML::script('bootstrap/js/bootstrap.min.js')}}
+    {{ HTML::script('bootstrap/js/bootstrap.min.js')}}
+
+    {{ HTML::script('js/bootstrap-modalmanager.js') }}
+    {{ HTML::script('js/bootstrap-modal.js') }}
+
+    {{ HTML::script('js/jquery.removeWhitespace.min.js')}}
+    {{ HTML::script('js/jquery.collagePlus.min.js')}}
+    {{ HTML::script('js/jquery.collageCaption.js')}}
+
+    {{ HTML::script('js/jquery-datatables/jquery.datatables.min.js')}}
+    {{ HTML::script('js/datatables.js')}}
+    {{ HTML::script('js/jquery-datatables/datatables.bootstrap.js')}}
+
+    {{ HTML::script('js/jquery.tagsinput.js') }}
+
+    {{ HTML::script('js/bootstrap-timepicker.js') }}
+    {{ HTML::script('js/bootstrap-datetimepicker.min.js') }}
+
+    {{ HTML::script('js/app.js') }}
+
+    {{ HTML::script('js/select2.js') }}
+
+    {{ HTML::script('js/jquery-fileupload/vendor/jquery.ui.widget.js') }}
+
+    {{ HTML::script('js/js-load-image/load-image.min.js') }}
+
+    {{ HTML::script('js/js-canvas-to-blob/canvas-to-blob.min.js') }}
+
+    {{ HTML::script('js/jquery-fileupload/jquery.iframe-transport.js') }}
+
+    {{ HTML::script('js/jquery-fileupload/jquery.fileupload.js') }}
+
+    {{ HTML::script('js/jquery-fileupload/jquery.fileupload-process.js') }}
+    {{ HTML::script('js/jquery-fileupload/jquery.fileupload-image.js') }}
+    {{ HTML::script('js/jquery-fileupload/jquery.fileupload-audio.js') }}
+    {{ HTML::script('js/jquery-fileupload/jquery.fileupload-video.js') }}
+    {{ HTML::script('js/jquery-fileupload/jquery.fileupload-validate.js') }}
+
 
 </body>
 </html>

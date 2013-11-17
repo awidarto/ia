@@ -42,7 +42,7 @@ body {
     }
 
     #wrap > .container {
-      padding: 60px 15px 0;
+      padding: 10px 60px 0;
     }
 
 }
@@ -59,7 +59,7 @@ body {
 #footer > .container {
   padding-left: 15px;
   padding-right: 15px;
-  background-color: #000;
+  background-color: maroon;
   color: #FFF;
 }
 

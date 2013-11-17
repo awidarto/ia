@@ -7,11 +7,12 @@
 .btn-primary[disabled]
 {
 	background-color: maroon;
+    border: none;
     background-image:none;
 }
 
 input, textarea, .uneditable-input{
-	width:300px;
+	/*width:300px;*/
 }
 
 textarea{
@@ -27,6 +28,7 @@ textarea{
 	height:27px;
 	margin-top: 10px;
 	background: url(../images/dk_arrows.png) no-repeat 95% 50% #fff;
+    margin-right: 4px;
 }
 
 .styled-select select{
@@ -73,6 +75,7 @@ textarea{
 	min-height: 29px;
 	height:26px;
 	border: 1px solid #cccccc;
+    padding-left: 5px;
 }
 
 #searchinput{

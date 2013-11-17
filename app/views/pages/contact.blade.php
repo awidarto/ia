@@ -3,7 +3,7 @@
 @section('content')
 <div id="home">
     <div class="row">
-        <div class="col-md-8" id="detail-view">
+        <div class="col-md-12" id="detail-view">
             <div class="row visible-xs">
                 <div class="col-md-12">
                     @include('partials.identity')
@@ -19,19 +19,6 @@
                 </p>
             </div>
         </div>
-        <div class="col-md-4 visible-lg">
-            <div class="row">
-                @include('partials.identity')
-                @include('partials.location')
-            </div>
-            <div class="row">
-                @include('partials.news')
-            </div>
-            <div class="row">
-                @include('partials.twitter')
-                @include('partials.ad')
-            </div>
-         </div>
     </div>
 </div>
 @stop

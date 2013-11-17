@@ -3,14 +3,13 @@ body{
 }
 
 #tm-head{
-    background-color: #0098a6;
-    height:220px;
-    min-height:220px;
+    background-color: #FFF;
+    height:100px;
+    min-height:100px;
 }
 
 #tm-head a{
     display: block;
-    padding-top:40px;
 }
 
 #tm-side-head p a{
@@ -18,12 +17,11 @@ body{
     margin-top: 0px;
     font-size: 14px;
     font-family: Lato, sans-serif;
-    color: white;
 }
 
 #tm-side-head p{
     font-family: inherit;
-    margin-top: 40px;
+    margin-top: 20px;
     vertical-align: middle;
 }
 
@@ -35,8 +33,6 @@ body{
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
     font-family: Lato,sans-serif;
     padding: 2px;
-    background-color: #000;
-    color: #FFF;
     display: inline-block;
 }
 
@@ -47,8 +43,10 @@ h2{
 }
 
 h3{
-    font-size: 14px;
+    font-size: 24px;
     margin: 0px;
+    margin-bottom: 25px;
+
 }
 
 .item a{
@@ -129,7 +127,7 @@ h3{
 @media (min-width: 978px) {
     .navbar-default .navbar-nav>.active>a,
     .navbar-default .navbar-nav>li>a:hover{
-        border-top: 7px solid #0098a6;
+        border-top: 7px solid #FF0000;
         padding-top: 8px;
     }
 
@@ -305,4 +303,12 @@ ul#more-news li a{
     display: block;
     padding-top: 8px;
     padding-bottom: 8px;
+}
+
+span.tag {
+    float: left;
+    padding: 1px 4px;
+    background-color: #ccc;
+    margin: 2px;
+    font-size: 11px;
 }

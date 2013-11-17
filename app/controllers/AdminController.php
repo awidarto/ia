@@ -16,7 +16,7 @@ class AdminController extends Controller {
 
 	public $form;
 
-	public $form_framework = 'TwitterBootstrap';
+	public $form_framework = 'TwitterBootstrap3';
 
 	public $form_class = 'form-horizontal';
 
@@ -45,6 +45,8 @@ class AdminController extends Controller {
     public $backlink = '';
 
     public $makeActions = 'makeActions';
+
+    public $query = array();
 
 
 	public function __construct(){
@@ -84,11 +86,11 @@ class AdminController extends Controller {
         return $this->tableResponder();
     }
 
-	public function pageGenerator(){
+    public function pageGenerator(){
 
-		//$action_selection = Former::select( Config::get('kickstart.actionselection'))->name('action');
+        //$action_selection = Former::select( Config::get('kickstart.actionselection'))->name('action');
 
-		$heads = $this->heads;
+        $heads = $this->heads;
 
         $this->ajaxsource = (is_null($this->ajaxsource))? strtolower($this->controller_name): $this->ajaxsource;
 
@@ -100,313 +102,330 @@ class AdminController extends Controller {
 
         $this->newbutton = (is_null($this->newbutton))? Str::singular($this->controller_name): $this->newbutton;
 
-		$select_all = Former::checkbox()->name('Select All')->check(false)->id('select_all');
+        $select_all = Former::checkbox()->name('Select All')->check(false)->id('select_all');
 
-		// add selector and sequence columns
-		array_unshift($heads, array($select_all,array('search'=>false,'sort'=>false)));
-		array_unshift($heads, array('#',array('search'=>false,'sort'=>false)));
+        // add selector and sequence columns
+        array_unshift($heads, array($select_all,array('sort'=>false)));
+        array_unshift($heads, array('#',array('sort'=>false)));
 
-		// add action column
-		array_push($heads,
-			array('Actions',array('search'=>false,'sort'=>false,'clear'=>true))
-		);
+        // add action column
+        array_push($heads,
+            array('Actions',array('search'=>false,'sort'=>false,'clear'=>true))
+        );
 
-		$disablesort = array();
+        $disablesort = array();
 
-		for($s = 0; $s < count($heads);$s++){
-			if($heads[$s][1]['sort'] == false){
-				$disablesort[] = $s;
-			}
-		}
+        for($s = 0; $s < count($heads);$s++){
+            if($heads[$s][1]['sort'] == false){
+                $disablesort[] = $s;
+            }
+        }
 
-		$disablesort = implode(',',$disablesort);
+        $disablesort = implode(',',$disablesort);
 
-		return View::make('tables.simple')
-			->with('title',$this->title )
-			->with('newbutton', $this->newbutton )
-			->with('disablesort',$disablesort )
-			->with('addurl',$this->addurl )
-			->with('ajaxsource',URL::to($this->ajaxsource) )
-			->with('ajaxdel',URL::to($this->delurl) )
-			->with('crumb',$this->crumb )
-			->with('heads',$heads )
-			->nest('row',$this->rowdetail );
+        return View::make('tables.simple')
+            ->with('title',$this->title )
+            ->with('newbutton', $this->newbutton )
+            ->with('disablesort',$disablesort )
+            ->with('addurl',$this->addurl )
+            ->with('ajaxsource',URL::to($this->ajaxsource) )
+            ->with('ajaxdel',URL::to($this->delurl) )
+            ->with('crumb',$this->crumb )
+            ->with('heads',$heads )
+            ->nest('row',$this->rowdetail );
 
 
-	}
+    }
 
+    public function tableResponder()
+    {
 
-	public function tableResponder($model = null)
-	{
+        $fields = $this->fields;
 
-		$fields = $this->fields;
+        //print_r($fields);
 
-		//print_r($fields);
+        //array_unshift($fields, array('select',array('kind'=>false)));
+        array_unshift($fields, array('seq',array('kind'=>false)));
 
-		//array_unshift($fields, array('select',array('kind'=>false)));
-		array_unshift($fields, array('seq',array('kind'=>false)));
+        $pagestart = Input::get('iDisplayStart');
+        $pagelength = Input::get('iDisplayLength');
 
-		$pagestart = Input::get('iDisplayStart');
-		$pagelength = Input::get('iDisplayLength');
+        $limit = array($pagelength, $pagestart);
 
-		$limit = array($pagelength, $pagestart);
+        $defsort = 1;
+        $defdir = -1;
 
-		$defsort = 1;
-		$defdir = -1;
+        $idx = 0;
+        if(count($this->query) > 0){
+            $q = $this->query;
+        }else{
+            $q = array();
+        }
 
-		$idx = 0;
-		$q = array();
+        $hilite = array();
+        $hilite_replace = array();
 
-		$hilite = array();
-		$hilite_replace = array();
+        for($i = 0;$i < count($fields);$i++){
+            $idx = $i;
 
-		$model = (is_null($model))? $this->model : $model;
+            //print_r($fields[$i]);
 
-		$count_all = $model->count();
+            $field = $fields[$i][0];
+            $type = $fields[$i][1]['kind'];
 
-		for($i = 0;$i < count($fields);$i++){
-			$idx = $i;
+            $qval = '';
 
-			//print_r($fields[$i]);
+            if(Input::get('sSearch_'.$i))
+            {
+                if( $type == 'text'){
+                    if($fields[$i][1]['query'] == 'like'){
+                        $pos = $fields[$i][1]['pos'];
+                        if($pos == 'both'){
+                            //$model->whereRegex($field,'/'.Input::get('sSearch_'.$idx).'/i');
+                            //$this->model->where($field,'like','%'.Input::get('sSearch_'.$idx).'%');
 
-			$field = $fields[$i][0];
-			$type = $fields[$i][1]['kind'];
+                            $qval = new MongoRegex('/'.Input::get('sSearch_'.$idx).'/i');
+                        }else if($pos == 'before'){
+                            //$this->model->whereRegex($field,'/^'.Input::get('sSearch_'.$idx).'/i');
+                            //$this->model->where($field,'like','%'.Input::get('sSearch_'.$idx));
 
-			$qval = '';
+                            $qval = new MongoRegex('/^'.Input::get('sSearch_'.$idx).'/i');
+                        }else if($pos == 'after'){
+                            //$this->model->whereRegex($field,'/'.Input::get('sSearch_'.$idx).'$/i');
+                            //$this->model->where($field,'like', Input::get('sSearch_'.$idx).'%');
 
-			if(Input::get('sSearch_'.$i))
-			{
-				if( $type == 'text'){
-					if($fields[$i][1]['query'] == 'like'){
-						$pos = $fields[$i][1]['pos'];
-						if($pos == 'both'){
-							$model->whereRegex($field,'/'.Input::get('sSearch_'.$idx).'/i');
+                            $qval = new MongoRegex('/'.Input::get('sSearch_'.$idx).'$/i');
+                        }
+                    }else{
+                        $qval = Input::get('sSearch_'.$idx);
 
-							$qval = new MongoRegex('/'.Input::get('sSearch_'.$idx).'/i');
-						}else if($pos == 'before'){
-							$model->whereRegex($field,'/^'.Input::get('sSearch_'.$idx).'/i');
+                        //$this->model->where($field,$qval);
+                    }
+                }elseif($type == 'numeric' || $type == 'currency'){
+                    $str = Input::get('sSearch_'.$idx);
 
-							$qval = new MongoRegex('/^'.Input::get('sSearch_'.$idx).'/i');
-						}else if($pos == 'after'){
-							$model->whereRegex($field,'/'.Input::get('sSearch_'.$idx).'$/i');
+                    $sign = null;
 
-							$qval = new MongoRegex('/'.Input::get('sSearch_'.$idx).'$/i');
-						}
-					}else{
-						$qval = Input::get('sSearch_'.$idx);
+                    $strval = trim(str_replace(array('<','>','='), '', $str));
 
-						$model->where($field,$qval);
-					}
-				}elseif($type == 'numeric' || $type == 'currency'){
-					$str = Input::get('sSearch_'.$idx);
+                    $qval = new MongoInt32($strval);
 
-					$sign = null;
+                    /*
+                    if(is_null($sign)){
+                        $qval = new MongoInt32($strval);
+                    }else{
+                        $str = new MongoInt32($str);
+                        $qval = array($sign=>$str);
+                    }
+                    */
 
-					$strval = trim(str_replace(array('<','>','='), '', $str));
 
-					$qval = new MongoInt32($strval);
+                    if(strpos($str, "<=") !== false){
+                        $sign = '$lte';
 
-					/*
-					if(is_null($sign)){
-						$qval = new MongoInt32($strval);
-					}else{
-						$str = new MongoInt32($str);
-						$qval = array($sign=>$str);
-					}
-					*/
+                        //$this->model->whereLte($field,$qval);
+                        //$this->model->where($field,'<=',$qval);
 
+                    }elseif(strpos($str, ">=") !== false){
+                        $sign = '$gte';
 
-					if(strpos($str, "<=") !== false){
-						$sign = '$lte';
+                        //$this->model->whereGte($field,$qval);
+                        //$this->model->where($field,'>=',$qval);
 
-						$model->whereLte($field,$qval);
+                    }elseif(strpos($str, ">") !== false){
+                        $sign = '$gt';
 
-					}elseif(strpos($str, ">=") !== false){
-						$sign = '$gte';
+                        //$this->model->whereGt($field,$qval);
+                        //$this->model->where($field,'>',$qval);
 
-						$model->whereGte($field,$qval);
+                    }elseif(stripos($str, "<") !== false){
+                        $sign = '$lt';
 
-					}elseif(strpos($str, ">") !== false){
-						$sign = '$gt';
+                        //$this->model->whereLt($field,$qval);
+                        //$this->model->where($field,'<',$qval);
 
-						$model->whereGt($field,$qval);
+                    }
 
-					}elseif(stripos($str, "<") !== false){
-						$sign = '$lt';
+                    //print $sign;
 
-						$model->whereLt($field,$qval);
+                }elseif($type == 'date'|| $type == 'datetime'){
+                    $datestring = Input::get('sSearch_'.$idx);
+                    $datestring = date('d-m-Y', strtotime($datestring));
 
-					}
+                    if (($timestamp = strtotime($datestring)) === false) {
+                    } else {
+                        $daystart = new MongoDate(strtotime($datestring.' 00:00:00'));
+                        $dayend = new MongoDate(strtotime($datestring.' 23:59:59'));
 
-					//print $sign;
+                        $qval = array($field =>array('$gte'=>$daystart,'$lte'=>$dayend));
+                        //echo "$str == " . date('l dS \o\f F Y h:i:s A', $timestamp);
 
-				}elseif($type == 'date'){
-					$datestring = Input::get('sSearch_'.$idx);
+                        //$this->model->whereBetween($field,$daystart,$dayend);
 
-					if (($timestamp = strtotime($datestring)) === false) {
-					} else {
-						$daystart = new MongoDate(strtotime($datestring.' 00:00:00'));
-						$dayend = new MongoDate(strtotime($datestring.' 23:59:59'));
+                    }
+                    $qval = array('$gte'=>$daystart,'$lte'=>$dayend);
+                    //$qval = Input::get('sSearch_'.$idx);
+                }elseif($type == '__datetime'){
+                    $datestring = Input::get('sSearch_'.$idx);
 
-						$qval = array($field =>array('$gte'=>$daystart,'$lte'=>$dayend));
-					    //echo "$str == " . date('l dS \o\f F Y h:i:s A', $timestamp);
+                    print $datestring;
 
-						$model->whereBetween($field,$daystart,$dayend);
+                    $qval = new MongoDate(strtotime($datestring));
 
-					}
-					$qval = array('$gte'=>$daystart,'$lte'=>$dayend);
-					//$qval = Input::get('sSearch_'.$idx);
-				}elseif($type == 'datetime'){
-					$datestring = Input::get('sSearch_'.$idx);
+                    //$this->model->where($field,$qval);
 
-					$qval = new MongoDate(strtotime($datestring));
+                }
 
-					$model->where($field,$qval);
+                $q[$field] = $qval;
 
-				}
+            }
 
+        }
 
-				$q[$field] = $qval;
+        //print_r($q);
 
-			}
 
-		}
+        /* first column is always sequence number, so must be omitted */
 
-		//print_r($q);
+        $fidx = Input::get('iSortCol_0') - 1;
 
+        $fidx = ($fidx == -1 )?0:$fidx;
 
-		/* first column is always sequence number, so must be omitted */
+        $sort_col = $fields[$fidx][0];
 
-		$fidx = Input::get('iSortCol_0') - 1;
+        $sort_dir = Input::get('sSortDir_0');
 
-		$fidx = ($fidx == -1 )?0:$fidx;
+        /*
+        if(count($q) > 0){
+            $results = $model->skip( $pagestart )->take( $pagelength )->orderBy($sort_col, $sort_dir )->get();
+            $count_display_all = $model->count();
+        }else{
+            $results = $model->find(array(),array(),array($sort_col=>$sort_dir),$limit);
+            $count_display_all = $model->count();
+        }
+        */
 
-		$sort_col = $fields[$fidx][0];
+        //$model->where('docFormat','picture');
 
-		$sort_dir = Input::get('sSortDir_0');
+        $count_all = $this->model->count();
+        $count_display_all = $this->model->count();
 
-		/*
-		if(count($q) > 0){
-			$results = $model->skip( $pagestart )->take( $pagelength )->orderBy($sort_col, $sort_dir )->get();
-			$count_display_all = $model->count();
-		}else{
-			$results = $model->find(array(),array(),array($sort_col=>$sort_dir),$limit);
-			$count_display_all = $model->count();
-		}
-		*/
+        if(is_array($q) && count($q) > 0){
+            $results = $this->model->whereRaw($q)->skip( $pagestart )->take( $pagelength )->orderBy($sort_col, $sort_dir )->get();
 
+            $count_display_all = $this->model->whereRaw($q)->count();
 
-		$model->skip( $pagestart )->take( $pagelength )->orderBy($sort_col, $sort_dir );
+        }else{
+            $results = $this->model->skip( $pagestart )->take( $pagelength )->orderBy($sort_col, $sort_dir )->get();
 
-		$count_display_all = $model->count();
+        }
 
-		$results = $model->get();
+        //print_r($results->toArray());
 
-		//print_r($results);
+        $aadata = array();
 
-		$aadata = array();
+        $form = $this->form;
 
-		$form = $this->form;
+        $counter = 1 + $pagestart;
 
-		$counter = 1 + $pagestart;
+        foreach ($results as $doc) {
 
-		foreach ($results as $doc) {
+            $extra = $doc;
 
-			$extra = $doc;
-
-			//$select = Former::checkbox('sel_'.$doc['_id'])->check(false)->id($doc['_id'])->class('selector');
+            //$select = Former::checkbox('sel_'.$doc['_id'])->check(false)->id($doc['_id'])->class('selector');
             $actionMaker = $this->makeActions;
-			$actions = $this->$actionMaker($doc);
+            $actions = $this->$actionMaker($doc);
 
-			$row = array();
+            $row = array();
 
-			$row[] = $counter;
+            $row[] = $counter;
 
-			//$sel = Former::checkbox('sel_'.$doc['_id'])->check(false)->label(false)->id($doc['_id'])->class('selector')->__toString();
-			$sel = '<input type="checkbox" name="sel_'.$doc['_id'].'" id="'.$doc['_id'].'" value="'.$doc['_id'].'" class="selector" />';
-			$row[] = $sel;
+            //$sel = Former::checkbox('sel_'.$doc['_id'])->check(false)->label(false)->id($doc['_id'])->class('selector')->__toString();
+            $sel = '<input type="checkbox" name="sel_'.$doc['_id'].'" id="'.$doc['_id'].'" value="'.$doc['_id'].'" class="selector" />';
+            $row[] = $sel;
 
-			foreach($fields as $field){
-				if($field[1]['kind'] != false && $field[1]['show'] == true){
+            foreach($fields as $field){
+                if($field[1]['kind'] != false && $field[1]['show'] == true){
 
-					$fieldarray = explode('.',$field[0]);
-					if(is_array($fieldarray) && count($fieldarray) > 1){
-						$fieldarray = implode('\'][\'',$fieldarray);
-						$cstring = '$label = (isset($doc[\''.$fieldarray.'\']))?true:false;';
-						eval($cstring);
-					}else{
-						$label = (isset($doc[$field[0]]))?true:false;
-					}
+                    $fieldarray = explode('.',$field[0]);
+                    if(is_array($fieldarray) && count($fieldarray) > 1){
+                        $fieldarray = implode('\'][\'',$fieldarray);
+                        $cstring = '$label = (isset($doc[\''.$fieldarray.'\']))?true:false;';
+                        eval($cstring);
+                    }else{
+                        $label = (isset($doc[$field[0]]))?true:false;
+                    }
 
 
-					if($label){
+                    if($label){
 
-						if( isset($field[1]['callback']) && $field[1]['callback'] != ''){
-							$callback = $field[1]['callback'];
-							$row[] = $this->$callback($doc);
-						}else{
-							if($field[1]['kind'] == 'datetime'){
+                        if( isset($field[1]['callback']) && $field[1]['callback'] != ''){
+                            $callback = $field[1]['callback'];
+                            $row[] = $this->$callback($doc);
+                        }else{
+                            if($field[1]['kind'] == 'datetime'){
                                 if($doc[$field[0]] instanceof MongoDate){
                                     $rowitem = date('d-m-Y H:i:s',$doc[$field[0]]->sec);
                                 }elseif ($doc[$field[0]] instanceof Date) {
                                     $rowitem = date('d-m-Y H:i:s',$doc[$field[0]]);
                                 }else{
-                                    $rowitem = $doc[$field[0]];
+                                    //$rowitem = $doc[$field[0]];
+                                    $rowitem = date('d-m-Y H:i:s',strtotime($doc[$field[0]]) );
                                 }
-							}elseif($field[1]['kind'] == 'date'){
+                            }elseif($field[1]['kind'] == 'date'){
                                 if($doc[$field[0]] instanceof MongoDate){
                                     $rowitem = date('d-m-Y',$doc[$field[0]]->sec);
                                 }elseif ($doc[$field[0]] instanceof Date) {
                                     $rowitem = date('d-m-Y',$doc[$field[0]]);
                                 }else{
-                                    $rowitem = $doc[$field[0]];
+                                    //$rowitem = $doc[$field[0]];
+                                    $rowitem = date('d-m-Y',strtotime($doc[$field[0]]) );
                                 }
-							}elseif($field[1]['kind'] == 'currency'){
-								$num = (double) $doc[$field[0]];
-								$rowitem = number_format($num,2,',','.');
-							}else{
-								$rowitem = $doc[$field[0]];
-							}
+                            }elseif($field[1]['kind'] == 'currency'){
+                                $num = (double) $doc[$field[0]];
+                                $rowitem = number_format($num,2,',','.');
+                            }else{
+                                $rowitem = $doc[$field[0]];
+                            }
 
-							if(isset($field[1]['attr'])){
-								$attr = '';
-								foreach ($field[1]['attr'] as $key => $value) {
-									$attr .= '"'.$key.'"="'.$value.'" ';
-								}
-								$row[] = '<span '.$attr.' >'.$rowitem.'</span>';
-							}else{
-								$row[] = $rowitem;
-							}
+                            if(isset($field[1]['attr'])){
+                                $attr = '';
+                                foreach ($field[1]['attr'] as $key => $value) {
+                                    $attr .= '"'.$key.'"="'.$value.'" ';
+                                }
+                                $row[] = '<span '.$attr.' >'.$rowitem.'</span>';
+                            }else{
+                                $row[] = $rowitem;
+                            }
 
-						}
-
-
-					}else{
-						$row[] = '';
-					}
-				}
-			}
-
-			$row[] = $actions;
-			$row['extra'] = $extra;
-
-			$aadata[] = $row;
-
-			$counter++;
-		}
+                        }
 
 
-		$result = array(
-			'sEcho'=> Input::get('sEcho'),
-			'iTotalRecords'=>$count_all,
-			'iTotalDisplayRecords'=> $count_display_all,
-			'aaData'=>$aadata,
-			'qrs'=>$q,
-			'sort'=>array($sort_col=>$sort_dir)
-		);
+                    }else{
+                        $row[] = '';
+                    }
+                }
+            }
 
-		return Response::json($result);
-	}
+            $row[] = $actions;
+            $row['extra'] = $extra;
+
+            $aadata[] = $row;
+
+            $counter++;
+        }
+
+        $result = array(
+            'sEcho'=> Input::get('sEcho'),
+            'iTotalRecords'=>$count_all,
+            'iTotalDisplayRecords'=> $count_display_all,
+            'aaData'=>$aadata,
+            'qrs'=>$q,
+            'sort'=>array($sort_col=>$sort_dir)
+        );
+
+        return Response::json($result);
+    }
 
 	public function getAdd(){
 
@@ -482,11 +501,12 @@ class AdminController extends Controller {
 
 		//$this->crumb->add(strtolower($this->controller_name).'/edit','Edit',false);
 
-		$model = $this->model;
 
 		$_id = new MongoId($id);
 
-		$population = $model->where('_id',$_id)->first();
+		//$population = $model->where('_id',$_id)->first();
+
+        $population = $this->model->find($id);
 
 		$population = $this->beforeUpdateForm($population);
 
@@ -544,7 +564,7 @@ class AdminController extends Controller {
 
 			$data = $this->beforeUpdate($id,$data);
 
-			if($obj = $model->where('_id',$id)->update($data)){
+			if($obj = $this->model->where('_id',$id)->update($data)){
 
 				$obj = $this->afterUpdate($id,$data);
 				if($obj != false){

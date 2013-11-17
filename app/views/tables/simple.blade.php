@@ -2,6 +2,8 @@
 
 @section('content')
 
+{{ HTML::style('css/form.css') }}
+
 
 <!--<div class="tableHeader">
 	@if(isset($addurl) && $addurl != '')
@@ -10,18 +12,11 @@
 </div>
 -->
 
-<div class="row-fluid">
-	<div class="span12 command-bar">
-
-        <h4>{{ $title }}</h4>
-       	<a href="{{ URL::to($addurl) }}" class="btn">Add</a>
+<div class="row">
+    <h4>{{ $title }}</h4>
+	<div class="col-lg-1 col-lg-offset-11 command-bar">
+       	<a href="{{ URL::to($addurl) }}" class="btn btn-primary " role="button">Add</a>
     <!--    <a href="#" id="pushmedia" class="btn btn-primary">Push Media Playlist</a> -->
-
-	   @if (Session::has('notify_operationalform'))
-	        <div class="alert alert-error">
-	             {{Session::get('notify_operationalform')}}
-	        </div>
-	    @endif
 	 </div>
 </div>
 
@@ -41,7 +36,7 @@
     });
 </script>
 
-<div class="row-fluid">
+<div class="row">
    <div class="span12">
 
       <table class="table table-condensed dataTable">
@@ -272,7 +267,7 @@
 		        "bServerSide": true,
 		        "sAjaxSource": "{{$ajaxsource}}",
 				"oLanguage": { "sSearch": "Search "},
-				"sPaginationType": "full_numbers",
+				"sPaginationType": "bs_full",
 				"sDom": 'Tlrpit',
 
 				@if(isset($excludecol) && $excludecol != '')
