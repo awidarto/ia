@@ -49,7 +49,7 @@
         <div id="tm-head" class="visible-md visible-lg">
             <div class="container">
                 <div class="col-lg-9">
-                    <a href="{{ URL::to('/') }}"><img class="img-responsive" src="{{ URL::to('images/').'/mumomu_logo.png' }}"></a>
+                    <a href="{{ URL::to('/') }}"><img class="img-responsive" src="{{ URL::to('images/').'/ialogo.png' }}"></a>
                 </div>
                 <div class="col-lg-3" id="tm-side-head">
                     @include('partials.identity')
