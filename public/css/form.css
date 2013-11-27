@@ -29,6 +29,8 @@ textarea{
 	margin-top: 10px;
 	background: url(../images/dk_arrows.png) no-repeat 95% 50% #fff;
     margin-right: 4px;
+    min-width: 70px;
+    width: 75px;
 }
 
 .styled-select select{

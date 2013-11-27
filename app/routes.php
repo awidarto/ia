@@ -13,15 +13,25 @@
 Route::controller('home', 'HomeController');
 Route::controller('shop', 'ShopController');
 Route::controller('news', 'NewsController');
+Route::controller('page', 'PageController');
 Route::controller('products', 'ProductsController');
+Route::controller('property', 'PropertyController');
 Route::controller('artist', 'ArtistController');
 Route::controller('music', 'MusicController');
 Route::controller('album', 'AlbumController');
+Route::controller('contact', 'ContactController');
 
 Route::controller('upload', 'UploadController');
 Route::controller('ajax', 'AjaxController');
 
-Route::get('/','MusicController@getIndex');
+Route::get('/','HomeController@getIndex');
+
+Route::get('page/cat/{slug}','PageController@getCat');
+Route::get('page/view/{slug}','PageController@getView');
+Route::get('page','PageController@getIndex');
+
+Route::get('contact','ContactController@getAdd');
+
 
 Route::get('hashme/{mypass}',function($mypass){
 
@@ -35,9 +45,6 @@ Route::get('media',function(){
 
 });
 
-Route::get('contact',function(){
-    return View::make('pages.contact');
-});
 
 Route::get('about',function(){
     return View::make('pages.about');

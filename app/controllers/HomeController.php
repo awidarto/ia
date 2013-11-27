@@ -17,7 +17,20 @@ class HomeController extends BaseController {
 
 	public function getIndex()
 	{
-		return View::make('pages.home');
+        $page = Page::where('slug','=','home')->first();
+
+        if($page){
+            $page = $page->toArray();
+        }else{
+            $page = null;
+        }
+
+        return View::make('pages.home')->with('content',$page);
 	}
+
+    public function getView($slug = null){
+
+    }
+
 
 }

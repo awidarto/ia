@@ -13,7 +13,9 @@
     {{ HTML::style('bootstrap/css/bootstrap.min.css') }}
     {{ HTML::style('bootstrap/css/font-awesome.min.css') }}
 
-    {{ HTML::style('css/datatables.css') }}
+    {{ HTML::style('css/docs.css') }}
+
+    {{ HTML::style('css/gridtable.css') }}
 
     <!-- Custom styles for this template -->
     {{ HTML::style('css/typography.css') }}
@@ -22,6 +24,9 @@
 
     {{ HTML::style('css/editor.css') }}
     {{ HTML::style('css/jquery.tagsinput.css') }}
+
+    {{ HTML::style('css/bootstrap-wysihtml5-0.0.2.css') }}
+
 
     {{ HTML::style('css/jquery-fileupload/css/jquery.fileupload-ui.css') }}
 
@@ -34,6 +39,9 @@
 
     {{ HTML::script('js/jquery-1.8.3.min.js')}}
     {{ HTML::script('js/jquery-ui-1.9.2.custom.min.js')}}
+
+    {{ HTML::style('css/blueimp-gallery.min.css') }}
+    {{ HTML::style('css/form.css') }}
 
     <script type="text/javascript">
         var base = '{{ URL::to('/') }}';
@@ -56,7 +64,7 @@
                 </div>
             </div>
         </div>
-        <!-- Fixed navbar -->
+        <!-- Fixed navbar
         <div class="navbar navbar-default "  id="tm-head-navbar">
             <div class="container" >
                 <div class="navbar-header">
@@ -70,13 +78,34 @@
 
                 <div class="collapse navbar-collapse">
                     @include('partials.topnav')
-                </div><!--/.nav-collapse -->
+                </div>
             </div>
         </div>
-
+        -->
         <!-- Begin page content -->
         <div class="container">
-            @yield('content')
+            <div class="row">
+                <div class="col-md-2">
+                    @include('partials.sidenav')
+                </div>
+                <div class="col-md-10">
+                    <div id="home">
+                        <div class="row">
+                            <div class="col-md-12" id="detail-view">
+                                <div class="row visible-xs">
+                                    <div class="col-md-12">
+                                        @include('partials.identity')
+                                    </div>
+                                </div>
+
+                                <div class="row" id="articlebox">
+                                    @yield('content')
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -112,7 +141,14 @@
 
     {{ HTML::script('js/app.js') }}
 
+    {{ HTML::script('js/blueimp-gallery.min.js') }}
+    {{ HTML::script('js/jquery.blueimp-gallery.min.js') }}
+
     {{ HTML::script('js/select2.js') }}
+
+    {{ HTML::script('js/wysihtml5-0.3.0.min.js') }}
+
+    {{ HTML::script('js/bootstrap-wysihtml5-0.0.2.min.js') }}
 
     {{ HTML::script('js/jquery-fileupload/vendor/jquery.ui.widget.js') }}
 

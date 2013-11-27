@@ -1,41 +1,68 @@
-@section('sidenav')
-	<?php
-		$role = Auth::user()->role;
-		$permissions = Auth::user()->permissions;
-
-        /*
-        <dd><a href="{{ URL::to('document') }}"><i class="foundicon-page sidemenu"></i> <br/>Documents</a></dd>
-        <dd><a href="{{ URL::to('opportunity') }}"><i class="foundicon-heart sidemenu"></i> <br/>Opportunity</a></dd>
-        <dd><a href="{{ URL::to('tender') }}"><i class="foundicon-idea sidemenu"></i> <br/>Tender</a></dd>
-        <dd><a href="{{ URL::to('qc') }}"><i class="foundicon-checkmark sidemenu"></i> <br/>Quality</a></dd>
-
-        @if(Auth::permit('document'))
-            <dd><a href="{{ URL::to('warehouse') }}"><i class="foundicon-cart sidemenu"></i> <br/>Warehouse</a></dd>
+<div class="bs-sidebar hidden-print affix-top" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li {{ sa('/') }} ><a href="{{ URL::to('/') }}" >Home</a></li>
+        <li {{ sa('property') }} ><a href="{{ URL::to('property') }}" >Properties</a></li>
+        <li {{ sa('buying-process') }} ><a href="{{ URL::to('page/view/buying-process') }}" >Buying Process</a></li>
+        <li {{ sa('markets') }} ><a href="{{ URL::to('page/view/markets') }}" >Markets</a></li>
+        <li {{ sa('how-to-invest') }} ><a href="{{ URL::to('page/view/how-to-invest') }}" >How To Invest</a></li>
+        <li {{ sa('preferred-customer') }} ><a href="{{ URL::to('page/view/preferred-customer') }}" >Preferred Customer</a></li>
+        <li {{ sa('research') }} ><a href="{{ URL::to('page/view/research') }}" >Research</a></li>
+        <li {{ sa('faq') }} ><a href="{{ URL::to('page/view/faq') }}" >FAQ</a></li>
+        <li {{ sa('about-investors-alliance') }} ><a href="{{ URL::to('page/view/about-investors-alliance') }}" >About Us</a></li>
+        <li {{ sa('contact') }} ><a href="{{ URL::to('contact') }}"  >Contact Us</a></li>
+        @if(Auth::check())
+            <li {{ sa('music') }}  ><a href="{{ URL::to('music') }}" >Music</a></li>
+            <li {{ sa('artist') }} ><a href="{{ URL::to('artist') }}" >Artist</a></li>
+            <li {{ sa('album') }} ><a href="{{ URL::to('album') }}" >Album</a></li>
+            <li {{ sa('about') }} ><a href="{{ URL::to('profile') }}" >Profile</a></li>
         @endif
 
-        <dd><a href="{{ URL::to('finance') }}"><i class="foundicon-graph sidemenu"></i> <br/>Finance</a></dd>
-        <dd><a href="{{ URL::to('hr') }}"><i class="foundicon-people sidemenu"></i> <br/>HRD</a></dd>
-        <dd><a href="{{ URL::to('activity/download') }}"><i class="foundicon-down-arrow sidemenu"></i> <br/>Download</a></dd>
-        <dd><a href="{{ URL::to('activity/upload') }}"><i class="foundicon-up-arrow sidemenu"></i> <br/>Upload</a></dd>
-        <dd><a href="{{ URL::to('user/people') }}"><i class="foundicon-address-book sidemenu"></i> <br/>People</a></dd>
-
-        */
-
-	?>
-    <div class="one columns mobile">     
-      <dl class="vertical tabs">
-        <dd><a href="{{ URL::base() }}"><i class="foundicon-home sidemenu"></i> <br/>Home</a></dd>
-        <dd><a href="{{ URL::to('requests/incoming') }}"><i class="foundicon-down-arrow sidemenu"></i> <br/>Incoming Requests</a></dd>
-        <dd><a href="{{ URL::to('requests/outgoing') }}"><i class="foundicon-up-arrow sidemenu"></i> <br/>Outgoing Requests</a></dd>
-        <dd><a href="{{ URL::to('message') }}"><i class="foundicon-mail sidemenu"></i> <br/>Messages</a></dd>
-        <dd><a href="{{ URL::to('opportunity') }}"><i class="foundicon-idea sidemenu"></i> <br/>Opportunity</a></dd>
-        <dd><a href="{{ URL::to('tender') }}"><i class="foundicon-idea sidemenu"></i> <br/>Tender</a></dd>
-        <dd><a href="{{ URL::to('project') }}"><i class="foundicon-idea sidemenu"></i> <br/>Projects</a></dd>
-        <dd><a href="{{ URL::to('employee') }}"><i class="foundicon-people sidemenu"></i> <br/>Human Resources</a></dd>
-        <dd><a href="{{ URL::to('user/profile') }}"><i class="foundicon-settings sidemenu"></i> <br/>Profile</a></dd>
-        <dd><a href="{{ URL::to('search') }}"><i class="foundicon-search sidemenu"></i> <br/>Search</a></dd>
-        <dd><a href="{{ URL::to('content/view/help') }}"><i class="foundicon-smiley sidemenu"></i> <br/>Help</a></dd>
-      </dl>          
-    </div>
-
-@endsection
+    </ul>
+<!--
+                <li>
+  <a href="#download">Download Bootstrap</a>
+  <ul class="nav">
+    <li><a href="#download-compiled">Compiled CSS, JS, and fonts</a></li>
+    <li><a href="#download-additional">Additional downloads</a></li>
+    <li><a href="#download-cdn">Bootstrap CDN</a></li>
+  </ul>
+</li>
+<li>
+  <a href="#whats-included">What's included</a>
+</li>
+<li>
+  <a href="#template">Basic template</a>
+</li>
+<li>
+  <a href="#examples">Examples</a>
+</li>
+<li>
+  <a href="#disable-responsive">Disabling responsiveness</a>
+</li>
+<li>
+  <a href="#migration">Migrating from 2.x to 3.0</a>
+  <ul class="nav">
+    <li><a href="#migration-classes">Major class changes</a></li>
+    <li><a href="#migration-new">What's new</a></li>
+    <li><a href="#migration-dropped">What's removed</a></li>
+    <li><a href="#migration-notes">Additional notes</a></li>
+  </ul>
+</li>
+<li>
+  <a href="#browsers">Browser support</a>
+</li>
+<li>
+  <a href="#third-parties">Third party support</a>
+</li>
+<li>
+  <a href="#accessibility">Accessibility</a>
+</li>
+<li>
+  <a href="#license-faqs">License FAQs</a>
+</li>
+<li>
+  <a href="#customizing">Customizing Bootstrap</a>
+</li>
+    </ul>
+-->
+</div>

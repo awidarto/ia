@@ -1,13 +1,16 @@
 @extends('layout.front')
 
+
 @section('content')
-<h3>Contact Us</h3>
+
+<h3>{{$title}}</h3>
+
 {{Former::open_vertical_for_files($submit,'POST',array('class'=>''))}}
 
 <div class="row-fluid">
     <div class="col-lg-6">
 
-        {{ Former::text('firstName','First Name') }}
+        {{ Former::text('songTitle','Song Title') }}
         {{ Former::text('artist','Artist') }}
         {{ Former::text('album','Album') }}
         {{ Former::select('countryOfOrigin')->options(Config::get('country.countries'))->label('Country of Origin') }}
@@ -110,5 +113,85 @@
 </div>
 
 {{Former::close()}}
+
+{{ HTML::script('js/wysihtml5-0.3.0.min.js') }}
+{{ HTML::script('js/parser_rules/advanced.js') }}
+
+<style type="text/css">
+#lyric{
+    min-height: 350px;
+    height: 400px;
+}
+
+</style>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+    /*
+    $('select').select2({
+      width : 'resolve'
+    });
+    */
+    var editor = new wysihtml5.Editor("lyric", { // id of textarea element
+      toolbar:      "wysihtml5-toolbar", // id of toolbar element
+      parserRules:  wysihtml5ParserRules // defined in parser rules set
+    });
+
+    var url = '{{ URL::to('upload') }}';
+
+    $('#fileupload').fileupload({
+        url: url,
+        dataType: 'json',
+        done: function (e, data) {
+            $.each(data.result.files, function (index, file) {
+                var thumb = '<li><img src="' + file.thumbnail_url + '" /><br /><input type="radio" name="defaultpic" value="' + file.name + '"> Default<br /><span class="img-title">' + file.name + '</span>' +
+                '<label for="colour">Colour</label><input type="text" name="colour[]" />' +
+                '<label for="material">Material & Finish</label><input type="text" name="material[]" />' +
+                '<label for="tags">Tags</label><input type="text" name="tag[]" />' +
+                '</li>';
+                $(thumb).appendTo('#files ul');
+
+                var upl = '<input type="hidden" name="delete_type[]" value="' + file.delete_type + '">';
+                upl += '<input type="hidden" name="delete_url[]" value="' + file.delete_url + '">';
+                upl += '<input type="hidden" name="filename[]" value="' + file.name  + '">';
+                upl += '<input type="hidden" name="filesize[]" value="' + file.size  + '">';
+                upl += '<input type="hidden" name="temp_dir[]" value="' + file.temp_dir  + '">';
+                upl += '<input type="hidden" name="thumbnail_url[]" value="' + file.thumbnail_url + '">';
+                upl += '<input type="hidden" name="filetype[]" value="' + file.type + '">';
+                upl += '<input type="hidden" name="fileurl[]" value="' + file.url + '">';
+
+                $(upl).appendTo('#uploadedform');
+            });
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#progress .bar').css(
+                'width',
+                progress + '%'
+            );
+
+            /*
+            if(progress == 100){
+                $('#progress .bar').css('width','0%');
+            }
+            */
+        }
+    })
+    .prop('disabled', !$.support.fileInput)
+        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+
+
+    $('#songTitle').keyup(function(){
+        var title = $('#songTitle').val();
+        var slug = string_to_slug(title);
+        $('#permalink').val(slug);
+    });
+
+    //$('#color_input').colorPicker();
+
+});
+
+</script>
 
 @stop
