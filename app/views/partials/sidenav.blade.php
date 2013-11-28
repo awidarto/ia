@@ -10,12 +10,6 @@
         <li {{ sa('faq') }} ><a href="{{ URL::to('page/view/faq') }}" >FAQ</a></li>
         <li {{ sa('about-investors-alliance') }} ><a href="{{ URL::to('page/view/about-investors-alliance') }}" >About Us</a></li>
         <li {{ sa('contact') }} ><a href="{{ URL::to('contact') }}"  >Contact Us</a></li>
-        @if(Auth::check())
-            <li {{ sa('music') }}  ><a href="{{ URL::to('music') }}" >Music</a></li>
-            <li {{ sa('artist') }} ><a href="{{ URL::to('artist') }}" >Artist</a></li>
-            <li {{ sa('album') }} ><a href="{{ URL::to('album') }}" >Album</a></li>
-            <li {{ sa('about') }} ><a href="{{ URL::to('profile') }}" >Profile</a></li>
-        @endif
 
     </ul>
 <!--
