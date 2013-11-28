@@ -2,5 +2,5 @@
 return array(
     'user_field'=>'email',
     'password_field'=>'pass',
-    'user_collection'=>'shoppers'
+    'user_collection'=>'agents'
 );

@@ -59,9 +59,6 @@
                 <div class="col-lg-9">
                     <a href="{{ URL::to('/') }}"><img class="img-responsive" src="{{ URL::to('images/').'/ialogo.png' }}"></a>
                 </div>
-                <div class="col-lg-3" id="tm-side-head">
-                    @include('partials.identity')
-                </div>
             </div>
         </div>
         <!-- Fixed navbar
