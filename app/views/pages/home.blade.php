@@ -8,6 +8,8 @@
             <div class="span9">
                 <h1 class="page-header">Featured properties</h1>
                 <!--insert grid-->
+                @include('realia.propgrid')
+
             </div>
             <div class="sidebar span3">
                 <div class="widget our-agents">
