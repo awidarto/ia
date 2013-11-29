@@ -23,7 +23,7 @@
 
                 {{ Former::textarea('message','Your Message')->class('editor') }}
 
-                <p style="text-align:left">
+                <p style="text-align:right">
                     {{ Form::submit('Send',array('class'=>'btn btn-primary arrow-right'))}}&nbsp;&nbsp;
                     {{ HTML::link($back,'Cancel',array('class'=>'btn'))}}
                 </p>
@@ -64,7 +64,8 @@ textarea{
 }
 
 #message{
-    width: 100%
+    width: 100%;
+    margin-bottom:8px;
 }
 
 </style>
