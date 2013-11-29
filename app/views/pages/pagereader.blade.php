@@ -1,11 +1,35 @@
-@extends('layout.front')
+@extends('realia.layout')
 
 @section('content')
-            @if(is_null($content))
-                <h2>Page Doesn't Exists</h2>
-                <p>Sorry, this page apparently does not exist yet.</p>
-            @else
-                <h2>{{ $content['title'] }}</h2>
-                {{ $content['body'] }}
-            @endif
+
+<div class="container">
+    <div id="main">
+
+        <div class="row">
+            <div class="span9">
+
+                @if(is_null($content))
+                    <h1 class="page-header">Page Doesn't Exists</h1>
+                    <p>Sorry, this page apparently does not exist yet.</p>
+                @else
+                    <h1 class="page-header">{{ $content['title'] }}</h1>
+                    {{ $content['body'] }}
+                @endif
+
+                <!--insert grid-->
+            </div>
+            <div class="sidebar span3">
+
+                @include('realia.latest')
+
+
+            </div>
+        </div>
+
+    <!--insert carousel-->
+    <!--insert features-->
+    </div>
+</div>
+
+
 @stop

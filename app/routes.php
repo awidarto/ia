@@ -50,6 +50,9 @@ Route::get('about',function(){
     return View::make('pages.about');
 });
 
+Route::get('faq',function(){
+    return View::make('realia.faq');
+});
 
 Route::get('login',function(){
     return View::make('login');

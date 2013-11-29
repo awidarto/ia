@@ -1,67 +1,70 @@
-@extends('layout.front')
+@extends('realia.layout')
 
 
 @section('content')
 
-<h2>{{$title}}</h2>
+<div class="container">
+    <div id="main">
 
-{{Former::open_vertical_for_files($submit,'POST',array('class'=>''))}}
+        <div class="row">
+            <div class="span9">
 
-<?php
-/*
-'accountnumber' => '3461783111',
-'activeCart' => '5260f68b8dfa19da49000000',
-'address_1' => 'jl cibaduyut lama komplek sauyunan mas 1 no 19',
-'address_2' => '',
-'agreetnc' => 'Yes',
-'bankname' => 'bca',
-'branch' => 'bandung',
-'city' => 'bandung',
-'country' => 'Indonesia',
-'createdDate' => new MongoDate(1382086083, 795000),
-'email' => 'emptyshalu@gmail.com',
-'firstname' => 'shalu',
-'fullname' => 'shalu hz',
-'lastUpdate' => new MongoDate(1382086083, 795000),
-'lastname' => 'shalu',
-'mobile' => '0818229096',
-'pass' => '$2a$08$9XwvZZVLsHSzu4MIX1ro3.X3cdhK0btglG7qqLGPgOA6/yYz5a51C',
-'role' => 'shopper',
-'salutation' => 'Ms',
-'saveinfo' => 'No',
-'shippingphone' => '02285447649',
-'shopperseq' => '0000000019',
-'zip' => '40235',
-*/
+                <h1 class="page-header">{{ $title }}</h1>
 
-?>
+                {{Former::open_vertical_for_files($submit,'POST',array('class'=>''))}}
 
-<div class="row-fluid">
-    <div class="col-lg-6">
+                {{ Former::text('firstname','First Name') }}
+                {{ Former::text('lastname','Last Name') }}
 
-        {{ Former::text('firstname','First Name') }}
-        {{ Former::text('lastname','Last Name') }}
+                {{ Former::text('email','Email')}}
 
-        {{ Former::text('email','Email')}}
-
-        {{ Former::select('countryOfOrigin')->options(Config::get('country.countries'))->label('Country of Origin') }}
+                {{ Former::select('countryOfOrigin')->options(Config::get('country.countries'))->label('Country of Origin') }}
 
 
-        {{ Former::textarea('message','Your Message')->class('editor') }}
-        <p style="text-align:right">
-            {{ Form::submit('Send',array('class'=>'btn primary'))}}&nbsp;&nbsp;
-            {{ HTML::link($back,'Cancel',array('class'=>'btn'))}}
-        </p>
+                {{ Former::textarea('message','Your Message')->class('editor') }}
+
+                <p style="text-align:left">
+                    {{ Form::submit('Send',array('class'=>'btn btn-primary arrow-right'))}}&nbsp;&nbsp;
+                    {{ HTML::link($back,'Cancel',array('class'=>'btn'))}}
+                </p>
+
+
+                {{Former::close()}}
+
+            </div>
+            <div class="sidebar span3">
+
+                @include('realia.latest')
+
+
+            </div>
+        </div>
+
+        @include('realia.carousel')
+    <!--insert carousel-->
+    <!--insert features-->
     </div>
 </div>
 
-{{Former::close()}}
+
 
 
 <style type="text/css">
 #lyric{
     min-height: 350px;
     height: 400px;
+}
+
+input, textarea, .uneditable-input {
+    width: 350px;
+}
+
+textarea{
+    height: 300px;
+}
+
+#message{
+    width: 100%
 }
 
 </style>
@@ -121,15 +124,6 @@ $(document).ready(function() {
     })
     .prop('disabled', !$.support.fileInput)
         .parent().addClass($.support.fileInput ? undefined : 'disabled');
-
-
-    $('#songTitle').keyup(function(){
-        var title = $('#songTitle').val();
-        var slug = string_to_slug(title);
-        $('#permalink').val(slug);
-    });
-
-    //$('#color_input').colorPicker();
 
 });
 
