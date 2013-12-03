@@ -2,7 +2,7 @@
     <div class="row">
 
 <?php
-    $properties = Property::get()->toArray();
+    $properties = Property::orderBy('createdDate','desc')->take(9)->get()->toArray();
 ?>
 
 
@@ -12,7 +12,7 @@
                 <div class="image">
                     <div class="content">
                         <a href="{{ URL::to('property/detail/'.$p['_id'] )}}"></a>
-                        <img src="{{ $p['defaultpictures']['large_url'] }}" alt="">
+                        <img src="{{ $p['defaultpictures']['medium_url'] }}" alt="">
                     </div><!-- /.content -->
 
                     <div class="price">$ {{ $p['listingPrice'] }}</div><!-- /.price -->
@@ -32,6 +32,11 @@
             </div><!-- /.property -->
 
         @endforeach
+
+        @if( count($properties)%2)
+            <div class="property span3" style="display:block;background:transparent;border:none;visibility:hidden;">
+            </div>
+        @endif
 
 
     </div><!-- /.row -->
