@@ -24,7 +24,7 @@ CONTACT US
 
 <ul class="nav navbar-nav">
     <li {{ sa('/') }} ><a href="{{ URL::to('/') }}" >Home</a></li>
-    <li {{ sa('/') }} ><a href="{{ URL::to('property') }}" >Properties</a></li>
+    <li {{ sa('/') }} ><a href="{{ URL::to('property/listing') }}" >Properties</a></li>
     <li {{ sa('/') }} ><a href="{{ URL::to('page/view/buying-process') }}" >Buying Process</a></li>
     <li {{ sa('/') }} ><a href="{{ URL::to('page/view/markets') }}" >Markets</a></li>
     <li {{ sa('/') }} ><a href="{{ URL::to('page/view/how-to-invest') }}" >How To Invest</a></li>

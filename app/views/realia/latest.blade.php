@@ -4,74 +4,32 @@
             <h2>Latest Properties</h2>
         </div><!-- /.title -->
 
+        <?php
+            $properties = Property::get()->toArray();
+
+        ?>
+
         <div class="content">
-            <div class="property">
-                <div class="image">
-                    <a href="detail.html"></a>
-                    <img src="{{ URL::to('/') }}/realia/img/tmp/property-small-4.png" alt="">
-                </div><!-- /.image -->
+            @foreach($properties as $p)
+                <div class="property">
+                    <div class="image">
+                        <a href="detail.html"></a>
+                        <img src="{{ $p['defaultpictures']['thumbnail_url'] }}" alt="">
+                    </div><!-- /.image -->
 
-                <div class="wrapper">
-                    <div class="title">
-                        <h3>
-                            <a href="detail.html">27523 Pacific Coast</a>
-                        </h3>
-                    </div><!-- /.title -->
-                    <div class="location">Palo Alto CA</div><!-- /.location -->
-                    <div class="price">€2 300 000</div><!-- /.price -->
-                </div><!-- /.wrapper -->
-            </div><!-- /.property -->
+                    <div class="wrapper">
+                        <div class="title">
+                            <h3>
+                                <a href="detail.html">{{ $p['address'] }}</a>
+                            </h3>
+                        </div><!-- /.title -->
+                        <div class="location">{{ $p['city'] }} {{ $p['state'] }}</div><!-- /.location -->
+                        <div class="price">{{ $p['listingPrice'] }}</div><!-- /.price -->
+                    </div><!-- /.wrapper -->
+                </div><!-- /.property -->
 
-            <div class="property">
-                <div class="image">
-                    <a href="detail.html"></a>
-                    <img src="{{ URL::to('/') }}/realia/img/tmp/property-small-5.png" alt="">
-                </div><!-- /.image -->
+            @endforeach
 
-                <div class="wrapper">
-                    <div class="title">
-                        <h3>
-                            <a href="detail.html">27523 Pacific Coast</a>
-                        </h3>
-                    </div><!-- /.title -->
-                    <div class="location">Palo Alto CA</div><!-- /.location -->
-                    <div class="price">€2 300 000</div><!-- /.price -->
-                </div><!-- /.wrapper -->
-            </div><!-- /.property -->
-
-            <div class="property">
-                <div class="image">
-                    <a href="detail.html"></a>
-                    <img src="{{ URL::to('/') }}/realia/img/tmp/property-small-6.png" alt="">
-                </div><!-- /.image -->
-
-                <div class="wrapper">
-                    <div class="title">
-                        <h3>
-                            <a href="detail.html">27523 Pacific Coast</a>
-                        </h3>
-                    </div><!-- /.title -->
-                    <div class="location">Palo Alto CA</div><!-- /.location -->
-                    <div class="price">€2 300 000</div><!-- /.price -->
-                </div><!-- /.wrapper -->
-            </div><!-- /.property -->
-
-            <div class="property">
-                <div class="image">
-                    <a href="detail.html"></a>
-                    <img src="{{ URL::to('/') }}/realia/img/tmp/property-small-2.png" alt="">
-                </div><!-- /.image -->
-
-                <div class="wrapper">
-                    <div class="title">
-                        <h3>
-                            <a href="detail.html">27523 Pacific Coast</a>
-                        </h3>
-                    </div><!-- /.title -->
-                    <div class="location">Palo Alto CA</div><!-- /.location -->
-                    <div class="price">€2 300 000</div><!-- /.price -->
-                </div><!-- /.wrapper -->
-            </div><!-- /.property -->
         </div><!-- /.content -->
     </div><!-- /.properties -->
 </div>

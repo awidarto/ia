@@ -69,7 +69,7 @@
                                 --}}
 
                                 <li {{ sa('/') }} ><a href="{{ URL::to('/') }}" >Home</a></li>
-                                <li {{ sa('/') }} ><a href="{{ URL::to('property') }}" >Properties</a></li>
+                                <li {{ sa('/') }} ><a href="{{ URL::to('property/listing') }}" >Properties</a></li>
                                 <li class="menuparent">
                                     <span class="menuparent nolink">Investment Info</span>
                                     <ul>
