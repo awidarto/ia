@@ -9,6 +9,7 @@
             <div class="span9">
                 <h1 class="page-header">{{ $prop['number'].' '.$prop['address'] }}</h1>
 
+                {{--
                 <div class="carousel property">
                     <div class="preview">
                         <img src="{{ $prop['defaultpictures']['large_url'] }}" alt="">
@@ -18,19 +19,27 @@
 
                         <a class="carousel-prev" href="#">Previous</a>
                         <a class="carousel-next" href="#">Next</a>
-                        <ul>
-                            @foreach($prop['files'] as $f )
-                                <li class="active">
-                                    <img src="{{ $f['thumbnail_url'] }}" alt="">
-                                </li>
-                            @endforeach
-
-                        </ul>
                     </div>
                     <!-- /.content -->
                 </div>
                 <!-- /.carousel -->
 
+                --}}
+
+                <div class="thumb-grid">
+                        <ul class="thumbnails_grid">
+                            @foreach($prop['files'] as $f )
+                                <li>
+                                    <a href="{{ $f['large_url'] }}" title="{{$f['caption']}}" data-gallery >
+                                        <img src="{{ $f['medium_url'] }}" alt="{{$f['caption']}}">
+                                    </a>
+                                </li>
+                            @endforeach
+
+                        </ul>
+                </div>
+
+                <div class="clearfix"></div>
                 <div class="property-detail">
                     <div class="pull-left overview">
                         <div class="row">
@@ -40,33 +49,47 @@
                                 <table>
                                     <tr>
                                         <th>Price:</th>
-                                        <td>€2 300 000</td>
+                                        <td>US$ {{ $prop['listingPrice']}}</td>
                                     </tr>
                                     <tr>
-                                        <th>Contract type:</th>
-                                        <td>Rent</td>
+                                        <th>FMV:</th>
+                                        <td>US$ {{ $prop['FMV']}}</td>
                                     </tr>
                                     <tr>
-                                        <th>Type:</th>
-                                        <td>Condo</td>
+                                    <tr>
+                                        <th>Type</th>
+                                        <td>{{ $prop['type']}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Construction</th>
+                                        <td>{{ $prop['typeOfConstruction']}}</td>
+                                    </tr>
                                     </tr>
                                     <tr>
                                         <th>Location:</th>
-                                        <td>Palo Alto CA</td>
+                                        <td>{{ $prop['city'].','.$prop['state']}}</td>
                                     </tr>
                                     <tr>
                                         <th>Bathrooms:</th>
-                                        <td>3</td>
+                                        <td>{{ $prop['bath']}}</td>
                                     </tr>
                                     <tr>
                                         <th>Bedrooms:</th>
-                                        <td>3</td>
+                                        <td>{{$prop['bed']}}</td>
                                     </tr>
                                     <tr>
-                                        <th>Area:</th>
-                                        <td>750m<sup>2</sup></td>
+                                        <th>House Area:</th>
+                                        <td>{{$prop['houseSize']}} ft<sup>2</sup></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Lot Size:</th>
+                                        <td>{{$prop['lotSize']}} ft<sup>2</sup></td>
                                     </tr>
                                 </table>
+                                    <br />
+                                    <button class="btn btn-primary pull-right">
+                                        Buy Now
+                                    </button>
                             </div>
                             <!-- /.span2 -->
                         </div>
@@ -214,6 +237,35 @@
 
             </div>
         </div>
+
+        <div id="blueimp-gallery" class="blueimp-gallery  blueimp-gallery-controls">
+            <div class="slides"></div>
+            <h3 class="title"></h3>
+            <a class="prev">‹</a>
+            <a class="next">›</a>
+            <a class="close">×</a>
+            <a class="play-pause"></a>
+            <ol class="indicator"></ol>
+        </div>
+
+        <script type="text/javascript">
+
+
+
+                g.each(function(){
+                    links.push({
+                        href:$(this).val(),
+                        title:$(this).data('caption')
+                    });
+                })
+                var options = {
+                    carousel: false
+                };
+                blueimp.Gallery(links, options);
+
+
+
+        </script>
 
     <!--insert carousel-->
     <!--insert features-->

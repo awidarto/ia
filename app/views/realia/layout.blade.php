@@ -15,6 +15,10 @@
     {{ HTML::style('realia/libraries/jquery-ui-1.10.2.custom/css/ui-lightness/jquery-ui-1.10.2.custom.min.css') }}
     {{ HTML::style('realia/css/realia-red.css') }}
 
+    {{ HTML::style('css/blueimp-gallery.min.css') }}
+
+    {{ HTML::style('css/app.css') }}
+
     <title>{{ Config::get('site.name') }}</title>
 </head>
 <body>
@@ -346,6 +350,9 @@
 {{ HTML::script('realia/libraries/iosslider/_src/jquery.iosslider.min.js') }}
 {{ HTML::script('realia/libraries/bootstrap-fileupload/bootstrap-fileupload.js') }}
 {{ HTML::script('realia/js/realia.js') }}
+
+{{ HTML::script('js/blueimp-gallery.min.js') }}
+{{ HTML::script('js/jquery.blueimp-gallery.min.js') }}
 
 </body>
 </html>
