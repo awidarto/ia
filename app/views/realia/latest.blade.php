@@ -13,14 +13,14 @@
             @foreach($properties as $p)
                 <div class="property">
                     <div class="image">
-                        <a href="detail.html"></a>
+                        <a href="{{ URL::to('property/detail/'.$p['_id'] )}}"></a>
                         <img src="{{ $p['defaultpictures']['thumbnail_url'] }}" alt="">
                     </div><!-- /.image -->
 
                     <div class="wrapper">
                         <div class="title">
                             <h3>
-                                <a href="detail.html">{{ $p['address'] }}</a>
+                                <a href="detail.html">{{ $p['number'].' '.$p['address'] }}</a>
                             </h3>
                         </div><!-- /.title -->
                         <div class="location">{{ $p['city'] }} {{ $p['state'] }}</div><!-- /.location -->
