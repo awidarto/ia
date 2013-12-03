@@ -5,7 +5,7 @@
         </div><!-- /.title -->
 
         <?php
-            $properties = Property::get()->toArray();
+            $properties = Property::orderBy('createdDate','desc')->take(5)->get()->toArray();
 
         ?>
 

@@ -80,12 +80,13 @@
                     </div><!-- /.properties-grid -->
                     <div class="pagination pagination-centered">
                         <ul>
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li class="active"><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">next</a></li>
-                            <li><a href="#">last</a></li>
+                            <li><a href="{{ URL::to('property/listing') }}">first</a></li>
+                            <li><a href="{{ URL::to('property/listing/'.(($current == 0)?$current:$current - 1) ) }}">previous</a></li>
+                            @for($p = 0; $p < $paging; $p++)
+                                <li {{ ($p == $current)?'class="active"':'' }} ><a href="{{ URL::to('property/listing/'.$p)}}"  >{{$p + 1}}</a></li>
+                            @endfor
+                            <li><a href="{{ URL::to('property/listing/'.(($current == ($paging - 1))?$current:$current + 1)) }}">next</a></li>
+                            <li><a href="{{ URL::to('property/listing/'.($paging - 1) ) }}">last</a></li>
                         </ul>
                     </div><!-- /.pagination -->
 

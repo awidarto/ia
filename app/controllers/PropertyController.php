@@ -38,11 +38,23 @@ class PropertyController extends BaseController {
         return View::make('pages.pagelist')->with('pages',$pages);
     }
 
-    public function getListing($page = null, $cat = null)
+    public function getListing($page = null, $orderby = 'createdDate',$order = 'desc')
     {
 
-        $properties = Property::get();
-        return View::make('realia.listing')->with('properties',$properties);
+        $page = (is_null($page))?0:$page;
+        $perpage = 15;
+        $skip = $page * $perpage;
+
+        $total = Property::count();
+
+        $paging = ceil($total / $perpage);
+
+        $properties = Property::skip($skip)->take($perpage)->get();
+
+        return View::make('realia.listing')
+            ->with('properties',$properties)
+            ->with('current',$page)
+            ->with('paging',$paging);
     }
 
     public function getDetail($id = null){
