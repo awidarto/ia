@@ -111,7 +111,7 @@ return array(
 		'Illuminate\Foundation\Providers\TinkerServiceProvider',
 		'Illuminate\Translation\TranslationServiceProvider',
 		'Illuminate\Validation\ValidationServiceProvider',
-		'Illuminate\View\ViewServiceProvider',
+		//'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
         'Jenssegers\Mongodb\MongodbServiceProvider',
         'Former\FormerServiceProvider',
@@ -119,7 +119,8 @@ return array(
         'Intervention\Validation\ValidationServiceProvider',
         'Intervention\Image\ImageServiceProvider',
         'Intervention\Helper\DateServiceProvider',
-        'Intervention\Helper\StringServiceProvider'
+        'Intervention\Helper\StringServiceProvider',
+        'AlexWhitman\ViewThemes\ViewThemesServiceProvider',
 	),
 
 	/*
@@ -188,7 +189,8 @@ return array(
         'Breadcrumb'      => 'Noherczeg\Breadcrumb\Facades\Breadcrumb',
         'Date'            => 'Intervention\Helper\Facades\Date',
         'String'          => 'Intervention\Helper\Facades\String',
-        'Image'           => 'Intervention\Image\Facades\Image'
+        'Image'           => 'Intervention\Image\Facades\Image',
+        'Theme'           => 'AlexWhitman\ViewThemes\ThemeFacade'
 
 	),
 

@@ -11,7 +11,8 @@
         "intervention/image": "dev-master",
         "intervention/imagecache": "dev-master",
         "intervention/helper": "dev-master",
-        "intervention/validation": "dev-master"
+        "intervention/validation": "dev-master",
+        "alexwhitman/view-themes": "dev-master"
 	},
 	"autoload": {
 		"classmap": [
@@ -20,7 +21,8 @@
 			"app/models",
 			"app/database/migrations",
 			"app/database/seeds",
-			"app/tests/TestCase.php"
+			"app/tests/TestCase.php",
+            "app/helpers"
 		]
 	},
 	"scripts": {

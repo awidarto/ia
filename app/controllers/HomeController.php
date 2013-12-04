@@ -15,6 +15,11 @@ class HomeController extends BaseController {
 	|
 	*/
 
+    public function __construct()
+    {
+        Theme::setCurrentTheme('realia');
+    }
+
 	public function getIndex()
 	{
         $page = Page::where('slug','=','home')->first();
@@ -30,6 +35,13 @@ class HomeController extends BaseController {
 
     public function getView($slug = null){
 
+    }
+
+    public function getTheme()
+    {
+        $theme = Theme::uses('default')->layout('default');
+
+        return $theme->watch('home.theme', array('name'=>'Template Test') )->render();
     }
 
 
