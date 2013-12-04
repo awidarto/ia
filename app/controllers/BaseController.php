@@ -9,7 +9,8 @@ class BaseController extends Controller {
 	 */
 	protected function setupLayout()
 	{
-        Theme::setCurrentTheme('realia');
+
+        Theme::setCurrentTheme(Prefs::getActiveTheme() );
 
 		if ( ! is_null($this->layout))
 		{

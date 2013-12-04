@@ -2,7 +2,7 @@
 
 return array(
 
-	'path'    => app_path() . '/themes',
+	'path'    => public_path() . '/themes',
 
 	'default' => 'default'
 
