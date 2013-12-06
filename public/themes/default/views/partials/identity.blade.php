@@ -1,12 +1,14 @@
 @if(Auth::check())
-    <div>
-        <p>Welcome {{ Auth::user()->firstname.' '.Auth::user()->lastname }}</p>
-        <p><a href="{{ URL::to('logout') }}">Logout</a></p>
-    </div>
+        <li><a href="">Welcome {{ Auth::user()->firstname.' '.Auth::user()->lastname }}</a></li>
+        <li><a href="{{ URL::to('logout') }}">Logout</a></li>
 @else
+        <li><a href="{{ URL::to('/') }}/login">Login</a></li>
+        <li><a href="{{ URL::to('/') }}/register">Registration</a></li>
+
+    {{--
     <h2>LOGIN / SIGN UP</h2>
-    <div class="col-md-12" style="padding:0px;">
-        {{ Form::open(array('url' => 'login','class'=>'form-inline', 'role'=>'form')) }}
+    <div class="span12" style="padding:0px;">
+        {{ Former::open_vertical(array('url' => 'login','class'=>'', 'role'=>'form')) }}
                 @if (Session::has('loginError'))
                     @if (Session::get('loginError'))
                     <div class="alert alert-danger">{{ Session::get('loginError') }}</div>
@@ -28,6 +30,8 @@
                 <label class="checkbox">
                   <input type="checkbox" value="remember-me"> Remember me
                 </label>
-        {{ Form::close() }}
+        {{ Former::close() }}
     </div>
+
+    --}}
 @endif

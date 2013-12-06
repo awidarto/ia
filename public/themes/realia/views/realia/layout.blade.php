@@ -36,8 +36,7 @@
 
                             <div class="account pull-right">
                                 <ul class="nav nav-pills">
-                                    <li><a href="login.html">Login</a></li>
-                                    <li><a href="registration.html">Registration</a></li>
+                                    @include('partials.identity')
                                 </ul>
                             </div>
                         </div><!-- /.span12 -->

@@ -20,7 +20,7 @@
                     <div class="wrapper">
                         <div class="title">
                             <h3>
-                                <a href="detail.html">{{ $p['number'].' '.$p['address'] }}</a>
+                                <a href="{{ URL::to('property/detail/'.$p['_id'] )}}">{{ $p['number'].' '.$p['address'] }}</a>
                             </h3>
                         </div><!-- /.title -->
                         <div class="location">{{ $p['city'] }} {{ $p['state'] }}</div><!-- /.location -->

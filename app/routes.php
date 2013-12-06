@@ -47,14 +47,17 @@ Route::get('media',function(){
 
 
 Route::get('about',function(){
+    Theme::setCurrentTheme(Prefs::getActiveTheme() );
     return View::make('pages.about');
 });
 
 Route::get('faq',function(){
+    Theme::setCurrentTheme(Prefs::getActiveTheme() );
     return View::make('realia.faq');
 });
 
 Route::get('login',function(){
+    Theme::setCurrentTheme(Prefs::getActiveTheme() );
     return View::make('login');
 });
 

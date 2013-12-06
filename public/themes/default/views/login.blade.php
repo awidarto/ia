@@ -1,4 +1,4 @@
-@extends('layout.front')
+@extends('realia.layout')
 
 @section('content')
             <!-- if there are login errors, show them here -->
@@ -9,56 +9,45 @@
     </p>
 @endif
 
-<div class="row">
-    <div class="col-lg-6">
-        <h3>Sign Up</h3>
+<div class="container">
+    <div id="main">
+
+        <div class="row">
+            <div class="span9">
+
+               <h1 class="page-header">Login</h1>
+
+                    {{Former::open_vertical('login','POST',array('class'=>''))}}
+                        @if (Session::has('login_errors'))
+                            @if (Session::get('loginError'))
+                            <div class="alert alert-danger">{{ Session::get('loginError') }}</div>
+                                 <button type="button" class="close" data-dismiss="alert"></button>
+                                 Email or password incorrect.
+                            @endif
+                        @endif
+                        {{ Former::text('email','Email') }}
+
+                        {{ Former::password('password','Password') }}
+
+                        {{ Former::checkbox('remember-me')->label('Remember Me')->value('remember-me')}}
+
+                        {{ Former::submit('Login')->class('btn btn-primary') }}
+
+                    {{ Former::close() }}
 
 
-        {{Former::open_vertical('signup','POST',array('class'=>''))}}
-            <h2 class="form-signin-heading">Sign up, upload and make $$$</h2>
-            @if (Session::has('login_errors'))
-                @if (Session::get('loginError'))
-                <div class="alert alert-danger">{{ Session::get('loginError') }}</div>
-                     <button type="button" class="close" data-dismiss="alert"></button>
-                     Email or password incorrect.
-                @endif
-            @endif
-            {{ Former::text('email','Email') }}
-            {{ Former::text('firstname','First Name') }}
-            {{ Former::text('lastname','Last Name') }}
+            </div>
+            <div class="sidebar span3">
+                @include('realia.latest')
 
-            {{ Former::password('pass','Password') }}
-            {{ Former::password('repass','Repeat Password') }}
 
-            <p>{{ Form::submit('Sign Up',array('class'=>'btn btn-primary')) }}</p>
+            </div>
+        </div>
 
-        {{Former::close()}}
-
-    </div>
-    <div class="col-lg-6">
-        <h3>Sign In</h3>
-
-        {{Former::open_vertical('login','POST',array('class'=>''))}}
-            <h2 class="form-signin-heading">Already a member ? Sign in</h2>
-            @if (Session::has('login_errors'))
-                @if (Session::get('loginError'))
-                <div class="alert alert-danger">{{ Session::get('loginError') }}</div>
-                     <button type="button" class="close" data-dismiss="alert"></button>
-                     Email or password incorrect.
-                @endif
-            @endif
-            {{ Former::text('email','Email') }}
-
-            {{ Former::password('password','Password') }}
-
-            <label class="checkbox">
-              <input type="checkbox" value="remember-me"> Remember me
-            </label>
-            <p>{{ Form::submit('Submit!',array('class'=>'btn btn-primary')) }}</p>
-        {{ Former::close() }}
+    <!--insert carousel-->
+    <!--insert features-->
     </div>
 </div>
-
 
 
 

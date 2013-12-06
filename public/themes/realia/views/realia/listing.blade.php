@@ -92,7 +92,6 @@
 
             </div>
             <div class="sidebar span3">
-
                 @include('realia.latest')
 
 

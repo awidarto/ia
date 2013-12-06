@@ -36,8 +36,8 @@
 
                             <div class="account pull-right">
                                 <ul class="nav nav-pills">
-                                    <li><a href="login.html">Login</a></li>
-                                    <li><a href="registration.html">Registration</a></li>
+                                    <li><a href="{{ URL::to('/') }}/login">Login</a></li>
+                                    <li><a href="{{ URL::to('/') }}/register">Registration</a></li>
                                 </ul>
                             </div>
                         </div><!-- /.span12 -->
