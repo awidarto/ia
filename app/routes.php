@@ -58,6 +58,7 @@ Route::get('faq',function(){
 
 Route::get('login',function(){
     Theme::setCurrentTheme(Prefs::getActiveTheme() );
+    Former::framework('TwitterBootstrap');
     return View::make('login');
 });
 
@@ -93,7 +94,11 @@ Route::post('login',function(){
                 // login the user
                 Auth::login($user);
 
-                return Redirect::to('/');
+                if(Session::get('redirect') != ''){
+                    return Redirect::to(Session::get('redirect'));
+                }else{
+                    return Redirect::to('/');
+                }
 
             } else {
                 // validation not successful

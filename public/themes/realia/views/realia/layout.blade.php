@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Aviators - byaviators.com">
+    <meta name="author" content="">
 
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
     <link rel="shortcut icon" href="realia/img/favicon.png" type="image/png">
 
-    {{ HTML::style( Prefs::themeAssetsPath().'css/bootstrap.css') }}
+    {{ HTML::style('realia/css/bootstrap.css') }}
     {{ HTML::style('realia/css/bootstrap-responsive.css') }}
     {{ HTML::style('realia/libraries/chosen/chosen.css') }}
     {{ HTML::style('realia/libraries/bootstrap-fileupload/bootstrap-fileupload.css') }}
@@ -18,6 +18,9 @@
     {{ HTML::style('css/blueimp-gallery.min.css') }}
 
     {{ HTML::style('css/app.css') }}
+
+    {{ HTML::script('realia/js/jquery.js') }}
+
 
     <title>{{ Config::get('site.name') }}</title>
 </head>
@@ -335,12 +338,11 @@
 --}}
 
 {{ HTML::script('http://maps.googleapis.com/maps/api/js?v=3&amp;sensor=true') }}
-{{ HTML::script('realia/js/jquery.js') }}
 {{ HTML::script('realia/js/jquery.ezmark.js') }}
 {{ HTML::script('realia/js/jquery.currency.js') }}
 {{ HTML::script('realia/js/jquery.cookie.js') }}
 {{ HTML::script('realia/js/retina.js') }}
-{{ HTML::script('realia/js/bootstrap.min.js') }}
+{{ HTML::script('js/bootstrap.min.js') }}
 {{ HTML::script('realia/js/carousel.js') }}
 {{ HTML::script('realia/js/gmap3.min.js') }}
 {{ HTML::script('realia/js/gmap3.infobox.min.js') }}
@@ -350,8 +352,11 @@
 {{ HTML::script('realia/libraries/bootstrap-fileupload/bootstrap-fileupload.js') }}
 {{ HTML::script('realia/js/realia.js') }}
 
+
 {{ HTML::script('js/blueimp-gallery.min.js') }}
 {{ HTML::script('js/jquery.blueimp-gallery.min.js') }}
+
+{{ HTML::script('js/jquery.bootstrap.wizard.min.js') }}
 
 </body>
 </html>

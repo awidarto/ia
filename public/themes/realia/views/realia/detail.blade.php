@@ -87,9 +87,9 @@
                                     </tr>
                                 </table>
                                     <br />
-                                    <button class="btn btn-primary pull-right">
+                                    <a href="{{ URL::to('property/buy/'.$prop['_id']) }}" class="btn btn-primary pull-right">
                                         Buy Now
-                                    </button>
+                                    </a>
                             </div>
                             <!-- /.span2 -->
                         </div>

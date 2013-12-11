@@ -15,6 +15,13 @@ class PropertyController extends BaseController {
     |
     */
 
+    public function __construct()
+    {
+        Former::framework('TwitterBootstrap');
+
+        $this->beforeFilter('auth', array('on'=>'get', 'only'=>array('getBuy') ));
+    }
+
     public function getIndex()
     {
         $pages = Property::get();
@@ -68,6 +75,19 @@ class PropertyController extends BaseController {
         }
 
         return View::make('realia.detail')->with('prop',$page);
+    }
+
+    public function getBuy($id = null){
+
+        $page = Property::find($id);
+
+        if($page){
+            $page = $page->toArray();
+        }else{
+            $page = null;
+        }
+
+        return View::make('realia.buy')->with('prop',$page);
     }
 
 

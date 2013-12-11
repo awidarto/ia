@@ -17,7 +17,7 @@
 
                <h1 class="page-header">Login</h1>
 
-                    {{Former::open_vertical('login','POST',array('class'=>''))}}
+                    {{Former::open_horizontal('login','POST',array('class'=>''))}}
                         @if (Session::has('login_errors'))
                             @if (Session::get('loginError'))
                             <div class="alert alert-danger">{{ Session::get('loginError') }}</div>
@@ -29,9 +29,11 @@
 
                         {{ Former::password('password','Password') }}
 
-                        {{ Former::checkbox('remember-me')->label('Remember Me')->value('remember-me')}}
+                        {{-- Former::checkbox('remember-me')->label('')->text('Remember Me')->value('remember-me') --}}
 
-                        {{ Former::submit('Login')->class('btn btn-primary') }}
+                        <br />
+
+                        {{ Former::submit('Login')->class('btn btn-primary offset3') }}
 
                     {{ Former::close() }}
 
