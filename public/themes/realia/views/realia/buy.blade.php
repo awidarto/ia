@@ -187,6 +187,11 @@
         </div>
 
         <style type="text/css">
+
+            input.uneditable-input{
+                border:none;
+            }
+
             .form-horizontal table#finance td .control-label{
                 width: auto;
                 text-align: left;
