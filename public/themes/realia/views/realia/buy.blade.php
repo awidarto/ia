@@ -48,6 +48,8 @@
                         <div class="tab-pane" id="tab1">
                             <div class="row">
                                 <div class="span4">
+                                    {{ Former::hidden('agentId','Agent ID')->value(Auth::user()->_id ) }}
+                                    {{ Former::text('agentName','Agent Name')->value(Auth::user()->firstname.' '.Auth::user()->lastname )->class('uneditable-input') }}
                                     {{ Former::text('customerId','Customer/Badge ID') }}
                                     {{ Former::text('firstName','First Name') }}
                                     {{ Former::text('lastName','Last Name') }}
