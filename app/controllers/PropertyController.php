@@ -115,9 +115,9 @@ class PropertyController extends BaseController {
             $model = new Transaction();
 
             if($obj = $model->insert($data)){
-                return Redirect::to('property/transactions')->with('notify_success','Order saved successfully');
+                return Redirect::to('transaction/listing')->with('notify_success','Order saved successfully');
             }else{
-                return Redirect::to('property/transactions')->with('notify_success','Order saving failed');
+                return Redirect::to('transaction/listing')->with('notify_success','Order saving failed');
             }
 
 

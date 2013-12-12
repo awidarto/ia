@@ -20,6 +20,7 @@ Route::controller('artist', 'ArtistController');
 Route::controller('music', 'MusicController');
 Route::controller('album', 'AlbumController');
 Route::controller('contact', 'ContactController');
+Route::controller('transaction', 'TransactionController');
 
 Route::controller('upload', 'UploadController');
 Route::controller('ajax', 'AjaxController');
@@ -31,6 +32,20 @@ Route::get('page/view/{slug}','PageController@getView');
 Route::get('page','PageController@getIndex');
 
 Route::get('contact','ContactController@getAdd');
+
+Route::get('pdf',function(){
+    $content = "
+    <page>
+        <h1>Exemple d'utilisation</h1>
+        <br>
+        Ceci est un <b>exemple d'utilisation</b>
+        de <a href='http://html2pdf.fr/'>HTML2PDF</a>.<br>
+    </page>";
+
+    $html2pdf = new HTML2PDF();
+    $html2pdf->WriteHTML($content);
+    $html2pdf->Output('exemple.pdf','D');
+});
 
 
 Route::get('hashme/{mypass}',function($mypass){
