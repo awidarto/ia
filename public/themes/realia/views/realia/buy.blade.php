@@ -26,7 +26,7 @@
                 <div class="clearfix"></div>
                 --}}
 
-                <h1 class="page-header">Buy {{ $prop['propertyId'].': '.$prop['number'].' '.$prop['address'] }}</h1>
+                <h1 class="page-header">{{ $prop['propertyId'].' : '.$prop['number'].' '.$prop['address'] }}</h1>
 
                 <div id="rootwizard">
                     <ul>
@@ -42,14 +42,17 @@
 
                     --}}
 
-                    {{ Former::open_horizontal('property/process')}}
+                    {{ Former::open_horizontal('property/process')->id('orderform')}}
+
+                    {{ Former::hidden('propObjectId')->value($prop['_id']) }}
+                    {{ Former::hidden('propertyId')->value($prop['propertyId']) }}
 
                     <div class="tab-content">
                         <div class="tab-pane" id="tab1">
                             <div class="row">
                                 <div class="span4">
-                                    {{ Former::hidden('agentId','Agent ID')->value(Auth::user()->_id ) }}
-                                    {{ Former::text('agentName','Agent Name')->value(Auth::user()->firstname.' '.Auth::user()->lastname )->class('uneditable-input') }}
+                                    {{ Former::hidden('agentId')->value( Auth::user()->_id ) }}
+                                    {{ Former::text('agentName','Agent Name')->value(Auth::user()->firstname.' '.Auth::user()->lastname )->readonly(true)->class('uneditable-input') }}
                                     {{ Former::text('customerId','Customer/Badge ID') }}
                                     {{ Former::text('firstName','First Name') }}
                                     {{ Former::text('lastName','Last Name') }}
@@ -58,7 +61,7 @@
                                     {{ Former::text('email','Email Address') }}
                                 </div>
                                 <div class="span3">
-                                    {{ Former::text('Street Address','Street Address') }}
+                                    {{ Former::text('address','Street Address') }}
                                     {{ Former::text('City','City') }}
                                     {{ Former::select('countryOfOrigin')->options(Config::get('country.countries'))->label('Country') }}
                                     {{ Former::select('state')->options(Config::get('country.aus_states'))->label('State') }}
@@ -102,17 +105,17 @@
                                     <tr>
                                         <td>Annual Insurance Premium</td>
                                         <td></td>
-                                        <td></td>
+                                        <td>{{ $prop['insurance'] }}</td>
                                     </tr>
                                     <tr>
                                         <td>Tax Adjustment</td>
                                         <td></td>
-                                        <td></td>
+                                        <td>{{ $prop['tax'] }}</td>
                                     </tr>
                                     <tr>
                                         <td>Closing Cost</td>
                                         <td></td>
-                                        <td></td>
+                                        <td>{{ $prop['HOA']}}</td>
                                     </tr>
                                     <tr>
                                         <td><b>Total Purchase Price</b></td>
@@ -157,8 +160,8 @@
                         <ul class="pager wizard">
                             <li class="previous first" style="display:none;"><a href="#">First</a></li>
                             <li class="previous"><a href="#">Previous</a></li>
-                            <li class="next finish" id="process" style="display:none;"><a href="#">Process</a></li>
                             <li class="next" ><a href="#">Next</a></li>
+                            <li class="next finish" id="process" style="display:none;"><a href="">Process</a></li>
                         </ul>
                     </div>
 
@@ -209,6 +212,11 @@
             .table thead th{
                 background-color: #eee;
             }
+
+            .table tr td:last-child, .table tr td:last-child input[type=text]{
+                text-align: right;
+            }
+
         </style>
 
         <script type="text/javascript">
@@ -227,9 +235,6 @@
                                     */
                                 }
                             }
-
-                            // Set the name for the next tab
-                            $('#tab3').html('Hello, ' + $('#name').val());
 
                         },
                     onTabShow: function(tab, navigation, index) {
@@ -252,6 +257,13 @@
                             }
 
                         }
+
+                });
+
+                $('#process').on('click',function(){
+
+                    $('#orderform').submit();
+                    return false;
 
                 });
 

@@ -53,6 +53,8 @@ class TableController extends Controller {
 
         date_default_timezone_set('Asia/Jakarta');
 
+        Theme::setCurrentTheme(Prefs::getActiveTheme() );
+
         Former::framework($this->form_framework);
 
         $this->crumb = new \Noherczeg\Breadcrumb\Breadcrumb(URL::to('/'));

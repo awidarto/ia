@@ -252,15 +252,22 @@ function InitCarousel() {
 }
 
 function LoadMapProperty() {
+
+    var lat = $('#ia-latitude').val();
+    var lon = $('#ia-longitude').val();
+    var zoom = $('#ia-zoom').val();
+
+    var content = '<div class="infobox"><div class="image"><img src="assets/img/tmp/property-tiny-1.png" alt=""></div><div class="title"><a href="detail.html">1041 Fife Ave</a></div><div class="area"><span class="key">Area:</span><span class="value">200m<sup>2</sup></span></div><div class="price">€450 000.00</div><div class="link"><a href="detail.html">View more</a></div></div>';
+
     var locations = new Array(
-        [34.01312,-118.496808]
+        [lat,lon]
     );
     var markers = new Array();
     var mapOptions = {
-        center: new google.maps.LatLng(34.012044, -118.494458),
-        zoom: 14,
+        center: new google.maps.LatLng(lat, lon),
+        zoom: parseInt(zoom),
         mapTypeId: google.maps.MapTypeId.ROADMAP,
-        scrollwheel: false
+        scrollwheel: true
     };
 
     var map = new google.maps.Map(document.getElementById('property-map'), mapOptions);
@@ -273,7 +280,7 @@ function LoadMapProperty() {
         });
 
         var myOptions = {
-            content: '<div class="infobox"><div class="image"><img src="assets/img/tmp/property-tiny-1.png" alt=""></div><div class="title"><a href="detail.html">1041 Fife Ave</a></div><div class="area"><span class="key">Area:</span><span class="value">200m<sup>2</sup></span></div><div class="price">€450 000.00</div><div class="link"><a href="detail.html">View more</a></div></div>',
+            content: content,
             disableAutoPan: false,
             maxWidth: 0,
             pixelOffset: new google.maps.Size(-146, -190),

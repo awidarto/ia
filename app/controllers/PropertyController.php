@@ -90,6 +90,40 @@ class PropertyController extends BaseController {
         return View::make('realia.buy')->with('prop',$page);
     }
 
+    public function postProcess(){
+
+        $validator = array(
+
+            );
+
+        $data = Input::get();
+
+        $validation = Validator::make($input = $data, $validator);
+
+        if($validation->fails()){
+
+            return Redirect::to('property/buy')->withErrors($validation)->withInput(Input::all());
+
+        }else{
+
+            unset($data['csrf_token']);
+
+            $data['createdDate'] = new MongoDate();
+            $data['lastUpdate'] = new MongoDate();
+
+
+            $model = new Transaction();
+
+            if($obj = $model->insert($data)){
+                return Redirect::to('property/transactions')->with('notify_success','Order saved successfully');
+            }else{
+                return Redirect::to('property/transactions')->with('notify_success','Order saving failed');
+            }
+
+
+        }
+
+    }
 
     public function getView($slug = null){
 
@@ -102,6 +136,10 @@ class PropertyController extends BaseController {
         }
 
         return View::make('pages.pagereader')->with('content',$page);
+    }
+
+    public function getTransactions(){
+
     }
 
     public function missingMethod($parameter){

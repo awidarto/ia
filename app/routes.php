@@ -53,7 +53,16 @@ Route::get('about',function(){
 
 Route::get('faq',function(){
     Theme::setCurrentTheme(Prefs::getActiveTheme() );
-    return View::make('realia.faq');
+
+    $faqs = Faq::get()->toArray();
+
+    $faqarray = array();
+
+    foreach($faqs as $f){
+        $faqarray[$f['category']]['content'][] = $f;
+    }
+
+    return View::make('realia.faq')->with('faqs',$faqarray);
 });
 
 Route::get('login',function(){

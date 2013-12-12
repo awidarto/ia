@@ -2,7 +2,7 @@ $(document).ready(function() {
 	InitCarousel();
     InitPropertyCarousel();
 	InitOffCanvasNavigation();
-	InitMap();
+	//InitMap();
 	InitChosen();
 	InitEzmark();
 	InitPriceSlider();
@@ -252,13 +252,21 @@ function InitCarousel() {
 }
 
 function LoadMapProperty() {
+
+    var lat = $('#ia-latitude').val();
+    var lon = $('#ia-longitude').val();
+    var zoom = $('#ia-zoom').val();
+
+    console.log(lat);
+
     var locations = new Array(
-        [34.01312,-118.496808]
+        [lat,lon]
     );
+
     var markers = new Array();
     var mapOptions = {
-        center: new google.maps.LatLng(34.012044, -118.494458),
-        zoom: 14,
+        center: new google.maps.LatLng(lat,lon),
+        zoom: zoom,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         scrollwheel: false
     };
@@ -408,6 +416,6 @@ function LoadMap() {
 }
 
 function InitMap() {
-	google.maps.event.addDomListener(window, 'load', LoadMap);
-    google.maps.event.addDomListener(window, 'load', LoadMapProperty);
+	//google.maps.event.addDomListener(window, 'load', LoadMap);
+    //google.maps.event.addDomListener(window, 'load', LoadMapProperty);
 }
