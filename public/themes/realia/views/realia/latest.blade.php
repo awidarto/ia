@@ -1,7 +1,7 @@
 <div class="hidden-tablet">
     <div class="widget properties last">
         <div class="title">
-            <h2>Latest Properties</h2>
+            <h2>New Additions</h2>
         </div><!-- /.title -->
 
         <?php
