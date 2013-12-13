@@ -27,7 +27,9 @@
                 --}}
 
                 <h1 class="page-header">{{ $prop['propertyId'].' : '.$prop['number'].' '.$prop['address'] }}</h1>
-
+                <div id="session-counter-bar">
+                    You have <span id="session-counter"></span> to finish this transaction.
+                </div>
                 <div id="rootwizard">
                     <ul>
                         <li><a href="#tab1" data-toggle="tab">Sales & Contact Information</a></li>
@@ -217,11 +219,70 @@
                 text-align: right;
             }
 
+            #session-counter-bar{
+                line-height: 24px;
+                text-align: right;
+                padding: 10px 0px;
+            }
+
+            #session-counter{
+                font-weight: bold;
+            }
         </style>
 
         <script type="text/javascript">
 
+            function Countdown(options) {
+                var timer,
+                instance = this,
+                seconds = options.seconds || 10,
+                updateStatus = options.onUpdateStatus || function () {},
+                counterEnd = options.onCounterEnd || function () {};
+
+                function decrementCounter() {
+                    updateStatus(seconds);
+
+                    if (seconds === 0) {
+                        counterEnd();
+                        instance.stop();
+                    }
+
+                    seconds--;
+                }
+
+                this.start = function () {
+                    clearInterval(timer);
+                    timer = 0;
+                    seconds = options.seconds;
+                    timer = setInterval(decrementCounter, 1000);
+                };
+
+                this.stop = function () {
+                    clearInterval(timer);
+                };
+            }
+
             $(document).ready(function(){
+
+                var myCounter = new Countdown({
+                    seconds:300,  // number of seconds to count down
+                    onUpdateStatus: function(sec){
+                            console.log(sec);
+
+                            //hours = totalSeconds / 3600;
+                            //totalSeconds %= 3600;
+                            totalSeconds = sec;
+                            minutes = parseInt(totalSeconds / 60);
+                            seconds = totalSeconds % 60;
+
+                            $('#session-counter').html(minutes + ' mins ' + seconds + ' secs ');
+                        }, // callback for each second
+                    onCounterEnd: function(){ alert('Your session has expired!');} // final action
+                });
+
+                myCounter.start();
+
+
                 $('#rootwizard').bootstrapWizard({
                     'tabClass': 'bwizard-steps',
                     onNext: function(tab, navigation, index) {

@@ -190,7 +190,8 @@ return array(
         'Date'            => 'Intervention\Helper\Facades\Date',
         'String'          => 'Intervention\Helper\Facades\String',
         'Image'           => 'Intervention\Image\Facades\Image',
-        'Theme'           => 'AlexWhitman\ViewThemes\ThemeFacade'
+        'Theme'           => 'AlexWhitman\ViewThemes\ThemeFacade',
+        'Carbon'          => 'Carbon\Carbon'
 
 	),
 

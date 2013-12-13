@@ -5,7 +5,10 @@
         </div><!-- /.title -->
 
         <?php
-            $properties = Property::orderBy('createdDate','desc')->take(5)->get()->toArray();
+            $lasttendays = Carbon::now()->subDays(10);
+            $properties = Property::where('publishDate', '>', $lasttendays )->where('publishStatus','published')->orderBy('publishDate','desc')
+                //->take(5)
+                ->get()->toArray();
 
         ?>
 

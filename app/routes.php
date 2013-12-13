@@ -47,6 +47,9 @@ Route::get('pdf',function(){
     $html2pdf->Output('exemple.pdf','D');
 });
 
+Route::get('tdate',function(){
+    print Carbon::now()->subDays(10);
+});
 
 Route::get('hashme/{mypass}',function($mypass){
 

@@ -22,3 +22,11 @@ ul.thumbnails_grid img{
     clear: both;
     display: block;
 }
+
+.input-append .add-on, .input-prepend .add-on{
+    height: 24px;
+}
+
+#finance-calculator input[type=text]{
+    text-align: right;
+}
