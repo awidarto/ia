@@ -3,9 +3,10 @@
         <li><a href="{{ URL::to('logout') }}">Logout</a></li>
 @else
         <li><a href="{{ URL::to('/') }}/login">Login</a></li>
-        <li><a href="{{ URL::to('/') }}/register">Registration</a></li>
 
     {{--
+        <li><a href="{{ URL::to('/') }}/register">Registration</a></li>
+
     <h2>LOGIN / SIGN UP</h2>
     <div class="span12" style="padding:0px;">
         {{ Former::open_vertical(array('url' => 'login','class'=>'', 'role'=>'form')) }}
