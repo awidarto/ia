@@ -25,7 +25,7 @@ Route::controller('transaction', 'TransactionController');
 Route::controller('upload', 'UploadController');
 Route::controller('ajax', 'AjaxController');
 
-Route::get('/','HomeController@getIndex');
+Route::get('/','PropertyController@getListing');
 
 Route::get('page/cat/{slug}','PageController@getCat');
 Route::get('page/view/{slug}','PageController@getView');
@@ -86,7 +86,10 @@ Route::get('faq',function(){
 Route::get('login',function(){
     Theme::setCurrentTheme(Prefs::getActiveTheme() );
     Former::framework('TwitterBootstrap');
-    return View::make('login');
+
+    $featured = Property::where('tags','like','%featured%')->get()->toArray();
+
+    return View::make('login')->with('featured',$featured);
 });
 
 Route::post('login',function(){

@@ -17,7 +17,7 @@
 
                <h1 class="page-header">Login</h1>
 
-                    {{Former::open_horizontal('login','POST',array('class'=>''))}}
+                    {{Former::open_horizontal('login','POST',array('class'=>'offset1'))}}
                         @if (Session::has('login_errors'))
                             @if (Session::get('loginError'))
                             <div class="alert alert-danger">{{ Session::get('loginError') }}</div>
@@ -37,15 +37,45 @@
 
                     {{ Former::close() }}
 
+            {{ HTML::style('css/liquid-slider.css') }}
+
+            <div class="liquid-slider" id="home-slider">
+
+                @foreach($featured as $f)
+                 <div>
+                      <h4 class="title">{{ $f['number'].' '.$f['address'].','.$f['city'].' '.$f['state'] }}</h4>
+                      <div class="row">
+                        <div class="span2" >
+                            <img src="{{ $f['defaultpictures']['thumbnail_url']}}" alt="{{ $f['propertyId'] }}" />
+                        </div>
+                        <div class="span10" >
+                            {{ $f['description']}}
+                        </div>
+                      </div>
+                 </div>
+                @endforeach
+            </div>
 
             </div>
             <div class="sidebar span3">
-                @include('realia.latest')
+                @include('realia.youtube')
 
 
             </div>
         </div>
 
+        {{ HTML::script('js/jquery.easing.1.3.js') }}
+        {{ HTML::script('js/jquery.touchSwipe.min.js') }}
+        {{ HTML::script('js/jquery.liquid-slider.min.js') }}
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#home-slider').liquidSlider({
+                    'autoSlide':true
+                });
+            });
+
+        </script>
     <!--insert carousel-->
     <!--insert features-->
     </div>

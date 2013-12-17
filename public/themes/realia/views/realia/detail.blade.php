@@ -2,6 +2,15 @@
 
 @section('content')
 
+<style type="text/css">
+
+.prelist{
+    display:block;
+    background-color: orange;
+}
+
+</style>
+
 <div class="container">
     <div id="main">
 
@@ -47,18 +56,22 @@
                                 <h2>Overview</h2>
 
                                 <table>
+                                    @if(isset($prop['propertyStatus']) && $prop['propertyStatus'] == 'prelisted')
+                                    <tr>
+                                        <th class="prelist" colspan="2">Prelisted</th>
+                                    </tr>
+
+                                    @endif
                                     <tr>
                                         <th>Price:</th>
                                         <td>US$ {{ $prop['listingPrice']}}</td>
                                     </tr>
+                                    <?php
+                                        $roi = ((12*$prop['monthlyRental']) - $prop['tax'] - $prop['insurance'] - ( (12*$prop['monthlyRental']) / 10 )) / $prop['listingPrice'];
+                                    ?>
                                     <tr>
-                                        <th>FMV:</th>
-                                        <td>US$ {{ $prop['FMV']}}</td>
-                                    </tr>
-                                    <tr>
-                                    <tr>
-                                        <th>Type</th>
-                                        <td>{{ $prop['type']}}</td>
+                                        <th>ROI</th>
+                                        <td>{{ $roi*100 }}%</td>
                                     </tr>
                                     <tr>
                                         <th>Construction</th>
@@ -78,11 +91,7 @@
                                         <td>{{$prop['bed']}}</td>
                                     </tr>
                                     <tr>
-                                        <th>House Area:</th>
-                                        <td>{{$prop['houseSize']}} ft<sup>2</sup></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Lot Size:</th>
+                                        <th>Square Feet:</th>
                                         <td>{{$prop['lotSize']}} ft<sup>2</sup></td>
                                     </tr>
                                 </table>

@@ -2,6 +2,42 @@
 
 @section('content')
 
+<style type="text/css">
+
+.properties-grid .property .price{
+    position: initial;
+}
+
+.propertyId{
+    padding: 8px 15px 0px 15px;
+    font-weight: bold;
+}
+
+.properties-grid .property h2{
+    margin-top: 0px;
+}
+
+.properties-grid .property .propStatus{
+    font-size: 18px;
+    padding: 5px 16px;
+    position: absolute;
+    right: 0px;
+    bottom: 15px;
+}
+
+.prelist {
+    background-color: orange;
+}
+
+.sold {
+    background-color: red;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+}
+
+</style>
+
 <div class="container">
     <div id="main">
 
@@ -49,24 +85,64 @@
                                 <div class="property span3">
                                     <div class="image">
                                         <div class="content">
+                                            <?php
+                                                $class = '';
+                                                if(isset($p['propertyStatus'])){
+                                                    if($p['propertyStatus'] == 'sold'){
+                                                        $class = 'sold';
+                                                    }else if($p['propertyStatus'] == 'prelisted'){
+                                                        $class = 'prelist';
+                                                    }
+                                                }
+
+                                            ?>
+                                            @if(isset($p['propertyStatus']) && $p['propertyStatus'] != 'available')
+                                            <div class="propStatus {{ $class }} ">
+                                                {{ isset($p['propertyStatus'])?$p['propertyStatus']:'' }}
+                                            </div>
+                                            @endif
+
                                             <a href="{{ URL::to('property/detail/'.$p['_id'] )}}"></a>
                                             <img src="{{ $p['defaultpictures']['medium_url'] }}" alt="">
+
+
                                         </div><!-- /.content -->
 
-                                        <div class="price">$ {{ $p['listingPrice'] }}</div><!-- /.price -->
                                     </div><!-- /.image -->
 
+                                    <div class="propertyId">
+                                        {{$p['propertyId'] }}
+                                    </div>
                                     <div class="title">
                                         <h2><a href="detail.html">{{ $p['number'].' '.$p['address'] }}</a></h2>
                                     </div><!-- /.title -->
 
                                     <div class="location">{{ $p['city'] }} {{ $p['state'] }}</div><!-- /.location -->
+
+                                    <div class="price">
+                                        <span class="key">Price:</span><!-- /.key -->
+
+                                        $ {{ $p['listingPrice'] }}</div><!-- /.price -->
                                     <div class="area">
-                                        <span class="key">Lot Size:</span><!-- /.key -->
+                                        <?php
+                                            $roi = ((12*$p['monthlyRental']) - $p['tax'] - $p['insurance'] - ( (12*$p['monthlyRental']) / 10 )) / $p['listingPrice'];
+                                        ?>
+
+                                        <span class="key">ROI:</span><!-- /.key -->
+                                        <span class="value">{{ $roi*100 }}%</span><!-- /.value -->
+                                    </div><!-- /.area -->
+                                    <div class="clearfix"></div>
+                                    <div class="area">
+                                        <span class="key">Sq. Ft.:</span><!-- /.key -->
                                         <span class="value">{{ $p['lotSize'] }}</span><!-- /.value -->
                                     </div><!-- /.area -->
-                                    <div class="bedrooms"><div class="content">{{ $p['bed'] }}</div></div><!-- /.bedrooms -->
                                     <div class="bathrooms"><div class="content">{{ $p['bath'] }}</div></div><!-- /.bathrooms -->
+                                    <div class="bedrooms"><div class="content">{{ $p['bed'] }}</div></div><!-- /.bedrooms -->
+                                    <div class="area">
+                                        <span class="key">Monthly Rental:</span><!-- /.key -->
+                                        <span class="value">$ {{ $p['monthlyRental'] }} /month</span><!-- /.value -->
+                                    </div><!-- /.area -->
+
                                 </div><!-- /.property -->
 
                             @endforeach

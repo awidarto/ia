@@ -15,7 +15,6 @@
                         <img src="{{ $p['defaultpictures']['medium_url'] }}" alt="">
                     </div><!-- /.content -->
 
-                    <div class="price">$ {{ $p['listingPrice'] }}</div><!-- /.price -->
                 </div><!-- /.image -->
 
                 <div class="title">
@@ -23,9 +22,16 @@
                 </div><!-- /.title -->
 
                 <div class="location">{{ $p['city'] }} {{ $p['state'] }}</div><!-- /.location -->
+
+                <div class="price">$ {{ $p['listingPrice'] }}</div><!-- /.price -->
+
                 <div class="area">
                     <span class="key">Lot Size:</span><!-- /.key -->
                     <span class="value">{{ $p['lotSize'] }}</span><!-- /.value -->
+                </div><!-- /.area -->
+                <div class="area">
+                    <span class="key">Monthly Rent:</span><!-- /.key -->
+                    <span class="value">$ {{ $p['monthlyRental'] }}</span><!-- /.value -->
                 </div><!-- /.area -->
                 <div class="bedrooms"><div class="content">{{ $p['bed'] }}</div></div><!-- /.bedrooms -->
                 <div class="bathrooms"><div class="content">{{ $p['bath'] }}</div></div><!-- /.bathrooms -->

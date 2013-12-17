@@ -19,7 +19,7 @@ class PropertyController extends BaseController {
     {
         Former::framework('TwitterBootstrap');
 
-        $this->beforeFilter('auth', array('on'=>'get', 'only'=>array('getBuy') ));
+        $this->beforeFilter('auth', array('on'=>'get' ));
     }
 
     public function getIndex()
@@ -56,7 +56,7 @@ class PropertyController extends BaseController {
 
         $paging = ceil($total / $perpage);
 
-        $properties = Property::skip($skip)->take($perpage)->get();
+        $properties = Property::where('propertyStatus','!=','offline')->skip($skip)->take($perpage)->get();
 
         return View::make('realia.listing')
             ->with('properties',$properties)
