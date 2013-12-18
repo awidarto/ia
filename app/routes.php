@@ -105,6 +105,9 @@ Route::post('login',function(){
 
     // if the validator fails, redirect back to the form
     if ($validator->fails()) {
+
+        Event::fire('log.a',array('login','login',Input::get('email'),'validation fail'));
+
         return Redirect::to('login')->withErrors($validator);
     } else {
 
@@ -124,16 +127,22 @@ Route::post('login',function(){
                 // login the user
                 Auth::login($user);
 
+                Event::fire('log.a',array('login','login',Auth::user()->email,'login success'));
+
                 if(Session::get('redirect') != ''){
                     return Redirect::to(Session::get('redirect'));
                 }else{
                     return Redirect::to('/');
                 }
 
+
             } else {
                 // validation not successful
                 // send back to form with errors
                 // send back to form with old input, but not the password
+
+                Event::fire('log.a',array('login','login',Input::get('email'),'auth fail'));
+
                 return Redirect::to('login')
                     ->withErrors($validator)
                     ->withInput(Input::except('password'));
@@ -143,6 +152,9 @@ Route::post('login',function(){
             // user does not exist in database
             // return them to login with message
             Session::flash('loginError', 'This user does not exist.');
+
+            Event::fire('log.a',array('login','login',Input::get('email'),'unregistered'));
+
             return Redirect::to('login');
         }
 
@@ -151,6 +163,8 @@ Route::post('login',function(){
 });
 
 Route::get('logout',function(){
+
+    Event::fire('log.a',array('logout','logout',Auth::user()->email,'logout'));
     Auth::logout();
     return Redirect::to('/');
 });
