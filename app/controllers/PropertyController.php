@@ -48,6 +48,11 @@ class PropertyController extends BaseController {
     public function getListing($page = null, $orderby = 'createdDate',$order = 'desc')
     {
 
+
+        $order = (Input::get('order') == '')?'desc':Input::get('order');
+        $sort = (Input::get('sort') == '')?'listingPrice':Input::get('sort');
+        $filter = (Input::get('filter') == '')?'all':Input::get('filter');
+
         $page = (is_null($page))?0:$page;
         $perpage = 15;
         $skip = $page * $perpage;
@@ -56,7 +61,13 @@ class PropertyController extends BaseController {
 
         $paging = ceil($total / $perpage);
 
-        $properties = Property::where('propertyStatus','!=','offline')->skip($skip)->take($perpage)->get();
+        if($filter == 'all'){
+            $properties = Property::where('propertyStatus','!=','offline')->orderBy($sort,$order)->skip($skip)->take($perpage)->get();
+        }else{
+            $properties = Property::where('propertyStatus','!=','offline')
+                                    ->where('type','=',$filter)
+                                    ->orderBy($sort,$order)->skip($skip)->take($perpage)->get();
+        }
 
         return View::make('realia.listing')
             ->with('properties',$properties)
@@ -111,6 +122,29 @@ class PropertyController extends BaseController {
             $data['createdDate'] = new MongoDate();
             $data['lastUpdate'] = new MongoDate();
 
+
+            $buyer = array();
+
+            $buyer['agentId']           =        $data['agentId'];
+            $buyer['agentName']          =          $data['agentName'];
+            $buyer['customerId']        =           $data['customerId'];
+            $buyer['salutation']        =           $data['salutation'];
+            $buyer['firstname']         =          $data['firstname'];
+            $buyer['lastname']          =         $data['lastname'];
+            $buyer['email']             =      $data['email'];
+            $buyer['address']           =        $data['address'];
+            $buyer['company']           =        $data['company'];
+            $buyer['phone']             =      $data['phone'];
+            $buyer['city']              =     $data['city'];
+            $buyer['countryOfOrigin']   =            $data['countryOfOrigin'];
+            $buyer['state']             =      $data['state'];
+            $buyer['zipCode']           =        $data['zipCode'];
+            $buyer['createdDate']       =            new MongoDate();
+            $buyer['lastUpdate']        =           new MongoDate();
+
+            $buyermodel = new Buyer();
+
+            $buyermodel->insert($buyer);
 
             $model = new Transaction();
 

@@ -34,7 +34,7 @@
                     <div class="row">
                         <div class="span12">
                             <ul class="breadcrumb pull-left">
-                                <li><a href="index-2.html">Home</a></li>
+                                <li><a href="{{ URL::to('/')}}">Home</a></li>
                             </ul><!-- /.breadcrumb -->
 
                             <div class="account pull-right">

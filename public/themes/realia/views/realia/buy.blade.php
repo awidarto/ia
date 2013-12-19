@@ -55,16 +55,17 @@
                                 <div class="span4">
                                     {{ Former::hidden('agentId')->value( Auth::user()->_id ) }}
                                     {{ Former::text('agentName','Agent Name')->value(Auth::user()->firstname.' '.Auth::user()->lastname )->readonly(true)->class('uneditable-input') }}
-                                    {{ Former::text('customerId','Customer/Badge ID') }}
-                                    {{ Former::text('firstName','First Name') }}
-                                    {{ Former::text('lastName','Last Name') }}
+                                    {{ Former::text('customerId','Customer/Badge ID')->value( str_random(5) ) }}
+                                    {{ Former::select('salutation')->options(Config::get('kickstart.salutation'))->label('Salutation')->class('span1') }}
+                                    {{ Former::text('firstname','First Name') }}
+                                    {{ Former::text('lastname','Last Name') }}
                                     {{ Former::text('company','Company / Entity') }}
                                     {{ Former::text('phone','Telephone') }}
                                     {{ Former::text('email','Email Address') }}
                                 </div>
-                                <div class="span3">
+                                <div class="span4">
                                     {{ Former::text('address','Street Address') }}
-                                    {{ Former::text('City','City') }}
+                                    {{ Former::text('city','City') }}
                                     {{ Former::select('countryOfOrigin')->options(Config::get('country.countries'))->label('Country') }}
                                     {{ Former::select('state')->options(Config::get('country.aus_states'))->label('State') }}
                                     {{ Former::text('zipCode','ZIP / Postal Code') }}
@@ -222,7 +223,7 @@
             #session-counter-bar{
                 line-height: 24px;
                 text-align: right;
-                padding: 10px 0px;
+                padding: 2px 0px;
             }
 
             #session-counter{

@@ -2,62 +2,46 @@
 
 @section('content')
 
-<style type="text/css">
-
-.properties-grid .property .price{
-    position: initial;
-}
-
-.propertyId{
-    padding: 8px 15px 0px 15px;
-    font-weight: bold;
-}
-
-.properties-grid .property h2{
-    margin-top: 0px;
-}
-
-.properties-grid .property .propStatus{
-    font-size: 18px;
-    padding: 5px 16px;
-    position: absolute;
-    right: 0px;
-    bottom: 15px;
-}
-
-.prelist {
-    background-color: orange;
-}
-
-.sold {
-    background-color: red;
-    text-transform: uppercase;
-    font-weight: bold;
-    color: #fff;
-}
-
-</style>
-
 <div class="container">
     <div id="main">
 
-        <div class="row">
+        <div class="row" id="listing">
             <div class="span9">
 
-               <h1 class="page-header">Properties</h1>
+               <h1 class="page-header"></h1>
 
                     <div class="properties-rows">
                         <div class="filter">
-                            <form action="http://html.realia.byaviators.com/listing-grid-filter.html?" method="get" class="form-horizontal">
+                            <form action="{{ URL::full() }}" method="get" class="form-horizontal">
+
+
+                                <div class="control-group">
+                                    <label class="control-label" for="inputSortBy">
+                                        Filter by Type
+                                        <span class="form-required" title="This field is required.">*</span>
+                                    </label>
+                                    <div class="controls">
+                                        <select id="inputFilterBy" name="filter">
+
+                                                <option id="price" value="all">All</option>
+                                            @foreach(Config::get('ia.type') as $key=>$val)
+                                                <option id="price" value="{{$val}}">{{ $key }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div><!-- /.controls -->
+                                </div><!-- /.control-group -->
+
+
                                 <div class="control-group">
                                     <label class="control-label" for="inputSortBy">
                                         Sort by
                                         <span class="form-required" title="This field is required.">*</span>
                                     </label>
                                     <div class="controls">
-                                        <select id="inputSortBy">
-                                            <option id="price">Price</option>
-                                            <option id="published">Published</option>
+                                        <select id="inputSortBy" name="sort">
+                                            <option value="listingPrice">Price</option>
+                                            <option value="state">State</option>
+                                            <option value="type">Type</option>
                                         </select>
                                     </div><!-- /.controls -->
                                 </div><!-- /.control-group -->
@@ -68,12 +52,16 @@
                                         <span class="form-required" title="This field is required.">*</span>
                                     </label>
                                     <div class="controls">
-                                        <select id="inputOrder">
-                                            <option id="asc">ASC</option>
-                                            <option id="desc">DESC</option>
+                                        <select id="inputOrder" name="order">
+                                            <option value="desc">DESC</option>
+                                            <option value="asc">ASC</option>
                                         </select>
                                     </div><!-- /.controls -->
                                 </div><!-- /.control-group -->
+
+                                {{ Former::submit('Submit')->class('btn btn-primary')->style('margin-left: 15px;height: 28px;padding: 2px 8px;') }}
+
+
                             </form>
                         </div><!-- /.filter -->
                     </div><!-- /.properties-rows -->
@@ -82,7 +70,7 @@
                         <div class="row">
                             @foreach($properties as $p)
 
-                                <div class="property span3">
+                                <div class="property">
                                     <div class="image">
                                         <div class="content">
                                             <?php
@@ -120,9 +108,8 @@
                                     <div class="location">{{ $p['city'] }} {{ $p['state'] }}</div><!-- /.location -->
 
                                     <div class="price">
-                                        <span class="key">Price:</span><!-- /.key -->
 
-                                        $ {{ $p['listingPrice'] }}</div><!-- /.price -->
+                                        $ {{ number_format($p['listingPrice'],2,'.',',')  }}</div><!-- /.price -->
                                     <div class="area">
                                         <?php
                                             $roi = ((12*$p['monthlyRental']) - $p['tax'] - $p['insurance'] - ( (12*$p['monthlyRental']) / 10 )) / $p['listingPrice'];
@@ -133,22 +120,23 @@
                                     </div><!-- /.area -->
                                     <div class="clearfix"></div>
                                     <div class="area">
+                                        <span class="key">Rental:</span><!-- /.key -->
+                                        <span class="value">$ {{ $p['monthlyRental'] }} /month</span><!-- /.value -->
+                                    </div><!-- /.area -->
+                                    <div class="clearfix"></div>
+                                    <div class="area">
                                         <span class="key">Sq. Ft.:</span><!-- /.key -->
                                         <span class="value">{{ $p['lotSize'] }}</span><!-- /.value -->
                                     </div><!-- /.area -->
                                     <div class="bathrooms"><div class="content">{{ $p['bath'] }}</div></div><!-- /.bathrooms -->
                                     <div class="bedrooms"><div class="content">{{ $p['bed'] }}</div></div><!-- /.bedrooms -->
-                                    <div class="area">
-                                        <span class="key">Monthly Rental:</span><!-- /.key -->
-                                        <span class="value">$ {{ $p['monthlyRental'] }} /month</span><!-- /.value -->
-                                    </div><!-- /.area -->
 
                                 </div><!-- /.property -->
 
                             @endforeach
 
                             @if( count($properties)%2)
-                                <div class="property span3" style="display:block;background:transparent;border:none;visibility:hidden;">
+                                <div class="property" style="display:block;background:transparent;border:none;visibility:hidden;">
                                 </div>
                             @endif
 

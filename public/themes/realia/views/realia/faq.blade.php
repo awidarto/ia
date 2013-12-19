@@ -14,7 +14,7 @@
                 @foreach( $faqs as $cat=>$content )
 
                     @if( $counter%2 == 0 )
-                        <h2>{{ $cat }}</h2>
+                        <h2 class="page-header">{{ $cat }}</h2>
                         <div class="accordion" id="faqLeft{{ $counter }}">
                             @foreach($content['content'] as $c)
                                 <div class="accordion-group">

@@ -1,7 +1,7 @@
 <div class="hidden-tablet">
     <div class="widget properties last">
         <div class="title">
-            <h2>New Additions</h2>
+            <h2 class="page-header">New Additions</h2>
         </div><!-- /.title -->
 
         <?php
@@ -10,11 +10,18 @@
                 //->take(5)
                 ->get()->toArray();
 
+            if(count($properties) > 1){
+                $properties = Property::where('publishStatus','published')->orderBy('publishDate','desc')
+                ->take(8)
+                ->get()->toArray();
+
+            }
+
         ?>
 
         <div class="content">
             @foreach($properties as $p)
-                <div class="property">
+                <div class="property property-small">
                     <div class="image">
                         <a href="{{ URL::to('property/detail/'.$p['_id'] )}}"></a>
                         <img src="{{ $p['defaultpictures']['thumbnail_url'] }}" alt="">
@@ -27,7 +34,7 @@
                             </h3>
                         </div><!-- /.title -->
                         <div class="location">{{ $p['city'] }} {{ $p['state'] }}</div><!-- /.location -->
-                        <div class="price">{{ $p['listingPrice'] }}</div><!-- /.price -->
+                        <div class="price">US$ {{ number_format($p['listingPrice'],2,'.',',')  }}</div><!-- /.price -->
                     </div><!-- /.wrapper -->
                 </div><!-- /.property -->
 

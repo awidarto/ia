@@ -17,24 +17,26 @@
 
                             <ul class="nav">
 
-                            <li {{ sa('/') }} ><a href="{{ URL::to('/') }}" >Home</a></li>
+                                {{--
+                                    <li {{ sa('/') }} ><a href="{{ URL::to('/') }}" >Home</a></li>
+                                --}}
 
-                        @if(Auth::check())
+                            @if(Auth::check())
 
-                            <li class="menuparent">
-                                <span class="menuparent nolink">Investment Info</span>
-                                <ul>
-                                    <li {{ sa('/') }} ><a href="{{ URL::to('page/view/buying-process') }}" >Buying Process</a></li>
-                                    <li {{ sa('/') }} ><a href="{{ URL::to('page/view/how-to-invest') }}" >How To Invest</a></li>
-                                    <li {{ sa('/') }} ><a href="{{ URL::to('page/view/research') }}" >Research</a></li>
-                                    <li {{ sa('/') }} ><a href="{{ URL::to('page/view/preferred-customer') }}" >Preferred Customer</a></li>
-                                    <li {{ sa('/') }} ><a href="{{ URL::to('page/view/markets') }}" >Markets</a></li>
+                                <li class="menuparent">
+                                    <span class="menuparent nolink">Investment Info</span>
+                                    <ul>
+                                        <li {{ sa('/') }} ><a href="{{ URL::to('page/view/buying-process') }}" >Buying Process</a></li>
+                                        <li {{ sa('/') }} ><a href="{{ URL::to('page/view/how-to-invest') }}" >How To Invest</a></li>
+                                        <li {{ sa('/') }} ><a href="{{ URL::to('page/view/research') }}" >Research</a></li>
+                                        <li {{ sa('/') }} ><a href="{{ URL::to('page/view/preferred-customer') }}" >Preferred Customer</a></li>
+                                        <li {{ sa('/') }} ><a href="{{ URL::to('page/view/markets') }}" >Markets</a></li>
 
-                                </ul>
-                            </li>
-                            <li {{ sa('/') }} ><a href="{{ URL::to('faq') }}" >FAQ</a></li>
+                                    </ul>
+                                </li>
+                                <li {{ sa('/') }} ><a href="{{ URL::to('faq') }}" >FAQ</a></li>
 
-                        @endif
+                            @endif
 
 
                             {{--

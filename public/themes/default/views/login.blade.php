@@ -15,27 +15,63 @@
         <div class="row">
             <div class="span9">
 
-               <h1 class="page-header">Login</h1>
+                <table class="table">
+                    <tr>
+                        <td>
+                           <h1 class="page-header">Agent Login</h1>
 
-                    {{Former::open_horizontal('login','POST',array('class'=>'offset1'))}}
-                        @if (Session::has('login_errors'))
-                            @if (Session::get('loginError'))
-                            <div class="alert alert-danger">{{ Session::get('loginError') }}</div>
-                                 <button type="button" class="close" data-dismiss="alert"></button>
-                                 Email or password incorrect.
-                            @endif
-                        @endif
-                        {{ Former::text('email','Email') }}
+                                {{Former::open_horizontal('login','POST',array('class'=>'span4'))}}
+                                    @if (Session::has('login_errors'))
+                                        @if (Session::get('loginError'))
+                                        <div class="alert alert-danger">{{ Session::get('loginError') }}</div>
+                                             <button type="button" class="close" data-dismiss="alert"></button>
+                                             Email or password incorrect.
+                                        @endif
+                                    @endif
+                                    {{ Former::text('email','Email')->class('span2 pull-right') }}
 
-                        {{ Former::password('password','Password') }}
+                                    {{ Former::password('password','Password')->class('span2 pull-right') }}
 
-                        {{-- Former::checkbox('remember-me')->label('')->text('Remember Me')->value('remember-me') --}}
+                                    {{-- Former::checkbox('remember-me')->label('')->text('Remember Me')->value('remember-me') --}}
 
-                        <br />
+                                    <br />
 
-                        {{ Former::submit('Login')->class('btn btn-primary offset3') }}
+                                    {{ Former::submit('Login')->class('btn btn-primary pull-right') }}
 
-                    {{ Former::close() }}
+                                {{ Former::close() }}
+
+                        </td>
+                        <td>
+                               <h1 class="page-header">Investor Login</h1>
+
+                                    {{Former::open_horizontal('login','POST',array('class'=>'span4'))}}
+                                        @if (Session::has('login_errors'))
+                                            @if (Session::get('loginError'))
+                                            <div class="alert alert-danger">{{ Session::get('loginError') }}</div>
+                                                 <button type="button" class="close" data-dismiss="alert"></button>
+                                                 Email or password incorrect.
+                                            @endif
+                                        @endif
+                                        {{ Former::text('email','Email')->class('span2 pull-right') }}
+
+                                        {{ Former::password('password','Password')->class('span2 pull-right') }}
+
+                                        {{-- Former::checkbox('remember-me')->label('')->text('Remember Me')->value('remember-me') --}}
+
+                                        <br />
+
+                                        {{ Former::submit('Login')->class('btn btn-primary pull-right') }}
+                                        <br />
+
+                                        <div style="font-size:13px;text-align:right;clear:both;padding-top:10px;">
+                                            Interested in investing ?
+                                            <a href="{{ URL::to('register') }}" class="" >Register</a> here
+                                        </div>
+                                    {{ Former::close() }}
+
+                        </td>
+                    </tr>
+                </table>
 
             {{ HTML::style('css/liquid-slider.css') }}
 

@@ -102,8 +102,8 @@
                                     @foreach($transactions as $t)
                                         <tr>
                                             <td>{{ $t['propertyId']}}</td>
-                                            <td>{{ $t['firstName']}}</td>
-                                            <td>{{ $t['lastName']}}</td>
+                                            <td>{{ $t['firstname']}}</td>
+                                            <td>{{ $t['lastname']}}</td>
                                             <td></td>
                                             <td></td>
                                             <td>{{ $t['createdDate']}}</td>
