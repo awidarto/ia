@@ -83,6 +83,16 @@ Route::get('faq',function(){
     return View::make('realia.faq')->with('faqs',$faqarray);
 });
 
+Route::get('register',function(){
+    Theme::setCurrentTheme(Prefs::getActiveTheme() );
+    Former::framework('TwitterBootstrap');
+
+    $featured = Property::where('tags','like','%featured%')->get()->toArray();
+
+    return View::make('realia/registration')->with('featured',$featured);
+});
+
+
 Route::get('login',function(){
     Theme::setCurrentTheme(Prefs::getActiveTheme() );
     Former::framework('TwitterBootstrap');
