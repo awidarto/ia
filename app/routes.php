@@ -87,6 +87,16 @@ Route::get('faq',function(){
     return View::make('pages.faq')->with('faqs',$faqarray);
 });
 
+Route::get('dashboard',function(){
+    Theme::setCurrentTheme(Prefs::getActiveTheme() );
+    Former::framework('TwitterBootstrap');
+
+    $featured = Property::where('tags','like','%featured%')->get()->toArray();
+
+    return View::make('pages.dashboard')->with('featured',$featured);
+});
+
+
 Route::get('register',function(){
     Theme::setCurrentTheme(Prefs::getActiveTheme() );
     Former::framework('TwitterBootstrap');

@@ -1,5 +1,5 @@
 @if(Auth::check())
-        <li><a href="{{ URL::to('transaction/listing') }}">Welcome {{ Auth::user()->firstname.' '.Auth::user()->lastname }}</a></li>
+        <li><a href="{{ URL::to('dashboard') }}">Welcome {{ Auth::user()->firstname.' '.Auth::user()->lastname }}</a></li>
         <li><a href="{{ URL::to('logout') }}">Logout</a></li>
 @else
         <li><a href="{{ URL::to('/') }}/login">Login</a></li>

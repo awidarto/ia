@@ -37,8 +37,8 @@
     }
 </style>
 <h1>Property</h1>
-<div class="row">
-    <div class="span2">
+<div class="row" style="margin-left:-15px;padding-bottom:0px;">
+    <div class="span2" >
         Items 1 to 20 of 40 total
     </div>
     <div class="pagination pagination-centered span8">
@@ -54,7 +54,7 @@
         {{ Former::select('perpage','Show ')->label('Show')->options(Config::get('ia.type'))->class('span1') }} per page
     </div>
 </div>
-<div class="subnav row" id="filter-bar" style="background-color: aquamarine;padding-bottom:0px;">
+<div class="subnav row" id="filter-bar" style="margin-left:5px;background-color: aquamarine;padding-bottom:0px;">
     <ul class="nav nav-pills span11" style="padding-left:10px;margin-bottom:0px;" >
         @foreach(array_merge(array('all'=>'All'),Config::get('ia.type')) as $k=>$t)
             <li><a href="{{$k}}">{{$t}}</a></li>

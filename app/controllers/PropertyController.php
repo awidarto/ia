@@ -45,10 +45,11 @@ class PropertyController extends BaseController {
         return View::make('pages.pagelist')->with('pages',$pages);
     }
 
-    public function getListing($page = null, $orderby = 'createdDate',$order = 'desc')
+    public function getListing()
     {
 
-
+        $page = (Input::get('page') == '')?'desc':Input::get('page');
+        $perpage = (Input::get('perpage') == '')?'20':Input::get('perpage');
         $order = (Input::get('order') == '')?'desc':Input::get('order');
         $sort = (Input::get('sort') == '')?'listingPrice':Input::get('sort');
         $filter = (Input::get('filter') == '')?'all':Input::get('filter');
