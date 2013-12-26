@@ -3,7 +3,7 @@ return array(
     'user_field'=>'email',
     'password_field'=>'pass',
     'user_collection'=>'agents',
-    'default_theme'=>'realia',
+    'default_theme'=>'default',
 
     'salutation'=>array(
             'Mr'=>'Mr',

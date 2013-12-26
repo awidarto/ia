@@ -1,168 +1,90 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"><script type="text/javascript" async="" src="index_files/ga.js"></script>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="shortcut icon" href="../../assets/ico/favicon.png">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<title>{{ Config::get('site.name') }}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="">
 
-    <title>{{ Config::get('site.name') }}</title>
+		<!--[if lt IE 9]>
+			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
 
-    <!-- Bootstrap core CSS -->
-    {{ HTML::style('bootstrap/css/bootstrap.min.css') }}
-    {{ HTML::style('bootstrap/css/font-awesome.min.css') }}
+		{{ HTML::style('bootstrap/css/bootstrap.min.css') }}
+		{{-- HTML::style('bootstrap/css/bootstrap-responsive.min.css') --}}
+		{{ HTML::style('bootstrap/css/font-awesome.min.css') }}
 
-    {{ HTML::style('css/docs.css') }}
-
-    {{ HTML::style('css/gridtable.css') }}
-
-    <!-- Custom styles for this template -->
-    {{ HTML::style('css/typography.css') }}
-    {{ HTML::style('css/sticky-footer-navbar.css') }}
-    {{ HTML::style('css/app.css') }}
-
-    {{ HTML::style('css/editor.css') }}
-    {{ HTML::style('css/jquery.tagsinput.css') }}
-
-    {{ HTML::style('css/bootstrap-wysihtml5-0.0.2.css') }}
-
-
-    {{ HTML::style('css/jquery-fileupload/css/jquery.fileupload-ui.css') }}
-
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-        <script src="../../assets/js/html5shiv.js"></script>
-        <script src="../../assets/js/respond.min.js"></script>
-        <![endif]-->
-
-    {{ HTML::script('js/jquery-1.8.3.min.js')}}
-    {{ HTML::script('js/jquery-ui-1.9.2.custom.min.js')}}
-
-    {{ HTML::style('css/blueimp-gallery.min.css') }}
-    {{ HTML::style('css/form.css') }}
-
-    <script type="text/javascript">
-        var base = '{{ URL::to('/') }}';
-    </script>
+		{{ HTML::style('bootstrap/css/bootswatch.css') }}
+		{{ HTML::style('bootstrap/css/app.css') }}
 
 </head>
 
-<body>
+<body class="preview" id="top" data-spy="scroll" data-target=".subnav" data-offset="80" cz-shortcut-listen="true" style="margin-top: 0px;">
+	<!--  <script src="../js/bsa.js"></script> -->
 
-    <!-- Wrap all page content here -->
-    <div id="wrap">
-        <!-- topmost header -->
-        <div id="tm-head" class="visible-md visible-lg">
-            <div class="container">
-                <div class="col-lg-9">
-                    <a href="{{ URL::to('/') }}"><img class="img-responsive" src="{{ URL::to('images/').'/ialogo.png' }}"></a>
-                </div>
+<!-- Masthead
+================================================== -->
+<div class="container">
+    <header class="jumbotron subhead" id="overview">
+        <div class="row">
+            <div class="span6">
+                <a href="{{ URL::to('/')}}" >{{ HTML::image('images/ialogo.png','Investors Alliance',array('class'=>'img-responsive' ) ) }}</a>
+            </div>
+            <div class="span6">
+
             </div>
         </div>
-        <!-- Fixed navbar
-        <div class="navbar navbar-default "  id="tm-head-navbar">
-            <div class="container" >
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand visible-sm visible-xs" href="{{ URL::to('/')}}">{{ Config::get('site.name') }}</a>
-                </div>
-
-                <div class="collapse navbar-collapse">
-                    @include('partials.topnav')
-                </div>
-            </div>
-        </div>
-        -->
-        <!-- Begin page content -->
-        <div class="container">
-            <div class="row">
-                <div class="col-md-2">
-                    @include('partials.sidenav')
-                </div>
-                <div class="col-md-10">
-                    <div id="home">
-                        <div class="row">
-                            <div class="col-md-12" id="detail-view">
-                                <div class="row visible-xs">
-                                    <div class="col-md-12">
-                                        @include('partials.identity')
-                                    </div>
-                                </div>
-
-                                <div class="row" id="articlebox">
-                                    @yield('content')
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="footer">
-        <div class="container">
-            <p class="text-muted credit">SITE MAP | TERMS &amp; CONDITIONS | PRIVACY POLICY
-               <span class="pull-right"> &copy; {{ date('Y',time()) }} {{ Config::get('site.design')}}</span>
-            </p>
-    </div>
+    </header>
 </div>
 
+@include('partials.topfixednav')
 
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-    {{ HTML::script('bootstrap/js/bootstrap.min.js')}}
+<div class="container" id="main-content">
 
-    {{ HTML::script('js/bootstrap-modalmanager.js') }}
-    {{ HTML::script('js/bootstrap-modal.js') }}
-
-    {{ HTML::script('js/jquery.removeWhitespace.min.js')}}
-    {{ HTML::script('js/jquery.collagePlus.min.js')}}
-    {{ HTML::script('js/jquery.collageCaption.js')}}
-
-    {{ HTML::script('js/jquery-datatables/jquery.datatables.min.js')}}
-    {{ HTML::script('js/datatables.js')}}
-    {{ HTML::script('js/jquery-datatables/datatables.bootstrap.js')}}
-
-    {{ HTML::script('js/jquery.tagsinput.js') }}
-
-    {{ HTML::script('js/bootstrap-timepicker.js') }}
-    {{ HTML::script('js/bootstrap-datetimepicker.min.js') }}
-
-    {{ HTML::script('js/app.js') }}
-
-    {{ HTML::script('js/blueimp-gallery.min.js') }}
-    {{ HTML::script('js/jquery.blueimp-gallery.min.js') }}
-
-    {{ HTML::script('js/select2.js') }}
-
-    {{ HTML::script('js/wysihtml5-0.3.0.min.js') }}
-
-    {{ HTML::script('js/bootstrap-wysihtml5-0.0.2.min.js') }}
-
-    {{ HTML::script('js/jquery-fileupload/vendor/jquery.ui.widget.js') }}
-
-    {{ HTML::script('js/js-load-image/load-image.min.js') }}
-
-    {{ HTML::script('js/js-canvas-to-blob/canvas-to-blob.min.js') }}
-
-    {{ HTML::script('js/jquery-fileupload/jquery.iframe-transport.js') }}
-
-    {{ HTML::script('js/jquery-fileupload/jquery.fileupload.js') }}
-
-    {{ HTML::script('js/jquery-fileupload/jquery.fileupload-process.js') }}
-    {{ HTML::script('js/jquery-fileupload/jquery.fileupload-image.js') }}
-    {{ HTML::script('js/jquery-fileupload/jquery.fileupload-audio.js') }}
-    {{ HTML::script('js/jquery-fileupload/jquery.fileupload-video.js') }}
-    {{ HTML::script('js/jquery-fileupload/jquery.fileupload-validate.js') }}
+@yield('content')
 
 
-</body>
-</html>
+<br><br><br><br>
+
+		 <!-- Footer
+			================================================== -->
+			<hr>
+
+			<footer id="footer">
+				<p class="pull-right"><a href="http://bootswatch.com/2/united/#top">Back to top</a></p>
+				<div class="links">
+					<a href="http://news.bootswatch.com/" onclick="pageTracker._link(this.href); return false;">Blog</a>
+					<a href="http://feeds.feedburner.com/bootswatch">RSS</a>
+					<a href="https://twitter.com/thomashpark">Twitter</a>
+					<a href="https://github.com/thomaspark/bootswatch/">GitHub</a>
+					<a rel="tooltip" href="javascript:(function(e,a,g,h,f,c,b,d)%7Bif(!(f%3De.jQuery)%7C%7Cg%3Ef.fn.jquery%7C%7Ch(f))%7Bc%3Da.createElement(%22script%22)%3Bc.type%3D%22text/javascript%22%3Bc.src%3D%22http://ajax.googleapis.com/ajax/libs/jquery/%22%2Bg%2B%22/jquery.min.js%22%3Bc.onload%3Dc.onreadystatechange%3Dfunction()%7Bif(!b%26%26(!(d%3Dthis.readyState)%7C%7Cd%3D%3D%22loaded%22%7C%7Cd%3D%3D%22complete%22))%7Bh((f%3De.jQuery).noConflict(1),b%3D1)%3Bf(c).remove()%7D%7D%3Ba.documentElement.childNodes%5B0%5D.appendChild(c)%7D%7D)(window,document,%221.3.2%22,function(%24,L)%7Bif(%24(%22.bootswatcher%22)%5B0%5D)%7B%24(%22.bootswatcher%22).remove()%7Delse%7Bvar%20%24e%3D%24(%27%3Cselect%20class%3D%22bootswatcher%22%3E%3Coption%3EAmelia%3C/option%3E%3Coption%3ECerulean%3C/option%3E%3Coption%3ECosmo%3C/option%3E%3Coption%3ECyborg%3C/option%3E%3Coption%3EJournal%3C/option%3E%3Coption%3EReadable%3C/option%3E%3Coption%3ESimplex%3C/option%3E%3Coption%3ESlate%3C/option%3E%3Coption%3ESpacelab%3C/option%3E%3Coption%3ESpruce%3C/option%3E%3Coption%3ESuperhero%3C/option%3E%3Coption%3EUnited%3C/option%3E%3C/select%3E%27)%3Bvar%20l%3D1%2BMath.floor(Math.random()*%24e.children().length)%3B%24e.css(%7B%22z-index%22:%2299999%22,position:%22fixed%22,top:%225px%22,right:%225px%22,opacity:%220.5%22%7D).hover(function()%7B%24(this).css(%22opacity%22,%221%22)%7D,function()%7B%24(this).css(%22opacity%22,%220.5%22)%7D).change(function()%7Bif(!%24(%22link.bootswatcher%22)%5B0%5D)%7B%24(%22head%22).append(%27%3Clink%20rel%3D%22stylesheet%22%20class%3D%22bootswatcher%22%3E%27)%7D%24(%22link.bootswatcher%22).attr(%22href%22,%22http://bootswatch.com/%22%2B%24(this).find(%22:selected%22).text().toLowerCase()%2B%22/bootstrap.min.css%22)%7D).find(%22option:nth-child(%22%2Bl%2B%22)%22).attr(%22selected%22,%22selected%22).end().trigger(%22change%22)%3B%24(%22body%22).append(%24e)%7D%3B%7D)%3B" title="" data-original-title="Drag to your bookmarks bar">Bookmarklet</a>
+					<a href="https://github.com/thomaspark/bootswatch/tree/gh-pages/swatchmaker">Swatchmaker</a>
+					<a href="http://news.bootswatch.com/post/22193315172/bootswatch-api">API</a>
+					<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=F22JEM3Q78JC2">Donate</a>
+				</div>
+				Made by <a href="http://thomaspark.me/">Thomas Park</a>. Contact him <a href="mailto:hello@thomaspark.me">hello@thomaspark.me</a>.<br>
+				Code licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License v2.0</a>.<br>
+				Based on <a href="http://getbootstrap.com/2.3.2/">Bootstrap</a>. Hosted on <a href="http://pages.github.com/">GitHub</a>. Icons from <a href="http://fortawesome.github.com/Font-Awesome/">Font Awesome</a>. Web fonts from <a href="http://www.google.com/webfonts">Google</a>. Favicon by <a href="https://twitter.com/geraldhiller">Gerald Hiller</a>.<p></p>
+			</footer>
+
+		</div><!-- /container -->
+
+
+
+		<!-- Le javascript
+		================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		{{ HTML::script('bootstrap/js/bootstrap.min.js')}}
+
+
+		{{ HTML::script('bootstrap/js/jquery.min.js') }}
+		{{ HTML::script('bootstrap/js/jquery.smooth-scroll.min.js') }}
+		{{ HTML::script('bootstrap/js/bootstrap.min.js') }}
+		{{ HTML::script('bootstrap/js/bootswatch.js') }}
+
+
+
+
+</body></html>

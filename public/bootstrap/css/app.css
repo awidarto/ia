@@ -39,20 +39,37 @@ h4, h5, h6 {
     line-height: 18px;
 }
 
+body{
+    background-color: transparent;
+    background: url(images/bg.jpg) top left;
+}
+
 #overview{
-    margin-top: 60px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 #overview h1{
     font-size: 36px;
 }
 
+#main-content{
+    padding-top: 10px;
+}
 
 blockquote p {
     margin-bottom: 0;
     font-size: 14px;
     font-weight: 300;
     line-height: 1.25em;
+}
+
+.navbar-fixed-top, .navbar-fixed-bottom {
+    position: relative;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+    margin-bottom: 0;
 }
 
 .navbar .brand {
@@ -64,6 +81,31 @@ blockquote p {
     font-weight: 200;
     color: #fff;
     text-shadow: 0 1px 0 #ce4213;
+}
+
+.navbar-search {
+    position: relative;
+    float: left;
+    margin-top: 7px;
+    margin-bottom: 0;
+}
+
+.navbar-search .search-query{
+    padding-top:6px;
+    font-size: 12px;
+}
+
+.nav-pills>li>a {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.pagination{
+    margin: 0px;
+}
+
+.form-inline label{
+    margin-right: 4px;
 }
 
 select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {

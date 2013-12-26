@@ -1,0 +1,287 @@
+ul.thumbnails_grid{
+    list-style: none;
+    margin-left: 0px;
+}
+
+ul.thumbnails_grid li{
+    list-style: none;
+    margin-left: 0px;
+    display: block;
+    float: left;
+}
+
+ul.thumbnails_grid img{
+    margin-right:8px;
+    margin-bottom:8px;
+    width:166px;
+    height:auto;
+
+}
+
+.thumb-grid{
+    clear: both;
+    display: block;
+}
+
+.input-append .add-on, .input-prepend .add-on{
+    height: 24px;
+}
+
+#finance-calculator input[type=text]{
+    text-align: right;
+}
+
+.btn{
+    font-size: 12px;
+}
+
+label, input, button, select, textarea{
+    font-size: 11px;
+}
+
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"],
+input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"],
+input[type="week"], input[type="number"], input[type="email"], input[type="url"],
+input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+    font-size: 12px;
+    line-height: 12px;
+    height:12px;
+}
+
+.form-horizontal .control-label {
+    float: left;
+    width: 75px;
+    padding-top: 5px;
+    text-align: right;
+}
+
+.form-horizontal .controls {
+    margin-left: 80px;
+}
+
+.form-horizontal .control-group{
+    margin-bottom: 5px;
+}
+
+.widget{
+    margin-bottom: 0px;
+}
+
+.properties-grid .property .image{
+    height:150px;
+}
+
+table.contact{
+    font-size: 12px;
+}
+
+.properties-grid .property h2 a {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.properties-grid .property h2{
+    margin-top: 0px;
+    line-height: 15px;
+}
+
+.properties-grid .property{
+    width: 208px;
+    margin-left: 35px;
+    margin-right: -30px;
+    margin-bottom: 0px;
+}
+
+.property-small{
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.properties-grid .property .propStatus {
+    font-size: 12px;
+    font-weight: bold;
+    padding: 0px 5px;
+    position: absolute;
+    right: 0px;
+    bottom: 10px;
+}
+
+.properties-grid .property .price{
+    position: initial;
+    text-align: right;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 0px 8px;
+
+}
+
+.propertyId{
+    padding: 8px 15px 0px 15px;
+    font-weight: bold;
+    font-size: 12px;
+    color: #000;
+}
+
+.properties-grid .property h2{
+    margin-top: 0px;
+}
+
+
+.prelist {
+    background-color: orange;
+    color:#000;
+    text-transform: uppercase;
+}
+
+.sold {
+    background-color: red;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+}
+
+
+.pagination ul li a {
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+    -webkit-box-shadow: 0px 1px 1px rgba(1,1,1,0.25);
+    -moz-box-shadow: 0px 1px 1px rgba(1,1,1,0.25);
+    box-shadow: 0px 1px 1px rgba(1,1,1,0.25);
+    background-color: #fff;
+    border: 0px;
+    margin: 0px 5px;
+    padding: 3px 7px;
+}
+
+.pagination {
+    margin: 10px 0;
+}
+
+.pagination ul{
+    margin-top: 0px;
+}
+
+.chzn-container {
+    font-size: 12px;
+}
+
+.chzn-container .chzn-single {
+    background-image: none;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FFFFFFFF', endColorstr='#FFFFFFFF');
+    background-image: none;
+    border: 1px solid #d5d5d5;
+    height: 25px;
+    line-height: 25px;
+}
+
+.properties-rows .filter form .control-group {
+    float: left;
+    margin-bottom: -8px;
+}
+
+.properties-rows .filter {
+    display: inline-block;
+    -webkit-box-shadow: 0px 1px 1px rgba(0,0,0,0.1);
+    -moz-box-shadow: 0px 1px 1px rgba(0,0,0,0.1);
+    box-shadow: 0px 1px 1px rgba(0,0,0,0.1);
+    background-color: #fff;
+    display: block;
+    margin: 0px 0px 10px 0px;
+    height: auto;
+    padding: 8px;
+}
+
+.property-detail {
+    background-color: #fff;
+    padding: 5px;
+}
+
+h1.page-header, h2.page-header {
+    border: 0px;
+    color: #511212;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 20px;
+    margin: 15px 0px;
+    padding: 0px;
+}
+
+.form-horizontal .control-label {
+    float: left;
+    width: 100px;
+    padding-top: 0px;
+    text-align: right;
+    padding-right: 4px;
+}
+
+.navigation-wrapper .navigation .nav li .nolink, .navigation-wrapper .navigation .nav li a {
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+    background-color: transparent;
+    border-left: 0px;
+    border-top: 2px solid transparent;
+    color: #313131;
+    cursor: pointer;
+    display: block;
+    font-size: 14px;
+    line-height: 1;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 8px;
+    padding-top: 8px;
+    white-space: nowrap;
+}
+
+.navigation-wrapper .navigation .nav li ul {
+    margin-top: 32px;
+    font-size: 14px;
+}
+
+.chzn-container-single .chzn-search input{
+    height: 25px;
+}
+
+.property-detail{
+    display: block;
+}
+
+.property-detail .overview {
+    border: 1px solid #b5b5b5;
+    margin: 0px 10px 10px 0px;
+    padding: 8px;
+}
+
+ul.thumbnails_grid img {
+    margin-right: 8px;
+    margin-bottom: 8px;
+    width: 140px;
+    height: auto;
+}
+
+.property-detail #property-map {
+    height: 350px;
+    width: 300px;
+}
+
+.main-info{
+    font-size: 14px;
+    font-weight: bold;
+}
+
+th, td{
+    vertical-align: top;
+}
+
+table.info{
+    font-size: 12px;
+}

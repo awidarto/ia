@@ -1,4 +1,4 @@
-@extends('realia.layout')
+@extends('layout.front')
 
 @section('content')
             <!-- if there are login errors, show them here -->
@@ -18,7 +18,7 @@
                 <table class="table">
                     <tr>
                         <td>
-                           <h1 class="page-header">Agent Login</h1>
+                           <h2 class="page-header">Agent Login</h2>
 
                                 {{Former::open_horizontal('login','POST',array('class'=>'span4'))}}
                                     @if (Session::has('login_errors'))
@@ -42,7 +42,7 @@
 
                         </td>
                         <td>
-                               <h1 class="page-header">Investor Login</h1>
+                               <h2 class="page-header">Customer Login</h2>
 
                                     {{Former::open_horizontal('login','POST',array('class'=>'span4'))}}
                                         @if (Session::has('login_errors'))
@@ -65,7 +65,7 @@
 
                                         <div style="font-size:13px;text-align:right;clear:both;padding-top:10px;">
                                             Interested in investing ?
-                                            <a href="{{ URL::to('register') }}" class="" >Register</a> here
+                                            <a href="{{ URL::to('register') }}" class="" >Create login</a> here
                                         </div>
                                     {{ Former::close() }}
 
@@ -94,7 +94,7 @@
 
             </div>
             <div class="sidebar span3">
-                @include('realia.youtube')
+                @include('partials.youtube')
 
 
             </div>

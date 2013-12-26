@@ -10,7 +10,7 @@
                 <h1 class="page-header"><a href="{{ URL::to('property/listing')}}" class="btn btn-primary">&laquo; Back</a> {{ $prop['number'].' '.$prop['address'].', '.$prop['state'] }}</h1>
                 <div class="property-detail row">
                     <div class="overview span9">
-                        <img src={{ $prop['defaultpictures']['thumbnail_url'] }} style="width:140px;float:left;">
+                        <img src="{{ isset($prop['defaultpictures']['thumbnail_url'])?$prop['defaultpictures']['thumbnail_url']:URL::to('defaults/sm.png') }}" style="width:140px;float:left;">
                             <?php
                                 $roi = ((12*$prop['monthlyRental']) - $prop['tax'] - $prop['insurance'] - ( (12*$prop['monthlyRental']) / 10 )) / $prop['listingPrice'];
                             ?>
@@ -129,6 +129,7 @@
 
                             </ul>
                     </div>
+                    <div class="clearfix"></div>
                     <div>
                         <h2 class="page-header">Map</h2>
 

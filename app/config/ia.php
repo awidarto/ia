@@ -57,5 +57,10 @@ return array(
     'property_id_prefix'=>'IA',
     'agent_id_prefix'=>'TA',
     'buyer_id_prefix'=>'TB',
+    'sort'=>array(
+        'price'=>'Price',
+        'state'=>'State',
+        'type'=>'Type'
+        ),
 
 );

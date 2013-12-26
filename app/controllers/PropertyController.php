@@ -69,7 +69,7 @@ class PropertyController extends BaseController {
                                     ->orderBy($sort,$order)->skip($skip)->take($perpage)->get();
         }
 
-        return View::make('realia.listing')
+        return View::make('pages.listing')
             ->with('properties',$properties)
             ->with('current',$page)
             ->with('paging',$paging);

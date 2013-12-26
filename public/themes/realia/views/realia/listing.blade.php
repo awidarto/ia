@@ -91,7 +91,7 @@
                                             @endif
 
                                             <a href="{{ URL::to('property/detail/'.$p['_id'] )}}"></a>
-                                            <img src="{{ $p['defaultpictures']['medium_url'] }}" alt="">
+                                            <img src="{{ isset($p['defaultpictures']['medium_url'])?$p['defaultpictures']['medium_url']:URL::to('defaults/med.png') }}" alt="">
 
 
                                         </div><!-- /.content -->
@@ -116,7 +116,7 @@
                                         ?>
 
                                         <span class="key">ROI:</span><!-- /.key -->
-                                        <span class="value">{{ $roi*100 }}%</span><!-- /.value -->
+                                        <span class="value">{{ number_format($roi*100,2,'.',',')  }}%</span><!-- /.value -->
                                     </div><!-- /.area -->
                                     <div class="clearfix"></div>
                                     <div class="area">

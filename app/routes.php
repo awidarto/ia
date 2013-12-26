@@ -63,6 +63,10 @@ Route::get('media',function(){
 
 });
 
+Route::get('ref',function(){
+
+    return View::make('pages.ref');
+});
 
 Route::get('about',function(){
     Theme::setCurrentTheme(Prefs::getActiveTheme() );
@@ -80,7 +84,7 @@ Route::get('faq',function(){
         $faqarray[$f['category']]['content'][] = $f;
     }
 
-    return View::make('realia.faq')->with('faqs',$faqarray);
+    return View::make('pages.faq')->with('faqs',$faqarray);
 });
 
 Route::get('register',function(){

@@ -1,4 +1,4 @@
-@extends('realia.layout')
+@extends('layout.front')
 
 @section('content')
 
@@ -6,7 +6,7 @@
     <div id="main">
 
         <div class="row">
-            <div class="span9">
+            <div class="span12">
 
                 @if(is_null($content))
                     <h1 class="page-header">Page Doesn't Exists</h1>
@@ -17,12 +17,6 @@
                 @endif
 
                 <!--insert grid-->
-            </div>
-            <div class="sidebar span3">
-
-                @include('realia.latest')
-
-
             </div>
         </div>
 
