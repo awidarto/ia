@@ -61,16 +61,30 @@
         return URL::current().'?'.$str;
     }
 
-    function ms($key, $val){
+    function ms($key, $val, $default){
         $pstring = str_replace(URL::current(), '', URL::full());
         $pstring = str_replace('?', '', $pstring);
         parse_str($pstring,$reqs);
 
-        if(isset($reqs[$key]) && $reqs[$key] == $val ){
+        if(Input::get($key) == $val ){
+            return 'active';
+        }else if(Input::get($key) == '' && $val == $default){
             return 'active';
         }else{
             return '';
         }
+    }
+
+    function ps($page){
+
+        if(Input::get('page') == $page ){
+            return 'active';
+        }else if(Input::get('page') == '' && $page == 0){
+            return 'active';
+        }else{
+            return '';
+        }
+
     }
 
     if(Input::get('order') == 'asc'){
@@ -97,7 +111,7 @@
     <div class="pagination pagination-centered span6">
         <ul>
             @for($p = 0;$p < $paging;$p++)
-                <li class="{{ ms('page',$p) }}" ><a href="{{ mg(array('page'=>$p))}}" >{{$p + 1}}</a></li>
+                <li class="{{ ps($p) }}" ><a href="{{ mg(array('page'=>$p))}}" >{{$p + 1}}</a></li>
             @endfor
         </ul>
     </div>
@@ -128,20 +142,20 @@
 <div class="subnav row" id="filter-bar" style="margin-left:5px;background-color: aquamarine;padding-bottom:0px;">
     <ul class="nav nav-pills span11" style="padding-left:10px;margin-bottom:0px;" >
         @foreach(array_merge(array('all'=>'All'),Config::get('ia.type')) as $k=>$t)
-            <li class="{{ ms('type',$k) }}" ><a href="{{ mg(array('type'=>$k))}}">{{$t}}</a></li>
+            <li class="{{ ms('type',$k , 'all') }}" ><a href="{{ mg(array('type'=>$k))}}">{{$t}}</a></li>
         @endforeach
     </ul>
 </div>
 <div id="sort-bar row" >
     <ul class="nav nav-pills pull-right">
         <li class="pill-label">Order :</li>
-        <li class="{{ ms('order','asc') }}" ><a href="{{ mg(array('order'=>'asc'))}}">asc</a></li>
-        <li class="{{ ms('order','desc') }}" ><a href="{{ mg(array('order'=>'desc'))}}">desc</a></li>
+        <li class="{{ ms('order','asc','desc') }}" ><a href="{{ mg(array('order'=>'asc'))}}">asc</a></li>
+        <li class="{{ ms('order','desc','desc') }}" ><a href="{{ mg(array('order'=>'desc'))}}">desc</a></li>
     </ul>
     <ul class="nav nav-pills pull-right" id="sorter">
         <li class="pill-label">Sort By :</li>
         @foreach(Config::get('ia.sort') as $k=>$t)
-            <li class="{{ ms('sort',$k) }}" ><a href="{{ mg(array('sort'=>$k))}}">{{$t}}</a></li>
+            <li class="{{ ms('sort',$k,'listingPrice') }}" ><a href="{{ mg(array('sort'=>$k))}}">{{$t}}</a></li>
         @endforeach
     </ul>
 </div>
