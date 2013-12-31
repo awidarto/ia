@@ -48,31 +48,43 @@ class PropertyController extends BaseController {
     public function getListing()
     {
 
-        $page = (Input::get('page') == '')?'desc':Input::get('page');
-        $perpage = (Input::get('perpage') == '')?'20':Input::get('perpage');
+        //count=40&order=asc&page=3&sort=State&type=TRIPLEX
+
+        $page = (Input::get('page') == '')?'0':Input::get('page');
+        $perpage = (Input::get('count') == '')?'20':Input::get('count');
         $order = (Input::get('order') == '')?'desc':Input::get('order');
         $sort = (Input::get('sort') == '')?'listingPrice':Input::get('sort');
-        $filter = (Input::get('filter') == '')?'all':Input::get('filter');
+        $filter = (Input::get('type') == '')?'all':Input::get('type');
 
         $page = (is_null($page))?0:$page;
-        $perpage = 15;
         $skip = $page * $perpage;
 
-        $total = Property::count();
-
-        $paging = ceil($total / $perpage);
+        $total_all = Property::count();
 
         if($filter == 'all'){
             $properties = Property::where('propertyStatus','!=','offline')->orderBy($sort,$order)->skip($skip)->take($perpage)->get();
+            $total_found = Property::where('propertyStatus','!=','offline')->count();
+
         }else{
             $properties = Property::where('propertyStatus','!=','offline')
-                                    ->where('type','=',$filter)
-                                    ->orderBy($sort,$order)->skip($skip)->take($perpage)->get();
+                            ->where('type','=',$filter)
+                            ->orderBy($sort,$order)->skip($skip)->take($perpage)->get();
+            $total_found = Property::where('propertyStatus','!=','offline')
+                            ->where('type','=',$filter)
+                            ->count();
         }
+
+        $currentcount = count($properties->toArray());
+
+        $paging = ceil($total_found / $perpage);
 
         return View::make('pages.listing')
             ->with('properties',$properties)
+            ->with('total',$total_found)
+            ->with('alltotal',$total_all)
             ->with('current',$page)
+            ->with('perpage',$perpage)
+            ->with('currentcount',$currentcount)
             ->with('paging',$paging);
     }
 

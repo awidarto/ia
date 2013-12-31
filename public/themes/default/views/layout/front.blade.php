@@ -19,6 +19,8 @@
 		{{-- HTML::style('bootstrap/css/bootswatch.css') --}}
 		{{ HTML::style('bootstrap/css/app.css') }}
 
+        {{ HTML::script('bootstrap/js/jquery.min.js') }}
+
 </head>
 
 <body class="preview" id="top" data-spy="scroll" data-target=".subnav" data-offset="80" cz-shortcut-listen="true" style="margin-top: 0px;">
@@ -69,7 +71,6 @@
 		{{ HTML::script('bootstrap/js/bootstrap.min.js')}}
 
 
-		{{ HTML::script('bootstrap/js/jquery.min.js') }}
 		{{ HTML::script('bootstrap/js/jquery.smooth-scroll.min.js') }}
 		{{ HTML::script('bootstrap/js/bootstrap.min.js') }}
 		{{ HTML::script('bootstrap/js/bootswatch.js') }}

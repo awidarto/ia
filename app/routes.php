@@ -56,6 +56,15 @@ Route::get('hashme/{mypass}',function($mypass){
     print Hash::make($mypass);
 });
 
+Route::get('types',function(){
+    $types = Property::distinct('type')->get();
+    print_r($types->toArray());
+});
+
+Route::get('st',function(){
+    Property::where('type','SINGLE FAMILY')->update(array('type'=>'SFH'),array('multi'=>true));
+});
+
 Route::get('media',function(){
     $media = Product::all();
 

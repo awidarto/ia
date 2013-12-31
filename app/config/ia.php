@@ -58,7 +58,7 @@ return array(
     'agent_id_prefix'=>'TA',
     'buyer_id_prefix'=>'TB',
     'sort'=>array(
-        'price'=>'Price',
+        'listingPrice'=>'Price',
         'state'=>'State',
         'type'=>'Type'
         ),

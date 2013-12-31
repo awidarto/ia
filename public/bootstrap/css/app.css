@@ -216,6 +216,14 @@ label.checkbox{
     border-left-width: 0;
 }
 
+.pagination ul>li>a:hover, .pagination ul>li>a:focus,
+.pagination ul>.active>a, .pagination ul>.active>span{
+    background-color: #F00;
+    color:#FFF;
+    border: 1px solid #F00;
+}
+
+
 /* Sidenav for Docs
 -------------------------------------------------- */
 
