@@ -111,7 +111,7 @@
     <div class="pagination pagination-centered span6">
         <ul>
             @for($p = 0;$p < $paging;$p++)
-                <li class="{{ ps($p) }}" ><a href="{{ mg(array('page'=>$p))}}" >{{$p + 1}}</a></li>
+                <li class="{{ ms('page',$p , 0) }}" ><a href="{{ mg(array('page'=>$p))}}" >{{$p + 1}}</a></li>
             @endfor
         </ul>
     </div>
