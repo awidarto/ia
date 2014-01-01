@@ -33,6 +33,21 @@ Route::get('page','PageController@getIndex');
 
 Route::get('contact','ContactController@getAdd');
 
+Route::get('brochure/dl/{id}',function($id){
+
+    $prop = Property::find($id)->toArray();
+
+    //return View::make('print.brochure')->with('prop',$prop)->render();
+
+    $content = View::make('print.brochure')->with('prop',$prop)->render();
+
+    //return $content;
+
+    return PDF::loadView('print.brochure',array('prop'=>$prop))
+        ->stream('download.pdf');
+});
+
+
 Route::get('pdf',function(){
     $content = "
     <page>

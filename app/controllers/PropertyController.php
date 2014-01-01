@@ -98,7 +98,7 @@ class PropertyController extends BaseController {
             $page = null;
         }
 
-        return View::make('realia.detail')->with('prop',$page);
+        return View::make('pages.detail')->with('prop',$page);
     }
 
     public function getBuy($id = null){

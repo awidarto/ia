@@ -121,6 +121,7 @@ return array(
         'Intervention\Helper\DateServiceProvider',
         'Intervention\Helper\StringServiceProvider',
         'AlexWhitman\ViewThemes\ViewThemesServiceProvider',
+        'Barryvdh\DomPDF\ServiceProvider',
 	),
 
 	/*
@@ -191,7 +192,8 @@ return array(
         'String'          => 'Intervention\Helper\Facades\String',
         'Image'           => 'Intervention\Image\Facades\Image',
         'Theme'           => 'AlexWhitman\ViewThemes\ThemeFacade',
-        'Carbon'          => 'Carbon\Carbon'
+        'Carbon'          => 'Carbon\Carbon',
+        'PDF'             => 'Barryvdh\DomPDF\Facade',
 
 	),
 

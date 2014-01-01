@@ -109,7 +109,7 @@
         Items {{ ($current * $perpage) + 1 }} to {{ ( $current * $perpage ) + $currentcount }} of {{$total}} total (Filtered from {{$alltotal}} entries)
     </div>
     <div class="pagination pagination-centered span6">
-        <ul>
+        <ul style="margin-left:-5px;">
             @for($p = 0;$p < $paging;$p++)
                 <li class="{{ ms('page',$p , 0) }}" ><a href="{{ mg(array('page'=>$p))}}" >{{$p + 1}}</a></li>
             @endfor
@@ -142,7 +142,7 @@
 <div class="subnav row" id="filter-bar" style="margin-left:5px;background-color: aquamarine;padding-bottom:0px;">
     <ul class="nav nav-pills span11" style="padding-left:10px;margin-bottom:0px;" >
         @foreach(array_merge(array('all'=>'All'),Config::get('ia.type')) as $k=>$t)
-            <li class="{{ ms('type',$k , 'all') }}" ><a href="{{ mg(array('type'=>$k))}}">{{$t}}</a></li>
+            <li class="{{ ms('type',$k , 'all') }}" ><a href="{{ mg(array('type'=>$k,'page'=>0))}}">{{$t}}</a></li>
         @endforeach
     </ul>
 </div>
@@ -165,15 +165,40 @@
         @foreach($properties as $p)
             <li>
                 <div class="thumb span3">
-                    <h5>ID : {{$p['propertyId']}}</h5>
-                    <img src="{{ (isset($p['defaultpictures']['medium_url']))?$p['defaultpictures']['medium_url']:'' }}" alt="{{$p['propertyId']}}" >
-                    <h5>{{ $p['city'].','.$p['state'] }}</h5>
-                    <h4>{{ number_format($p['listingPrice'],2,'.',',') }}</h4>
-                    <h6>ROI : {{ number_format(Prefs::roi($p),1,',','.') }}%</h6>
+                    <a href="{{ URL::to('property/detail/'.$p['_id']) }}" class="thumblink">
+                        <h5>ID : {{$p['propertyId']}}</h5>
+                        <img src="{{ (isset($p['defaultpictures']['medium_url']))?$p['defaultpictures']['medium_url']:'' }}" alt="{{$p['propertyId']}}" >
+                        <h5>{{ $p['city'].','.$p['state'] }}</h5>
+                        <h4>{{ number_format($p['listingPrice'],2,'.',',') }}</h4>
+                        <h6>ROI : {{ number_format(Prefs::roi($p),1,',','.') }}%</h6>
+                    </a>
                 </div>
             </li>
         @endforeach
         </ul>
     </div>
 </div>
+<div class="row" style="margin-top:10px;" >
+    <div class="span4"></div>
+    <div class="pagination pagination-centered span6">
+        <ul>
+            @for($p = 0;$p < $paging;$p++)
+                <li class="{{ ms('page',$p , 0) }}" ><a href="{{ mg(array('page'=>$p))}}" >{{$p + 1}}</a></li>
+            @endfor
+        </ul>
+    </div>
+</div>
+
+<!-- blueimp overlay -->
+
+<div id="blueimp-gallery" class="blueimp-gallery  blueimp-gallery-controls">
+    <div class="slides"></div>
+    <h3 class="title"></h3>
+    <a class="prev">‹</a>
+    <a class="next">›</a>
+    <a class="close">×</a>
+    <a class="play-pause"></a>
+    <ol class="indicator"></ol>
+</div>
+
 @stop

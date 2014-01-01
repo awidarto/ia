@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><script type="text/javascript" async="" src="index_files/ga.js"></script>
+<html lang="en">
 <head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
@@ -16,10 +16,12 @@
 		{{-- HTML::style('bootstrap/css/bootstrap-responsive.min.css') --}}
 		{{ HTML::style('font-awesome/css/font-awesome.min.css') }}
 
+        {{ HTML::style('css/blueimp-gallery.min.css') }}
+
 		{{-- HTML::style('bootstrap/css/bootswatch.css') --}}
 		{{ HTML::style('bootstrap/css/app.css') }}
 
-        {{ HTML::script('bootstrap/js/jquery.min.js') }}
+        {{ HTML::script('realia/js/jquery.js') }}
 
 </head>
 
@@ -75,7 +77,7 @@
 		{{ HTML::script('bootstrap/js/bootstrap.min.js') }}
 		{{ HTML::script('bootstrap/js/bootswatch.js') }}
 
-
-
+        {{ HTML::script('js/blueimp-gallery.min.js') }}
+        {{ HTML::script('js/jquery.blueimp-gallery.min.js') }}
 
 </body></html>
