@@ -86,7 +86,8 @@
 
                 #main-content{
                     overflow-y:auto;
-                    height: 400px;
+                    overflow-x:hidden;
+                    height: 570px;
                 }
 
                 #main-content h1 {
@@ -106,7 +107,7 @@
                 }
 
                 #overview img{
-                    height:30px;
+                    height:45px;
                     width: auto;
                 }
 
