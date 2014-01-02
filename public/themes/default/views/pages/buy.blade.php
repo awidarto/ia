@@ -278,7 +278,7 @@
                                 {{ Former::select('entitySource')->options(Config::get('ia.entity_source'))->label('Entity Type') }}
                                 </div>
                         </div>
-                        {{ Former::framework('nude')}}
+                        {{ Former::framework('Nude')}}
                         <div class="tab-pane" id="tab3">
                             <table class="table table-bordered table-striped" id="finance" >
                                 <thead>
