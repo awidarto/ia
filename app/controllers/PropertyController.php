@@ -111,7 +111,7 @@ class PropertyController extends BaseController {
             $page = null;
         }
 
-        return View::make('realia.buy')->with('prop',$page);
+        return View::make('pages.buy')->with('prop',$page);
     }
 
     public function postProcess(){

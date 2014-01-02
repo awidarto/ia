@@ -104,8 +104,8 @@
 </script>
 
 <h1>Property</h1>
-<div class="row" style="margin-left:-15px;padding-bottom:0px;">
-    <div class="span4" >
+<div class="row" >
+    <div class="span4" style="margin-left:0px;" >
         Items {{ ($current * $perpage) + 1 }} to {{ ( $current * $perpage ) + $currentcount }} of {{$total}} total (Filtered from {{$alltotal}} entries)
     </div>
     <div class="pagination pagination-centered span6">
@@ -139,14 +139,14 @@
         </select> per page
     </div>
 </div>
-<div class="subnav row" id="filter-bar" style="margin-left:5px;background-color: aquamarine;padding-bottom:0px;">
-    <ul class="nav nav-pills span11" style="padding-left:10px;margin-bottom:0px;" >
+<div class="subnav row" id="filter-bar" style="background-color: aquamarine;padding:0px;margin:5px 10px;">
+    <ul class="nav nav-pills span11" style="padding-left:10px;margin-bottom:2px;margin-top:2px;" >
         @foreach(array_merge(array('all'=>'All'),Config::get('ia.type')) as $k=>$t)
             <li class="{{ ms('type',$k , 'all') }}" ><a href="{{ mg(array('type'=>$k,'page'=>0))}}">{{$t}}</a></li>
         @endforeach
     </ul>
 </div>
-<div id="sort-bar row" >
+<div id="sort-bar row" style="padding:0px 10px;">
     <ul class="nav nav-pills pull-right">
         <li class="pill-label">Order :</li>
         <li class="{{ ms('order','asc','desc') }}" ><a href="{{ mg(array('order'=>'asc'))}}">asc</a></li>
@@ -160,7 +160,7 @@
     </ul>
 </div>
 <div class="row">
-    <div class="span12" >
+    <div class="span12" style="margin-left:5px;">
         <ul id="listing">
         @foreach($properties as $p)
             <li>

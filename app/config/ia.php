@@ -10,7 +10,15 @@ return array(
 
     'entity_type'=>array(
             'Personal'=>'Personal',
-            'Company'=>'Company'
+            'Business'=>'Business'
+        ),
+    'entity_source'=>array(
+            'Veil'=>'Veil',
+            'Other'=>'Other',
+            'Not yet registered'=>'Not yet registered'
+        ),
+    'adjustment_type'=>array(
+            'Misc. Adjustment'=>'Misc. Adjustment'
         ),
     'category'=>array(
             'TENANTED'=>'TENANTED',

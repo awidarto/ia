@@ -266,7 +266,7 @@
             $(document).ready(function(){
 
                 var myCounter = new Countdown({
-                    seconds:300,  // number of seconds to count down
+                    seconds:60*15,  // number of seconds to count down
                     onUpdateStatus: function(sec){
                             console.log(sec);
 
