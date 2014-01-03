@@ -166,7 +166,7 @@ Route::get('account/create',function(){
 Route::post('account/create',function(){
     // validate the info, create rules for the inputs
     $rules = array(
-        'email'    => 'required|email|unique:buyers',
+        'email'    => 'required|email',
         'pass' => 'required|alphaNum|min:3|same:repass'
     );
 
