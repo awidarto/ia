@@ -6,12 +6,9 @@
     <div class="span3">
         <h4>Agent Login</h4>
             {{Former::open_horizontal('login','POST',array('class'=>''))}}
-                @if (Session::has('login_errors'))
-                    @if (Session::get('loginError'))
+                @if (Session::get('loginError'))
                     <div class="alert alert-danger">{{ Session::get('loginError') }}</div>
                          <button type="button" class="close" data-dismiss="alert"></button>
-                         Email or password incorrect.
-                    @endif
                 @endif
                 {{ Former::text('email','Email')->class('span2') }}
 
@@ -26,13 +23,10 @@
     <div class="span1"></div>
     <div class="span3">
         <h4>Customer Login</h4>
-            {{Former::open_horizontal('login','POST',array('class'=>''))}}
-                @if (Session::has('login_errors'))
-                    @if (Session::get('loginError'))
-                    <div class="alert alert-danger">{{ Session::get('loginError') }}</div>
+            {{Former::open_horizontal('clogin','POST',array('class'=>''))}}
+                @if (Session::get('cloginError'))
+                    <div class="alert alert-danger">{{ Session::get('cloginError') }}</div>
                          <button type="button" class="close" data-dismiss="alert"></button>
-                         Email or password incorrect.
-                    @endif
                 @endif
                 {{ Former::text('email','Email')->class('span2') }}
 
@@ -43,7 +37,7 @@
                 {{ Former::submit('Login')->class('btn btn-primary pull-right') }}
 
                 <div class="" style="display:block;padding-top:20px;text-align:right;clear:both;width:100%;">
-                    <a href="{{ URL::to('register') }}" class="" >Create login</a> here
+                    <a href="{{ URL::to('account/create') }}" class="" >Create account</a> here
                 </div>
 
             {{ Former::close() }}

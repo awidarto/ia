@@ -139,7 +139,7 @@ class PropertyController extends BaseController {
             $buyer = array();
 
             $buyer['agentId']           =        $data['agentId'];
-            $buyer['agentName']          =          $data['agentName'];
+            $buyer['agentName']         =          $data['agentName'];
             $buyer['customerId']        =           $data['customerId'];
             $buyer['salutation']        =           $data['salutation'];
             $buyer['firstname']         =          $data['firstname'];
@@ -162,9 +162,9 @@ class PropertyController extends BaseController {
             $model = new Transaction();
 
             if($obj = $model->insert($data)){
-                return Redirect::to('transaction/listing')->with('notify_success','Order saved successfully');
+                return Redirect::to('property/review')->with('notify_success','Order saved successfully');
             }else{
-                return Redirect::to('transaction/listing')->with('notify_success','Order saving failed');
+                return Redirect::to('property/review')->with('notify_success','Order saving failed');
             }
 
 

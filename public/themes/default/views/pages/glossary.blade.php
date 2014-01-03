@@ -1,7 +1,7 @@
 @extends('layout.front')
 
 @section('content')
-    <h1>FAQ</h1>
+    <h1>Glossary</h1>
     <div class="row">
       <div class="span3 bs-docs-sidebar">
         <ul class="nav nav-list bs-docs-sidenav">

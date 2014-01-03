@@ -93,7 +93,7 @@
                 #main-content h1 {
                     margin-top: 8px;
                     margin-bottom: 8px;
-                    padding-left: 5px;
+                    padding-left: 10px;
                 }
 
                 #main-img img{

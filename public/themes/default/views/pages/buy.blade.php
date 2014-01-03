@@ -136,7 +136,9 @@
         padding: 10px 4px;
     }
 
-    table#finance tr td:last-child{
+    table#finance tr td:last-child,
+    table#finance tr td:last-child input[type=text]
+    {
         text-align: right;
         font-size: 13px;
     }
@@ -215,13 +217,13 @@
                         <div class="tab-pane" id="tab1">
                             <div class="row">
                                 <div class="span4">
-                                    {{ Former::text('customerId','Customer ID')->value( str_random(5) ) }}
+                                    {{ Former::text('customerId','Customer ID')->value( str_random(5) )->class('span1') }}
                                     {{ Former::select('salutation')->options(Config::get('kickstart.salutation'))->label('Salutation')->class('span1') }}
-                                    {{ Former::text('firstname','First Name') }}
-                                    {{ Former::text('lastname','Last Name') }}
-                                    {{ Former::text('company','Company / Entity') }}
-                                    {{ Former::text('phone','Telephone') }}
-                                    {{ Former::text('email','Email Address') }}
+                                    {{ Former::text('firstname','First Name')->class('span3') }}
+                                    {{ Former::text('lastname','Last Name')->class('span3') }}
+                                    {{ Former::text('company','Company / Entity')->class('span3') }}
+                                    {{ Former::text('phone','Telephone')->class('span3') }}
+                                    {{ Former::text('email','Email Address')->class('span3') }}
 
                                 </div>
                                 <div class="span4">
@@ -436,6 +438,14 @@
 
             $(document).ready(function(){
 
+                function notNan(v){
+                    if(v == '' || v == null || typeof v === "undefined" || isNaN(v) ){
+                        v = 0;
+                    }
+
+                    return parseFloat(v);
+                }
+
                 function calculateCost(){
                     var salePrice = $('#listingPrice').val();
                     var adjustment1 = $('#adjustment1').val();
@@ -444,7 +454,7 @@
                     var tax = $('#tax').val();
                     var closingCost = $('#closingCost').val();
 
-                    var total_purchase = parseInt(salePrice) + parseInt(adjustment1) + parseInt(adjustment2) + parseInt(insurance) + parseInt(tax) + parseInt(closingCost);
+                    var total_purchase = notNan(salePrice) + notNan(adjustment1) + notNan(adjustment2) + notNan(insurance) + notNan(tax) + notNan(closingCost);
 
                     console.log(total_purchase);
 

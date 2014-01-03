@@ -102,14 +102,33 @@ Route::get('faq',function(){
 
     $faqs = Faq::get()->toArray();
 
+    $faqcats = Faqcat::get()->toArray();
+
     $faqarray = array();
 
     foreach($faqs as $f){
-        $faqarray[$f['category']]['content'][] = $f;
+        $faqarray[$f['category']][] = $f;
     }
 
-    return View::make('pages.faq')->with('faqs',$faqarray);
+    return View::make('pages.faq')->with('faqs',$faqarray)->with('faqcats',$faqcats);
 });
+
+Route::get('glossary',function(){
+    Theme::setCurrentTheme(Prefs::getActiveTheme() );
+
+    $faqs = Faq::get()->toArray();
+
+    $faqcats = Faqcat::get()->toArray();
+
+    $faqarray = array();
+
+    foreach($faqs as $f){
+        $faqarray[$f['category']][] = $f;
+    }
+
+    return View::make('pages.glossary')->with('faqs',$faqarray)->with('faqcats',$faqcats);
+});
+
 
 Route::get('dashboard',function(){
     Theme::setCurrentTheme(Prefs::getActiveTheme() );
@@ -130,6 +149,65 @@ Route::get('register',function(){
     return View::make('realia/registration')->with('featured',$featured);
 });
 
+Route::get('account/create',function(){
+    Theme::setCurrentTheme(Prefs::getActiveTheme() );
+    Former::framework('TwitterBootstrap');
+
+    $agents = Agent::get()->toArray();
+
+    $agent_select = array();
+    foreach($agents as $agent){
+        $agent_select[$agent['_id']] = $agent['firstname'].' '.$agent['lastname'];
+    }
+
+    return View::make('pages.createaccount')->with('agents',$agent_select);
+});
+
+Route::post('account/create',function(){
+    // validate the info, create rules for the inputs
+    $rules = array(
+        'email'    => 'required|email|unique:buyers',
+        'pass' => 'required|alphaNum|min:3|same:repass'
+    );
+
+    // run the validation rules on the inputs from the form
+    $validator = Validator::make(Input::all(), $rules);
+
+    // if the validator fails, redirect back to the form
+    if ($validator->fails()) {
+
+        Event::fire('log.a',array('create account','createaccount',Input::get('email'),'validation fail'));
+
+        return Redirect::to('account/create')->withErrors($validator);
+    } else {
+
+        unset($data['csrf_token']);
+
+        $model = new Buyer();
+
+        $data['createdDate'] = new MongoDate();
+        $data['lastUpdate'] = new MongoDate();
+
+        if($obj = $model->insert($data)){
+            Event::fire('log.a',array('create account','createaccount',Input::get('email'),'validation fail'));
+            //Event::fire('product.createformadmin',array($obj['_id'],$passwordRandom,$obj['conventionPaymentStatus']));
+            return Redirect::to('account/success');
+        }else{
+            return Redirect::to($this->backlink)->with('notify_success',ucfirst(Str::singular($controller_name)).' saving failed');
+        }
+
+
+
+
+    }
+
+
+    return View::make('pages.createaccount');
+});
+
+Route::get('account/success',function(){
+    return View::make('pages.createaccountsuccess');
+});
 
 Route::get('login',function(){
     Theme::setCurrentTheme(Prefs::getActiveTheme() );
@@ -173,6 +251,9 @@ Route::post('login',function(){
             if (Hash::check(Input::get('password'), $user->{$passwordfield} )) {
 
                 // login the user
+
+                $user->role = 'agent';
+
                 Auth::login($user);
 
                 Event::fire('log.a',array('login','login',Auth::user()->email,'login success'));
@@ -188,6 +269,7 @@ Route::post('login',function(){
                 // validation not successful
                 // send back to form with errors
                 // send back to form with old input, but not the password
+                Session::flash('loginError', 'Incorrect email or password.');
 
                 Event::fire('log.a',array('login','login',Input::get('email'),'auth fail'));
 
@@ -209,6 +291,79 @@ Route::post('login',function(){
     }
 
 });
+
+Route::post('clogin',function(){
+
+    // validate the info, create rules for the inputs
+    $rules = array(
+        'email'    => 'required|email',
+        'password' => 'required|alphaNum|min:3'
+    );
+
+    // run the validation rules on the inputs from the form
+    $validator = Validator::make(Input::all(), $rules);
+
+    // if the validator fails, redirect back to the form
+    if ($validator->fails()) {
+
+        Event::fire('log.a',array('login','login',Input::get('email'),'validation fail'));
+
+        return Redirect::to('login')->withErrors($validator);
+    } else {
+
+        $userfield = Config::get('kickstart.user_field');
+        $passwordfield = Config::get('kickstart.password_field');
+
+        // find the user
+        $user = Buyer::where($userfield, '=', Input::get('email'))->first();
+
+        // check if user exists
+        if ($user) {
+
+            // check if password is correct
+            if (Hash::check(Input::get('password'), $user->{$passwordfield} )) {
+
+                $user->role = 'customer';
+
+                // login the user
+                Auth::login($user);
+
+                Event::fire('log.a',array('clogin','clogin',Auth::user()->email,'login success'));
+
+                if(Session::get('redirect') != ''){
+                    return Redirect::to(Session::get('redirect'));
+                }else{
+                    return Redirect::to('/');
+                }
+
+
+            } else {
+                // validation not successful
+                // send back to form with errors
+                // send back to form with old input, but not the password
+                Session::flash('cloginError', 'Incorrect email or password.');
+
+                Event::fire('log.a',array('login','login',Input::get('email'),'auth fail'));
+
+                return Redirect::to('login')
+                    ->withErrors($validator)
+                    ->withInput(Input::except('password'));
+            }
+
+        } else {
+            // user does not exist in database
+            // return them to login with message
+            Session::flash('cloginError', 'This user does not exist.');
+
+            Event::fire('log.a',array('login','login',Input::get('email'),'unregistered'));
+
+            return Redirect::to('login');
+        }
+
+    }
+
+});
+
 
 Route::get('logout',function(){
 
