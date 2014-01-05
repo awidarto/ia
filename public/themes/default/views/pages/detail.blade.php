@@ -157,7 +157,7 @@
 
                 <th>Size</th>
                 <td>
-                    {{ $prop['houseSize'] }} sq.ft.
+                    {{ number_format($prop['houseSize'],0) }} sqft
                 </td>
 
             </tr>
@@ -171,9 +171,9 @@
                 <th>Lot Size</th>
                 <td>
                     @if( $prop['lotSize'] < 100)
-                    {{ $prop['lotSize'] * 43560 }} sq.ft.
+                    {{ number_format($prop['lotSize'] * 43560,0) }} sqft
                     @else
-                    {{ $prop['lotSize'] }} sq.ft.
+                    {{ $prop['lotSize'] }} sqft
                     @endif
                 </td>
 
@@ -181,7 +181,7 @@
             <tr>
                 <th>Price</th>
                 <td>
-                    {{ number_format($prop['listingPrice'],2,'.',',') }}
+                    ${{ number_format($prop['listingPrice'],0,'.',',') }}
                 </td>
 
                 <th>Bath</th>
@@ -198,7 +198,7 @@
             <tr>
                 <th>FMV</th>
                 <td>
-                    {{ number_format($prop['FMV'],2,'.',',') }}
+                    ${{ number_format($prop['FMV'],0,'.',',') }}
                 </td>
 
                 <th>Garage</th>
@@ -215,7 +215,7 @@
             <tr>
                 <th>ROI</th>
                 <td>
-                    {{ number_format(Prefs::roi($prop),1,',','.') }}%
+                    {{ number_format(Prefs::roi($prop),1,'.',',') }}%
                 </td>
 
                 <th>Pool</th>

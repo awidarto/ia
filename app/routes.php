@@ -181,12 +181,21 @@ Route::post('account/create',function(){
         return Redirect::to('account/create')->withErrors($validator);
     } else {
 
+        $data = Input::get();
+
         unset($data['csrf_token']);
+
 
         $model = new Buyer();
 
         $data['createdDate'] = new MongoDate();
         $data['lastUpdate'] = new MongoDate();
+
+        unset($data['repass']);
+        $data['pass'] = Hash::make($data['pass']);
+
+        $data['fullname'] = $data['firstname'].' '.$data['lastname'];
+
 
         if($obj = $model->insert($data)){
             Event::fire('log.a',array('create account','createaccount',Input::get('email'),'validation fail'));
