@@ -62,18 +62,9 @@
         text-align: left;
         vertical-align: top;*/
         line-height: 16px;
-        border-top: 1px solid #ddd;
-        font-size: 11px;
+        border-top: 1px solid #FFF;
     }
 
-    table th{
-        font-weight: bold;
-        width: 100px;
-        background-color: #ccc;
-        border-color: transparent;
-    }
-
-    /*
     table{
         width:100%;
         font-size: 12px;
@@ -89,17 +80,22 @@
         border-color: transparent;
     }
 
+    table th{
+        font-weight: bold;
+        width: 100px;
+        background-color: #eee;
+        border-color: transparent;
+    }
 
     table th.h4{
         background-color: transparent;
     }
-    */
 
     .btn-buy{
         font-size: 36px;
     }
 
-    i.icon-download{
+    i.icon-download, i.icon-map-marker{
         font-size: 26px;
     }
 
@@ -160,21 +156,150 @@
             <img src="{{ (isset($prop['defaultpictures']['medium_url']))?$prop['defaultpictures']['medium_url']:'' }}" alt="{{$prop['propertyId']}}" >
         </div>
     </div>
-    <div class="span4">
-        <h1 style="margin-top:0px;padding-left:0px;margin-bottom:4px;">ID : {{$prop['propertyId']}}</h1>
-        <h2 style="margin-top:0px;margin-bottom:4px;">Purchase Details</h2>
-        <a href="{{ URL::to('brochure/dl/'.$prop['_id'])}}" target="blank" style="width:100%;line-height:24px;"><i class="icon-download"></i> Brochure</a>
+    <div class="span3">
+        <h1 style="margin-top:0px;margin-bottom:4px;padding-left:0px;">Purchase Details</h1>
+        <h2 style="margin-top:0px;padding-left:0px;margin-bottom:4px;">ID : {{$prop['propertyId']}}</h2>
+        <h3 style="margin-top:0px;padding-left:0px;margin-bottom:4px;">
+            {{ $prop['number'].' '.$prop['address'] }}<br />
+            {{ $prop['city'].', '.$prop['state'].' '.$prop['zipCode'] }}
+        </h3>
+
     </div>
-    <div class="span5">
+    <div class="span6" style="display:block;">
+
+            <?php
+                $address = $prop['number'].' '.$prop['address'].' '.$prop['city'].', '.$prop['state'].' '.$prop['zipCode'];
+            ?>
+
         <div id="session-counter-bar" style="text-align:right;">
             Your shopping cart will expire in <span id="session-counter"></span>.
         </div>
+
+        <div id="icon-bar" style="text-align:right;position:relative;bottom:0;">
+            <br />
+            <br />
+            <a href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$address}}&ie=UTF8&hq=&hnear={{$address}}" target="blank" style="width:100%;line-height:24px;"><i class="icon-map-marker"></i> Map</a>&nbsp;&nbsp;
+            <a href="{{ URL::to('brochure/dl/'.$prop['_id'])}}" target="blank" style="width:100%;line-height:24px;"><i class="icon-download"></i> Brochure</a>
+        </div>
+
     </div>
     <hr>
 </div>
 <div class="row">
     <div class="span3">
-        <h4>Description</h4>
+        <h3>Quick Specs</h3>
+        <table class="table">
+            {{--
+            <tr>
+                <th colspan="2" class="h4">
+                    {{ $prop['number'].' '.$prop['address'] }}<br />
+                    {{ $prop['city'].', '.$prop['state'].' '.$prop['zipCode'] }}
+                </th>
+            </tr>
+            --}}
+            <tr>
+                <th>Price</th>
+                <td>
+                    ${{ number_format($prop['listingPrice'],0,'.',',') }}
+                </td>
+            </tr>
+            <tr>
+                <th>FMV</th>
+                <td>
+                    ${{ number_format($prop['FMV'],0,'.',',') }}
+                </td>
+            </tr>
+            <tr>
+
+                <th>Type</th>
+                <td>
+                    {{ $prop['type'] }}
+                </td>
+            </tr>
+            <tr>
+
+                <th>Year Built</th>
+                <td>
+                    {{ $prop['yearBuilt'] }}
+                </td>
+
+            </tr>
+            <tr>
+
+                <th>Size</th>
+                <td>
+                    {{ number_format($prop['houseSize'],0) }} sqft
+                </td>
+
+            </tr>
+            <tr>
+
+                <th>Lot Size</th>
+                <td>
+                    @if( $prop['lotSize'] < 100)
+                    {{ number_format($prop['lotSize'] * 43560,0) }} sqft
+                    @else
+                    {{ $prop['lotSize'] }} sqft
+                    @endif
+                </td>
+
+            </tr>
+            <tr>
+
+                <th>Bed</th>
+                <td>
+                    {{ $prop['bed'] }}
+                </td>
+            </tr>
+            <tr>
+
+                <th>Bath</th>
+                <td>
+                    {{ $prop['bath'] }}
+                </td>
+            </tr>
+            <tr>
+
+                <th>Garage</th>
+                <td>
+                    {{ $prop['garage'] }}
+                </td>
+            </tr>
+            <tr>
+
+                <th>Pool</th>
+                <td>
+                    {{ $prop['pool'] }}
+                </td>
+            </tr>
+
+            @if($prop['typeOfConstruction'] != '')
+            <tr>
+
+                <th>Construction</th>
+                <td>
+                    {{ $prop['typeOfConstruction'] }}
+                </td>
+
+            </tr>
+            @endif
+            <tr>
+                <th>Monthly Rental</th>
+                <td>
+                    ${{ number_format($prop['monthlyRental'],0,'.',',') }}
+                </td>
+            </tr>
+            <tr>
+
+                <th>Parcel #</th>
+                <td>
+                    {{ $prop['parcelNumber'] }}
+                </td>
+
+            </tr>
+        </table>
+
+        <h3>Description</h3>
         {{ $prop['description']}}
     </div>
     <div class="span9">
@@ -329,7 +454,7 @@
                                         <td>Tax Adjustment</td>
                                         <td></td>
                                         <td>{{ $prop['tax'] }}
-                                            {{ Former::hidden('tax')->value($prop['tax'] )->id('listingPrice') }}
+                                            {{ Former::hidden('tax')->value($prop['tax'] )->id('tax') }}
                                         </td>
                                     </tr>
                                     <tr>
@@ -369,7 +494,7 @@
                                     </tr>
 
                                     <tr id="loan_proceed">
-                                        <td>Insider's Cash, LLC Loan proceeds<br /><span class="help">*not including origination fee or reserves.</span></td>
+                                        <td>Loan<br /><span class="help">*not including origination fee or reserves.</span></td>
                                         <td>
                                             {{ Former::text('loanProceedPct','')->label('')->class('span1') }} %
                                         </td>

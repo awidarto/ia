@@ -213,9 +213,9 @@
 
             </tr>
             <tr>
-                <th>ROI</th>
+                <th>Monthly Rental</th>
                 <td>
-                    {{ number_format(Prefs::roi($prop),1,'.',',') }}%
+                    ${{ number_format($prop['monthlyRental'],0,'.',',') }}
                 </td>
 
                 <th>Pool</th>

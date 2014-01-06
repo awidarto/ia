@@ -13,7 +13,7 @@ return array(
             'Business'=>'Business'
         ),
     'entity_source'=>array(
-            'Veil'=>'Veil',
+            'VC'=>'VC',
             'Other'=>'Other',
             'Not yet registered'=>'Not yet registered'
         ),
