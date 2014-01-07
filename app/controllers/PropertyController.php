@@ -159,10 +159,14 @@ class PropertyController extends BaseController {
 
             $buyermodel->insert($buyer);
 
-            $model = new Transaction();
+            $trx = Transaction::create($data);
 
-            if($obj = $model->insert($data)){
-                return Redirect::to('property/review')->with('notify_success','Order saved successfully');
+            foreach($data as $k=>$v){
+                $trx->{$k} = $v;
+            }
+
+            if($trx->save()){
+                return Redirect::to('property/review/'.$trx->_id)->with('notify_success','Order saved successfully');
             }else{
                 return Redirect::to('property/review')->with('notify_success','Order saving failed');
             }
@@ -184,6 +188,18 @@ class PropertyController extends BaseController {
 
         return View::make('pages.pagereader')->with('content',$page);
     }
+
+    public function getReview($id = null){
+
+        $trx = Transaction::find($id)->toArray();
+
+        $prop = Property::find($trx['propObjectId'])->toArray();
+
+        //print_r($trx);
+
+        return View::make('pages.review')->with('trx',$trx)->with('prop',$prop);
+    }
+
 
     public function getTransactions(){
 

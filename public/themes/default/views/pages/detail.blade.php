@@ -92,8 +92,8 @@
         font-size: 36px;
     }
 
-    i.icon-download{
-        font-size: 26px;
+    i.icon-download , i.icon-map-marker, i.icon-envelope{
+        font-size: 20px;
     }
 
     ul.thumbnails_grid{
@@ -130,6 +130,20 @@
     }
 
 </style>
+
+<?php
+
+    $address = $prop['number'].' '.$prop['address'].' '.$prop['city'].', '.$prop['state'].' '.$prop['zipCode'];
+    if($prop['type'] == 'LAND'){
+        $color = 'green';
+        $label = 'L';
+    }else{
+        $color = 'blue';
+        $label = 'H';
+    }
+
+?>
+
 
 <h1>
     <a href="{{ URL::previous() }}" class="btn btn-primary">&laquo; Back</a>
@@ -206,10 +220,17 @@
                     {{ $prop['garage'] }}
                 </td>
 
-                <th>Construction</th>
-                <td>
-                    {{ $prop['typeOfConstruction'] }}
-                </td>
+                @if($prop['typeOfConstruction'] == '')
+                    <th>Property Manager</th>
+                    <td>
+                        {{ $prop['propertyManager'] }}
+                    </td>
+                @else
+                    <th>Construction</th>
+                    <td>
+                        {{ $prop['typeOfConstruction'] }}
+                    </td>
+                @endif
 
             </tr>
             <tr>
@@ -231,15 +252,76 @@
             </tr>
         </table>
     </div>
-    <div class="span1" style="text-align:center;">
-        <a href="{{ URL::to('brochure/dl/'.$prop['_id'])}}" target="blank" style="width:100%">Brochure<br /><i class="icon-download"></i></a>
-        <br />
-        <br />
-        <a href="{{ URL::to('property/buy/'.$prop['_id']) }}" class="btn btn-primary btn-buy"><i class="icon-shopping-cart"></i></a>
+    <div class="span1" style="text-align:left;display:block;">
+
+        <a href="{{ URL::to('property/buy/'.$prop['_id']) }}" class="btn btn-primary btn-buy" style="margin-top:75px;bottom:0px;"><i class="icon-shopping-cart"></i></a>
     </div>
 </div>
 <div class="row">
     <div class="span3">
+        <table class="table">
+            <tr>
+                <td colspan="2" style="text-align:justify;">
+                    <a href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$address}}&ie=UTF8&hq=&hnear={{$address}}" target="blank" style="width:100%;line-height:24px;"><i class="icon-map-marker"></i></a>
+                    &nbsp;&nbsp;&nbsp;
+                    <a href="{{ URL::to('brochure/dl/'.$prop['_id'])}}" target="blank" style="width:100%"><i class="icon-download"></i></a>
+                    &nbsp;&nbsp;&nbsp;
+                    <a href="{{ URL::to('brochure/dl/'.$prop['_id'])}}" target="blank" style="width:100%"><i class="icon-envelope"></i></a>
+                </td>
+            </tr>
+            <tr>
+
+                <th>Category</th>
+                <td>
+                    {{ ucfirst(strtolower($prop['category'])) }}
+                </td>
+            </tr>
+            <tr>
+
+                <th>Lease Term</th>
+                <td>
+                    {{ $prop['leaseTerms'] }}
+                </td>
+
+            </tr>
+            <tr>
+
+                <th>Lease Start Date</th>
+                <td>
+                    {{ $prop['leaseStartDate'] }}
+                </td>
+
+            </tr>
+            <tr>
+
+                <th>Annual Tax</th>
+                <td>
+                    ${{ $prop['tax'] }}
+                </td>
+            </tr>
+            <tr>
+
+                <th>Insurance</th>
+                <td>
+                    {{ $prop['insurance'] }}
+                </td>
+            </tr>
+            <tr>
+                <th>Property Manager</th>
+                <td>
+                    {{ $prop['propertyManager'] }}
+                </td>
+            </tr>
+            <tr>
+
+                <th>Parcel #</th>
+                <td>
+                    {{ $prop['parcelNumber'] }}
+                </td>
+
+            </tr>
+
+        </table>
         <h4>Description</h4>
         {{ $prop['description']}}
     </div>
@@ -255,21 +337,26 @@
         </ul>
         <div class="clearfix"></div>
         <div id="map-box">
-            <?php
-
-                $address = $prop['number'].' '.$prop['address'].' '.$prop['city'].', '.$prop['state'].' '.$prop['zipCode'];
-                if($prop['type'] == 'LAND'){
-                    $color = 'green';
-                    $label = 'L';
-                }else{
-                    $color = 'blue';
-                    $label = 'H';
-                }
-
-            ?>
             <div id="map-container">
-                <img src="http://maps.googleapis.com/maps/api/staticmap?center={{ $address }}&zoom=13&size=300x250&maptype=roadmap&markers=color:{{ $color }}%7Clabel:{{ $label }}%7C{{ $address }}&sensor=false" />
+                <img src="http://maps.googleapis.com/maps/api/staticmap?center={{ $address }}&zoom=13&size=300x250&maptype=roadmap&markers=color:{{ $color }}%7Clabel:{{ $label }}%7C{{ $address }}&sensor=false" style="float:left"/>
             </div>
+            <table class="table" style="width:365px;float:right;">
+                <tr>
+
+                    <th>Category</th>
+                    <td>
+                        {{ ucfirst(strtolower($prop['category'])) }}
+                    </td>
+                </tr>
+                <tr>
+
+                    <th>Least Term</th>
+                    <td>
+                        {{ $prop['leaseTerms'] }}
+                    </td>
+
+                </tr>
+            </table>
         </div>
     </div>
 </div>

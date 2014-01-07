@@ -95,7 +95,7 @@
         font-size: 36px;
     }
 
-    i.icon-download, i.icon-map-marker{
+    i.icon-download , i.icon-map-marker, i.icon-envelope{
         font-size: 26px;
     }
 
@@ -175,13 +175,6 @@
             Your shopping cart will expire in <span id="session-counter"></span>.
         </div>
 
-        <div id="icon-bar" style="text-align:right;position:relative;bottom:0;">
-            <br />
-            <br />
-            <a href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$address}}&ie=UTF8&hq=&hnear={{$address}}" target="blank" style="width:100%;line-height:24px;"><i class="icon-map-marker"></i> Map</a>&nbsp;&nbsp;
-            <a href="{{ URL::to('brochure/dl/'.$prop['_id'])}}" target="blank" style="width:100%;line-height:24px;"><i class="icon-download"></i> Brochure</a>
-        </div>
-
     </div>
     <hr>
 </div>
@@ -197,6 +190,15 @@
                 </th>
             </tr>
             --}}
+            <tr>
+                <td colspan="2" style="text-align:justify;">
+                    <a href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$address}}&ie=UTF8&hq=&hnear={{$address}}" target="blank" style="width:100%;line-height:24px;"><i class="icon-map-marker"></i></a>
+                    &nbsp;&nbsp;&nbsp;
+                    <a href="{{ URL::to('brochure/dl/'.$prop['_id'])}}" target="blank" style="width:100%"><i class="icon-download"></i></a>
+                    &nbsp;&nbsp;&nbsp;
+                    <a href="{{ URL::to('brochure/dl/'.$prop['_id'])}}" target="blank" style="width:100%"><i class="icon-envelope"></i></a>
+                </td>
+            </tr>
             <tr>
                 <th>Price</th>
                 <td>
@@ -317,6 +319,11 @@
                     zoom: 1;
                     width: 26%;
                 }
+
+                input.error, select.error{
+                    border: 1px solid red;
+                    background-color: orange;
+                }
             </style>
 
                 <div id="rootwizard" style="width: 645px;">
@@ -344,28 +351,28 @@
                                 <div class="span4">
                                     {{ Former::text('customerId','Customer ID')->value( str_random(5) )->class('span1') }}
                                     {{ Former::select('salutation')->options(Config::get('kickstart.salutation'))->label('Salutation')->class('span1') }}
-                                    {{ Former::text('firstname','First Name')->class('span3') }}
-                                    {{ Former::text('lastname','Last Name')->class('span3') }}
-                                    {{ Former::text('company','Company / Entity')->class('span3') }}
-                                    {{ Former::text('phone','Telephone')->class('span3') }}
-                                    {{ Former::text('email','Email Address')->class('span3') }}
+                                    {{ Former::text('firstname','First Name *')->class('span3')->id('firstname') }}
+                                    {{ Former::text('lastname','Last Name *')->class('span3')->id('lastname') }}
+                                    {{ Former::text('company','Company / Entity *')->class('span3')->id('company') }}
+                                    {{ Former::text('phone','Telephone *')->class('span3')->id('phone') }}
+                                    {{ Former::text('email','Email Address *')->class('span3')->id('email') }}
 
                                 </div>
                                 <div class="span4">
-                                    {{ Former::text('address','Street Address') }}
-                                    {{ Former::text('city','City') }}
+                                    {{ Former::text('address','Street Address *')->id('address') }}
+                                    {{ Former::text('city','City *')->id('city') }}
                                     {{ Former::select('countryOfOrigin')->options(Config::get('country.countries'))->label('Country')->id('country') }}
                                     <div class="us" style="display:none;">
-                                        {{ Former::select('state')->class('us')->options(Config::get('country.us_states'))->label('State')->style('display:none;') }}
+                                        {{ Former::select('state')->class('us')->options(Config::get('country.us_states'))->label('State')->style('display:none;')->id('us_states') }}
                                     </div>
                                     <div class="au" style="display:none;">
-                                        {{ Former::select('state')->class('au')->options(Config::get('country.aus_states'))->label('State')->style('display:none;') }}
+                                        {{ Former::select('state')->class('au')->options(Config::get('country.aus_states'))->label('State')->style('display:none;')->id('au_states') }}
                                     </div>
                                     <div class="outside">
-                                        {{ Former::text('state','State / Province')->class('outside') }}
+                                        {{ Former::text('state','State / Province')->class('outside')->id('other_state') }}
                                     </div>
 
-                                    {{ Former::text('zipCode','ZIP / Postal Code') }}
+                                    {{ Former::text('zipCode','ZIP / Postal Code')->id('zip') }}
 
                                     {{ Former::hidden('agentId')->value( Auth::user()->_id ) }}
                                     {{ Former::hidden('agentName')->value( Auth::user()->firstname.' '.Auth::user()->lastname ) }}
@@ -402,7 +409,7 @@
                                 {{ Former::text('legalName','Legal Name for Title') }}
                                 {{ Former::select('entityType')->options(Config::get('ia.entity_type'))->label('Entity Type')->id('entity_type') }}
                                 <div id="entity_source" style="display:none;">
-                                {{ Former::select('entitySource')->options(Config::get('ia.entity_source'))->label('Entity Type') }}
+                                {{ Former::select('entitySource')->options(Config::get('ia.entity_source'))->label('Entity Source') }}
                                 </div>
                         </div>
                         {{ Former::framework('Nude')}}
@@ -478,34 +485,38 @@
                                         <td>
                                             {{ Former::select('earnestMoneyType1')->options(Config::get('ia.funding_method'))->label('')->class('span2') }} <span id="more_earnest" class="more">Add More</span>
                                         </td>
-                                        <td>{{ Former::text('earnestMoney1','')->label('')->class('span2') }}</td>
+                                        <td>{{ Former::text('earnestMoney1','')->label('')->class('span2 tp') }}</td>
                                     </tr>
                                     <tr id="earnest_2" style="display:none;">
                                         <td>Earnest Money 2</td>
                                         <td>
                                             {{ Former::select('earnestMoneyType2')->options(Config::get('ia.funding_method'))->label('')->class('span2') }}
                                         </td>
-                                        <td>{{ Former::text('earnestMoney2','')->label('')->class('span2') }}</td>
+                                        <td>{{ Former::text('earnestMoney2','')->label('')->class('span2 tp') }}</td>
                                     </tr>
                                     <tr>
                                         <td>Client Remaining Balance (Cash)</td>
                                         <td></td>
-                                        <td><span id="remaining_balance"></span></td>
+                                        <td><span id="txt_remaining_balance"></span>
+                                            {{ Former::hidden('remaining_balance')->id('remaining_balance')}}
+                                        </td>
                                     </tr>
 
                                     <tr id="loan_proceed">
                                         <td>Loan<br /><span class="help">*not including origination fee or reserves.</span></td>
                                         <td>
-                                            {{ Former::text('loanProceedPct','')->label('')->class('span1') }} %
+                                            {{ Former::text('loanProceedPct','')->id('loanProceedPct')->label('')->class('span1 tp') }} %
                                         </td>
                                         <td>
-                                            {{ Former::text('loanProceed','')->label('')->class('span2') }}
+                                            {{ Former::text('loanProceed','')->id('loanProceed')->label('')->class('span2') }}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td><h3>Total Payment</h3></td>
                                         <td></td>
-                                        <td><span id="total_payment"></span></td>
+                                        <td><span id="txt_total_payment"></span>
+                                            {{ Former::hidden('total_payment')->id('total_payment')}}
+                                        </td>
                                     </tr>
 
                                 </tbody>
@@ -514,10 +525,10 @@
 
                         </div>
                         <ul class="pager wizard">
-                            <li class="previous first" style="display:none;"><a href="#">First</a></li>
-                            <li class="previous"><a href="#">Previous</a></li>
-                            <li class="next" ><a href="#">Next</a></li>
-                            <li class="next finish" id="process" style="display:none;"><a href="">Process</a></li>
+                            <li class="previous first" style="display:none;"><a href="#"><i class="icon-chevron-left"></i></a></li>
+                            <li class="previous"><a href="#"><i class="icon-chevron-left"></i></a></li>
+                            <li class="next" ><a href="#"><i class="icon-chevron-right"></i></a></li>
+                            <li class="next finish" id="process" style="display:none;"><a href=""><i class="icon-check-sign"></i></a></li>
                         </ul>
                     </div>
 
@@ -579,6 +590,8 @@
                     var tax = $('#tax').val();
                     var closingCost = $('#closingCost').val();
 
+
+
                     var total_purchase = notNan(salePrice) + notNan(adjustment1) + notNan(adjustment2) + notNan(insurance) + notNan(tax) + notNan(closingCost);
 
                     console.log(total_purchase);
@@ -586,6 +599,28 @@
                     return total_purchase;
                 }
 
+                function calculateAdvance(total_purchase){
+                    var earnestMoney1 = $('#earnestMoney1').val();
+                    var earnestMoney2 = $('#earnestMoney2').val();
+                    var loanPercent = $('#loanProceedPct').val();
+
+                    var total_earnest = notNan(earnestMoney1) + notNan(earnestMoney2);
+                    var client_balance = total_purchase - total_earnest;
+
+                    $('#remaining_balance').val(client_balance);
+                    $('#txt_remaining_balance').html(client_balance);
+
+                    var loan = (notNan(loanPercent) / 100 ) * total_purchase;
+
+                    loan = Math.round(loan);
+
+                    $('#loanProceed').val(loan);
+
+                    var total_payment = (total_purchase - total_earnest) - loan;
+
+                    return total_payment;
+
+                }
 
                 var myCounter = new Countdown({
                     seconds:60*15,  // number of seconds to count down
@@ -607,8 +642,13 @@
 
 
                 $('.tp').on('keyup',function(){
-                    var tp = calculateCost();
-                    $('#total_purchase').html(tp);
+                    var total_purchase = calculateCost();
+                    $('#total_purchase').html(total_purchase);
+
+                    var total_payment = calculateAdvance(total_purchase);
+                    $('#total_payment').val(total_payment);
+                    $('#txt_total_payment').html(total_payment);
+
                 });
 
                 $('#country').on('change',function(){
@@ -635,13 +675,19 @@
 
                     var etype = $('#entity_type').val();
 
+                    var legalName = '';
+
                     if(etype == 'Business'){
                         $('#entity_source').show();
                         $('#loan_proceed').show();
+                        legalName = $('#company').val();
                     }else{
                         $('#entity_source').hide();
                         $('#loan_proceed').hide();
+                        legalName = $('#firstname').val() + ' ' + $('#lastname').val();
                     }
+
+                    $('#legalName').val(legalName);
 
                 });
 
@@ -662,18 +708,66 @@
                 $('#rootwizard').bootstrapWizard({
                     'tabClass': 'bwizard-steps',
                     onNext: function(tab, navigation, index) {
-                            if(index==2) {
+
+                            var ret = true;
+
+                            if(index==1) {
+
+                                $('input').removeClass('error');
+
                                 // Make sure we entered the name
-                                if(!$('#name').val()) {
-                                    /*
-                                    alert('You must enter your name');
-                                    $('#name').focus();
-                                    return false;
-                                    */
+                                if(!$('#firstname').val()) {
+                                    $('#firstname').focus();
+                                    $('#firstname').addClass('error');
+                                    ret = false;
                                 }
+                                if(!$('#lastname').val()) {
+                                    $('#lastname').focus();
+                                    $('#lastname').addClass('error');
+                                    ret = false;
+                                }
+                                if(!$('#company').val()) {
+                                    $('#company').focus();
+                                    $('#company').addClass('error');
+                                    ret = false;
+                                }
+                                if(!$('#phone').val()) {
+                                    $('#phone').focus();
+                                    $('#phone').addClass('error');
+                                    ret = false;
+                                }
+                                if(!$('#email').val()) {
+                                    $('#email').focus();
+                                    $('#email').addClass('error');
+                                    ret = false;
+                                }
+                                if(!$('#address').val()) {
+                                    $('#address').focus();
+                                    $('#address').addClass('error');
+                                    ret = false;
+                                }
+
+                                if(!$('#city').val()) {
+                                    $('#city').focus();
+                                    $('#city').addClass('error');
+                                    ret = false;
+                                }
+
+                                if($('#country').val() == '-') {
+                                    $('#country').focus();
+                                    $('#country').addClass('error');
+                                    ret = false;
+                                }
+
+                                $('.error').attr('placeholder','required field');
+
+                                return ret;
                             }
 
                         },
+                    onTabClick:function(tab, navigation, index){
+                        return false;
+                    },
                     onTabShow: function(tab, navigation, index) {
 
                             console.log(index);
@@ -697,12 +791,38 @@
 
                 });
 
+
                 $('#process').on('click',function(){
 
-                    $('#orderform').submit();
-                    return false;
+                    var ret = true;
+
+                    console.log($('#adjustment1').val());
+                    console.log($('#code1').val());
+
+                    $('input').removeClass('error');
+
+                    if($('#adjustment1').val() && !$('#code1').val()) {
+                        $('#code1').focus();
+                        $('#code1').addClass('error');
+                        ret = false;
+                    }
+
+                    if($('#adjustment2').val() && !$('#code2').val()) {
+                        $('#code2').focus();
+                        $('#code2').addClass('error');
+                        ret = false;
+                    }
+
+                    if(ret){
+                        $('#orderform').submit();
+                        return false;
+                    }else{
+                        return false;
+                    }
+
 
                 });
+
 
             });
 
