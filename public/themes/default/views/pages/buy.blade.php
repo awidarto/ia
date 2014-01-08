@@ -453,7 +453,7 @@
                                         <td>Annual Insurance Premium</td>
                                         <td></td>
                                         <td>{{ $prop['insurance'] }}
-                                            {{ Former::hidden('insurance')->value($prop['insurance'] )->id('listingPrice') }}
+                                            {{ Former::hidden('insurance')->value($prop['insurance'] )->id('insurance') }}
 
                                         </td>
                                     </tr>
@@ -473,7 +473,9 @@
                                     <tr>
                                         <td><h4>Total Purchase Price</h4></td>
                                         <td></td>
-                                        <td><h4 id="total_purchase"></h4></td>
+                                        <td><h4 id="txt_total_purchase"></h4>
+                                            {{ Former::hidden('total_purchase')->id('total_purchase')}}
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td></td>
@@ -595,6 +597,9 @@
                     var total_purchase = notNan(salePrice) + notNan(adjustment1) + notNan(adjustment2) + notNan(insurance) + notNan(tax) + notNan(closingCost);
 
                     console.log(total_purchase);
+
+                    $('#total_purchase').val(total_purchase);
+                    $('#txt_total_purchase').html(total_purchase);
 
                     return total_purchase;
                 }
