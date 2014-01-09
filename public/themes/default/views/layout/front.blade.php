@@ -18,10 +18,16 @@
 
         {{ HTML::style('css/blueimp-gallery.min.css') }}
 
+        {{ HTML::style('css/custom-theme/jquery-ui-1.10.3.custom.css')}}
+
 		{{-- HTML::style('bootstrap/css/bootswatch.css') --}}
 		{{ HTML::style('bootstrap/css/app.css') }}
 
-        {{ HTML::script('realia/js/jquery.js') }}
+        {{ HTML::script('js/jquery-1.9.1.js') }}
+
+        {{ HTML::script('js/jquery-ui/js/jquery-ui-1.10.3.custom.min.js')}}
+
+        {{ HTML::style('bootstrap/css/app.css') }}
 
         <style type="text/css">
 
@@ -177,6 +183,12 @@
 
         {{ HTML::script('js/blueimp-gallery.min.js') }}
         {{ HTML::script('js/jquery.blueimp-gallery.min.js') }}
+
+        <script type="text/javascript">
+            var base = '{{ URL::to('/')}}/';
+        </script>
+
+        {{ HTML::script('js/ia.js') }}
 
 </body>
 </html>

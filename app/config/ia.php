@@ -39,6 +39,8 @@ return array(
             'offline'=>'Offline',
             'prelisted'=>'Prelisted',
             'available'=>'Available for Sale',
+            'reserved'=>'Reserved',
+            'pending'=>'Pending Sales',
             'sold'=>'Sold'
         ),
     'search_publishing'=>array(
@@ -46,6 +48,8 @@ return array(
             'offline'=>'Offline',
             'prelisted'=>'Prelisted',
             'available'=>'Available for Sale',
+            'reserved'=>'Reserved',
+            'pending'=>'Pending Sales',
             'sold'=>'Sold'
         ),
 

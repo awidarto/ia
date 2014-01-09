@@ -111,7 +111,18 @@ class PropertyController extends BaseController {
             $page = null;
         }
 
-        return View::make('pages.buy')->with('prop',$page);
+        return View::make('pages.buy')->with('prop',$page)->with('trx_id','')->with('update',0);
+    }
+
+    public function getUpdate($id = null){
+
+        $trx = Transaction::find($id)->toArray();
+
+        $prop = Property::find($trx['propObjectId'])->toArray();
+
+        Former::populate($trx);
+
+        return View::make('pages.buy')->with('prop',$prop)->with('trx_id',$id)->with('update',1);
     }
 
     public function postProcess(){
@@ -135,8 +146,11 @@ class PropertyController extends BaseController {
             $data['createdDate'] = new MongoDate();
             $data['lastUpdate'] = new MongoDate();
 
+            $data['update'] = (is_null($data['update']) || $data['update'] == '')?0:$data['update'];
+            $trx_id = (is_null($data['trx_id']) || $data['trx_id'] == '')?0:$data['trx_id'];
 
             $buyer = array();
+            $buyer['buyerId']           =        $data['buyerId'];
 
             $buyer['agentId']           =        $data['agentId'];
             $buyer['agentName']         =          $data['agentName'];
@@ -152,14 +166,43 @@ class PropertyController extends BaseController {
             $buyer['countryOfOrigin']   =            $data['countryOfOrigin'];
             $buyer['state']             =      $data['state'];
             $buyer['zipCode']           =        $data['zipCode'];
-            $buyer['createdDate']       =            new MongoDate();
-            $buyer['lastUpdate']        =           new MongoDate();
 
-            $buyermodel = new Buyer();
+            $sequence = new Sequence();
 
-            $buyermodel->insert($buyer);
+            $newbuyer = false;
 
-            $trx = Transaction::create($data);
+            if($buyer['buyerId'] == ''){ // new buyer
+                $seq = $sequence->getNewId('customer');
+                $buyer['sequence'] = $seq;
+                $buyer['customerId'] = 'IAB'.$seq;
+                $buyer['lastUpdate'] = new MongoDate();
+                $buyer['createdDate'] = new MongoDate();
+
+                $buyermodel = new Buyer();
+                $buyermodel->insert($buyer);
+            }elseif($buyer['buyerId'] != '' && $data['update'] == 1){
+                $buyermodel = Buyer::find($buyer['buyerId']);
+
+                foreach($buyer as $k=>$v){
+                    $buyermodel->{$k} = $v;
+                }
+
+                $buyermodel->save();
+            }
+
+
+
+            $data['adjustment1'] = ($data['adjustment1'] == '' || is_null($data['adjustment1']))?0:$data['adjustment1'];
+            $data['adjustment2'] = ($data['adjustment2'] == '' || is_null($data['adjustment2']))?0:$data['adjustment2'];
+
+            $data['earnestMoney1'] = ($data['earnestMoney1'] == '' || is_null($data['earnestMoney1']))?0:$data['earnestMoney1'];
+            $data['earnestMoney2'] = ($data['earnestMoney2'] == '' || is_null($data['earnestMoney2']))?0:$data['earnestMoney2'];
+
+            if($data['update'] == 1){
+                $trx = Transaction::find($trx_id);
+            }else{
+                $trx = Transaction::create($data);
+            }
 
             foreach($data as $k=>$v){
                 $trx->{$k} = $v;
@@ -169,6 +212,56 @@ class PropertyController extends BaseController {
                 return Redirect::to('property/review/'.$trx->_id)->with('notify_success','Order saved successfully');
             }else{
                 return Redirect::to('property/review')->with('notify_success','Order saving failed');
+            }
+
+
+        }
+
+    }
+
+    public function postCommit(){
+
+        $validator = array(
+            'signature'=>'required',
+            'legalName'=>'required'
+        );
+
+        $data = Input::get();
+
+        $validation = Validator::make($input = $data, $validator);
+
+        $trx_id = $data['trx_id'];
+
+        if($validation->fails()){
+
+            return Redirect::to('property/review/'.$trx_id)->withErrors($validation)->withInput(Input::all());
+
+        }else{
+
+            unset($data['csrf_token']);
+
+            $data['lastUpdate'] = new MongoDate();
+
+
+            $trx = Transaction::find($trx_id);
+
+            $prop = Property::find($trx->propObjectId);
+
+            $prop->propertyStatus = 'booked';
+
+            $trx->propertyStatus = 'booked';
+
+            $trx->orderStatus = 'pending';
+
+            $trx->signature = $data['signature'];
+
+            $trx->legalSigned = $data['legalName'];
+
+            if($trx->save()){
+                $prop->save();
+                return Redirect::to('property/receipt/'.$trx->_id)->with('prop',$prop->toArray())->with('trx',$trx->toArray())->with('notify_success','Order saved successfully');
+            }else{
+                return Redirect::to('property/review/'.$trx->_id)->with('prop',$prop)->with('trx',$trx->toArray())->with('notify_success','Order Process Failed. Please check your submitted informations.');
             }
 
 
@@ -200,6 +293,18 @@ class PropertyController extends BaseController {
         return View::make('pages.review')->with('trx',$trx)->with('prop',$prop);
     }
 
+    public function getReceipt($id = null){
+
+        $trx = Transaction::find($id)->toArray();
+
+        $prop = Property::find($trx['propObjectId'])->toArray();
+
+        $agent = Agent::find($trx['agentId'])->toArray();
+
+        //print_r($trx);
+
+        return View::make('pages.receipt')->with('trx',$trx)->with('prop',$prop)->with('agent',$agent);
+    }
 
     public function getTransactions(){
 

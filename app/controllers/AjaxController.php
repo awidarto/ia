@@ -170,6 +170,66 @@ class AjaxController extends BaseController {
         return Response::json($result);
     }
 
+    public function getBuyerfirstname()
+    {
+        $q = Input::get('term');
+
+        $res = Buyer::where('firstname','like','%'.$q.'%')->get()->toArray();
+
+        $result = array();
+
+        foreach($res as $r){
+            $result[] = array('id'=>$r['_id'],'value'=>$r['firstname'],'email'=>$r['email'],'label'=>$r['firstname'].' '.$r['lastname'].' ('.$r['email'].')','userdata'=>$r);
+        }
+
+        return Response::json($result);
+    }
+
+    public function getBuyerlastname()
+    {
+        $q = Input::get('term');
+
+        $res = Buyer::where('lastname','like','%'.$q.'%')->get()->toArray();
+
+        $result = array();
+
+        foreach($res as $r){
+            $result[] = array('id'=>$r['_id'],'value'=>$r['lastname'],'email'=>$r['email'],'label'=>$r['firstname'].' '.$r['lastname'].' ('.$r['email'].')','userdata'=>$r);
+        }
+
+        return Response::json($result);
+    }
+
+    public function getBuyeremail()
+    {
+        $q = Input::get('term');
+
+        $res = Buyer::where('email','like','%'.$q.'%')->get()->toArray();
+
+        $result = array();
+
+        foreach($res as $r){
+            $result[] = array('id'=>$r['_id'],'value'=>$r['email'],'email'=>$r['email'],'label'=>$r['email'],'userdata'=>$r);
+        }
+
+        return Response::json($result);
+    }
+
+    public function getBuyerid()
+    {
+        $q = Input::get('term');
+
+        $res = Buyer::where('customerId','like','%'.$q.'%')->get()->toArray();
+
+        $result = array();
+
+        foreach($res as $r){
+            $result[] = array('id'=>$r['_id'],'value'=>$r['customerId'],'email'=>$r['email'],'label'=>$r['customerId'],'userdata'=>$r);
+        }
+
+        return Response::json($result);
+    }
+
     public function getGroup()
     {
         $q = Input::get('term');

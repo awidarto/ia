@@ -317,6 +317,21 @@
 			}
 		});
 
+        $( '.autoid' ).autocomplete({
+          source: [ "c++", "java", "php", "coldfusion", "javascript", "asp", "ruby" ]
+        });
+
+        $( '.autofirstname' ).autocomplete({
+          source: [ "c++", "java", "php", "coldfusion", "javascript", "asp", "ruby" ]
+        });
+
+        $( '.autolastname' ).autocomplete({
+          source: [ "c++", "java", "php", "coldfusion", "javascript", "asp", "ruby" ]
+        });
+
+        $( '.autoemail' ).autocomplete({
+          source: [ "c++", "java", "php", "coldfusion", "javascript", "asp", "ruby" ]
+        });
 
 		$('.auto_userdata').autocomplete({
 			source: base + 'ajax/userdata',

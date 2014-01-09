@@ -329,6 +329,9 @@
             </tbody>
         </table>
         <br />
+        <?php
+            $prop['tax'] = str_replace(array(',','.'), '', $prop['tax']);
+        ?>
         <table class="table table-bordered table-striped" id="finance" >
             <thead>
                 <tr>
@@ -425,17 +428,22 @@
         </table>
 
         <div class="row">
-            <div class="span6">
+            <div class="span8">
                 {{ Former::framework('TwitterBootstrap')}}
                 <h4>Review and Submit</h4>
                 {{ Former::open_horizontal('property/commit')}}
+
+                {{ Former::hidden('trx_id',$trx['_id'])}}
+
                 <p>
-                    Please review the summary above. By Entering your name below you are electronically signing and agreeing to the purchase agreement found here. Click "Next" to process your order.
+                    Please review the summary above. By Entering your name below you are electronically signing and agreeing to the purchase agreement found here.
+                    Click "Edit" to revise your current transaction or click "Process" to process your order.
                 </p>
                 {{ Former::text('legalName','Entity Name')->value($trx['legalName'])}}
                 {{ Former::text('signature','Signature') }}
 
-
+                {{ HTML::link('property/update/'.$trx['_id'],'&laquo; Edit',array('class'=>'btn btn-success  btn-large'))}}
+                {{ Former::submit('Process &raquo;')->class('btn btn-primary btn-large pull-right')}}
                 {{ Former::close()}}
 
             </div>

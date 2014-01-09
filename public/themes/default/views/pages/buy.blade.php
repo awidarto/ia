@@ -342,20 +342,25 @@
 
                     {{ Former::open_horizontal('property/process')->id('orderform')}}
 
+                    {{ Former::hidden('update')->value($update) }}
+                    {{ Former::hidden('trx_id')->value($trx_id) }}
+
                     {{ Former::hidden('propObjectId')->value($prop['_id']) }}
                     {{ Former::hidden('propertyId')->value($prop['propertyId']) }}
+
 
                     <div class="tab-content">
                         <div class="tab-pane" id="tab1">
                             <div class="row">
                                 <div class="span4">
-                                    {{ Former::text('customerId','Customer ID')->value( str_random(5) )->class('span1') }}
+                                    {{ Former::hidden('buyerId')->id('buyerId')}}
+                                    {{ Former::text('customerId','Customer ID')->class('span1 autoid') }}
                                     {{ Former::select('salutation')->options(Config::get('kickstart.salutation'))->label('Salutation')->class('span1') }}
-                                    {{ Former::text('firstname','First Name *')->class('span3')->id('firstname') }}
-                                    {{ Former::text('lastname','Last Name *')->class('span3')->id('lastname') }}
+                                    {{ Former::text('firstname','First Name *')->class('span3 autofirstname')->id('firstname') }}
+                                    {{ Former::text('lastname','Last Name *')->class('span3 autolastname')->id('lastname') }}
                                     {{ Former::text('company','Company / Entity *')->class('span3')->id('company') }}
                                     {{ Former::text('phone','Telephone *')->class('span3')->id('phone') }}
-                                    {{ Former::text('email','Email Address *')->class('span3')->id('email') }}
+                                    {{ Former::text('email','Email Address *')->class('span3 autoemail')->id('email') }}
 
                                 </div>
                                 <div class="span4">
@@ -413,6 +418,9 @@
                                 </div>
                         </div>
                         {{ Former::framework('Nude')}}
+                        <?php
+                            $prop['tax'] = str_replace(array(',','.'), '', $prop['tax']);
+                        ?>
                         <div class="tab-pane" id="tab3">
                             <table class="table table-bordered table-striped" id="finance" >
                                 <thead>
@@ -461,7 +469,7 @@
                                         <td>Tax Adjustment</td>
                                         <td></td>
                                         <td>{{ $prop['tax'] }}
-                                            {{ Former::hidden('tax')->value($prop['tax'] )->id('tax') }}
+                                            {{ Former::hidden('tax')->value( $prop['tax'] )->id('tax') }}
                                         </td>
                                     </tr>
                                     <tr>
@@ -530,7 +538,7 @@
                             <li class="previous first" style="display:none;"><a href="#"><i class="icon-chevron-left"></i></a></li>
                             <li class="previous"><a href="#"><i class="icon-chevron-left"></i></a></li>
                             <li class="next" ><a href="#"><i class="icon-chevron-right"></i></a></li>
-                            <li class="next finish" id="process" style="display:none;"><a href=""><i class="icon-check-sign"></i></a></li>
+                            <li class="next finish" id="process" style="display:none;"><a href="" style="font-size:20px;"><i class="icon-ok"></i></a></li>
                         </ul>
                     </div>
 
@@ -806,13 +814,13 @@
 
                     $('input').removeClass('error');
 
-                    if($('#adjustment1').val() && !$('#code1').val()) {
+                    if($('#adjustment1').val() > 0 && !$('#code1').val()) {
                         $('#code1').focus();
                         $('#code1').addClass('error');
                         ret = false;
                     }
 
-                    if($('#adjustment2').val() && !$('#code2').val()) {
+                    if($('#adjustment2').val() > 0 && !$('#code2').val()) {
                         $('#code2').focus();
                         $('#code2').addClass('error');
                         ret = false;
