@@ -95,8 +95,8 @@
         font-size: 36px;
     }
 
-    i.icon-download , i.icon-map-marker, i.icon-envelope{
-        font-size: 26px;
+    i.icon-download , i.icon-map-marker, i.icon-envelope, i.icon-print{
+        font-size: 18px;
     }
 
     ul.thumbnails_grid{
@@ -187,11 +187,11 @@
             --}}
             <tr>
                 <td colspan="2" style="text-align:justify;">
-                    <a href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$address}}&ie=UTF8&hq=&hnear={{$address}}" target="blank" style="width:100%;line-height:24px;"><i class="icon-map-marker"></i></a>
+                    <a class="btn"  href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$address}}&ie=UTF8&hq=&hnear={{$address}}" target="blank"><i class="icon-map-marker"></i></a>
                     &nbsp;&nbsp;&nbsp;
-                    <a href="{{ URL::to('brochure/dl/'.$prop['_id'])}}" target="blank" style="width:100%"><i class="icon-download"></i></a>
+                    <a href="{{ URL::to('brochure/dl/'.$prop['_id'])}}" class="btn"  target="blank" ><i class="icon-download"></i></a>
                     &nbsp;&nbsp;&nbsp;
-                    <a href="{{ URL::to('brochure/dl/'.$prop['_id'])}}" target="blank" style="width:100%"><i class="icon-envelope"></i></a>
+                    <a href="#myModal" role="button" class="btn" data-toggle="modal"><i class="icon-envelope"></i></a>
                 </td>
             </tr>
             <tr>
@@ -301,8 +301,10 @@
     </div>
     <div class="span9">
         <h1 style="padding-left:0px;">Purchase Receipt</h1>
-        <a href="{{ URL::to('property/printreceipt/'.$trx['_id'])}}" target="new" ><i class="icon-print"></i></a>
-        <a href="{{ URL::to('property/dlreceipt/'.$trx['_id'])}}"  target="new" ><i class="icon-download"></i></a>
+        <a href="{{ URL::to('pr/print/'.$trx['_id'])}}" class="btn receipt" target="new" ><i class="icon-print"></i></a>
+        <a href="{{ URL::to('pr/dl/'.$trx['_id'])}}"  class="btn receipt"  target="new" ><i class="icon-download"></i></a>
+        <a href="#myModalReceipt" role="button" class="btn receipt" data-toggle="modal"><i class="icon-envelope"></i></a>
+
         <div class="row" style="padding-left:0px;">
             <div class="span4" style="padding-left:0px;">
                 <h3>Purchased From</h3>
@@ -358,7 +360,6 @@
                 </tr>
             </tbody>
         </table>
-        <br />
         <?php
             $prop['tax'] = str_replace(array(',','.'), '', $prop['tax']);
         ?>
@@ -754,5 +755,69 @@
             });
 
         </script>
+<!-- Modal -->
+<div id="myModalReceipt" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalReceiptLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalReceiptLabel">Send Purchase Receipt</h3>
+  </div>
+  <div class="modal-body">
+    {{ Former::open_horizontal('sendEmailForm')->id('sendEmailForm')}}
+    {{ Former::text('to', 'Send To')->id('sendTo')->help('use comma to separate multiple email addresses')}}
+    {{ Former::close() }}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#sendEmail').on('click',function(){
+                $.post('{{ URL::to('pr/mail/'.$prop['_id'])}}',
+                    { to: $('#sendTo').val() },
+                    function(data){
+                        if(data.result == 'OK'){
+                            $('#sendTo').val('');
+                            $('#myModalReceipt').modal('hide');
+                        }
+                    },'json'
+                );
+            });
+        });
+    </script>
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    <button class="btn btn-primary" id="sendEmail">Send</button>
+  </div>
+</div>
+
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Send Property Brochure</h3>
+  </div>
+  <div class="modal-body">
+    {{ Former::open_horizontal('sendEmailForm')->id('sendEmailForm')}}
+    {{ Former::text('to', 'Send To')->id('sendTo')->help('use comma to separate multiple email addresses')}}
+    {{ Former::close() }}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#sendEmail').on('click',function(){
+                $.post('{{ URL::to('brochure/mail/'.$prop['_id'])}}',
+                    { to: $('#sendTo').val() },
+                    function(data){
+                        if(data.result == 'OK'){
+                            $('#sendTo').val('');
+                            $('#myModal').modal('hide');
+                        }
+                    },'json'
+                );
+            });
+        });
+    </script>
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    <button class="btn btn-primary" id="sendEmail">Send</button>
+  </div>
+</div>
 
 @stop

@@ -147,10 +147,10 @@
 
 <h1>
     <a href="{{ URL::previous() }}" class="btn btn-primary">&laquo; Back</a>
+    @if(Session::get('reservedLock') == 1)
+        <span style="font-size:12px;padding:2px 4px;display:inline-block;background-color:yellow;">This property is currently under buying process.</span>
+    @endif
 </h1>
-@if(Session::get('reservedLock') == 1)
-    <span>This property is currently under buying process.</span>
-@endif
 <div class="row">
     <div class="span2">
         <div id="main-img" class="img-container">
