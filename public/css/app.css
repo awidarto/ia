@@ -39,12 +39,61 @@ h4, h5, h6 {
     line-height: 18px;
 }
 
+.img-container{
+    position:relative;
+    display: block;
+}
+
+.prop-status{
+    display: inline-block;
+    min-width: 25%;
+    position: absolute;
+    bottom: 10px;
+    right: 0px;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 2px 4px;
+    text-transform: uppercase;
+}
+
+.prop-status-small{
+    display: inline-block;
+    min-width: 25%;
+    position: absolute;
+    bottom: 10px;
+    right: 0px;
+    font-weight: bold;
+    padding: 2px 4px;
+    text-transform: uppercase;
+}
+
+.booked{
+    background-color: yellow;
+    display: block;
+}
+
+.reserved{
+    background-color: red;
+    color: white;
+}
+
+.sold{
+    background-color: brown;
+    color: white;
+}
+
+
+
 #overview{
     margin-top: 60px;
 }
 
 #overview h1{
     font-size: 36px;
+}
+
+td.curr{
+    text-align: right;
 }
 
 

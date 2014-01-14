@@ -145,6 +145,7 @@
     }
 
 </style>
+{{ HTML::style('css/imagestyle.css')}}
 
 <h1>
     <a href="{{ URL::previous() }}" class="btn btn-primary">&laquo; Back</a>
@@ -152,8 +153,9 @@
 
 <div class="row">
     <div class="span2">
-        <div id="main-img">
+        <div id="main-img" class="img-container">
             <img src="{{ (isset($prop['defaultpictures']['medium_url']))?$prop['defaultpictures']['medium_url']:'' }}" alt="{{$prop['propertyId']}}" >
+            <span class="prop-status-small {{$prop['propertyStatus']}}">{{ $prop['propertyStatus']}}</span>
         </div>
     </div>
     <div class="span3">
@@ -636,7 +638,7 @@
                 }
 
                 var myCounter = new Countdown({
-                    seconds:60*15,  // number of seconds to count down
+                    seconds:60*2,  // number of seconds to count down
                     onUpdateStatus: function(sec){
                             //console.log(sec);
 
@@ -648,10 +650,25 @@
 
                             $('#session-counter').html(minutes + ' mins ' + seconds + ' secs ');
                         }, // callback for each second
-                    onCounterEnd: function(){ alert('Your session has expired!');} // final action
+                    onCounterEnd: function(){
+                            alert('Your session has expired!');
+                            $.post('{{ URL::to('ajax/translock')}}',
+                                {
+                                    lockstatus:'open',
+                                    propObjectId: '{{ $prop['_id']}}'
+                                },
+                                function(data){
+                                    if(data.result == 'OK'){
+                                        window.location = '{{ URL::previous() }}';
+                                    }
+                                },
+                                'json');
+                        } // final action
                 });
 
+                @if($update == 0)
                 myCounter.start();
+                @endif
 
 
                 $('.tp').on('keyup',function(){

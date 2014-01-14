@@ -47,6 +47,41 @@ Route::get('brochure/dl/{id}',function($id){
         ->stream('download.pdf');
 });
 
+Route::post('brochure/mail/{id}',function($id){
+
+    $prop = Property::find($id)->toArray();
+
+    //$content = View::make('print.brochure')->with('prop',$prop)->render();
+
+    $brochurepdf =  PDF::loadView('print.brochure',array('prop'=>$prop))->output();
+
+    file_put_contents(public_path().'/storage/pdf/'.$prop['propertyId'].'.pdf', $brochurepdf);
+
+    //$mailcontent = View::make('emails.brochure')->with('prop',$prop)->render();
+
+    Mail::send('emails.brochure',$prop, function($message) use ($prop, &$prop){
+        $to = Input::get('to');
+        $tos = explode(',', $to);
+        if(is_array($tos) && count($tos) > 1){
+            foreach($tos as $to){
+                $message->to($to, $to);
+            }
+        }else{
+                $message->to($to, $to);
+        }
+
+        $message->subject('Investors Alliance - '.$prop['propertyId']);
+
+        $message->cc('support@propinvestorsalliance.com');
+
+        $message->attach(public_path().'/storage/pdf/'.$prop['propertyId'].'.pdf');
+    });
+
+    print json_encode(array('result'=>'OK'));
+
+});
+
+
 
 Route::get('pdf',function(){
     $content = "

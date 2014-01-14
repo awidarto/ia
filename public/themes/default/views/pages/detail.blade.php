@@ -130,6 +130,7 @@
     }
 
 </style>
+{{ HTML::style('css/imagestyle.css')}}
 
 <?php
 
@@ -144,15 +145,17 @@
 
 ?>
 
-
 <h1>
     <a href="{{ URL::previous() }}" class="btn btn-primary">&laquo; Back</a>
 </h1>
-
+@if(Session::get('reservedLock') == 1)
+    <span>This property is currently under buying process.</span>
+@endif
 <div class="row">
     <div class="span2">
-        <div id="main-img">
+        <div id="main-img" class="img-container">
             <img src="{{ (isset($prop['defaultpictures']['medium_url']))?$prop['defaultpictures']['medium_url']:'' }}" alt="{{$prop['propertyId']}}" >
+            <span class="prop-status-small {{$prop['propertyStatus']}}">{{ $prop['propertyStatus']}}</span>
         </div>
         <h5 style="text-align:center;">ID : {{$prop['propertyId']}}</h5>
     </div>
@@ -234,7 +237,7 @@
 
             </tr>
             <tr>
-                <th>Monthly Rental</th>
+                <th>Monthly Rent</th>
                 <td>
                     ${{ number_format($prop['monthlyRental'],0,'.',',') }}
                 </td>
@@ -254,7 +257,7 @@
     </div>
     <div class="span1" style="text-align:left;display:block;">
 
-        <a href="{{ URL::to('property/buy/'.$prop['_id']) }}" class="btn btn-primary btn-buy" style="margin-top:75px;bottom:0px;"><i class="icon-shopping-cart"></i></a>
+        <a href="{{ URL::to('property/buy/'.$prop['_id']) }}" class="btn btn-primary btn-buy" style="margin-top:90px;bottom:0px;"><i class="icon-shopping-cart"></i></a>
     </div>
 </div>
 <div class="row">
@@ -262,11 +265,12 @@
         <table class="table">
             <tr>
                 <td colspan="2" style="text-align:justify;">
-                    <a href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$address}}&ie=UTF8&hq=&hnear={{$address}}" target="blank" style="width:100%;line-height:24px;"><i class="icon-map-marker"></i></a>
+                    <a class="btn"  href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$address}}&ie=UTF8&hq=&hnear={{$address}}" target="blank"><i class="icon-map-marker"></i></a>
                     &nbsp;&nbsp;&nbsp;
-                    <a href="{{ URL::to('brochure/dl/'.$prop['_id'])}}" target="blank" style="width:100%"><i class="icon-download"></i></a>
+                    <a href="{{ URL::to('brochure/dl/'.$prop['_id'])}}" class="btn"  target="blank" ><i class="icon-download"></i></a>
                     &nbsp;&nbsp;&nbsp;
-                    <a href="{{ URL::to('brochure/dl/'.$prop['_id'])}}" target="blank" style="width:100%"><i class="icon-envelope"></i></a>
+                    <a href="#myModal" role="button" class="btn" data-toggle="modal"><i class="icon-envelope"></i></a>
+
                 </td>
             </tr>
             <tr>
@@ -336,27 +340,152 @@
             @endforeach
         </ul>
         <div class="clearfix"></div>
+
+        <style type="text/css">
+            table#fin th{
+                width:200px;
+                text-align: right;
+            }
+
+            table#fin th.header{
+                text-align: left;
+            }
+
+            table#fin input[type="text"]{
+                width:80%;
+                text-align: right;
+                margin: 0px;
+                padding: 2px;
+            }
+
+            table#fin th+td{
+                text-align: right;
+            }
+
+            table#fin tr.yield th, table#fin tr.yield td{
+                background-color: maroon;
+                color:white;
+                font-size: 14px;
+                font-weight: bold;
+            }
+
+        </style>
+
         <div id="map-box">
             <div id="map-container">
                 <img src="http://maps.googleapis.com/maps/api/staticmap?center={{ $address }}&zoom=13&size=300x250&maptype=roadmap&markers=color:{{ $color }}%7Clabel:{{ $label }}%7C{{ $address }}&sensor=false" style="float:left"/>
             </div>
-            <table class="table" style="width:365px;float:right;">
-                <tr>
+            <table class="table table-bordered" id="fin" style="width:365px;float:right;">
+                <thead>
+                    <tr>
+                        <th colspan="2" class="header">
+                            Financial Calculator
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        $annualRental = 12*$prop['monthlyRental'];
+                        $propManagementFee = $annualRental * 0.1;
+                        $maintenanceAllowance = $annualRental * 0.05;
+                        $vacancyAllowance = $annualRental * 0.05;
 
-                    <th>Category</th>
-                    <td>
-                        {{ ucfirst(strtolower($prop['category'])) }}
-                    </td>
-                </tr>
-                <tr>
+                        $totalExpense = $propManagementFee + $maintenanceAllowance + $vacancyAllowance + $prop['tax'] + $prop['insurance'];
 
-                    <th>Least Term</th>
-                    <td>
-                        {{ $prop['leaseTerms'] }}
-                    </td>
+                        $netAnnualCashFlow = $annualRental - $totalExpense;
+                        $netMonthlyCashFlow = round($netAnnualCashFlow / 12, 0, PHP_ROUND_HALF_UP);
 
-                </tr>
+                        $roi = ($netAnnualCashFlow / $prop['listingPrice']) * 100;
+                        $roi = round($roi, 1, PHP_ROUND_HALF_UP);
+
+                    ?>
+                    <tr>
+                        <th class="h5">Purchase Price</th><td class="h5">${{$prop['listingPrice']}}</td>
+                        <input type="hidden" valus="{{ $prop['listingPrice'] }}" id="purchasePrice" >
+                    </tr>
+                    <tr>
+                        <th>Monthly Rent</th><td><input class="calc" type="text" value="{{$prop['monthlyRental']}}" id="monthlyRental"></td>
+                    </tr>
+                    <tr>
+                        <th>Annual Rent</th><td id="txt_annualRental">${{ $annualRental }}</td>
+                        <input type="hidden" value="{{ $annualRental }}" id="annualRental">
+                    </tr>
+                    <tr>
+                        <th colspan="2" class="header">Annual Expenses</th>
+                        <input type="hidden" value="{{ $annualRental }}" id="annualRental">
+                    </tr>
+                    <tr>
+                        <th>Taxes</th><td><input class="calc"  type="text" value="{{str_replace(array(',','.'),'',$prop['tax']) }}" id="tax"></td>
+                    </tr>
+                    <tr>
+                        <th>Insurance</th><td><input  class="calc" type="text" value="{{$prop['insurance']}}" id="insurance"></td>
+                    </tr>
+                    <tr>
+                        <th>10% Prop Management</th><td id="propManagementFee">${{ $propManagementFee}}</td>
+                    </tr>
+                    <tr>
+                        <th>5% Maintenance Allowance</th><td id="maintenanceAllowance">${{ $maintenanceAllowance}}</td>
+                    </tr>
+                    <tr>
+                        <th>5% Vacancy Allowance</th><td id="vacancyAllowance">${{ $vacancyAllowance}}</td>
+                    </tr>
+                    <tr>
+                        <th class="h6">Total Expenses</th><td id="totalExpense">${{ $totalExpense }}</td>
+                    </tr>
+                    <tr>
+                        <th>Net Annual Cash Flow</th><td id="netAnnualCashFlow">${{ $netAnnualCashFlow }}</td>
+                    </tr>
+                    <tr>
+                        <th class="h6"><b>Net Monthly Cash Flow</b></th><td id="netMonthlyCashFlow">${{ $netMonthlyCashFlow }}</td>
+                    </tr>
+                    <tr class="yield">
+                        <th>ROI</th><td id="calcROI">{{ $roi }}%</td>
+                    </tr>
+                </tbody>
             </table>
+            <script type="text/javascript">
+                function notNan(v){
+                    if(v == '' || v == null || typeof v === "undefined" || isNaN(v) ){
+                        v = 0;
+                    }
+
+                    return parseFloat(v);
+                }
+
+                $('.calc').on('keyup',function(){
+                    var purchasePrice = {{ $prop['listingPrice']}};
+                    var monthlyRental = notNan($('#monthlyRental').val());
+
+                    var tax = notNan($('#tax').val());
+                    var insurance = notNan($('#insurance').val());
+
+                    var annualRental = 12 * monthlyRental;
+                    var propManagementFee = annualRental * 0.1;
+                    var maintenanceAllowance = annualRental * 0.05;
+                    var vacancyAllowance = annualRental * 0.05;
+
+                    var totalExpense = notNan(propManagementFee) + notNan(maintenanceAllowance) + notNan(vacancyAllowance) + tax + insurance;
+
+                    var netAnnualCashFlow = annualRental - totalExpense;
+                    var netMonthlyCashFlow = netAnnualCashFlow / 12;
+                        netMonthlyCashFlow = netMonthlyCashFlow.toFixed(0);
+
+                    var roi = ( netAnnualCashFlow / purchasePrice ) * 100;
+                    roi = roi.toFixed(1);
+
+                    $('#propManagementFee').html('$' + propManagementFee);
+                    $('#maintenanceAllowance').html('$' + maintenanceAllowance);
+                    $('#vacancyAllowance').html('$' + vacancyAllowance);
+
+                    $('#totalExpense').html('$' + totalExpense);
+                    $('#netAnnualCashFlow').html('$' + netAnnualCashFlow);
+                    $('#netMonthlyCashFlow').html('$' + netMonthlyCashFlow);
+
+                    $('#calcROI').html(roi + '%');
+
+                });
+
+            </script>
         </div>
     </div>
 </div>
@@ -369,6 +498,39 @@
     <a class="close">×</a>
     <a class="play-pause"></a>
     <ol class="indicator"></ol>
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Send Property Brochure</h3>
+  </div>
+  <div class="modal-body">
+    {{ Former::open_horizontal('sendEmailForm')->id('sendEmailForm')}}
+    {{ Former::text('to', 'Send To')->id('sendTo')->help('use comma to separate multiple email addresses')}}
+    {{ Former::close() }}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#sendEmail').on('click',function(){
+                $.post('{{ URL::to('brochure/mail/'.$prop['_id'])}}',
+                    { to: $('#sendTo').val() },
+                    function(data){
+                        if(data.result == 'OK'){
+                            $('#sendTo').val('');
+                            $('#myModal').modal('hide');
+                        }
+                    },'json'
+                );
+            });
+        });
+    </script>
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    <button class="btn btn-primary" id="sendEmail">Send</button>
+  </div>
 </div>
 
 @stop

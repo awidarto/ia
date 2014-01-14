@@ -103,15 +103,35 @@ class PropertyController extends BaseController {
 
     public function getBuy($id = null){
 
-        $page = Property::find($id);
+        $property = Property::find($id);
 
-        if($page){
-            $page = $page->toArray();
+        if($property){
+            $prop = $property->toArray();
         }else{
-            $page = null;
+            $prop = null;
         }
 
-        return View::make('pages.buy')->with('prop',$page)->with('trx_id','')->with('update',0);
+        if($prop['propertyStatus'] == 'reserved'){
+            if(isset($prop['reservedBy']) && $prop['reservedBy'] == Auth::user()->_id){
+                return View::make('pages.buy')->with('prop',$prop)->with('trx_id','')->with('update',0);
+            }else{
+                Redirect::to(URL::previous());
+            }
+        }else{
+            $property->propertyLastStatus = $property->propertyStatus;
+            $property->propertyStatus = 'reserved';
+            $property->reservedBy = Auth::user()->_id;
+            $property->reservedAt = new MongoDate();
+            $property->locked = 1;
+            $property->save();
+
+            Session::put('reservedBy', Auth::user()->_id);
+            Session::put('reservedAt', time());
+            Session::put('reservedLock', 1);
+
+            return View::make('pages.buy')->with('prop',$prop)->with('trx_id','')->with('update',0);
+        }
+
     }
 
     public function getUpdate($id = null){
@@ -202,6 +222,9 @@ class PropertyController extends BaseController {
                 $trx = Transaction::find($trx_id);
             }else{
                 $trx = Transaction::create($data);
+                $seq = $sequence->getNewId('order');
+                $data['sequence'] = $seq;
+                $data['orderNumber'] = 'IAO'.$seq;
             }
 
             foreach($data as $k=>$v){
@@ -247,9 +270,11 @@ class PropertyController extends BaseController {
 
             $prop = Property::find($trx->propObjectId);
 
-            $prop->propertyStatus = 'booked';
+            $prop->propertyStatus = 'reserved';
 
-            $trx->propertyStatus = 'booked';
+            $prop->locked = 0;
+
+            $trx->propertyStatus = 'reserved';
 
             $trx->orderStatus = 'pending';
 

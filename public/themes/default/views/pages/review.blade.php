@@ -152,8 +152,9 @@
 
 <div class="row">
     <div class="span2">
-        <div id="main-img">
+        <div id="main-img" class="img-container">
             <img src="{{ (isset($prop['defaultpictures']['medium_url']))?$prop['defaultpictures']['medium_url']:'' }}" alt="{{$prop['propertyId']}}" >
+            <span class="prop-status-small {{$prop['propertyStatus']}}">{{ $prop['propertyStatus']}}</span>
         </div>
     </div>
     <div class="span3">
@@ -301,7 +302,7 @@
     </div>
     <div class="span9">
         <h2>Property ID : {{ $prop['propertyId']}}</h2>
-        <table class="table table-bordered span4">
+        <table class="table table-bordered">
             <thead>
                 <tr>
                     <th colspan="4">Details</th>
@@ -348,28 +349,28 @@
                 </tr>
                 <tr>
                     <td>{{ $trx['adjustmentType1'] }}</td>
-                    <td>${{ number_format($trx['adjustment1'],0,'.',',')}}</td>
+                    <td class="curr">${{ number_format($trx['adjustment1'],0,'.',',')}}</td>
                     <td>${{ number_format($prop['listingPrice'] + $trx['adjustment1'],0,'.',',')}}</td>
                 </tr>
                 <tr>
                     <td>{{ $trx['adjustmentType1'] }}</td>
-                    <td>${{ number_format($trx['adjustment2'],0,'.',',')}}</td>
+                    <td class="curr">${{ number_format($trx['adjustment2'],0,'.',',')}}</td>
                     <td>${{ number_format($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'],0,'.',',')}}</td>
                 </tr>
                 <tr>
                     <td>Annual Insurance Premium</td>
-                    <td>${{ number_format($prop['insurance'],0,'.',',')}}</td>
+                    <td class="curr">${{ number_format($prop['insurance'],0,'.',',')}}</td>
                     <td>${{ number_format($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'],0,'.',',')}}</td>
 
                 </tr>
                 <tr>
                     <td>Tax Adjustment</td>
-                    <td>${{ number_format($prop['tax'],0,'.',',')}}</td>
+                    <td class="curr">${{ number_format($prop['tax'],0,'.',',')}}</td>
                     <td>${{ number_format($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'] + $prop['tax'],0,'.',',')}}</td>
                 </tr>
                 <tr>
                     <td>Closing Cost</td>
-                    <td>${{ number_format($trx['closingCost'],0,'.',',')}}</td>
+                    <td class="curr">${{ number_format($trx['closingCost'],0,'.',',')}}</td>
                     <td>${{ number_format($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'] + $prop['tax'] + $trx['closingCost'],0,'.',',')}}</td>
                 </tr>
                 <tr>
@@ -394,25 +395,25 @@
             <tbody>
                 <tr>
                     <td colspan="2">Cash Proceeds</td>
-                    <td>${{ number_format( ($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'] + $prop['tax'] + $trx['closingCost']),0,'.',',')}}</td>
+                    <td class="curr">${{ number_format( ($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'] + $prop['tax'] + $trx['closingCost']),0,'.',',')}}</td>
                     <td>${{ number_format( ($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'] + $prop['tax'] + $trx['closingCost']) ,0,'.',',')}}</td>
                 </tr>
                 <tr>
                     <td>Earnest Money Deposit 1</td>
-                    <td>{{ $trx['earnestMoneyType1']}}</td>
-                    <td>${{ number_format($trx['earnestMoney1'],0,'.',',')}}</td>
+                    <td class="curr">{{ $trx['earnestMoneyType1']}}</td>
+                    <td class="curr">${{ number_format($trx['earnestMoney1'],0,'.',',')}}</td>
                     <td>${{ number_format( ($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'] + $prop['tax'] + $trx['closingCost']) - $trx['earnestMoney1'] ,0,'.',',')}}</td>
                 </tr>
                 <tr>
                     <td>Earnest Money Deposit 2</td>
-                    <td>{{ $trx['earnestMoneyType2']}}</td>
-                    <td>${{ number_format($trx['earnestMoney2'],0,'.',',')}}</td>
+                    <td class="curr">{{ $trx['earnestMoneyType2']}}</td>
+                    <td class="curr">${{ number_format($trx['earnestMoney2'],0,'.',',')}}</td>
                     <td>${{ number_format( ($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'] + $prop['tax'] + $trx['closingCost']) - ($trx['earnestMoney1'] + $trx['earnestMoney2']) ,0,'.',',')}}</td>
                 </tr>
                 <tr>
                     <td>Loan</td>
-                    <td>{{ ($trx['loanProceedPct'] == 0)?'':$trx['loanProceedPct'].'%' }}</td>
-                    <td>${{ number_format($trx['loanProceed'],0,'.',',')}}</td>
+                    <td class="curr">{{ ($trx['loanProceedPct'] == 0)?'':$trx['loanProceedPct'].'%' }}</td>
+                    <td class="curr">${{ number_format($trx['loanProceed'],0,'.',',')}}</td>
                     <td>${{ number_format(($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'] + $prop['tax'] + $trx['closingCost']) - ($trx['earnestMoney1'] + $trx['earnestMoney2'] + $trx['loanProceed']),0,'.',',') }}</td>
                 </tr>
 
@@ -550,7 +551,7 @@
                     onCounterEnd: function(){ alert('Your session has expired!');} // final action
                 });
 
-                myCounter.start();
+                //myCounter.start();
 
 
                 $('.tp').on('keyup',function(){

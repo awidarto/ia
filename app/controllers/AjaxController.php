@@ -78,6 +78,29 @@ class AjaxController extends BaseController {
         }
     }
 
+    public function postTranslock(){
+        $in = Input::get();
+
+        if($in['lockstatus'] == 'open'){
+            Session::forget('reservedBy');
+            Session::forget('reservedAt');
+            Session::forget('reservedLock');
+
+            $property = Property::find($in['propObjectId']);
+
+            $property->propertyStatus = $property->propertyLastStatus;
+            $property->reservedBy = '';
+            $property->reservedAt = '';
+            $property->lock = 0;
+            $property->save();
+
+        }
+
+        print json_encode(array('result'=>'OK'));
+
+    }
+
+
     public function getTag()
     {
         $q = Input::get('term');

@@ -42,6 +42,9 @@ body{
 
 }
 
+td.curr{
+    text-align: right;
+}
 
 #overview{
     margin-top: 10px;

@@ -40,7 +40,7 @@ return array(
             'prelisted'=>'Prelisted',
             'available'=>'Available for Sale',
             'reserved'=>'Reserved',
-            'pending'=>'Pending Sales',
+            'pending'=>'Pending Payment',
             'sold'=>'Sold'
         ),
     'search_publishing'=>array(
@@ -49,7 +49,7 @@ return array(
             'prelisted'=>'Prelisted',
             'available'=>'Available for Sale',
             'reserved'=>'Reserved',
-            'pending'=>'Pending Sales',
+            'pending'=>'Pending Payment',
             'sold'=>'Sold'
         ),
 
