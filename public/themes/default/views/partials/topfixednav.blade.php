@@ -45,8 +45,8 @@ CONTACT US
                         <li {{ sa('page/view/research') }} ><a href="{{ URL::to('page/view/research') }}" >Research</a></li>
                     </ul>
                 </li>
-                <li {{ sa('/') }} ><a href="{{ URL::to('faq') }}" >FAQ</a></li>
-                <li {{ sa('/') }} ><a href="{{ URL::to('glossary') }}" >Glossary</a></li>
+                <li {{ sa('faq') }} ><a href="{{ URL::to('faq') }}" >FAQ</a></li>
+                <li {{ sa('glossary') }} ><a href="{{ URL::to('glossary') }}" >Glossary</a></li>
             </ul>
             <ul class="nav pull-right" id="main-menu-right">
                 @include('partials.identity')

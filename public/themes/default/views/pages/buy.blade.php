@@ -638,7 +638,7 @@
                 }
 
                 var myCounter = new Countdown({
-                    seconds:60*2,  // number of seconds to count down
+                    seconds:{{ Config::get('ia.reserveTimeOut') }},  // number of seconds to count down
                     onUpdateStatus: function(sec){
                             //console.log(sec);
 

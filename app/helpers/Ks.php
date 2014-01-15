@@ -50,7 +50,7 @@ class Ks {
     }
 
     public static function usd($in){
-        return '$'.number_format((double) $in,0,',','.');
+        return '$'.number_format((double) $in,0,'.',',');
     }
 
 }

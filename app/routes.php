@@ -239,11 +239,14 @@ Route::get('dashboard',function(){
     Theme::setCurrentTheme(Prefs::getActiveTheme() );
     Former::framework('TwitterBootstrap');
 
+    $contact = Agent::find(Auth::user()->_id)->toArray();
+
     $buyers = Buyer::where('agentId', '=', Auth::user()->_id)->orderby('createdDate')->get()->toArray();
 
     $trx = Transaction::where('agentId', '=', Auth::user()->_id)->orderby('createdDate')->get()->toArray();
 
     return View::make('pages.dashboard')
+        ->with('contact',$contact)
         ->with('buyers',$buyers)
         ->with('trx',$trx);
 });

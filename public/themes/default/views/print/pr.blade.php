@@ -5,42 +5,20 @@
 <body>
 {{ HTML::style('bootstrap/css/bootstrap.min.css') }}
 {{ HTML::style('bootstrap/css/bootstrap-responsive.min.css') }}
+{{ HTML::style('bootstrap/css/app.css') }}
 <style type="text/css">
-    div.dcol h1,
-    div.dcol h2,
-    div.dcol h3,
-    div.dcol h4,
-    div.dcol h5,
-    div.dcol h6 {
-            margin-top: 0px;
+
+    body {
+        background-color: transparent;
+        background: none;
     }
 
-    dl {
-        margin-bottom:50px;
-        margin-top: 0px;
-        font-size: 13px;
-    }
+    h1{
+        font-size: 28px;
+        text-align: center;
+        border-bottom: thin solid #ccc;
+        padding-bottom: 15px;
 
-    dl dt {
-        float:left;
-        font-weight:bold;
-        margin-right:10px;
-        padding:0px 2px;
-        width:100px;
-        min-width: 60px;
-        display: block;
-        vertical-align: top;
-    }
-
-    dl dt:after{
-        content: ':';
-    }
-
-    dl dd {
-        margin:2px 0;
-        padding:0px 2px;
-        display: block;
-        padding-left: 60px;
     }
 
     .h4{
@@ -145,6 +123,10 @@
         text-decoration: underline;
     }
 
+    table td.curr{
+        text-align: right;
+    }
+
 </style>
 
             <?php
@@ -152,20 +134,28 @@
             ?>
 
     <div class="container">
+        <div class="row">
+            <div class="span3">
+                <a href="{{ URL::to('/')}}" >{{ HTML::image('images/ialogo.png','Investors Alliance',array('class'=>'img-responsive' ) ) }}</a>
+            </div>
+            <div class="span9">
+            </div>
+        </div>
         <h1 style="padding-left:0px;">Purchase Receipt</h1>
         <div class="row-fluid" style="padding-left:0px;">
-            <div class="span4" style="padding-left:0px;">
+            <div class="span6" style="padding-left:0px;">
                 <h3>Purchased From</h3>
                 <h4>{{ $trx['agentName']}}</h4>
                 <h5>
                     {{ $agent['address_1'] }}<br />
+                    @if( $agent['address_2'] != '')
                     {{ $agent['address_2'] }}<br />
+                    @endif
                     {{ $agent['city']}}, {{ $agent['state']}} {{ (isset($agent['zipCode']))?$agent['zipCode']:''}}<br />
                     {{ $agent['countryOfOrigin']}}
                 </h5>
             </div>
-            <div class="span1"></div>
-            <div class="span4" style="padding-left:0px;">
+            <div class="span6" style="padding-left:0px;">
                 <h3>Purchased By</h3>
                 <h4>{{ $trx['firstname'].' '.$trx['lastname']}}</h4>
                 <h5>
@@ -192,7 +182,7 @@
                     <th>Lease Start Date</th>
                     <td>{{ $prop['leaseStartDate']}}</td>
                     <th>Lease Terms</th>
-                    <td>{{ $prop['leaseTerms']}}</td>
+                    <td>{{ $prop['leaseTerms']}} month(s)</td>
                 </tr>
                 <tr>
                     <th>Monthly Rent Amount</th>
@@ -252,8 +242,7 @@
                     <td>${{ number_format($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'] + $prop['tax'] + $trx['closingCost'],0,'.',',')}}</td>
                 </tr>
                 <tr>
-                    <td><h4>Total Purchase Price</h4></td>
-                    <td></td>
+                    <td colspan="2" class="curr"><h4>Total Purchase Price</h4></td>
                     <td><h4 id="total_purchase">
                         ${{ number_format($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'] + $prop['tax'] + $trx['closingCost'],0,'.',',')}}
                         </h4>
@@ -296,15 +285,15 @@
                 </tr>
 
                 <tr>
-                    <td colspan="3"><h4>Remaining Balance Due</h4></td>
+                    <td colspan="3" class="curr"><h4>Remaining Balance Due</h4></td>
                     <td><h4>
                         ${{ number_format(($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'] + $prop['tax'] + $trx['closingCost']) - ($trx['earnestMoney1'] + $trx['earnestMoney2'] + $trx['loanProceed']),0,'.',',') }}
                         </h4>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2"><h4>Due On</h4></td>
-                    <td colspan="2"><h4>
+                    <td colspan="3" class="curr"><h4>Due On</h4></td>
+                    <td ><h4>
                             {{ Carbon::parse($trx['createdDate'])->addDays(14)->format('d M Y')}}
                         </h4>
                     </td>

@@ -78,6 +78,8 @@ class PropertyController extends BaseController {
 
         $paging = ceil($total_found / $perpage);
 
+        Event::fire('cleanup');
+
         return View::make('pages.listing')
             ->with('properties',$properties)
             ->with('total',$total_found)
