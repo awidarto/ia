@@ -356,7 +356,7 @@
                             <div class="row">
                                 <div class="span4">
                                     {{ Former::hidden('buyerId')->id('buyerId')}}
-                                    {{ Former::text('customerId','Customer ID')->class('span1 autoid') }}
+                                    {{ Former::text('customerId','Customer ID')->class('span1 autoid')->help('Leave blank for new buyer') }}
                                     {{ Former::select('salutation')->options(Config::get('kickstart.salutation'))->label('Salutation')->class('span1') }}
                                     {{ Former::text('firstname','First Name *')->class('span3 autofirstname')->id('firstname') }}
                                     {{ Former::text('lastname','Last Name *')->class('span3 autolastname')->id('lastname') }}

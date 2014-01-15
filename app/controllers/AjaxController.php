@@ -197,7 +197,7 @@ class AjaxController extends BaseController {
     {
         $q = Input::get('term');
 
-        $res = Buyer::where('firstname','like','%'.$q.'%')->get()->toArray();
+        $res = Buyer::where('firstname','like','%'.$q.'%')->where('agentId', '=', Auth::user()->_id)->get()->toArray();
 
         $result = array();
 
@@ -212,7 +212,7 @@ class AjaxController extends BaseController {
     {
         $q = Input::get('term');
 
-        $res = Buyer::where('lastname','like','%'.$q.'%')->get()->toArray();
+        $res = Buyer::where('lastname','like','%'.$q.'%')->where('agentId', '=', Auth::user()->_id)->get()->toArray();
 
         $result = array();
 
@@ -227,7 +227,7 @@ class AjaxController extends BaseController {
     {
         $q = Input::get('term');
 
-        $res = Buyer::where('email','like','%'.$q.'%')->get()->toArray();
+        $res = Buyer::where('email','like','%'.$q.'%')->where('agentId', '=', Auth::user()->_id)->get()->toArray();
 
         $result = array();
 
@@ -242,7 +242,7 @@ class AjaxController extends BaseController {
     {
         $q = Input::get('term');
 
-        $res = Buyer::where('customerId','like','%'.$q.'%')->get()->toArray();
+        $res = Buyer::where('customerId','like','%'.$q.'%')->where('agentId', '=', Auth::user()->_id)->get()->toArray();
 
         $result = array();
 

@@ -239,9 +239,13 @@ Route::get('dashboard',function(){
     Theme::setCurrentTheme(Prefs::getActiveTheme() );
     Former::framework('TwitterBootstrap');
 
-    $featured = Property::where('tags','like','%featured%')->get()->toArray();
+    $buyers = Buyer::where('agentId', '=', Auth::user()->_id)->orderby('createdDate')->get()->toArray();
 
-    return View::make('pages.dashboard')->with('featured',$featured);
+    $trx = Transaction::where('agentId', '=', Auth::user()->_id)->orderby('createdDate')->get()->toArray();
+
+    return View::make('pages.dashboard')
+        ->with('buyers',$buyers)
+        ->with('trx',$trx);
 });
 
 
