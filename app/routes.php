@@ -239,11 +239,22 @@ Route::get('dashboard',function(){
     Theme::setCurrentTheme(Prefs::getActiveTheme() );
     Former::framework('TwitterBootstrap');
 
-    $contact = Agent::find(Auth::user()->_id)->toArray();
+    if(Auth::user()->role == 'customer'){
+        $contact = Buyer::find(Auth::user()->_id)->toArray();
 
-    $buyers = Buyer::where('agentId', '=', Auth::user()->_id)->orderby('createdDate')->get()->toArray();
+        $buyers = Buyer::find(Auth::user()->_id)->orderby('createdDate')->get()->toArray();
 
-    $trx = Transaction::where('agentId', '=', Auth::user()->_id)->orderby('createdDate')->get()->toArray();
+        $trx = Transaction::where('buyerId', '=', Auth::user()->_id)->orderby('createdDate')->get()->toArray();
+
+    }else{
+        $contact = Agent::find(Auth::user()->_id)->toArray();
+
+        $buyers = Buyer::where('agentId', '=', Auth::user()->_id)->orderby('createdDate')->get()->toArray();
+
+        $trx = Transaction::where('agentId', '=', Auth::user()->_id)->orderby('createdDate')->get()->toArray();
+
+    }
+
 
     return View::make('pages.dashboard')
         ->with('contact',$contact)
@@ -442,6 +453,10 @@ Route::post('login',function(){
 
                 Auth::login($user);
 
+                //print_r(Auth::user());
+
+                //exit();
+
                 Event::fire('log.a',array('login','login',Auth::user()->email,'login success'));
 
                 if(Session::get('redirect') != ''){
@@ -482,8 +497,8 @@ Route::post('clogin',function(){
 
     // validate the info, create rules for the inputs
     $rules = array(
-        'email'    => 'required|email',
-        'password' => 'required|alphaNum|min:3'
+        'cemail'    => 'required|email',
+        'cpassword' => 'required|alphaNum|min:3'
     );
 
     // run the validation rules on the inputs from the form
@@ -492,7 +507,7 @@ Route::post('clogin',function(){
     // if the validator fails, redirect back to the form
     if ($validator->fails()) {
 
-        Event::fire('log.a',array('login','login',Input::get('email'),'validation fail'));
+        Event::fire('log.a',array('clogin','clogin',Input::get('email'),'validation fail'));
 
         return Redirect::to('login')->withErrors($validator);
     } else {
@@ -501,27 +516,35 @@ Route::post('clogin',function(){
         $passwordfield = Config::get('kickstart.password_field');
 
         // find the user
-        $user = Buyer::where($userfield, '=', Input::get('email'))->first();
+        $usermodel = new User('buyers');
+
+        $user = $usermodel->where($userfield, '=', Input::get('cemail'))->first();
 
         // check if user exists
         if ($user) {
 
             // check if password is correct
-            if (Hash::check(Input::get('password'), $user->{$passwordfield} )) {
+            if (Hash::check(Input::get('cpassword'), $user->{$passwordfield} )) {
 
                 $user->role = 'customer';
 
                 // login the user
                 Auth::login($user);
 
+                //print_r(Auth::user());
+
+                //print Auth::user()->email;
+
                 Event::fire('log.a',array('clogin','clogin',Auth::user()->email,'login success'));
 
+                /*
                 if(Session::get('redirect') != ''){
                     return Redirect::to(Session::get('redirect'));
                 }else{
-                    return Redirect::to('/');
                 }
+                */
 
+                    return Redirect::to('dashboard');
 
             } else {
                 // validation not successful
@@ -529,11 +552,11 @@ Route::post('clogin',function(){
                 // send back to form with old input, but not the password
                 Session::flash('cloginError', 'Incorrect email or password.');
 
-                Event::fire('log.a',array('login','login',Input::get('email'),'auth fail'));
+                Event::fire('log.a',array('clogin','clogin',Input::get('cemail'),'auth fail'));
 
                 return Redirect::to('login')
                     ->withErrors($validator)
-                    ->withInput(Input::except('password'));
+                    ->withInput(Input::except('cpassword'));
             }
 
         } else {

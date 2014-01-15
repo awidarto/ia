@@ -30,9 +30,9 @@
                             <div class="alert alert-danger">{{ Session::get('cloginError') }}</div>
                                  <button type="button" class="close" data-dismiss="alert"></button>
                         @endif
-                        {{ Former::text('email','Email')->class('span2') }}
+                        {{ Former::text('cemail','Email')->class('span2') }}
 
-                        {{ Former::password('password','Password')->class('span2') }}
+                        {{ Former::password('cpassword','Password')->class('span2') }}
 
                         {{-- Former::checkbox('remember-me')->label('')->text('Remember Me')->value('remember-me') --}}
 

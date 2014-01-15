@@ -3,7 +3,7 @@ use Jenssegers\Mongodb\Model as Eloquent;
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
 
-class Buyer extends Eloquent implements UserInterface, RemindableInterface {
+class OldBuyer extends Eloquent implements UserInterface, RemindableInterface {
 
     /**
      * The database table used by the model.
@@ -19,9 +19,10 @@ class Buyer extends Eloquent implements UserInterface, RemindableInterface {
      */
     protected $hidden = array('password');
 
+
     public function __construct(){
 
-        $this->table = 'buyers';
+        //$this->table = 'buyers';
 
     }
 
