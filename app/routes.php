@@ -252,6 +252,71 @@ Route::get('dashboard',function(){
 });
 
 
+Route::get('changepass',function(){
+    Theme::setCurrentTheme(Prefs::getActiveTheme() );
+    Former::framework('TwitterBootstrap');
+
+    return View::make('pages.changepass');
+});
+
+Route::post('changepass',function(){
+    // validate the info, create rules for the inputs
+    $rules = array(
+        'newpass' => 'required|alphaNum|min:3|same:repass'
+    );
+
+    // run the validation rules on the inputs from the form
+    $validator = Validator::make(Input::all(), $rules);
+
+    // if the validator fails, redirect back to the form
+    if ($validator->fails()) {
+
+        Event::fire('log.a',array('change password','changepass',Auth::user()->email,'validation fail'));
+
+        return Redirect::to('changepass')->withErrors($validator);
+    } else {
+
+        $data = Input::get();
+
+        unset($data['csrf_token']);
+
+        unset($data['repass']);
+
+        $user = Agent::find(Auth::user()->_id);
+
+        $user->pass = Hash::make($data['newpass']);
+
+        if($user->save()){
+            Session::flash('loginError', 'Password successfuly changed');
+
+            Mail::send('emails.changepass',$data, function($message) use ($user, &$user){
+                $to = Input::get('to');
+                $tos = explode(',', $to);
+
+                $message->to($user->email);
+
+                $message->subject('Investors Alliance - Password Changes');
+
+                $message->cc('support@propinvestorsalliance.com');
+
+            });
+
+
+            Event::fire('log.a',array('create account','createaccount',Input::get('email'),'validation fail'));
+            //Event::fire('product.createformadmin',array($obj['_id'],$passwordRandom,$obj['conventionPaymentStatus']));
+            return Redirect::to('changepass')->with('notify_success', 'Password Changed');
+        }else{
+            Session::flash('loginError', 'Failed to change password');
+            return Redirect::to('dashboard')->with('notify_success',ucfirst(Str::singular($controller_name)).' saving failed');
+        }
+
+    }
+
+
+    return View::make('pages.changepass');
+
+});
+
 Route::get('register',function(){
     Theme::setCurrentTheme(Prefs::getActiveTheme() );
     Former::framework('TwitterBootstrap');

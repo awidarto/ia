@@ -76,6 +76,7 @@
                         <th>Salutation</th>
                         <th>First Name</th>
                         <th>Last Name</th>
+                        <th>Address</th>
                         <th>Email</th>
                         <th>Phone</th>
                         <th></th>
@@ -88,6 +89,7 @@
                         <td>{{ $by['salutation']}}</td>
                         <td>{{ $by['firstname']}}</td>
                         <td>{{ $by['lastname']}}</td>
+                        <td>{{ $by['address'].'<br />'.$by['city'].' '.$by['state'].' '.$by['zipCode'].'<br />'.$by['countryOfOrigin']}}</td>
                         <td>{{ $by['email']}}</td>
                         <td>{{ $by['phone']}}</td>
                         <td>
@@ -119,7 +121,9 @@
                     <tr>
                         <td colspan="4">
                             <a href="{{ URL::to('changepass') }}"><i class="icon-key"></i> Change Password</a>&nbsp;&nbsp;&nbsp;
+                            {{--
                             <a href="{{ URL::to('addaddress')}}" ><i class="icon-plus-sign"></i> Add Address</a>
+                            --}}
                         </td>
                     </tr>
                 </tbody>
