@@ -91,11 +91,7 @@
                         <td>{{ $by['email']}}</td>
                         <td>{{ $by['phone']}}</td>
                         <td>
-                            <a href="{{ URL::to('pr/print/'.$tx['_id'])}}" class="btn receipt" target="new" ><i class="icon-print"></i></a>
-                            <a href="{{ URL::to('pr/dl/'.$tx['_id'])}}"  class="btn receipt"  target="new" ><i class="icon-download"></i></a>
-                            {{--
-                            <a href="#myModalReceipt" role="button" class="btn receipt" data-toggle="modal"><i class="icon-envelope"></i></a>
-                            --}}
+                            <a href="#myModalReceipt" role="button" class="btn receipt" data-toggle="modal"><i class="icon-eye-open"></i></a>
                         </td>
                     </tr>
                     @endforeach

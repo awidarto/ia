@@ -11,7 +11,9 @@
     body {
         background-color: transparent;
         background: none;
+        font-family: Arial,Helvetica, sans-serif;
     }
+
 
     h1{
         font-size: 28px;
@@ -19,6 +21,10 @@
         border-bottom: thin solid #ccc;
         padding-bottom: 15px;
 
+    }
+
+    h1,h2,h3,h4,h5,h6{
+        font-family: Arial,Helvetica, sans-serif;
     }
 
     .h4{
@@ -55,13 +61,12 @@
     }
 
     table td{
-        min-width: 80px;
+        /*min-width: 80px;*/
         border-color: transparent;
     }
 
     table th{
         font-weight: bold;
-        width: 100px;
         background-color: #eee;
         border-color: transparent;
     }
@@ -133,8 +138,8 @@
                 $address = $prop['number'].' '.$prop['address'].' '.$prop['city'].', '.$prop['state'].' '.$prop['zipCode'];
             ?>
 
-    <div class="container">
-        <div class="row">
+    <div class="container" style="width:90%;">
+        <div class="row-fluid">
             <div class="span3">
                 <a href="{{ URL::to('/')}}" >{{ HTML::image('images/ialogo.png','Investors Alliance',array('class'=>'img-responsive' ) ) }}</a>
             </div>
@@ -142,30 +147,35 @@
             </div>
         </div>
         <h1 style="padding-left:0px;">Purchase Receipt</h1>
-        <div class="row-fluid" style="padding-left:0px;">
-            <div class="span6" style="padding-left:0px;">
-                <h3>Purchased From</h3>
-                <h4>{{ $trx['agentName']}}</h4>
-                <h5>
-                    {{ $agent['address_1'] }}<br />
-                    @if( $agent['address_2'] != '')
-                    {{ $agent['address_2'] }}<br />
-                    @endif
-                    {{ $agent['city']}}, {{ $agent['state']}} {{ (isset($agent['zipCode']))?$agent['zipCode']:''}}<br />
-                    {{ $agent['countryOfOrigin']}}
-                </h5>
-            </div>
-            <div class="span6" style="padding-left:0px;">
-                <h3>Purchased By</h3>
-                <h4>{{ $trx['firstname'].' '.$trx['lastname']}}</h4>
-                <h5>
-                    {{ $trx['address'] }}<br />
-                    {{ $trx['city']}}, {{ $trx['state']}} {{ (isset($trx['zipCode']))?$trx['zipCode']:''}}<br />
-                    {{ $trx['countryOfOrigin']}}
-                </h5>
-            </div>
-        </div>
-        <table class="table table-bordered">
+        <table style="width:100%;">
+            <tbody>
+                <tr>
+                    <td>
+                        <h3>Purchased From</h3>
+                        <h4>{{ $trx['agentName']}}</h4>
+                        <h5>
+                            {{ $agent['address_1'] }}<br />
+                            @if( $agent['address_2'] != '')
+                            {{ $agent['address_2'] }}<br />
+                            @endif
+                            {{ $agent['city']}}, {{ $agent['state']}} {{ (isset($agent['zipCode']))?$agent['zipCode']:''}}<br />
+                            {{ $agent['countryOfOrigin']}}
+                        </h5>
+
+                    </td>
+                    <td>
+                        <h3>Purchased By</h3>
+                        <h4>{{ $trx['firstname'].' '.$trx['lastname']}}</h4>
+                        <h5>
+                            {{ $trx['address'] }}<br />
+                            {{ $trx['city']}}, {{ $trx['state']}} {{ (isset($trx['zipCode']))?$trx['zipCode']:''}}<br />
+                            {{ $trx['countryOfOrigin']}}
+                        </h5>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-bordered" style="width:100%;">
             <thead>
                 <tr>
                     <th colspan="4">Details</th>
