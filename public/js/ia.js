@@ -19,6 +19,39 @@ $(document).ready(function(){
                 $('#us_state').val(ui.item.userdata.state);
                 $('#zip').val(ui.item.userdata.zipCode);
 
+                var etype = $('#entity_type').val();
+
+                var legalName = '';
+
+                if(etype == 'Business'){
+                    $('#entity_source').show();
+                    $('#loan_proceed').show();
+                    legalName = $('#company').val();
+                }else{
+                    $('#entity_source').hide();
+                    $('#loan_proceed').hide();
+                    legalName = ui.item.userdata.firstname + ' ' + ui.item.userdata.lastname + ' and or assign';
+                }
+
+                $('#legalName').val(legalName);
+
+                var country = ui.item.userdata.countryOfOrigin;
+
+                if(country == 'Australia'){
+                    $('.au').show();
+                    $('.us').hide();
+                    $('.outside').hide();
+                }else if(country == 'United States of America'){
+                    $('.au').hide();
+                    $('.us').show();
+                    $('.outside').hide();
+                }else{
+                    $('.au').hide();
+                    $('.us').hide();
+                    $('.outside').show();
+                }
+
+
             }
         });
 
@@ -41,6 +74,38 @@ $(document).ready(function(){
                 $('#au_state').val(ui.item.userdata.state);
                 $('#us_state').val(ui.item.userdata.state);
                 $('#zip').val(ui.item.userdata.zipCode);
+
+                var etype = $('#entity_type').val();
+
+                var legalName = '';
+
+                if(etype == 'Business'){
+                    $('#entity_source').show();
+                    $('#loan_proceed').show();
+                    legalName = $('#company').val();
+                }else{
+                    $('#entity_source').hide();
+                    $('#loan_proceed').hide();
+                    legalName = ui.item.userdata.firstname + ' ' + ui.item.userdata.lastname + ' and or assign';
+                }
+
+                $('#legalName').val(legalName);
+
+                var country = ui.item.userdata.countryOfOrigin;
+
+                if(country == 'Australia'){
+                    $('.au').show();
+                    $('.us').hide();
+                    $('.outside').hide();
+                }else if(country == 'United States of America'){
+                    $('.au').hide();
+                    $('.us').show();
+                    $('.outside').hide();
+                }else{
+                    $('.au').hide();
+                    $('.us').hide();
+                    $('.outside').show();
+                }
 
             }
         });
@@ -65,6 +130,38 @@ $(document).ready(function(){
                 $('#us_state').val(ui.item.userdata.state);
                 $('#zip').val(ui.item.userdata.zipCode);
 
+                var etype = $('#entity_type').val();
+
+                var legalName = '';
+
+                if(etype == 'Business'){
+                    $('#entity_source').show();
+                    $('#loan_proceed').show();
+                    legalName = $('#company').val();
+                }else{
+                    $('#entity_source').hide();
+                    $('#loan_proceed').hide();
+                    legalName = ui.item.userdata.firstname + ' ' + ui.item.userdata.lastname + ' and or assign';
+                }
+
+                $('#legalName').val(legalName);
+
+                var country = ui.item.userdata.countryOfOrigin;
+
+                if(country == 'Australia'){
+                    $('.au').show();
+                    $('.us').hide();
+                    $('.outside').hide();
+                }else if(country == 'United States of America'){
+                    $('.au').hide();
+                    $('.us').show();
+                    $('.outside').hide();
+                }else{
+                    $('.au').hide();
+                    $('.us').hide();
+                    $('.outside').show();
+                }
+
             }
         });
 
@@ -87,6 +184,38 @@ $(document).ready(function(){
                 $('#au_state').val(ui.item.userdata.state);
                 $('#us_state').val(ui.item.userdata.state);
                 $('#zip').val(ui.item.userdata.zipCode);
+
+                var etype = $('#entity_type').val();
+
+                var legalName = '';
+
+                if(etype == 'Business'){
+                    $('#entity_source').show();
+                    $('#loan_proceed').show();
+                    legalName = $('#company').val();
+                }else{
+                    $('#entity_source').hide();
+                    $('#loan_proceed').hide();
+                    legalName = ui.item.userdata.firstname + ' ' + ui.item.userdata.lastname + ' and or assign';
+                }
+
+                $('#legalName').val(legalName);
+
+                var country = ui.item.userdata.countryOfOrigin;
+
+                if(country == 'Australia'){
+                    $('.au').show();
+                    $('.us').hide();
+                    $('.outside').hide();
+                }else if(country == 'United States of America'){
+                    $('.au').hide();
+                    $('.us').show();
+                    $('.outside').hide();
+                }else{
+                    $('.au').hide();
+                    $('.us').hide();
+                    $('.outside').show();
+                }
 
             }
         });

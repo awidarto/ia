@@ -188,7 +188,7 @@
             <tr>
                 <th colspan="2" class="h4">
                     {{ $prop['number'].' '.$prop['address'] }}<br />
-                    {{ $prop['city'].', '.$prop['state'].' '.$prop['zipCode'] }}
+                    {{ $prop['city'].' '.$prop['state'].' '.$prop['zipCode'] }}
                 </th>
             </tr>
             --}}
@@ -212,6 +212,41 @@
                 <td>
                     ${{ number_format($prop['FMV'],0,'.',',') }}
                 </td>
+            </tr>
+            <tr>
+                <th>Monthly Rental</th>
+                <td>
+                    ${{ number_format($prop['monthlyRental'],0,'.',',') }}
+                </td>
+            </tr>
+            <tr>
+                <th>Annual Tax</th>
+                <td>
+                    ${{ $prop['tax'] }}
+                </td>
+            </tr>
+            <tr>
+
+                <th>Category</th>
+                <td>
+                    {{ ucfirst(strtolower($prop['category'])) }}
+                </td>
+            </tr>
+            <tr>
+
+                <th>Lease Term</th>
+                <td>
+                    {{ $prop['leaseTerms'] }} month(s)
+                </td>
+
+            </tr>
+            <tr>
+
+                <th>Lease Start Date</th>
+                <td>
+                    {{ $prop['leaseStartDate'] }}
+                </td>
+
             </tr>
             <tr>
 
@@ -262,6 +297,7 @@
                     {{ $prop['bath'] }}
                 </td>
             </tr>
+            {{--
             <tr>
 
                 <th>Garage</th>
@@ -277,6 +313,8 @@
                 </td>
             </tr>
 
+            --}}
+
             @if($prop['typeOfConstruction'] != '')
             <tr>
 
@@ -287,12 +325,6 @@
 
             </tr>
             @endif
-            <tr>
-                <th>Monthly Rental</th>
-                <td>
-                    ${{ number_format($prop['monthlyRental'],0,'.',',') }}
-                </td>
-            </tr>
             <tr>
 
                 <th>Parcel #</th>
@@ -366,7 +398,9 @@
 
                                 </div>
                                 <div class="span4">
+                                    {{ Former::text('number','Number *')->id('number')->class('span1') }}
                                     {{ Former::text('address','Street Address *')->id('address') }}
+                                    {{ Former::text('address_2','')->id('address_2') }}
                                     {{ Former::text('city','City *')->id('city') }}
                                     {{ Former::select('countryOfOrigin')->options(Config::get('country.countries'))->label('Country')->id('country') }}
                                     <div class="us" style="display:none;">
@@ -701,6 +735,46 @@
 
                 });
 
+                $('#firstname').on('change',function(){
+
+                    var etype = $('#entity_type').val();
+
+                    var legalName = '';
+
+                    if(etype == 'Business'){
+                        $('#entity_source').show();
+                        $('#loan_proceed').show();
+                        legalName = $('#company').val();
+                    }else{
+                        $('#entity_source').hide();
+                        $('#loan_proceed').hide();
+                        legalName = $('#firstname').val() + ' ' + $('#lastname').val() + ' and or assign';
+                    }
+
+                    $('#legalName').val(legalName);
+
+                });
+
+                $('#lastname').on('change',function(){
+
+                    var etype = $('#entity_type').val();
+
+                    var legalName = '';
+
+                    if(etype == 'Business'){
+                        $('#entity_source').show();
+                        $('#loan_proceed').show();
+                        legalName = $('#company').val();
+                    }else{
+                        $('#entity_source').hide();
+                        $('#loan_proceed').hide();
+                        legalName = $('#firstname').val() + ' ' + $('#lastname').val() + ' and or assign';
+                    }
+
+                    $('#legalName').val(legalName);
+
+                });
+
                 $('#entity_type').on('change',function(){
 
                     var etype = $('#entity_type').val();
@@ -714,7 +788,7 @@
                     }else{
                         $('#entity_source').hide();
                         $('#loan_proceed').hide();
-                        legalName = $('#firstname').val() + ' ' + $('#lastname').val();
+                        legalName = $('#firstname').val() + ' ' + $('#lastname').val() + ' and or assign';
                     }
 
                     $('#legalName').val(legalName);
@@ -771,6 +845,13 @@
                                     $('#email').addClass('error');
                                     ret = false;
                                 }
+
+                                if(!$('#number').val()) {
+                                    $('#number').focus();
+                                    $('#number').addClass('error');
+                                    ret = false;
+                                }
+
                                 if(!$('#address').val()) {
                                     $('#address').focus();
                                     $('#address').addClass('error');

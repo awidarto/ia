@@ -162,14 +162,14 @@
         <h2 style="margin-top:0px;padding-left:0px;margin-bottom:4px;">ID : {{$prop['propertyId']}}</h2>
         <h3 style="margin-top:0px;padding-left:0px;margin-bottom:4px;">
             {{ $prop['number'].' '.$prop['address'] }}<br />
-            {{ $prop['city'].', '.$prop['state'].' '.$prop['zipCode'] }}
+            {{ $prop['city'].' '.$prop['state'].' '.$prop['zipCode'] }}
         </h3>
 
     </div>
     <div class="span6" style="display:block;">
 
             <?php
-                $address = $prop['number'].' '.$prop['address'].' '.$prop['city'].', '.$prop['state'].' '.$prop['zipCode'];
+                $address = $prop['number'].' '.$prop['address'].' '.$prop['city'].' '.$prop['state'].' '.$prop['zipCode'];
             ?>
     </div>
     <hr>
@@ -182,7 +182,7 @@
             <tr>
                 <th colspan="2" class="h4">
                     {{ $prop['number'].' '.$prop['address'] }}<br />
-                    {{ $prop['city'].', '.$prop['state'].' '.$prop['zipCode'] }}
+                    {{ $prop['city'].' '.$prop['state'].' '.$prop['zipCode'] }}
                 </th>
             </tr>
             --}}
@@ -206,6 +206,41 @@
                 <td>
                     ${{ number_format($prop['FMV'],0,'.',',') }}
                 </td>
+            </tr>
+            <tr>
+                <th>Monthly Rental</th>
+                <td>
+                    ${{ number_format($prop['monthlyRental'],0,'.',',') }}
+                </td>
+            </tr>
+            <tr>
+                <th>Annual Tax</th>
+                <td>
+                    ${{ $prop['tax'] }}
+                </td>
+            </tr>
+            <tr>
+
+                <th>Category</th>
+                <td>
+                    {{ ucfirst(strtolower($prop['category'])) }}
+                </td>
+            </tr>
+            <tr>
+
+                <th>Lease Term</th>
+                <td>
+                    {{ $prop['leaseTerms'] }} month(s)
+                </td>
+
+            </tr>
+            <tr>
+
+                <th>Lease Start Date</th>
+                <td>
+                    {{ $prop['leaseStartDate'] }}
+                </td>
+
             </tr>
             <tr>
 
@@ -256,6 +291,7 @@
                     {{ $prop['bath'] }}
                 </td>
             </tr>
+            {{--
             <tr>
 
                 <th>Garage</th>
@@ -271,6 +307,8 @@
                 </td>
             </tr>
 
+            --}}
+
             @if($prop['typeOfConstruction'] != '')
             <tr>
 
@@ -281,12 +319,6 @@
 
             </tr>
             @endif
-            <tr>
-                <th>Monthly Rental</th>
-                <td>
-                    ${{ number_format($prop['monthlyRental'],0,'.',',') }}
-                </td>
-            </tr>
             <tr>
 
                 <th>Parcel #</th>
@@ -305,10 +337,36 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th colspan="4">Details</th>
+                    <th colspan="2">Purchaser Details</th>
                 </tr>
             </thead>
             <tbody>
+                <tr>
+                    <th>Name</th>
+                    <td>{{$trx['firstname'].' '.$trx['lastname']}}</td>
+                </tr>
+                <tr>
+                    <th>Address</th>
+                    <td>{{ $trx['address'].' '.(( isset($trx['address_1']) && $trx['address_1'] != '')?$trx['address_1'].' ':'' ).$trx['state'].' '.$trx['zipCode'].' '.$trx['countryOfOrigin'] }}</td>
+                </tr>
+                <tr>
+                    <th>Company</th>
+                    <td>{{ $trx['company']}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th colspan="4">Property Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>Property Address</th>
+                    <td colspan="3">{{ $address}}</td>
+                </tr>
                 <tr>
                     <th>Lease Start Date</th>
                     <td>{{ $prop['leaseStartDate']}}</td>
@@ -438,13 +496,13 @@
 
                 <p>
                     Please review the summary above. By Entering your name below you are electronically signing and agreeing to the purchase agreement found here.
-                    Click "Edit" to revise your current transaction or click "Process" to process your order.
+                    Click "Edit" to revise your current transaction or click "Proceed" to process your order.
                 </p>
-                {{ Former::text('legalName','Entity Name')->value($trx['legalName'])}}
-                {{ Former::text('signature','Signature') }}
+                {{ Former::hidden('legalName')->value($trx['legalName']) }}
+                {{-- Former::text('signature','Signature') --}}
 
                 {{ HTML::link('property/update/'.$trx['_id'],'&laquo; Edit',array('class'=>'btn btn-success  btn-large'))}}
-                {{ Former::submit('Process &raquo;')->class('btn btn-primary btn-large pull-right')}}
+                {{ Former::submit('Proceed &raquo;')->class('btn btn-primary btn-large pull-right')}}
                 {{ Former::close()}}
 
             </div>

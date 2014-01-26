@@ -150,27 +150,25 @@
         <table style="width:100%;">
             <tbody>
                 <tr>
-                    <td>
-                        <h3>Purchased From</h3>
-                        <h4>{{ $trx['agentName']}}</h4>
+                    <td style="vertical-align:top;width:45%;">
+                        <h3>Investors Alliance</h3>
                         <h5>
-                            {{ $agent['address_1'] }}<br />
-                            @if( $agent['address_2'] != '')
-                            {{ $agent['address_2'] }}<br />
-                            @endif
-                            {{ $agent['city']}}, {{ $agent['state']}} {{ (isset($agent['zipCode']))?$agent['zipCode']:''}}<br />
-                            {{ $agent['countryOfOrigin']}}
+                            125 East Main Street #350<br />American Fork, UT 84003<br />USA
+                            <br />+1 614 432 8875
                         </h5>
-
                     </td>
                     <td>
-                        <h3>Purchased By</h3>
+                        <h3>Purchaser</h3>
                         <h4>{{ $trx['firstname'].' '.$trx['lastname']}}</h4>
+                        @if($trx['company'] != '')
+                            <h5>{{ $trx['company']}}</h5>
+                        @endif
                         <h5>
                             {{ $trx['address'] }}<br />
                             {{ $trx['city']}}, {{ $trx['state']}} {{ (isset($trx['zipCode']))?$trx['zipCode']:''}}<br />
                             {{ $trx['countryOfOrigin']}}
                         </h5>
+                        <h5><b>Agent :</b> {{ $trx['agentName']}}</h5>
                     </td>
                 </tr>
             </tbody>

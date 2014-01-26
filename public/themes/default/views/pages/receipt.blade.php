@@ -161,14 +161,14 @@
         <h2 style="margin-top:0px;padding-left:0px;margin-bottom:4px;">ID : {{$prop['propertyId']}}</h2>
         <h3 style="margin-top:0px;padding-left:0px;margin-bottom:4px;">
             {{ $prop['number'].' '.$prop['address'] }}<br />
-            {{ $prop['city'].', '.$prop['state'].' '.$prop['zipCode'] }}
+            {{ $prop['city'].' '.$prop['state'].' '.$prop['zipCode'] }}
         </h3>
 
     </div>
     <div class="span6" style="display:block;">
 
             <?php
-                $address = $prop['number'].' '.$prop['address'].' '.$prop['city'].', '.$prop['state'].' '.$prop['zipCode'];
+                $address = $prop['number'].' '.$prop['address'].' '.$prop['city'].' '.$prop['state'].' '.$prop['zipCode'];
             ?>
     </div>
     <hr>
@@ -181,7 +181,7 @@
             <tr>
                 <th colspan="2" class="h4">
                     {{ $prop['number'].' '.$prop['address'] }}<br />
-                    {{ $prop['city'].', '.$prop['state'].' '.$prop['zipCode'] }}
+                    {{ $prop['city'].' '.$prop['state'].' '.$prop['zipCode'] }}
                 </th>
             </tr>
             --}}
@@ -205,6 +205,41 @@
                 <td>
                     ${{ number_format($prop['FMV'],0,'.',',') }}
                 </td>
+            </tr>
+            <tr>
+                <th>Monthly Rental</th>
+                <td>
+                    ${{ number_format($prop['monthlyRental'],0,'.',',') }}
+                </td>
+            </tr>
+            <tr>
+                <th>Annual Tax</th>
+                <td>
+                    ${{ $prop['tax'] }}
+                </td>
+            </tr>
+            <tr>
+
+                <th>Category</th>
+                <td>
+                    {{ ucfirst(strtolower($prop['category'])) }}
+                </td>
+            </tr>
+            <tr>
+
+                <th>Lease Term</th>
+                <td>
+                    {{ $prop['leaseTerms'] }} month(s)
+                </td>
+
+            </tr>
+            <tr>
+
+                <th>Lease Start Date</th>
+                <td>
+                    {{ $prop['leaseStartDate'] }}
+                </td>
+
             </tr>
             <tr>
 
@@ -255,6 +290,7 @@
                     {{ $prop['bath'] }}
                 </td>
             </tr>
+            {{--
             <tr>
 
                 <th>Garage</th>
@@ -270,6 +306,8 @@
                 </td>
             </tr>
 
+            --}}
+
             @if($prop['typeOfConstruction'] != '')
             <tr>
 
@@ -280,12 +318,6 @@
 
             </tr>
             @endif
-            <tr>
-                <th>Monthly Rental</th>
-                <td>
-                    ${{ number_format($prop['monthlyRental'],0,'.',',') }}
-                </td>
-            </tr>
             <tr>
 
                 <th>Parcel #</th>
@@ -307,24 +339,25 @@
 
         <div class="row" style="padding-left:0px;">
             <div class="span4" style="padding-left:0px;">
-                <h3>Purchased From</h3>
-                <h4>{{ $trx['agentName']}}</h4>
+                <h3>Investors Alliance</h3>
                 <h5>
-                    {{ $agent['address_1'] }}<br />
-                    {{ $agent['address_2'] }}<br />
-                    {{ $agent['city']}}, {{ $agent['state']}} {{ (isset($agent['zipCode']))?$agent['zipCode']:''}}<br />
-                    {{ $agent['countryOfOrigin']}}
+                    125 East Main Street #350<br />American Fork, UT 84003<br />USA
+                    <br />+1 614 432 8875
                 </h5>
             </div>
             <div class="span1"></div>
             <div class="span4" style="padding-left:0px;">
-                <h3>Purchased By</h3>
+                <h3>Purchaser</h3>
                 <h4>{{ $trx['firstname'].' '.$trx['lastname']}}</h4>
+                @if($trx['company'] != '')
+                    <h5>{{ $trx['company']}}</h5>
+                @endif
                 <h5>
                     {{ $trx['address'] }}<br />
                     {{ $trx['city']}}, {{ $trx['state']}} {{ (isset($trx['zipCode']))?$trx['zipCode']:''}}<br />
                     {{ $trx['countryOfOrigin']}}
                 </h5>
+                <h5><b>Agent :</b> {{ $trx['agentName']}}</h5>
             </div>
         </div>
         <table class="table table-bordered">
@@ -448,15 +481,16 @@
                 </tr>
 
                 <tr>
-                    <td colspan="3"><h4>Remaining Balance Due</h4></td>
+                    <td colspan="3" class="curr"><h4>Remaining Balance Due</h4></td>
                     <td><h4>
                         ${{ number_format(($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'] + $prop['tax'] + $trx['closingCost']) - ($trx['earnestMoney1'] + $trx['earnestMoney2'] + $trx['loanProceed']),0,'.',',') }}
                         </h4>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2"><h4>Due On</h4></td>
-                    <td colspan="2"><h4>
+                    <td colspan="3" class="curr"><h4>Due On</h4></td>
+                    <td>
+                        <h4>
                             {{ Carbon::parse($trx['createdDate'])->addDays(14)->format('d M Y')}}
                         </h4>
                     </td>

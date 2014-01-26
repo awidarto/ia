@@ -4,16 +4,16 @@ return array(
 
 	'countries' => array(
 		'-' 									    => 'Select Country',
-        'Indonesia'                                 => 'Indonesia',
-        'Thailand'                                  => 'Thailand',
         'Australia'                                 => 'Australia',
-        'Singapore'                                 => 'Singapore',
-        'Malaysia'                                  => 'Malaysia',
-        'Philippines'                               => 'Philippines',
+        'Canada'                                    => 'Canada',
         'China'                                     => 'China',
         'Hong Kong'                                 => 'Hong Kong',
+        'Indonesia'                                 => 'Indonesia',
+        'Malaysia'                                  => 'Malaysia',
+        'Philippines'                               => 'Philippines',
+        'Singapore'                                 => 'Singapore',
+        'Thailand'                                  => 'Thailand',
         'United Kingdom'                            => 'United Kingdom',
-        'Canada'                                    => 'Canada',
         'United States of America'                  => 'United States of America'
 	),
 

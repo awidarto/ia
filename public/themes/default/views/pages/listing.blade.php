@@ -107,7 +107,7 @@
 <h1>Property</h1>
 <div class="row" >
     <div class="span4" style="margin-left:0px;" >
-        Items {{ ($current * $perpage) + 1 }} to {{ ( $current * $perpage ) + $currentcount }} of {{$total}} total (Filtered from {{$alltotal}} entries)
+        Items {{ ($current * $perpage) + 1 }} to {{ ( $current * $perpage ) + $currentcount }} of {{$total}}{{-- total (Filtered from {{$alltotal}} entries) --}}
     </div>
     <div class="pagination pagination-centered span6">
         <ul style="margin-left:-5px;">

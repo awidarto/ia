@@ -134,7 +134,7 @@
 
 <?php
 
-    $address = $prop['number'].' '.$prop['address'].' '.$prop['city'].', '.$prop['state'].' '.$prop['zipCode'];
+    $address = $prop['number'].' '.$prop['address'].' '.$prop['city'].' '.$prop['state'].' '.$prop['zipCode'];
     if($prop['type'] == 'LAND'){
         $color = 'green';
         $label = 'L';
@@ -164,7 +164,7 @@
             <tr>
                 <th colspan="2" rowspan="2" class="h4">
                     {{ $prop['number'].' '.$prop['address'] }}<br />
-                    {{ $prop['city'].', '.$prop['state'].' '.$prop['zipCode'] }}
+                    {{ $prop['city'].' '.$prop['state'].' '.$prop['zipCode'] }}
                 </th>
 
                 <th>Type</th>
@@ -218,9 +218,9 @@
                     ${{ number_format($prop['FMV'],0,'.',',') }}
                 </td>
 
-                <th>Garage</th>
+                <th></th>
                 <td>
-                    {{ $prop['garage'] }}
+                    {{-- $prop['garage'] --}}
                 </td>
 
                 @if($prop['typeOfConstruction'] == '')
@@ -242,9 +242,9 @@
                     ${{ number_format($prop['monthlyRental'],0,'.',',') }}
                 </td>
 
-                <th>Pool</th>
+                <th></th>
                 <td>
-                    {{ $prop['pool'] }}
+                    {{-- $prop['pool'] --}}
                 </td>
 
                 <th>Parcel #</th>
@@ -284,7 +284,7 @@
 
                 <th>Lease Term</th>
                 <td>
-                    {{ $prop['leaseTerms'] }}
+                    {{ $prop['leaseTerms'] }} month(s)
                 </td>
 
             </tr>
@@ -303,6 +303,7 @@
                     ${{ $prop['tax'] }}
                 </td>
             </tr>
+            {{--
             <tr>
 
                 <th>Insurance</th>
@@ -324,6 +325,8 @@
                 </td>
 
             </tr>
+
+            --}}
 
         </table>
         <h4>Description</h4>
@@ -387,8 +390,8 @@
                     <?php
                         $annualRental = 12*$prop['monthlyRental'];
                         $propManagementFee = $annualRental * 0.1;
-                        $maintenanceAllowance = $annualRental * 0.05;
-                        $vacancyAllowance = $annualRental * 0.05;
+                        $maintenanceAllowance = $annualRental * 0;
+                        $vacancyAllowance = $annualRental * 0;
 
                         $totalExpense = $propManagementFee + $maintenanceAllowance + $vacancyAllowance + $prop['tax'] + $prop['insurance'];
 
@@ -401,7 +404,7 @@
                     ?>
                     <tr>
                         <th class="h5">Purchase Price</th><td class="h5">${{$prop['listingPrice']}}</td>
-                        <input type="hidden" valus="{{ $prop['listingPrice'] }}" id="purchasePrice" >
+                        <input type="hidden" value="{{ $prop['listingPrice'] }}" id="purchasePrice" >
                     </tr>
                     <tr>
                         <th>Monthly Rent</th><td><input class="calc" type="text" value="{{$prop['monthlyRental']}}" id="monthlyRental"></td>
@@ -421,13 +424,13 @@
                         <th>Insurance</th><td><input  class="calc" type="text" value="{{$prop['insurance']}}" id="insurance"></td>
                     </tr>
                     <tr>
-                        <th>10% Prop Management</th><td id="propManagementFee">${{ $propManagementFee}}</td>
+                        <th><input  class="calc" style="width:20px" type="text" value="10" id="propFeePct">% Prop Management</th><td id="propManagementFee">${{ $propManagementFee}}</td>
                     </tr>
                     <tr>
-                        <th>5% Maintenance Allowance</th><td id="maintenanceAllowance">${{ $maintenanceAllowance}}</td>
+                        <th><input  class="calc" style="width:20px" type="text" value="0" id="maintenanceAllowancePct">% Maintenance Allowance</th><td id="maintenanceAllowance">${{ $maintenanceAllowance}}</td>
                     </tr>
                     <tr>
-                        <th>5% Vacancy Allowance</th><td id="vacancyAllowance">${{ $vacancyAllowance}}</td>
+                        <th><input  class="calc" style="width:20px" type="text" value="0" id="vacancyAllowancePct">% Vacancy Allowance</th><td id="vacancyAllowance">${{ $vacancyAllowance}}</td>
                     </tr>
                     <tr>
                         <th class="h6">Total Expenses</th><td id="totalExpense">${{ $totalExpense }}</td>
@@ -460,9 +463,9 @@
                     var insurance = notNan($('#insurance').val());
 
                     var annualRental = 12 * monthlyRental;
-                    var propManagementFee = annualRental * 0.1;
-                    var maintenanceAllowance = annualRental * 0.05;
-                    var vacancyAllowance = annualRental * 0.05;
+                    var propManagementFee = annualRental * ( notNan($('#propFeePct').val()) / 100 );
+                    var maintenanceAllowance = annualRental *  ( notNan($('#maintenanceAllowancePct').val()) / 100 );
+                    var vacancyAllowance = annualRental *  ( notNan($('#vacancyAllowancePct').val()) / 100 );
 
                     var totalExpense = notNan(propManagementFee) + notNan(maintenanceAllowance) + notNan(vacancyAllowance) + tax + insurance;
 

@@ -20,6 +20,9 @@ class PropertyController extends BaseController {
         Former::framework('TwitterBootstrap');
 
         $this->beforeFilter('auth', array('on'=>'get' ));
+
+        Logger::access();
+
     }
 
     public function getIndex()
@@ -247,7 +250,6 @@ class PropertyController extends BaseController {
     public function postCommit(){
 
         $validator = array(
-            'signature'=>'required',
             'legalName'=>'required'
         );
 
@@ -280,7 +282,7 @@ class PropertyController extends BaseController {
 
             $trx->orderStatus = 'pending';
 
-            $trx->signature = $data['signature'];
+            //$trx->signature = $data['signature'];
 
             $trx->legalSigned = $data['legalName'];
 
