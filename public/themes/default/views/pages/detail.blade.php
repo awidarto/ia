@@ -147,7 +147,7 @@
 
 <h1>
     <a href="{{ URL::previous() }}" class="btn btn-primary">&laquo; Back</a>
-    @if(Session::get('reservedLock') == 1)
+    @if($prop['locked'] == 1)
         <span style="font-size:12px;padding:2px 4px;display:inline-block;background-color:yellow;">This property is currently under buying process.</span>
     @endif
 </h1>
@@ -256,8 +256,16 @@
         </table>
     </div>
     <div class="span1" style="text-align:left;display:block;">
-
-        <a href="{{ URL::to('property/buy/'.$prop['_id']) }}" class="btn btn-primary btn-buy" style="margin-top:90px;bottom:0px;"><i class="icon-shopping-cart"></i></a>
+        <?php
+            if( $prop['locked'] == 1 && $prop['reservedBy'] == Auth::user()->_id){
+                $urlbuy = URL::to('property/buy/'.$prop['_id']);
+            }elseif( $prop['locked'] == 1 && $prop['reservedBy'] != Auth::user()->_id){
+                $urlbuy = '';
+            }else{
+                $urlbuy = URL::to('property/buy/'.$prop['_id']);
+            }
+        ?>
+        <a href="{{ $urlbuy }}" class="btn btn-primary btn-buy" style="margin-top:90px;bottom:0px;"><i class="icon-shopping-cart"></i></a>
     </div>
 </div>
 <div class="row">

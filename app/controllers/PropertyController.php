@@ -108,10 +108,20 @@ class PropertyController extends BaseController {
 
     public function getBuy($id = null){
 
+
         $property = Property::find($id);
 
         if($property){
             $prop = $property->toArray();
+
+            $trans = Transaction::where('propertyId', '=', $prop['propertyId'])->where('agentId','=',Auth::user()->_id)->first();
+
+            if(isset($trans['propertyId']) && $trans['propertyId'] == $prop['propertyId']){
+                return Redirect::to('property/detail/'.$id);
+            }else{
+                $bought = false;
+            }
+
         }else{
             $prop = null;
         }
@@ -120,7 +130,7 @@ class PropertyController extends BaseController {
             if(isset($prop['reservedBy']) && $prop['reservedBy'] == Auth::user()->_id){
                 return View::make('pages.buy')->with('prop',$prop)->with('trx_id','')->with('update',0);
             }else{
-                Redirect::to(URL::previous());
+                return Redirect::to('property/detail/'.$id);
             }
         }else{
             $property->propertyLastStatus = $property->propertyStatus;
@@ -184,7 +194,9 @@ class PropertyController extends BaseController {
             $buyer['firstname']         =          $data['firstname'];
             $buyer['lastname']          =         $data['lastname'];
             $buyer['email']             =      $data['email'];
+            $buyer['number']           =        $data['number'];
             $buyer['address']           =        $data['address'];
+            $buyer['address_2']           =        $data['address_2'];
             $buyer['company']           =        $data['company'];
             $buyer['phone']             =      $data['phone'];
             $buyer['city']              =     $data['city'];
@@ -265,10 +277,10 @@ class PropertyController extends BaseController {
 
         }else{
 
+
             unset($data['csrf_token']);
 
             $data['lastUpdate'] = new MongoDate();
-
 
             $trx = Transaction::find($trx_id);
 

@@ -91,6 +91,7 @@ class AjaxController extends BaseController {
             $property->propertyStatus = $property->propertyLastStatus;
             $property->reservedBy = '';
             $property->reservedAt = '';
+            $property->locked = 0;
             $property->lock = 0;
             $property->save();
 

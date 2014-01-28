@@ -21,13 +21,17 @@ Event::listen('cleanup',function(){
 
     $props = Property::where('locked','=',1)->where('reservedAt','<', $last )->get();
 
+    $props2 = Property::where('locked','=',1)->where('reservedAt','=', '' )->get();
+
     foreach($props as $property){
             $property->propertyStatus = $property->propertyLastStatus;
             $property->reservedBy = '';
             $property->reservedAt = '';
+            $property->locked = 0;
             $property->lock = 0;
             $property->save();
     }
+
 
     return true;
 });

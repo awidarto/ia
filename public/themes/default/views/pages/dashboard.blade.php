@@ -23,6 +23,7 @@
                 <thead>
                     <tr>
                         <th>Order #</th>
+                        <th>Property ID</th>
                         <th>Date</th>
                         <th>Ship To</th>
                         <th>Purchase Total</th>
@@ -39,6 +40,7 @@
                     @foreach($trx as $tx)
                     <tr>
                         <td>{{ $tx['orderNumber']}}</td>
+                        <td>{{ $tx['propertyId']}}</td>
                         <td>{{ Carbon::createFromFormat('Y-m-d H:i:s',$tx['createdDate'])->format('d/m/Y')}}</td>
                         <td>{{ $tx['firstname'].' '.$tx['lastname']}}</td>
                         <td class="curr">{{ Ks::usd($tx['total_purchase'])}}</td>
