@@ -674,7 +674,19 @@
                 <?php
                     if( isset($prop['reservedBy']) && $prop['reservedBy'] == Auth::user()->_id){
                         $laststart = (isset($prop['reservedAt']))?strtotime($prop['reservedAt']):0;
-                        $countstart =  time() - $laststart;
+
+                        if(time() > ($laststart + Config::get('ia.reserveTimeOut')) ){
+                            $countstart = 1;
+                        }elseif( time() < ($laststart + Config::get('ia.reserveTimeOut')) ){
+                            $countstart = ($laststart + Config::get('ia.reserveTimeOut')) - time();
+                        }else{
+                            $countstart = 1;
+                        }
+
+                        if($countstart <= 0){
+                            $countstart = 1;
+                        }
+
                     }else{
                         $countstart = Config::get('ia.reserveTimeOut');
                     }

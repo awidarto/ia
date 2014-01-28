@@ -97,10 +97,41 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
+        var current_session = '{{ Session::get('reservedId')}}';
+
+        console.log('id ' + current_session);
+
         $('#perpage').on('change',function(){
             console.log($('#perpage').val());
             window.location = $('#perpage').val();
-        })
+        });
+
+        /*
+        $('.thumb').on('click',function(e){
+            console.log(this.id);
+            if(current_session == this.id){
+
+            }else{
+                var calert = 'You currently have another property under process, would you like to cancel that previous process ?';
+                if(confirm(calert)){
+                    $.post('{{ URL::to('ajax/translock')}}',
+                    {
+                        lockstatus:'open',
+                        propObjectId: this.id
+                    },
+                    function(data){
+                    },
+                    'json');
+
+                }else{
+
+                }
+
+                alert();
+            }
+        });
+        */
+
     });
 </script>
 
@@ -165,7 +196,7 @@
         <ul id="listing">
         @foreach($properties as $p)
             <li>
-                <div class="thumb span3">
+                <div class="thumb span3" id="{{$p['_id']}}">
                     <a href="{{ URL::to('property/detail/'.$p['_id']) }}" class="thumblink">
                         <h5>ID : {{$p['propertyId']}}</h5>
                         <div class="img-container">

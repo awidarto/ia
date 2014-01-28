@@ -85,6 +85,7 @@ class AjaxController extends BaseController {
             Session::forget('reservedBy');
             Session::forget('reservedAt');
             Session::forget('reservedLock');
+            Session::forget('reservedId');
 
             $property = Property::find($in['propObjectId']);
 

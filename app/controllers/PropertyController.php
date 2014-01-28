@@ -143,6 +143,7 @@ class PropertyController extends BaseController {
             Session::put('reservedBy', Auth::user()->_id);
             Session::put('reservedAt', time());
             Session::put('reservedLock', 1);
+            Session::put('reservedId', $prop['_id']);
 
             return View::make('pages.buy')->with('prop',$prop)->with('trx_id','')->with('update',0);
         }
