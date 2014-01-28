@@ -147,7 +147,7 @@
 
 <h1>
     <a href="{{ URL::previous() }}" class="btn btn-primary">&laquo; Back</a>
-    @if($prop['locked'] == 1)
+    @if( isset($prop['locked']) && $prop['locked'] == 1)
         <span style="font-size:12px;padding:2px 4px;display:inline-block;background-color:yellow;">This property is currently under buying process.</span>
     @endif
 </h1>
@@ -257,9 +257,10 @@
     </div>
     <div class="span1" style="text-align:left;display:block;">
         <?php
-            if( $prop['locked'] == 1 && $prop['reservedBy'] == Auth::user()->_id){
+
+            if( isset($prop['locked']) && $prop['locked'] == 1 && $prop['reservedBy'] == Auth::user()->_id){
                 $urlbuy = URL::to('property/buy/'.$prop['_id']);
-            }elseif( $prop['locked'] == 1 && $prop['reservedBy'] != Auth::user()->_id){
+            }elseif( isset($prop['locked']) && $prop['locked'] == 1 && $prop['reservedBy'] != Auth::user()->_id){
                 $urlbuy = '';
             }else{
                 $urlbuy = URL::to('property/buy/'.$prop['_id']);

@@ -671,8 +671,17 @@
 
                 }
 
+                <?php
+                    if( isset($prop['reservedBy']) && $prop['reservedBy'] == Auth::user()->_id){
+                        $laststart = (isset($prop['reservedAt']))?strtotime($prop['reservedAt']):0;
+                        $countstart =  time() - $laststart;
+                    }else{
+                        $countstart = Config::get('ia.reserveTimeOut');
+                    }
+                ?>
+
                 var myCounter = new Countdown({
-                    seconds:{{ Config::get('ia.reserveTimeOut') }},  // number of seconds to count down
+                    seconds:{{ $countstart }},  // number of seconds to count down
                     onUpdateStatus: function(sec){
                             //console.log(sec);
 
