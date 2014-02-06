@@ -235,7 +235,7 @@ Route::get('glossary',function(){
 });
 
 
-Route::get('dashboard',function(){
+Route::get('dashboard', array('before'=>'auth', function(){
     Theme::setCurrentTheme(Prefs::getActiveTheme() );
     Former::framework('TwitterBootstrap');
 
@@ -260,7 +260,7 @@ Route::get('dashboard',function(){
         ->with('contact',$contact)
         ->with('buyers',$buyers)
         ->with('trx',$trx);
-});
+} ) );
 
 
 Route::get('changepass',function(){
