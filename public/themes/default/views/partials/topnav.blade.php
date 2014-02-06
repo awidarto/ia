@@ -43,8 +43,13 @@ CONTACT US
                                 <li {{ sa('/') }} ><a href="{{ URL::to('page/view/research') }}" >Research</a></li>
                             </ul>
                         </li>
-                        <li {{ sa('/') }} ><a href="{{ URL::to('faq') }}" >FAQ</a></li>
-                        <li {{ sa('/') }} ><a href="{{ URL::to('glossary') }}" >Glossary</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">News <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li {{ sa('/') }} ><a href="{{ URL::to('faq') }}" >FAQ</a></li>
+                                <li {{ sa('/') }} ><a href="{{ URL::to('glossary') }}" >Glossary</a></li>
+                            </ul>
+                        </li>
 
                     </ul>
                     <form class="navbar-search pull-right" action="">

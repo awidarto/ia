@@ -45,8 +45,14 @@ CONTACT US
                         <li {{ sa('page/view/research') }} ><a href="{{ URL::to('page/view/research') }}" >Research</a></li>
                     </ul>
                 </li>
-                <li {{ sa('faq') }} ><a href="{{ URL::to('faq') }}" >FAQ</a></li>
-                <li {{ sa('glossary') }} ><a href="{{ URL::to('glossary') }}" >Glossary</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">News <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li {{ sa('faq') }} ><a href="{{ URL::to('faq') }}" >FAQ</a></li>
+                        <li {{ sa('glossary') }} ><a href="{{ URL::to('glossary') }}" >Glossary</a></li>
+                    </ul>
+                </li>
+                <li {{ sa('page/view/contact') }} ><a href="{{ URL::to('page/view/contact') }}" >Contact</a></li>
             </ul>
             <ul class="nav pull-right" id="main-menu-right">
                 @include('partials.identity')

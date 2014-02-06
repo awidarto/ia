@@ -135,7 +135,7 @@
 </style>
 
             <?php
-                $address = $prop['number'].' '.$prop['address'].' '.$prop['city'].', '.$prop['state'].' '.$prop['zipCode'];
+                $address = $prop['number'].' '.$prop['address'].' '.$prop['city'].' '.$prop['state'].' '.$prop['zipCode'];
             ?>
 
     <div class="container" style="width:90%;">

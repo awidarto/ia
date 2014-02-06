@@ -389,7 +389,7 @@
                     <img src="http://maps.googleapis.com/maps/api/staticmap?center={{ $address }}&zoom=13&size=300x250&maptype=roadmap&markers=color:{{ $color }}%7Clabel:{{ $label }}%7C{{ $address }}&sensor=false" style="float:left"/>
                 </a>
             </div>
-            <table class="table table-bordered" id="fin" style="width:365px;float:right;">
+            <table class="table table-bordered" id="fin" style="width:355px;float:right;">
                 <thead>
                     <tr>
                         <th colspan="2" class="header">
