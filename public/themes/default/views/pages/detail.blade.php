@@ -385,7 +385,9 @@
 
         <div id="map-box">
             <div id="map-container">
-                <img src="http://maps.googleapis.com/maps/api/staticmap?center={{ $address }}&zoom=13&size=300x250&maptype=roadmap&markers=color:{{ $color }}%7Clabel:{{ $label }}%7C{{ $address }}&sensor=false" style="float:left"/>
+                <a class="btn"  href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$address}}&ie=UTF8&hq=&hnear={{$address}}" target="blank">
+                    <img src="http://maps.googleapis.com/maps/api/staticmap?center={{ $address }}&zoom=13&size=300x250&maptype=roadmap&markers=color:{{ $color }}%7Clabel:{{ $label }}%7C{{ $address }}&sensor=false" style="float:left"/>
+                </a>
             </div>
             <table class="table table-bordered" id="fin" style="width:365px;float:right;">
                 <thead>
@@ -412,14 +414,14 @@
 
                     ?>
                     <tr>
-                        <th class="h5">Purchase Price</th><td class="h5">${{$prop['listingPrice']}}</td>
+                        <th class="h5">Purchase Price</th><td class="h5">${{ Ks::us( $prop['listingPrice'])}}</td>
                         <input type="hidden" value="{{ $prop['listingPrice'] }}" id="purchasePrice" >
                     </tr>
                     <tr>
                         <th>Monthly Rent</th><td><input class="calc" type="text" value="{{$prop['monthlyRental']}}" id="monthlyRental"></td>
                     </tr>
                     <tr>
-                        <th>Annual Rent</th><td id="txt_annualRental">${{ $annualRental }}</td>
+                        <th>Annual Rent</th><td id="txt_annualRental">${{ Ks::us($annualRental) }}</td>
                         <input type="hidden" value="{{ $annualRental }}" id="annualRental">
                     </tr>
                     <tr>
@@ -433,22 +435,22 @@
                         <th>Insurance</th><td><input  class="calc" type="text" value="{{$prop['insurance']}}" id="insurance"></td>
                     </tr>
                     <tr>
-                        <th><input  class="calc" style="width:20px" type="text" value="10" id="propFeePct">% Prop Management</th><td id="propManagementFee">${{ $propManagementFee}}</td>
+                        <th>Property Management</th><td><span class="pull-left" ><input  class="calc" style="width:20px" type="text" value="10" id="propFeePct">%</span> <span id="propManagementFee">${{ $propManagementFee}}</span></td>
                     </tr>
                     <tr>
-                        <th><input  class="calc" style="width:20px" type="text" value="0" id="maintenanceAllowancePct">% Maintenance Allowance</th><td id="maintenanceAllowance">${{ $maintenanceAllowance}}</td>
+                        <th>Maintenance Allowance</th><td><span class="pull-left" ><input  class="calc" style="width:20px" type="text" value="0" id="maintenanceAllowancePct">%</span> <span id="maintenanceAllowance">${{ Ks::us($maintenanceAllowance) }}</span></td>
                     </tr>
                     <tr>
-                        <th><input  class="calc" style="width:20px" type="text" value="0" id="vacancyAllowancePct">% Vacancy Allowance</th><td id="vacancyAllowance">${{ $vacancyAllowance}}</td>
+                        <th>Vacancy Allowance</th><td><span class="pull-left" ><input  class="calc" style="width:20px" type="text" value="0" id="vacancyAllowancePct">%</span> <span id="vacancyAllowance">${{ Ks::us($vacancyAllowance)}}</span></td>
                     </tr>
                     <tr>
-                        <th class="h6">Total Expenses</th><td id="totalExpense">${{ $totalExpense }}</td>
+                        <th class="h6">Total Expenses</th><td id="totalExpense">${{ Ks::us($totalExpense) }}</td>
                     </tr>
                     <tr>
-                        <th>Net Annual Cash Flow</th><td id="netAnnualCashFlow">${{ $netAnnualCashFlow }}</td>
+                        <th>Net Annual Cash Flow</th><td id="netAnnualCashFlow">${{ Ks::us($netAnnualCashFlow) }}</td>
                     </tr>
                     <tr>
-                        <th class="h6"><b>Net Monthly Cash Flow</b></th><td id="netMonthlyCashFlow">${{ $netMonthlyCashFlow }}</td>
+                        <th class="h6"><b>Net Monthly Cash Flow</b></th><td id="netMonthlyCashFlow">${{ Ks::us($netMonthlyCashFlow) }}</td>
                     </tr>
                     <tr class="yield">
                         <th>ROI</th><td id="calcROI">{{ $roi }}%</td>
@@ -462,6 +464,18 @@
                     }
 
                     return parseFloat(v);
+                }
+
+                function cf(input) {
+                    var output = input
+                    if (parseFloat(input)) {
+                        input = new String(input); // so you can perform string operations
+                        var parts = input.split("."); // remove the decimal part
+                        parts[0] = parts[0].split("").reverse().join("").replace(/(\d{3})(?!$)/g, "$1,").split("").reverse().join("");
+                        output = parts.join(".");
+                    }
+
+                    return output;
                 }
 
                 $('.calc').on('keyup',function(){
@@ -485,13 +499,13 @@
                     var roi = ( netAnnualCashFlow / purchasePrice ) * 100;
                     roi = roi.toFixed(1);
 
-                    $('#propManagementFee').html('$' + propManagementFee);
-                    $('#maintenanceAllowance').html('$' + maintenanceAllowance);
-                    $('#vacancyAllowance').html('$' + vacancyAllowance);
+                    $('#propManagementFee').html('$' + cf(propManagementFee));
+                    $('#maintenanceAllowance').html('$' + cf(maintenanceAllowance));
+                    $('#vacancyAllowance').html('$' + cf(vacancyAllowance));
 
-                    $('#totalExpense').html('$' + totalExpense);
-                    $('#netAnnualCashFlow').html('$' + netAnnualCashFlow);
-                    $('#netMonthlyCashFlow').html('$' + netMonthlyCashFlow);
+                    $('#totalExpense').html('$' + cf(totalExpense));
+                    $('#netAnnualCashFlow').html('$' + cf(netAnnualCashFlow));
+                    $('#netMonthlyCashFlow').html('$' + cf(netMonthlyCashFlow));
 
                     $('#calcROI').html(roi + '%');
 

@@ -53,5 +53,9 @@ class Ks {
         return '$'.number_format((double) $in,0,'.',',');
     }
 
+    public static function us($in){
+        return number_format((double) $in,0,'.',',');
+    }
+
 }
 

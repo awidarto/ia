@@ -41,6 +41,7 @@ return array(
             'available'=>'Available for Sale',
             'reserved'=>'Reserved',
             'pending'=>'Pending Payment',
+            'under contract'=>'Under Contract',
             'sold'=>'Sold'
         ),
     'search_publishing'=>array(
@@ -50,6 +51,7 @@ return array(
             'available'=>'Available for Sale',
             'reserved'=>'Reserved',
             'pending'=>'Pending Payment',
+            'under contract'=>'Under Contract',
             'sold'=>'Sold'
         ),
 

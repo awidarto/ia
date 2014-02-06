@@ -163,14 +163,14 @@
         <h2 style="margin-top:0px;padding-left:0px;margin-bottom:4px;">ID : {{$prop['propertyId']}}</h2>
         <h3 style="margin-top:0px;padding-left:0px;margin-bottom:4px;">
             {{ $prop['number'].' '.$prop['address'] }}<br />
-            {{ $prop['city'].', '.$prop['state'].' '.$prop['zipCode'] }}
+            {{ $prop['city'].' '.$prop['state'].' '.$prop['zipCode'] }}
         </h3>
 
     </div>
     <div class="span6" style="display:block;">
 
             <?php
-                $address = $prop['number'].' '.$prop['address'].' '.$prop['city'].', '.$prop['state'].' '.$prop['zipCode'];
+                $address = $prop['number'].' '.$prop['address'].' '.$prop['city'].' '.$prop['state'].' '.$prop['zipCode'];
             ?>
 
         <div id="session-counter-bar" style="text-align:right;">
