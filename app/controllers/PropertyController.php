@@ -287,17 +287,28 @@ class PropertyController extends BaseController {
 
             $prop = Property::find($trx->propObjectId);
 
-            $prop->propertyStatus = 'reserved';
+            $prop->propertyStatus = 'under contract';
 
             $prop->locked = 0;
 
-            $trx->propertyStatus = 'reserved';
+            $trx->propertyStatus = 'under contract';
 
             $trx->orderStatus = 'pending';
 
             //$trx->signature = $data['signature'];
 
             $trx->legalSigned = $data['legalName'];
+
+            $trx->propertyData = $prop->toArray();
+
+            $trx->propertyNumber = $prop->number;
+            $trx->propertyAddress = $prop->address;
+            $trx->propertyCity = $prop->city;
+            $trx->propertyState = $prop->state;
+            $trx->propertyZipCode = $prop->zipCode;
+
+            $trx->earnestMoney = $trx->earnestMoney1 + $trx->earnestMoney2;
+
 
             if($trx->save()){
                 $prop->save();

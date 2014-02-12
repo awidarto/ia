@@ -1,7 +1,7 @@
 <?php
 
 return array(
-    'reserveTimeOut'=>(60*1),
+    'reserveTimeOut'=>(60*10),
     'funding_method'=>array(
             'Cash'=>'Cash',
             'Check'=>'Check',
