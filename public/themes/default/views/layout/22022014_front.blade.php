@@ -139,8 +139,11 @@
     <div class="container">
         <header class="jumbotron subhead" id="overview">
             <div class="row">
-                <div class="span8">
-                    <a href="{{ URL::to('/')}}" >{{ HTML::image('images/ialogo-med.png','Investors Alliance',array('class'=>'img-responsive' ) ) }}</a>
+                <div class="span6">
+                    <a href="{{ URL::to('/')}}" >{{ HTML::image('images/ialogo.png','Investors Alliance',array('class'=>'img-responsive' ) ) }}</a>
+                </div>
+                <div class="span6">
+
                 </div>
             </div>
         </header>

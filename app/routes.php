@@ -25,7 +25,18 @@ Route::controller('transaction', 'TransactionController');
 Route::controller('upload', 'UploadController');
 Route::controller('ajax', 'AjaxController');
 
-Route::get('/','PropertyController@getListing');
+//Route::get('/','PropertyController@getListing');
+
+Route::get('/',function(){
+
+    Theme::setCurrentTheme(Prefs::getActiveTheme() );
+    Former::framework('TwitterBootstrap');
+
+    $featured = Property::where('tags','like','%featured%')->get()->toArray();
+
+    return View::make('pages.home')->with('featured',$featured);
+
+});
 
 Route::get('page/cat/{slug}','PageController@getCat');
 Route::get('page/view/{slug}','PageController@getView');

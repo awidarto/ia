@@ -33,7 +33,7 @@ CONTACT US
          </a>
          <div class="nav-collapse collapse" id="main-menu">
             <ul class="nav" id="main-menu-left">
-                <li {{ sa('dashboard') }} ><a href="{{ URL::to('dashboard') }}" >Home</a></li>
+                <li {{ sa('/') }} ><a href="{{ URL::to('/') }}" >Home</a></li>
                 <li {{ sa('property/listing') }} ><a href="{{ URL::to('property/listing') }}" >Property</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Investor Info <b class="caret"></b></a>
