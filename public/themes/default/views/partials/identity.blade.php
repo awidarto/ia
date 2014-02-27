@@ -1,8 +1,7 @@
 @if(Auth::check())
-        <li><a href="{{ URL::to('dashboard') }}">Welcome {{ Auth::user()->firstname.' '.Auth::user()->lastname }}</a></li>
-        <li><a href="{{ URL::to('logout') }}">Logout</a></li>
+        <a href="{{ URL::to('dashboard') }}">Welcome {{ Auth::user()->firstname.' '.Auth::user()->lastname }}</a> | <a href="{{ URL::to('logout') }}">LOGOUT</a>
 @else
-        <li><a href="{{ URL::to('/') }}/login">Login</a></li>
+        <a href="{{ URL::to('/') }}/login">LOGIN</a> | <a href="{{ URL::to('/') }}/signup">SIGN UP</a>
 
     {{--
         <li><a href="{{ URL::to('/') }}/register">Registration</a></li>

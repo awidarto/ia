@@ -23,7 +23,7 @@ CONTACT US
 ?>
     <!-- Navbar
         ================================================== -->
-<div class="navbar navbar-fixed-top">
+<div class="navbar">
     <div class="navbar-inner">
      <div class="container">
          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -53,9 +53,6 @@ CONTACT US
                     </ul>
                 </li>
                 <li {{ sa('page/view/contact') }} ><a href="{{ URL::to('page/view/contact') }}" >Contact</a></li>
-            </ul>
-            <ul class="nav pull-right" id="main-menu-right">
-                @include('partials.identity')
             </ul>
          </div>
      </div>

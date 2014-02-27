@@ -73,8 +73,8 @@
                 padding-top: 10px;
                 background-color: #fff;
                 padding:0px 0px;
-                min-height: 100%;
-                height: 100%;
+                min-height: 460px;
+                height: 460px;
                 margin-bottom: 0px;
             }
 
@@ -113,7 +113,7 @@
                 }
 
                 #overview img{
-                    height:45px;
+                    height:75px;
                     width: auto;
                 }
 
@@ -139,14 +139,20 @@
     <div class="container">
         <header class="jumbotron subhead" id="overview">
             <div class="row">
-                <div class="span8">
+                <div class="span4">
                     <a href="{{ URL::to('/')}}" >{{ HTML::image('images/ialogo-med.png','Investors Alliance',array('class'=>'img-responsive' ) ) }}</a>
+                </div>
+                <div class="span8">
+                    <div class="pull-right" id="main-menu-right">
+                        @include('partials.identity')
+                    </div>
+                    <div class="clearfix"></div>
+                    @include('partials.topfixednav')
                 </div>
             </div>
         </header>
     </div>
 
-    @include('partials.topfixednav')
 
     <div class="container" id="main-content">
 

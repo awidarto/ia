@@ -58,8 +58,25 @@ td.curr{
 
 .navbar-inner {
     min-height: 30px;
+    background-color: transparent;
+    background-image: -moz-linear-gradient(top,#ce4213,#dd4814);
+    background-image: -webkit-gradient(linear,0 0,0 100%,from(#ce4213),to(#dd4814));
+    background-image: -webkit-linear-gradient(top,#ce4213,#dd4814);
+    background-image: -o-linear-gradient(top,#ce4213,#dd4814);
+    background-image: linear-gradient(to bottom,#ce4213,#dd4814);
+    background-image: none;
+    background-repeat: repeat-x;
+    border: 1px solid transparent;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffce4213',endColorstr='#ffdd4814',GradientType=0);
+    -webkit-box-shadow: 0 1px 4px rgba(0,0,0,0.065);
+    -moz-box-shadow: 0 1px 4px rgba(0,0,0,0.065);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.065);
 }
-.navbar .nav>li>a {
+
+.navbar .nav>li>a{
     float: none;
     padding: 5px 15px 5px;
     padding-top: 5px;
@@ -69,6 +86,10 @@ td.curr{
     color: #fff;
     text-decoration: none;
     text-shadow: 0 1px 0 #ce4213;
+}
+
+.navbar .nav>li a{
+    text-transform: uppercase;
 }
 
 #overview h1{
@@ -329,4 +350,9 @@ a.thumblink{
   position: absolute;
   top: auto;
   bottom: 270px;
+}
+
+.navbar{
+    margin-bottom: 0px;
+    margin-top: 20px;
 }
