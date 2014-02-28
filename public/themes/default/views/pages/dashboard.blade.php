@@ -53,7 +53,7 @@
                             <td>{{ $tx['firstname'].' '.$tx['lastname']}}</td>
                             <td class="curr">{{ Ks::usd($tx['total_purchase'])}}</td>
                             <td class="curr">{{ Ks::usd($tx['total_payment'])}}</td>
-                            <td>{{ $tx['orderStatus']}}</td>
+                            <td>{{ isset($tx['orderStatus'])?$tx['orderStatus']:''}}</td>
                             <td>
                                 <a href="{{ URL::to('pr/print/'.$tx['_id'])}}" class="btn receipt" target="new" ><i class="icon-print"></i></a>
                                 <a href="{{ URL::to('pr/dl/'.$tx['_id'])}}"  class="btn receipt"  target="new" ><i class="icon-download"></i></a>
