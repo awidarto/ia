@@ -135,96 +135,112 @@
     });
 </script>
 
-<h1>Property</h1>
-<div class="row" >
-    <div class="span4" style="margin-left:0px;" >
-        Items {{ ($current * $perpage) + 1 }} to {{ ( $current * $perpage ) + $currentcount }} of {{$total}}{{-- total (Filtered from {{$alltotal}} entries) --}}
-    </div>
-    <div class="pagination pagination-centered span6">
-        <ul style="margin-left:-5px;">
-            @for($p = 0;$p < $paging;$p++)
-                <li class="{{ ms('page',$p , 0) }}" ><a href="{{ mg(array('page'=>$p))}}" >{{$p + 1}}</a></li>
-            @endfor
-        </ul>
-    </div>
-    <div class="span2 pull-right form-inline">
-        <?php
-            $perpage = array();
-            for($p = 1;$p < 5;$p++){
-                $url = mg(array('count'=>$p*10));
-                $perpage[ $url ] = $p*10;
-            }
-        ?>
-        <label for="perpage">Show </label>
-        <select class="span1" id="perpage" name="perpage">
-            <?php
-                $perpage = array();
-            ?>
-            @for($p = 2;$p < 6;$p++)
-                <?php
-                    $url = mg(array('count'=>$p*10));
-                    $perpage = $p*10;
-                    $selected = (Input::get('count') == $perpage)?'selected':'';
-                ?>
-                <option value="{{$url}}" {{ $selected }} >{{$perpage}}</option>
-            @endfor
-        </select> per page
-    </div>
-</div>
-<div class="subnav row" id="filter-bar" style="background-color: aquamarine;padding:0px;margin:5px 10px;">
-    <ul class="nav nav-pills span11" style="padding-left:10px;margin-bottom:2px;margin-top:2px;" >
-        @foreach(array_merge(array('all'=>'All'),Config::get('ia.type')) as $k=>$t)
-            <li class="{{ ms('type',$k , 'all') }}" ><a href="{{ mg(array('type'=>$k,'page'=>0))}}">{{$t}}</a></li>
-        @endforeach
-    </ul>
-</div>
-<div id="sort-bar row" style="padding:0px 10px;">
-    <ul class="nav nav-pills pull-right">
-        <li class="pill-label">Order :</li>
-        <li class="{{ ms('order','asc','desc') }}" ><a href="{{ mg(array('order'=>'asc'))}}">asc</a></li>
-        <li class="{{ ms('order','desc','desc') }}" ><a href="{{ mg(array('order'=>'desc'))}}">desc</a></li>
-    </ul>
-    <ul class="nav nav-pills pull-right" id="sorter">
-        <li class="pill-label">Sort By :</li>
-        @foreach(Config::get('ia.sort') as $k=>$t)
-            <li class="{{ ms('sort',$k,'listingPrice') }}" ><a href="{{ mg(array('sort'=>$k))}}">{{$t}}</a></li>
-        @endforeach
-    </ul>
-</div>
-<div class="row">
-    <div class="span12" style="margin-left:5px;">
-        <ul id="listing">
-        @foreach($properties as $p)
-            <li>
-                <div class="thumb span3" id="{{$p['_id']}}">
-                    <a href="{{ URL::to('property/detail/'.$p['_id']) }}" class="thumblink">
-                        <h5>ID : {{$p['propertyId']}}</h5>
-                        <div class="img-container">
-                            <img src="{{ (isset($p['defaultpictures']['medium_url']))?$p['defaultpictures']['medium_url']:'' }}" alt="{{$p['propertyId']}}" >
-                            <span class="prop-status {{$p['propertyStatus']}}">{{ $p['propertyStatus']}}</span>
-                        </div>
-                        <h5>{{ $p['city'].','.$p['state'] }}</h5>
-                        <h4>${{ number_format($p['listingPrice'],0,'.',',') }}</h4>
-                        <h6>Monthly Rent : ${{ number_format($p['monthlyRental'],0,'.',',') }}</h6>
-                    </a>
-                </div>
-            </li>
-        @endforeach
-        </ul>
-    </div>
-</div>
-<div class="row" style="margin-top:10px;" >
-    <div class="span4"></div>
-    <div class="pagination pagination-centered span6">
-        <ul>
-            @for($p = 0;$p < $paging;$p++)
-                <li class="{{ ms('page',$p , 0) }}" ><a href="{{ mg(array('page'=>$p))}}" >{{$p + 1}}</a></li>
-            @endfor
-        </ul>
-    </div>
-</div>
+<div class="row" style="padding-bottom:0px;margin-top:10px;padding-top:35px;">
+    <div class="span12" style="margin:auto;background-color:#fff;overflow-y:auto;overflow-x:hidden;height:460px;position:relative;">
 
-<!-- blueimp overlay -->
+        {{-- top pagination
+
+        <div class="row" >
+            <div class="span4" style="margin-left:0px;" >
+                Items {{ ($current * $perpage) + 1 }} to {{ ( $current * $perpage ) + $currentcount }} of {{$total}}{{ total (Filtered from {{$alltotal}} entries) }}
+            </div>
+
+
+            <div class="pagination pagination-centered span6">
+                <ul style="margin-left:-5px;">
+                    @for($p = 0;$p < $paging;$p++)
+                        <li class="{{ ms('page',$p , 0) }}" ><a href="{{ mg(array('page'=>$p))}}" >{{$p + 1}}</a></li>
+                    @endfor
+                </ul>
+            </div>
+
+            <div class="span2 pull-right form-inline">
+                <?php
+                    $perpage = array();
+                    for($p = 1;$p < 5;$p++){
+                        $url = mg(array('count'=>$p*10));
+                        $perpage[ $url ] = $p*10;
+                    }
+                ?>
+                <label for="perpage">Show </label>
+                <select class="span1" id="perpage" name="perpage">
+                    <?php
+                        $perpage = array();
+                    ?>
+                    @for($p = 2;$p < 6;$p++)
+                        <?php
+                            $url = mg(array('count'=>$p*10));
+                            $perpage = $p*10;
+                            $selected = (Input::get('count') == $perpage)?'selected':'';
+                        ?>
+                        <option value="{{$url}}" {{ $selected }} >{{$perpage}}</option>
+                    @endfor
+                </select> per page
+            </div>
+
+        </div>
+            --}}
+
+        <div class="subnav row" id="filter-bar" style="background-color: #fff;padding:0px;margin:5px;">
+
+            <ul class="nav nav-pills span5" style="padding-left:0px;margin-bottom:2px;" >
+                @foreach(array_merge(array('all'=>'All'),Config::get('ia.type')) as $k=>$t)
+                    <li class="{{ ms('type',$k , 'all') }}" ><a href="{{ mg(array('type'=>$k,'page'=>0))}}">{{$t}}</a></li>
+                @endforeach
+            </ul>
+            <ul class="nav nav-pills pull-right">
+                <li class="pill-label">Order :</li>
+                <li class="{{ ms('order','asc','desc') }}" ><a href="{{ mg(array('order'=>'asc'))}}">asc</a></li>
+                <li class="{{ ms('order','desc','desc') }}" ><a href="{{ mg(array('order'=>'desc'))}}">desc</a></li>
+            </ul>
+            <ul class="nav nav-pills pull-right" id="sorter">
+                <li class="pill-label">Sort By :</li>
+                @foreach(Config::get('ia.sort') as $k=>$t)
+                    <li class="{{ ms('sort',$k,'listingPrice') }}" ><a href="{{ mg(array('sort'=>$k))}}">{{$t}}</a></li>
+                @endforeach
+            </ul>
+        </div>
+        <div id="sort-bar row" style="padding:0px 10px;">
+            <div class="span4" style="margin-left:0px;" >
+                Items {{ ($current * $perpage) + 1 }} to {{ ( $current * $perpage ) + $currentcount }} of {{$total}}{{-- total (Filtered from {{$alltotal}} entries) --}}
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="span12" style="margin-left:5px;">
+                <ul id="listing">
+                @foreach($properties as $p)
+                    <li>
+                        <div class="thumb span3" id="{{$p['_id']}}">
+                            <a href="{{ URL::to('property/detail/'.$p['_id']) }}" class="thumblink">
+                                <h5>ID : {{$p['propertyId']}}</h5>
+                                <div class="img-container">
+                                    <img src="{{ (isset($p['defaultpictures']['medium_url']))?$p['defaultpictures']['medium_url']:'' }}" alt="{{$p['propertyId']}}" >
+                                    <span class="prop-status {{$p['propertyStatus']}}">{{ $p['propertyStatus']}}</span>
+                                </div>
+                                <h5>{{ $p['city'].','.$p['state'] }}</h5>
+                                <h4>${{ number_format($p['listingPrice'],0,'.',',') }}</h4>
+                                <h6>Monthly Rent : ${{ number_format($p['monthlyRental'],0,'.',',') }}</h6>
+                            </a>
+                        </div>
+                    </li>
+                @endforeach
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <div class="row" style="margin-top:10px;padding-left:0px;padding-top:8px;" >
+        <div class="pagination pagination-centered span12">
+            <ul>
+                @for($p = 0;$p < $paging;$p++)
+                    <li class="{{ ms('page',$p , 0) }}" ><a href="{{ mg(array('page'=>$p))}}" >{{$p + 1}}</a></li>
+                @endfor
+            </ul>
+        </div>
+    </div>
+
+</div>
 
 <div id="blueimp-gallery" class="blueimp-gallery  blueimp-gallery-controls">
     <div class="slides"></div>

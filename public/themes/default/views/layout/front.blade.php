@@ -46,32 +46,9 @@
                 margin: 0 auto -60px;
             }
 
-            /* Set the fixed height of the footer here */
-            #push,
-            #footer {
-                height: 30px;
-            }
-            #footer {
-                background-color: #fff;
-                width: 940px;
-                padding: 15px 10px;
-                margin-left: auto;
-                margin-right: auto;
-            }
-
-            /* Lastly, apply responsive CSS fixes as necessary */
-            @media (max-width: 767px) {
-                #footer {
-                    margin-left: -20px;
-                    margin-right: -20px;
-                    padding-left: 20px;
-                    padding-right: 20px;
-                }
-            }
 
             #main-content{
                 padding-top: 10px;
-                background-color: #fff;
                 padding:0px 0px;
                 min-height: 460px;
                 height: 460px;
@@ -155,15 +132,14 @@
 
 
     <div class="container" id="main-content">
-
-    @yield('content')
-
+        <div class="container">
+            @yield('content')
+        </div>
     </div><!-- /container -->
-    <div id="push"></div>
-</div>
-<div id="footer">
-    <div class="container" style="border-top: thin solid #eee;">
-        <p class="muted credit">&copy; 2013 - Investors Alliance</p>
+    <div id="footer">
+        <div class="container">
+            <p class="muted credit">Copyright &copy; 2013 - Investors Alliance</p>
+        </div>
     </div>
 </div>
 

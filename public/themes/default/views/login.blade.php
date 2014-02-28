@@ -2,7 +2,7 @@
 
 @section('content')
             <!-- if there are login errors, show them here -->
-<div class="row" style="margin-left:8px;padding-bottom:0px;margin-top:10px;">
+<div class="row content-box" style="margin-left:8px;padding-bottom:0px;margin-top:40px;">
     <div class="span8">
         <div class="row">
             <div class="span3">
@@ -22,6 +22,7 @@
 
                     {{ Former::close() }}
             </div>
+            {{--
             <div class="span1"></div>
             <div class="span3">
                 <h4>Customer Login</h4>
@@ -34,7 +35,7 @@
 
                         {{ Former::password('cpassword','Password')->class('span2') }}
 
-                        {{-- Former::checkbox('remember-me')->label('')->text('Remember Me')->value('remember-me') --}}
+                        {{ Former::checkbox('remember-me')->label('')->text('Remember Me')->value('remember-me') }}
 
                         {{ Former::submit('Login')->class('btn btn-primary pull-right') }}
 
@@ -44,25 +45,7 @@
 
                     {{ Former::close() }}
             </div>
-        </div>
-        <div class="row">
-            <div class="liquid-slider span7" id="home-slider">
-
-                @foreach($featured as $f)
-                 <div>
-                      <h4 class="title">{{ $f['number'].' '.$f['address'].','.$f['city'].' '.$f['state'] }}</h4>
-                      <div class="row">
-                        <div class="span2" >
-                            <img src="{{ $f['defaultpictures']['thumbnail_url']}}" alt="{{ $f['propertyId'] }}" />
-                        </div>
-                        <div class="span3" >
-                            {{ $f['description']}}
-                        </div>
-                      </div>
-                 </div>
-                @endforeach
-            </div>
-
+            --}}
         </div>
     </div>
     <div class="span3" style="padding-left:30px;">
