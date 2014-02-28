@@ -148,74 +148,33 @@
 <div class="row" style="padding-bottom:0px;margin-top:10px;padding-top:35px;">
     <div class="span12" style="margin:auto;background-color:#fff;height:460px;">
 
-        <div class="subnav row" id="filter-bar" style="background-color: #fff;padding:0px;margin:5px;">
-            <ul class="nav nav-pills span5" style="padding-left:0px;margin-bottom:2px;" >
-                <li>
-                    <a href="{{ URL::previous() }}" class="btn btn-primary">&laquo; Back</a>
-                </li>
 
-            </ul>
+<div class="row">
+    <div class="span2">
+        <h1>
+            <a href="{{ URL::previous() }}" class="btn btn-primary">&laquo; Back</a>
             @if( isset($prop['locked']) && $prop['locked'] == 1)
                 <span style="font-size:12px;padding:2px 4px;display:inline-block;background-color:yellow;">This property is currently under buying process.</span>
             @endif
-        </div>
-
-
-<div class="row" style="margin:0px;padding:5px;">
-    <div class="span4" style="margin:auto;background-color:#fff;height:410px;overflow-y:auto;overflow-x:hidden;">
+        </h1>
         <div id="main-img" class="img-container">
             <img src="{{ (isset($prop['defaultpictures']['medium_url']))?$prop['defaultpictures']['medium_url']:'' }}" alt="{{$prop['propertyId']}}" >
             <span class="prop-status-small {{$prop['propertyStatus']}}">{{ $prop['propertyStatus']}}</span>
         </div>
         <h5 style="text-align:center;">ID : {{$prop['propertyId']}}</h5>
-
+    </div>
+    <div class="span9">
         <table class="table">
             <tr>
-                <th colspan="2" class="h4">
+                <th colspan="2" rowspan="2" class="h4">
                     {{ $prop['number'].' '.$prop['address'] }}<br />
                     {{ $prop['city'].' '.$prop['state'].' '.$prop['zipCode'] }}
                 </th>
-            </tr>
-            <tr>
-                <th>Price</th>
-                <td>
-                    ${{ number_format($prop['listingPrice'],0,'.',',') }}
-                </td>
-            </tr>
-            <tr>
-                <th>FMV</th>
-                <td>
-                    ${{ number_format($prop['FMV'],0,'.',',') }}
-                </td>
-            </tr>
-            <tr>
-                <th>Monthly Rent</th>
-                <td>
-                    ${{ number_format($prop['monthlyRental'],0,'.',',') }}
-                </td>
-            </tr>
-            <tr>
 
                 <th>Type</th>
                 <td>
                     {{ $prop['type'] }}
                 </td>
-            </tr>
-            <tr>
-
-                <th>Bed</th>
-                <td>
-                    {{ $prop['bed'] }}
-                </td>
-            </tr>
-            <tr>
-
-                <th>Bath</th>
-                <td>
-                    {{ $prop['bath'] }}
-                </td>
-            </tr>
-            <tr>
 
                 <th>Size</th>
                 <td>
@@ -224,6 +183,11 @@
 
             </tr>
             <tr>
+
+                <th>Bed</th>
+                <td>
+                    {{ $prop['bed'] }}
+                </td>
 
                 <th>Lot Size</th>
                 <td>
@@ -236,6 +200,15 @@
 
             </tr>
             <tr>
+                <th>Price</th>
+                <td>
+                    ${{ number_format($prop['listingPrice'],0,'.',',') }}
+                </td>
+
+                <th>Bath</th>
+                <td>
+                    {{ $prop['bath'] }}
+                </td>
 
                 <th>Year Built</th>
                 <td>
@@ -244,6 +217,15 @@
 
             </tr>
             <tr>
+                <th>FMV</th>
+                <td>
+                    ${{ number_format($prop['FMV'],0,'.',',') }}
+                </td>
+
+                <th></th>
+                <td>
+                    {{-- $prop['garage'] --}}
+                </td>
 
                 @if($prop['typeOfConstruction'] == '')
                     <th>Property Manager</th>
@@ -258,8 +240,16 @@
                 @endif
 
             </tr>
-
             <tr>
+                <th>Monthly Rent</th>
+                <td>
+                    ${{ number_format($prop['monthlyRental'],0,'.',',') }}
+                </td>
+
+                <th></th>
+                <td>
+                    {{-- $prop['pool'] --}}
+                </td>
 
                 <th>Parcel #</th>
                 <td>
@@ -268,9 +258,96 @@
 
             </tr>
         </table>
-
     </div>
-        <div class="span8" style="margin:auto;background-color:#fff;height:410px;overflow-y:auto;overflow-x:hidden;">
+    <div class="span1" style="text-align:left;display:block;">
+        <?php
+
+            if( isset($prop['locked']) && $prop['locked'] == 1 && $prop['reservedBy'] == Auth::user()->_id){
+                $urlbuy = URL::to('property/buy/'.$prop['_id']);
+            }elseif( isset($prop['locked']) && $prop['locked'] == 1 && $prop['reservedBy'] != Auth::user()->_id){
+                $urlbuy = '';
+            }else{
+                $urlbuy = URL::to('property/buy/'.$prop['_id']);
+            }
+        ?>
+        <a href="{{ $urlbuy }}" class="btn btn-primary btn-buy" style="margin-top:90px;bottom:0px;"><i class="icon-shopping-cart"></i></a>
+    </div>
+</div>
+<div style="width:100%;height:286px;overflow-y:auto;overflow-x:hidden;">
+
+    <div class="row">
+        <div class="span3">
+            <table class="table">
+                <tr>
+                    <td colspan="2" style="text-align:justify;">
+                        <a class="btn"  href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$address}}&ie=UTF8&hq=&hnear={{$address}}" target="blank"><i class="icon-map-marker"></i></a>
+                        &nbsp;&nbsp;&nbsp;
+                        <a href="{{ URL::to('brochure/dl/'.$prop['_id'])}}" class="btn"  target="blank" ><i class="icon-download"></i></a>
+                        &nbsp;&nbsp;&nbsp;
+                        <a href="#myModal" role="button" class="btn" data-toggle="modal"><i class="icon-envelope"></i></a>
+
+                    </td>
+                </tr>
+                <tr>
+
+                    <th>Category</th>
+                    <td>
+                        {{ ucfirst(strtolower($prop['category'])) }}
+                    </td>
+                </tr>
+                <tr>
+
+                    <th>Lease Term</th>
+                    <td>
+                        {{ $prop['leaseTerms'] }} month(s)
+                    </td>
+
+                </tr>
+                <tr>
+
+                    <th>Lease Start Date</th>
+                    <td>
+                        {{ $prop['leaseStartDate'] }}
+                    </td>
+
+                </tr>
+                <tr>
+
+                    <th>Annual Tax</th>
+                    <td>
+                        ${{ $prop['tax'] }}
+                    </td>
+                </tr>
+                {{--
+                <tr>
+
+                    <th>Insurance</th>
+                    <td>
+                        {{ $prop['insurance'] }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Property Manager</th>
+                    <td>
+                        {{ $prop['propertyManager'] }}
+                    </td>
+                </tr>
+                <tr>
+
+                    <th>Parcel #</th>
+                    <td>
+                        {{ $prop['parcelNumber'] }}
+                    </td>
+
+                </tr>
+
+                --}}
+
+            </table>
+            <h4>Description</h4>
+            {{ $prop['description']}}
+        </div>
+        <div class="span9">
             <ul class="thumbnails_grid">
                 @foreach($prop['files'] as $f )
                     <li>
@@ -318,7 +395,7 @@
                         <img src="http://maps.googleapis.com/maps/api/staticmap?center={{ $address }}&zoom=13&size=300x250&maptype=roadmap&markers=color:{{ $color }}%7Clabel:{{ $label }}%7C{{ $address }}&sensor=false" style="float:left"/>
                     </a>
                 </div>
-                <table class="table table-bordered" id="fin" style="width:260px;float:right;">
+                <table class="table table-bordered" id="fin" style="width:355px;float:right;">
                     <thead>
                         <tr>
                             <th colspan="2" class="header">
@@ -443,8 +520,9 @@
                 </script>
             </div>
         </div>
-</div>
+    </div>
 
+</div>
 
     </div><!-- end span -->
 </div><!-- end row -->
