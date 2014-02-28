@@ -25,7 +25,7 @@
                   <li><a href="#account-info"><i class="icon-chevron-right"></i> Account Info</a></li>
                 </ul>
             </div>
-            <div class="span5 lionbars" style="margin:auto;background-color:#fff;height:430px;overflow-y:auto;overflow-x:hidden;">
+            <div class="span9 lionbars" style="margin:auto;background-color:#fff;height:430px;overflow-y:hidden;overflow-x:hidden;">
                 <h3 style="margin-top:6px;">Change Password</h3>
                 @if (Session::get('loginError'))
                     <div class="alert alert-danger">{{ Session::get('loginError') }}</div>
@@ -34,7 +34,7 @@
                 {{ Former::open_horizontal('changepass')}}
                     {{ Former::password('newpass','New Password') }}
                     {{ Former::password('repass','Repeat New Password') }}
-                    {{ Former::submit('submit','Submit')->class('btn btn-primary pull-right')}}
+                    {{ Former::submit('submit','Submit')->class('btn btn-primary')}}
                 {{ Former::close()}}
 
             </div>
