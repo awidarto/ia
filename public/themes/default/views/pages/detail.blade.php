@@ -275,7 +275,7 @@
 </div>
 <div style="width:100%;height:286px;overflow-y:auto;overflow-x:hidden;">
 
-    <div class="row">
+    <div class="row-fluid">
         <div class="span3">
             <table class="table">
                 <tr>
