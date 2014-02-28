@@ -385,6 +385,7 @@ a.thumblink{
 }
 
 .shadows{
+    border-radius: 3px;
     -webkit-box-shadow: 3px 4px 15px 4px rgba(0,0,0,0.75);
     -moz-box-shadow: 3px 4px 15px 4px rgba(0,0,0,0.75);
     box-shadow: 3px 4px 15px 4px rgba(0,0,0,0.75);

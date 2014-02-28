@@ -29,12 +29,16 @@ Route::controller('ajax', 'AjaxController');
 
 Route::get('/',function(){
 
-    Theme::setCurrentTheme(Prefs::getActiveTheme() );
-    Former::framework('TwitterBootstrap');
+    if(Auth::check()){
+        return Redirect::to('dashboard');
+    }else{
+        Theme::setCurrentTheme(Prefs::getActiveTheme() );
+        Former::framework('TwitterBootstrap');
 
-    $featured = Property::where('tags','like','%featured%')->get()->toArray();
+        $featured = Property::where('tags','like','%featured%')->get()->toArray();
 
-    return View::make('pages.home')->with('featured',$featured);
+        return View::make('pages.home')->with('featured',$featured);
+    }
 
 });
 
