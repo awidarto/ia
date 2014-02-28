@@ -80,7 +80,6 @@
                 }
 
                 #main-img img{
-                    height:75px;
                     width: auto;
                 }
 

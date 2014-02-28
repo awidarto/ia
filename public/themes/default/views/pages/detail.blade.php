@@ -89,7 +89,7 @@
     }
 
     .btn-buy{
-        font-size: 36px;
+        font-size: 24px;
     }
 
     i.icon-download , i.icon-map-marker, i.icon-envelope{
@@ -120,7 +120,6 @@
     #map-container{
         display: inline-block;
         padding: 4px;
-        border: solid thin #eef;
     }
 
     #map-box{
@@ -158,11 +157,26 @@
             @if( isset($prop['locked']) && $prop['locked'] == 1)
                 <span style="font-size:12px;padding:2px 4px;display:inline-block;background-color:yellow;">This property is currently under buying process.</span>
             @endif
+
+        <?php
+
+            if( isset($prop['locked']) && $prop['locked'] == 1 && $prop['reservedBy'] == Auth::user()->_id){
+                $urlbuy = URL::to('property/buy/'.$prop['_id']);
+            }elseif( isset($prop['locked']) && $prop['locked'] == 1 && $prop['reservedBy'] != Auth::user()->_id){
+                $urlbuy = '';
+            }else{
+                $urlbuy = URL::to('property/buy/'.$prop['_id']);
+            }
+        ?>
+        <div class="span1 pull-right">
+            <a href="{{ $urlbuy }}" class="btn btn-primary btn-buy" style="bottom:0px;"><i class="icon-shopping-cart"></i></a>
+        </div>
+
         </div>
 
 
 <div class="row" style="margin:0px;padding:5px;">
-    <div class="span4" style="margin:auto;background-color:#fff;height:410px;overflow-y:auto;overflow-x:hidden;">
+    <div class="span4" style="margin:auto;background-color:#fff;height:405px;overflow-y:auto;overflow-x:hidden;">
         <div id="main-img" class="img-container">
             <img src="{{ (isset($prop['defaultpictures']['medium_url']))?$prop['defaultpictures']['medium_url']:'' }}" alt="{{$prop['propertyId']}}" >
             <span class="prop-status-small {{$prop['propertyStatus']}}">{{ $prop['propertyStatus']}}</span>
@@ -270,7 +284,7 @@
         </table>
 
     </div>
-        <div class="span8" style="margin:auto;background-color:#fff;height:410px;overflow-y:auto;overflow-x:hidden;">
+        <div class="span8" style="margin:auto;background-color:#fff;height:405px;overflow-y:auto;overflow-x:hidden;">
             <ul class="thumbnails_grid">
                 @foreach($prop['files'] as $f )
                     <li>
@@ -315,10 +329,10 @@
             <div id="map-box">
                 <div id="map-container">
                     <a class="btn"  href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$address}}&ie=UTF8&hq=&hnear={{$address}}" target="blank">
-                        <img src="http://maps.googleapis.com/maps/api/staticmap?center={{ $address }}&zoom=13&size=300x250&maptype=roadmap&markers=color:{{ $color }}%7Clabel:{{ $label }}%7C{{ $address }}&sensor=false" style="float:left"/>
+                        <img src="http://maps.googleapis.com/maps/api/staticmap?center={{ $address }}&zoom=13&size=260x370&maptype=roadmap&markers=color:{{ $color }}%7Clabel:{{ $label }}%7C{{ $address }}&sensor=false" style="float:left"/>
                     </a>
                 </div>
-                <table class="table table-bordered" id="fin" style="width:260px;float:right;">
+                <table class="table table-bordered" id="fin" style="width:300px;float:right;">
                     <thead>
                         <tr>
                             <th colspan="2" class="header">
