@@ -12,7 +12,7 @@
         margin: 4px;
         padding: 5px;
         border: thin solid #ccc;
-        width: 166px;
+        width: 210px;
         text-align: center;
     }
 
@@ -209,7 +209,7 @@
                 <ul id="listing">
                 @foreach($properties as $p)
                     <li>
-                        <div class="thumb span3" id="{{$p['_id']}}">
+                        <div class="thumb span5" id="{{$p['_id']}}">
                             <a href="{{ URL::to('property/detail/'.$p['_id']) }}" class="thumblink">
                                 <h5>ID : {{$p['propertyId']}}</h5>
                                 <div class="img-container">
