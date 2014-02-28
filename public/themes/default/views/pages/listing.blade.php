@@ -136,7 +136,7 @@
 </script>
 
 <div class="row" style="padding-bottom:0px;margin-top:10px;padding-top:35px;">
-    <div class="span12" style="margin:auto;background-color:#fff;overflow-y:auto;overflow-x:hidden;height:460px;position:relative;">
+    <div class="span12" style="margin:auto;background-color:#fff;height:460px;">
 
         {{-- top pagination
 
@@ -188,6 +188,9 @@
                     <li class="{{ ms('type',$k , 'all') }}" ><a href="{{ mg(array('type'=>$k,'page'=>0))}}">{{$t}}</a></li>
                 @endforeach
             </ul>
+            <div class="span2" style="margin-left:0px;" >
+                Items {{ ($current * $perpage) + 1 }} to {{ ( $current * $perpage ) + $currentcount }} of {{$total}}{{-- total (Filtered from {{$alltotal}} entries) --}}
+            </div>
             <ul class="nav nav-pills pull-right">
                 <li class="pill-label">Order :</li>
                 <li class="{{ ms('order','asc','desc') }}" ><a href="{{ mg(array('order'=>'asc'))}}">asc</a></li>
@@ -200,13 +203,8 @@
                 @endforeach
             </ul>
         </div>
-        <div id="sort-bar row" style="padding:0px 10px;">
-            <div class="span4" style="margin-left:0px;" >
-                Items {{ ($current * $perpage) + 1 }} to {{ ( $current * $perpage ) + $currentcount }} of {{$total}}{{-- total (Filtered from {{$alltotal}} entries) --}}
-            </div>
 
-        </div>
-        <div class="row">
+        <div class="row" style="overflow-y:auto;height:400px;overflow-x:hidden;">
             <div class="span12" style="margin-left:5px;">
                 <ul id="listing">
                 @foreach($properties as $p)
@@ -231,7 +229,7 @@
 
     </div>
     <div class="row" style="margin-top:10px;padding-left:0px;padding-top:8px;" >
-        <div class="pagination pagination-centered span12">
+        <div class="pagination pagination-centered span12" style="color:#fff;">
             <ul>
                 @for($p = 0;$p < $paging;$p++)
                     <li class="{{ ms('page',$p , 0) }}" ><a href="{{ mg(array('page'=>$p))}}" >{{$p + 1}}</a></li>
