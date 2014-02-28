@@ -188,7 +188,7 @@
                     <li class="{{ ms('type',$k , 'all') }}" ><a href="{{ mg(array('type'=>$k,'page'=>0))}}">{{$t}}</a></li>
                 @endforeach
             </ul>
-            <div class="span2" style="margin-left:0px;" >
+            <div class="span2" style="margin-left:0px;padding-top:4px;" >
                 Items {{ ($current * $perpage) + 1 }} to {{ ( $current * $perpage ) + $currentcount }} of {{$total}}{{-- total (Filtered from {{$alltotal}} entries) --}}
             </div>
             <ul class="nav nav-pills pull-right">
@@ -204,8 +204,8 @@
             </ul>
         </div>
 
-        <div class="row" style="overflow-y:auto;height:400px;overflow-x:hidden;">
-            <div class="span12" style="margin-left:5px;">
+        <div class="row" style="overflow-y:auto;height:400px;overflow-x:hidden;padding:0px;">
+            <div class="span12" style="margin-left:0px;">
                 <ul id="listing">
                 @foreach($properties as $p)
                     <li>
@@ -229,7 +229,7 @@
 
     </div>
     <div class="row" style="margin-top:10px;padding-left:0px;padding-top:8px;" >
-        <div class="pagination pagination-centered span12" style="color:#fff;">
+        <div class="pagination pagination-centered span12" style="color:#fff;padding-top:15px;">
             <ul>
                 @for($p = 0;$p < $paging;$p++)
                     <li class="{{ ms('page',$p , 0) }}" ><a href="{{ mg(array('page'=>$p))}}" >{{$p + 1}}</a></li>
