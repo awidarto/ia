@@ -145,14 +145,18 @@
 
 ?>
 
-<h1>
-    <a href="{{ URL::previous() }}" class="btn btn-primary">&laquo; Back</a>
-    @if( isset($prop['locked']) && $prop['locked'] == 1)
-        <span style="font-size:12px;padding:2px 4px;display:inline-block;background-color:yellow;">This property is currently under buying process.</span>
-    @endif
-</h1>
+<div class="row" style="padding-bottom:0px;margin-top:10px;padding-top:35px;">
+    <div class="span12" style="margin:auto;background-color:#fff;height:460px;">
+
+
 <div class="row">
     <div class="span2">
+        <h1>
+            <a href="{{ URL::previous() }}" class="btn btn-primary">&laquo; Back</a>
+            @if( isset($prop['locked']) && $prop['locked'] == 1)
+                <span style="font-size:12px;padding:2px 4px;display:inline-block;background-color:yellow;">This property is currently under buying process.</span>
+            @endif
+        </h1>
         <div id="main-img" class="img-container">
             <img src="{{ (isset($prop['defaultpictures']['medium_url']))?$prop['defaultpictures']['medium_url']:'' }}" alt="{{$prop['propertyId']}}" >
             <span class="prop-status-small {{$prop['propertyStatus']}}">{{ $prop['propertyStatus']}}</span>
@@ -269,252 +273,260 @@
         <a href="{{ $urlbuy }}" class="btn btn-primary btn-buy" style="margin-top:90px;bottom:0px;"><i class="icon-shopping-cart"></i></a>
     </div>
 </div>
-<div class="row">
-    <div class="span3">
-        <table class="table">
-            <tr>
-                <td colspan="2" style="text-align:justify;">
-                    <a class="btn"  href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$address}}&ie=UTF8&hq=&hnear={{$address}}" target="blank"><i class="icon-map-marker"></i></a>
-                    &nbsp;&nbsp;&nbsp;
-                    <a href="{{ URL::to('brochure/dl/'.$prop['_id'])}}" class="btn"  target="blank" ><i class="icon-download"></i></a>
-                    &nbsp;&nbsp;&nbsp;
-                    <a href="#myModal" role="button" class="btn" data-toggle="modal"><i class="icon-envelope"></i></a>
+<div style="width:100%;height:286px;overflow-y:auto;overflow-x:hidden;">
 
-                </td>
-            </tr>
-            <tr>
+    <div class="row">
+        <div class="span3">
+            <table class="table">
+                <tr>
+                    <td colspan="2" style="text-align:justify;">
+                        <a class="btn"  href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$address}}&ie=UTF8&hq=&hnear={{$address}}" target="blank"><i class="icon-map-marker"></i></a>
+                        &nbsp;&nbsp;&nbsp;
+                        <a href="{{ URL::to('brochure/dl/'.$prop['_id'])}}" class="btn"  target="blank" ><i class="icon-download"></i></a>
+                        &nbsp;&nbsp;&nbsp;
+                        <a href="#myModal" role="button" class="btn" data-toggle="modal"><i class="icon-envelope"></i></a>
 
-                <th>Category</th>
-                <td>
-                    {{ ucfirst(strtolower($prop['category'])) }}
-                </td>
-            </tr>
-            <tr>
+                    </td>
+                </tr>
+                <tr>
 
-                <th>Lease Term</th>
-                <td>
-                    {{ $prop['leaseTerms'] }} month(s)
-                </td>
+                    <th>Category</th>
+                    <td>
+                        {{ ucfirst(strtolower($prop['category'])) }}
+                    </td>
+                </tr>
+                <tr>
 
-            </tr>
-            <tr>
+                    <th>Lease Term</th>
+                    <td>
+                        {{ $prop['leaseTerms'] }} month(s)
+                    </td>
 
-                <th>Lease Start Date</th>
-                <td>
-                    {{ $prop['leaseStartDate'] }}
-                </td>
+                </tr>
+                <tr>
 
-            </tr>
-            <tr>
+                    <th>Lease Start Date</th>
+                    <td>
+                        {{ $prop['leaseStartDate'] }}
+                    </td>
 
-                <th>Annual Tax</th>
-                <td>
-                    ${{ $prop['tax'] }}
-                </td>
-            </tr>
-            {{--
-            <tr>
+                </tr>
+                <tr>
 
-                <th>Insurance</th>
-                <td>
-                    {{ $prop['insurance'] }}
-                </td>
-            </tr>
-            <tr>
-                <th>Property Manager</th>
-                <td>
-                    {{ $prop['propertyManager'] }}
-                </td>
-            </tr>
-            <tr>
+                    <th>Annual Tax</th>
+                    <td>
+                        ${{ $prop['tax'] }}
+                    </td>
+                </tr>
+                {{--
+                <tr>
 
-                <th>Parcel #</th>
-                <td>
-                    {{ $prop['parcelNumber'] }}
-                </td>
+                    <th>Insurance</th>
+                    <td>
+                        {{ $prop['insurance'] }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Property Manager</th>
+                    <td>
+                        {{ $prop['propertyManager'] }}
+                    </td>
+                </tr>
+                <tr>
 
-            </tr>
+                    <th>Parcel #</th>
+                    <td>
+                        {{ $prop['parcelNumber'] }}
+                    </td>
 
-            --}}
+                </tr>
 
-        </table>
-        <h4>Description</h4>
-        {{ $prop['description']}}
-    </div>
-    <div class="span9">
-        <ul class="thumbnails_grid">
-            @foreach($prop['files'] as $f )
-                <li>
-                    <a href="{{ $f['fileurl'] }}" title="{{$f['caption']}}" data-gallery >
-                        <img src="{{ $f['medium_url'] }}" alt="{{$f['caption']}}">
-                    </a>
-                </li>
-            @endforeach
-        </ul>
-        <div class="clearfix"></div>
+                --}}
 
-        <style type="text/css">
-            table#fin th{
-                width:200px;
-                text-align: right;
-            }
-
-            table#fin th.header{
-                text-align: left;
-            }
-
-            table#fin input[type="text"]{
-                width:80%;
-                text-align: right;
-                margin: 0px;
-                padding: 2px;
-            }
-
-            table#fin th+td{
-                text-align: right;
-            }
-
-            table#fin tr.yield th, table#fin tr.yield td{
-                background-color: maroon;
-                color:white;
-                font-size: 14px;
-                font-weight: bold;
-            }
-
-        </style>
-
-        <div id="map-box">
-            <div id="map-container">
-                <a class="btn"  href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$address}}&ie=UTF8&hq=&hnear={{$address}}" target="blank">
-                    <img src="http://maps.googleapis.com/maps/api/staticmap?center={{ $address }}&zoom=13&size=300x250&maptype=roadmap&markers=color:{{ $color }}%7Clabel:{{ $label }}%7C{{ $address }}&sensor=false" style="float:left"/>
-                </a>
-            </div>
-            <table class="table table-bordered" id="fin" style="width:355px;float:right;">
-                <thead>
-                    <tr>
-                        <th colspan="2" class="header">
-                            Financial Calculator
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                        $annualRental = 12*$prop['monthlyRental'];
-                        $propManagementFee = $annualRental * 0.1;
-                        $maintenanceAllowance = $annualRental * 0;
-                        $vacancyAllowance = $annualRental * 0;
-
-                        $totalExpense = $propManagementFee + $maintenanceAllowance + $vacancyAllowance + $prop['tax'] + $prop['insurance'];
-
-                        $netAnnualCashFlow = $annualRental - $totalExpense;
-                        $netMonthlyCashFlow = round($netAnnualCashFlow / 12, 0, PHP_ROUND_HALF_UP);
-
-                        $roi = ($netAnnualCashFlow / $prop['listingPrice']) * 100;
-                        $roi = round($roi, 1, PHP_ROUND_HALF_UP);
-
-                    ?>
-                    <tr>
-                        <th class="h5">Purchase Price</th><td class="h5">${{ Ks::us( $prop['listingPrice'])}}</td>
-                        <input type="hidden" value="{{ $prop['listingPrice'] }}" id="purchasePrice" >
-                    </tr>
-                    <tr>
-                        <th>Monthly Rent</th><td><input class="calc" type="text" value="{{$prop['monthlyRental']}}" id="monthlyRental"></td>
-                    </tr>
-                    <tr>
-                        <th>Annual Rent</th><td id="txt_annualRental">${{ Ks::us($annualRental) }}</td>
-                        <input type="hidden" value="{{ $annualRental }}" id="annualRental">
-                    </tr>
-                    <tr>
-                        <th colspan="2" class="header">Annual Expenses</th>
-                        <input type="hidden" value="{{ $annualRental }}" id="annualRental">
-                    </tr>
-                    <tr>
-                        <th>Taxes</th><td><input class="calc"  type="text" value="{{str_replace(array(',','.'),'',$prop['tax']) }}" id="tax"></td>
-                    </tr>
-                    <tr>
-                        <th>Insurance</th><td><input  class="calc" type="text" value="{{$prop['insurance']}}" id="insurance"></td>
-                    </tr>
-                    <tr>
-                        <th>Property Management</th><td><span class="pull-left" ><input  class="calc" style="width:20px" type="text" value="10" id="propFeePct">%</span> <span id="propManagementFee">${{ $propManagementFee}}</span></td>
-                    </tr>
-                    <tr>
-                        <th>Maintenance Allowance</th><td><span class="pull-left" ><input  class="calc" style="width:20px" type="text" value="0" id="maintenanceAllowancePct">%</span> <span id="maintenanceAllowance">${{ Ks::us($maintenanceAllowance) }}</span></td>
-                    </tr>
-                    <tr>
-                        <th>Vacancy Allowance</th><td><span class="pull-left" ><input  class="calc" style="width:20px" type="text" value="0" id="vacancyAllowancePct">%</span> <span id="vacancyAllowance">${{ Ks::us($vacancyAllowance)}}</span></td>
-                    </tr>
-                    <tr>
-                        <th class="h6">Total Expenses</th><td id="totalExpense">${{ Ks::us($totalExpense) }}</td>
-                    </tr>
-                    <tr>
-                        <th>Net Annual Cash Flow</th><td id="netAnnualCashFlow">${{ Ks::us($netAnnualCashFlow) }}</td>
-                    </tr>
-                    <tr>
-                        <th class="h6"><b>Net Monthly Cash Flow</b></th><td id="netMonthlyCashFlow">${{ Ks::us($netMonthlyCashFlow) }}</td>
-                    </tr>
-                    <tr class="yield">
-                        <th>ROI</th><td id="calcROI">{{ $roi }}%</td>
-                    </tr>
-                </tbody>
             </table>
-            <script type="text/javascript">
-                function notNan(v){
-                    if(v == '' || v == null || typeof v === "undefined" || isNaN(v) ){
-                        v = 0;
-                    }
+            <h4>Description</h4>
+            {{ $prop['description']}}
+        </div>
+        <div class="span9">
+            <ul class="thumbnails_grid">
+                @foreach($prop['files'] as $f )
+                    <li>
+                        <a href="{{ $f['fileurl'] }}" title="{{$f['caption']}}" data-gallery >
+                            <img src="{{ $f['medium_url'] }}" alt="{{$f['caption']}}">
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+            <div class="clearfix"></div>
 
-                    return parseFloat(v);
+            <style type="text/css">
+                table#fin th{
+                    width:200px;
+                    text-align: right;
                 }
 
-                function cf(input) {
-                    var output = input
-                    if (parseFloat(input)) {
-                        input = new String(input); // so you can perform string operations
-                        var parts = input.split("."); // remove the decimal part
-                        parts[0] = parts[0].split("").reverse().join("").replace(/(\d{3})(?!$)/g, "$1,").split("").reverse().join("");
-                        output = parts.join(".");
-                    }
-
-                    return output;
+                table#fin th.header{
+                    text-align: left;
                 }
 
-                $('.calc').on('keyup',function(){
-                    var purchasePrice = {{ $prop['listingPrice']}};
-                    var monthlyRental = notNan($('#monthlyRental').val());
+                table#fin input[type="text"]{
+                    width:80%;
+                    text-align: right;
+                    margin: 0px;
+                    padding: 2px;
+                }
 
-                    var tax = notNan($('#tax').val());
-                    var insurance = notNan($('#insurance').val());
+                table#fin th+td{
+                    text-align: right;
+                }
 
-                    var annualRental = 12 * monthlyRental;
-                    var propManagementFee = annualRental * ( notNan($('#propFeePct').val()) / 100 );
-                    var maintenanceAllowance = annualRental *  ( notNan($('#maintenanceAllowancePct').val()) / 100 );
-                    var vacancyAllowance = annualRental *  ( notNan($('#vacancyAllowancePct').val()) / 100 );
+                table#fin tr.yield th, table#fin tr.yield td{
+                    background-color: maroon;
+                    color:white;
+                    font-size: 14px;
+                    font-weight: bold;
+                }
 
-                    var totalExpense = notNan(propManagementFee) + notNan(maintenanceAllowance) + notNan(vacancyAllowance) + tax + insurance;
+            </style>
 
-                    var netAnnualCashFlow = annualRental - totalExpense;
-                    var netMonthlyCashFlow = netAnnualCashFlow / 12;
-                        netMonthlyCashFlow = netMonthlyCashFlow.toFixed(0);
+            <div id="map-box">
+                <div id="map-container">
+                    <a class="btn"  href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$address}}&ie=UTF8&hq=&hnear={{$address}}" target="blank">
+                        <img src="http://maps.googleapis.com/maps/api/staticmap?center={{ $address }}&zoom=13&size=300x250&maptype=roadmap&markers=color:{{ $color }}%7Clabel:{{ $label }}%7C{{ $address }}&sensor=false" style="float:left"/>
+                    </a>
+                </div>
+                <table class="table table-bordered" id="fin" style="width:355px;float:right;">
+                    <thead>
+                        <tr>
+                            <th colspan="2" class="header">
+                                Financial Calculator
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                            $annualRental = 12*$prop['monthlyRental'];
+                            $propManagementFee = $annualRental * 0.1;
+                            $maintenanceAllowance = $annualRental * 0;
+                            $vacancyAllowance = $annualRental * 0;
 
-                    var roi = ( netAnnualCashFlow / purchasePrice ) * 100;
-                    roi = roi.toFixed(1);
+                            $totalExpense = $propManagementFee + $maintenanceAllowance + $vacancyAllowance + $prop['tax'] + $prop['insurance'];
 
-                    $('#propManagementFee').html('$' + cf(propManagementFee));
-                    $('#maintenanceAllowance').html('$' + cf(maintenanceAllowance));
-                    $('#vacancyAllowance').html('$' + cf(vacancyAllowance));
+                            $netAnnualCashFlow = $annualRental - $totalExpense;
+                            $netMonthlyCashFlow = round($netAnnualCashFlow / 12, 0, PHP_ROUND_HALF_UP);
 
-                    $('#totalExpense').html('$' + cf(totalExpense));
-                    $('#netAnnualCashFlow').html('$' + cf(netAnnualCashFlow));
-                    $('#netMonthlyCashFlow').html('$' + cf(netMonthlyCashFlow));
+                            $roi = ($netAnnualCashFlow / $prop['listingPrice']) * 100;
+                            $roi = round($roi, 1, PHP_ROUND_HALF_UP);
 
-                    $('#calcROI').html(roi + '%');
+                        ?>
+                        <tr>
+                            <th class="h5">Purchase Price</th><td class="h5">${{ Ks::us( $prop['listingPrice'])}}</td>
+                            <input type="hidden" value="{{ $prop['listingPrice'] }}" id="purchasePrice" >
+                        </tr>
+                        <tr>
+                            <th>Monthly Rent</th><td><input class="calc" type="text" value="{{$prop['monthlyRental']}}" id="monthlyRental"></td>
+                        </tr>
+                        <tr>
+                            <th>Annual Rent</th><td id="txt_annualRental">${{ Ks::us($annualRental) }}</td>
+                            <input type="hidden" value="{{ $annualRental }}" id="annualRental">
+                        </tr>
+                        <tr>
+                            <th colspan="2" class="header">Annual Expenses</th>
+                            <input type="hidden" value="{{ $annualRental }}" id="annualRental">
+                        </tr>
+                        <tr>
+                            <th>Taxes</th><td><input class="calc"  type="text" value="{{str_replace(array(',','.'),'',$prop['tax']) }}" id="tax"></td>
+                        </tr>
+                        <tr>
+                            <th>Insurance</th><td><input  class="calc" type="text" value="{{$prop['insurance']}}" id="insurance"></td>
+                        </tr>
+                        <tr>
+                            <th>Property Management</th><td><span class="pull-left" ><input  class="calc" style="width:20px" type="text" value="10" id="propFeePct">%</span> <span id="propManagementFee">${{ $propManagementFee}}</span></td>
+                        </tr>
+                        <tr>
+                            <th>Maintenance Allowance</th><td><span class="pull-left" ><input  class="calc" style="width:20px" type="text" value="0" id="maintenanceAllowancePct">%</span> <span id="maintenanceAllowance">${{ Ks::us($maintenanceAllowance) }}</span></td>
+                        </tr>
+                        <tr>
+                            <th>Vacancy Allowance</th><td><span class="pull-left" ><input  class="calc" style="width:20px" type="text" value="0" id="vacancyAllowancePct">%</span> <span id="vacancyAllowance">${{ Ks::us($vacancyAllowance)}}</span></td>
+                        </tr>
+                        <tr>
+                            <th class="h6">Total Expenses</th><td id="totalExpense">${{ Ks::us($totalExpense) }}</td>
+                        </tr>
+                        <tr>
+                            <th>Net Annual Cash Flow</th><td id="netAnnualCashFlow">${{ Ks::us($netAnnualCashFlow) }}</td>
+                        </tr>
+                        <tr>
+                            <th class="h6"><b>Net Monthly Cash Flow</b></th><td id="netMonthlyCashFlow">${{ Ks::us($netMonthlyCashFlow) }}</td>
+                        </tr>
+                        <tr class="yield">
+                            <th>ROI</th><td id="calcROI">{{ $roi }}%</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <script type="text/javascript">
+                    function notNan(v){
+                        if(v == '' || v == null || typeof v === "undefined" || isNaN(v) ){
+                            v = 0;
+                        }
 
-                });
+                        return parseFloat(v);
+                    }
 
-            </script>
+                    function cf(input) {
+                        var output = input
+                        if (parseFloat(input)) {
+                            input = new String(input); // so you can perform string operations
+                            var parts = input.split("."); // remove the decimal part
+                            parts[0] = parts[0].split("").reverse().join("").replace(/(\d{3})(?!$)/g, "$1,").split("").reverse().join("");
+                            output = parts.join(".");
+                        }
+
+                        return output;
+                    }
+
+                    $('.calc').on('keyup',function(){
+                        var purchasePrice = {{ $prop['listingPrice']}};
+                        var monthlyRental = notNan($('#monthlyRental').val());
+
+                        var tax = notNan($('#tax').val());
+                        var insurance = notNan($('#insurance').val());
+
+                        var annualRental = 12 * monthlyRental;
+                        var propManagementFee = annualRental * ( notNan($('#propFeePct').val()) / 100 );
+                        var maintenanceAllowance = annualRental *  ( notNan($('#maintenanceAllowancePct').val()) / 100 );
+                        var vacancyAllowance = annualRental *  ( notNan($('#vacancyAllowancePct').val()) / 100 );
+
+                        var totalExpense = notNan(propManagementFee) + notNan(maintenanceAllowance) + notNan(vacancyAllowance) + tax + insurance;
+
+                        var netAnnualCashFlow = annualRental - totalExpense;
+                        var netMonthlyCashFlow = netAnnualCashFlow / 12;
+                            netMonthlyCashFlow = netMonthlyCashFlow.toFixed(0);
+
+                        var roi = ( netAnnualCashFlow / purchasePrice ) * 100;
+                        roi = roi.toFixed(1);
+
+                        $('#propManagementFee').html('$' + cf(propManagementFee));
+                        $('#maintenanceAllowance').html('$' + cf(maintenanceAllowance));
+                        $('#vacancyAllowance').html('$' + cf(vacancyAllowance));
+
+                        $('#totalExpense').html('$' + cf(totalExpense));
+                        $('#netAnnualCashFlow').html('$' + cf(netAnnualCashFlow));
+                        $('#netMonthlyCashFlow').html('$' + cf(netMonthlyCashFlow));
+
+                        $('#calcROI').html(roi + '%');
+
+                    });
+
+                </script>
+            </div>
         </div>
     </div>
+
 </div>
+
+    </div><!-- end span -->
+</div><!-- end row -->
+
 
 <div id="blueimp-gallery" class="blueimp-gallery  blueimp-gallery-controls">
     <div class="slides"></div>
