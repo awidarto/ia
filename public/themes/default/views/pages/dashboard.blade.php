@@ -44,6 +44,7 @@
                             $total_purchase = 0;
                             $total_payment = 0;
                         ?>
+                    @if(count($trx) > 0 )
                         @foreach($trx as $tx)
                         <tr>
                             <td>{{ $tx['orderNumber']}}</td>
@@ -66,6 +67,7 @@
                             ?>
                         </tr>
                         @endforeach
+                    @endif
                         <tr>
                             <td></td>
                             <td></td>
@@ -92,6 +94,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                    @if(count($buyers) > 0)
                         @foreach($buyers as $by)
                         <tr>
                             <td>{{ $by['customerId']}}</td>
@@ -106,6 +109,7 @@
                             </td>
                         </tr>
                         @endforeach
+                    @endif
                     </tbody>
                 </table>
                 <h3 id="account-info">Account Info</h3>
