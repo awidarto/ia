@@ -152,10 +152,9 @@
                 <li>
                     <a href="{{ URL::previous() }}" class="btn btn-primary">&laquo; Back</a>
                 </li>
-
             </ul>
             @if( isset($prop['locked']) && $prop['locked'] == 1)
-                <span style="font-size:12px;padding:2px 4px;display:inline-block;background-color:yellow;">This property is currently under buying process.</span>
+                <span style="font-size:12px;margin-left:4px;padding:2px 4px;display:inline-block;background-color:yellow;">This property is currently under buying process.</span>
             @endif
 
         <?php
@@ -168,7 +167,7 @@
                 $urlbuy = URL::to('property/buy/'.$prop['_id']);
             }
         ?>
-            <div class="span4 pull-right">
+            <div class="span4 pull-right" style="text-align:right;">
                 <a class="btn"  href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$address}}&ie=UTF8&hq=&hnear={{$address}}" target="blank"><i class="icon-map-marker"></i></a>
                 &nbsp;&nbsp;&nbsp;
                 <a href="{{ URL::to('brochure/dl/'.$prop['_id'])}}" class="btn"  target="blank" ><i class="icon-download"></i></a>
@@ -184,7 +183,7 @@
 
 
     <div class="row" style="margin:0px;padding:5px;">
-        <div class="span4 lionbars" style="margin:auto;background-color:#fff;height:405px;overflow-y:auto;overflow-x:hidden;">
+        <div class="span4 lionbars" style="margin:auto;background-color:#fff;height:405px;overflow-y:auto;overflow-x:hidden;padding-right:4px;">
             <div id="main-img" class="img-container">
                 <img src="{{ (isset($prop['defaultpictures']['medium_url']))?$prop['defaultpictures']['medium_url']:'' }}" alt="{{$prop['propertyId']}}" >
                 <span class="prop-status-small {{$prop['propertyStatus']}}">{{ $prop['propertyStatus']}}</span>
@@ -198,6 +197,7 @@
                         {{ $prop['city'].' '.$prop['state'].' '.$prop['zipCode'] }}
                     </th>
                 </tr>
+                {{--
                 <tr>
                     <td colspan="2" style="text-align:justify;">
                         <a class="btn"  href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$address}}&ie=UTF8&hq=&hnear={{$address}}" target="blank"><i class="icon-map-marker"></i></a>
@@ -208,6 +208,7 @@
 
                     </td>
                 </tr>
+                --}}
                 <tr>
                     <th>Price</th>
                     <td>
@@ -334,7 +335,7 @@
             </table>
 
         </div>
-            <div class="span8 lionbars" style="margin:auto;background-color:#fff;height:405px;overflow-y:auto;overflow-x:hidden;">
+            <div class="span8 lionbars" style="margin:auto;background-color:#fff;height:405px;overflow-y:auto;overflow-x:hidden;padding-right:4px;">
                 <ul class="thumbnails_grid">
                     @foreach($prop['files'] as $f )
                         <li>

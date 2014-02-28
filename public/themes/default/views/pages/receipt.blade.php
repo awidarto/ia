@@ -158,7 +158,7 @@
 
         <div class="row" style="margin:0px;padding:5px;">
 
-            <div class="span3 lionbars" style="margin:auto;background-color:#fff;height:470px;overflow-y:auto;overflow-x:hidden;">
+            <div class="span3 lionbars" style="margin:auto;background-color:#fff;height:470px;overflow-y:auto;overflow-x:hidden;padding-right:4px;">
                 <div id="main-img" class="img-container">
                     <img src="{{ (isset($prop['defaultpictures']['medium_url']))?$prop['defaultpictures']['medium_url']:'' }}" alt="{{$prop['propertyId']}}" >
                     <span class="prop-status-small {{$prop['propertyStatus']}}">{{ $prop['propertyStatus']}}</span>
@@ -331,7 +331,7 @@
 
             </div>
 
-            <div class="span9 lionbars" style="margin:auto;background-color:#fff;height:470px;overflow-y:auto;overflow-x:hidden;">
+            <div class="span9 lionbars" style="margin:auto;background-color:#fff;height:470px;overflow-y:auto;overflow-x:hidden;padding-right:4px;">
 
         <h1 style="padding-left:0px;">Purchase Receipt</h1>
         <a href="{{ URL::to('pr/print/'.$trx['_id'])}}" class="btn receipt" target="new" ><i class="icon-print"></i></a>

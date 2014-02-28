@@ -12,7 +12,7 @@
             @endif
         </div>
         <div class="row" style="margin:0px;padding:0px;padding-left:8px;">
-            <div class="span12 lionbars" style="overflow-y:auto;height:410px;width:100%;margin:0px;">
+            <div class="span12 lionbars" style="overflow-y:auto;height:410px;width:100%;margin:0px;margin-right:4px;">
 
                 @if(is_null($content))
                     <p>Sorry, this page apparently does not exist yet.</p>
