@@ -136,7 +136,7 @@
 </script>
 
 <div class="row" style="padding-bottom:0px;margin-top:10px;padding-top:35px;">
-    <div class="span12" style="margin:auto;background-color:#fff;height:460px;">
+    <div class="span12 shadows" style="margin:auto;background-color:#fff;height:460px;">
 
         {{-- top pagination
 
@@ -204,8 +204,8 @@
             </ul>
         </div>
 
-        <div class="row" style="overflow-y:auto;height:415px;overflow-x:hidden;padding:0px;">
-            <div class="span12" style="margin-left:0px;">
+        <div class="row" style="margin:0px;padding:0px;padding-left:8px;">
+            <div class="span12 lionbars" style="overflow-y:auto;height:410px;width:100%;margin:0px;">
                 <ul id="listing">
                 @foreach($properties as $p)
                     <li>

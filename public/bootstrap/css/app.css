@@ -384,10 +384,10 @@ a.thumblink{
     background-color: #fff;
 }
 
-.bx-viewport{
-    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.075);
-    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.075);
-        box-shadow: 0 1px 2px rgba(0,0,0,.075);
+.shadows{
+    -webkit-box-shadow: 3px 4px 15px 4px rgba(0,0,0,0.75);
+    -moz-box-shadow: 3px 4px 15px 4px rgba(0,0,0,0.75);
+    box-shadow: 3px 4px 15px 4px rgba(0,0,0,0.75);
 }
 
 #footer{

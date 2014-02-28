@@ -1,6 +1,9 @@
 @extends('layout.front')
 
 @section('content')
+            <?php
+                $address = $prop['number'].' '.$prop['address'].' '.$prop['city'].' '.$prop['state'].' '.$prop['zipCode'];
+            ?>
 
 {{ HTML::script('js/jquery.bootstrap.wizard.min.js')}}
 
@@ -144,447 +147,459 @@
         text-decoration: underline;
     }
 
+    #main-content{
+        height:650px;
+        overflow-y:hidden;
+    }
+
 </style>
 {{ HTML::style('css/imagestyle.css')}}
 
-<h1>
-    <a href="{{ URL::previous() }}" class="btn btn-primary">&laquo; Back</a>
-</h1>
+<div class="row" style="padding-bottom:0px;margin-top:10px;padding-top:15px;">
+    <div class="span12 shadows" style="margin:auto;background-color:#fff;height:570px;">
 
-<div class="row">
-    <div class="span2">
-        <div id="main-img" class="img-container">
-            <img src="{{ (isset($prop['defaultpictures']['medium_url']))?$prop['defaultpictures']['medium_url']:'' }}" alt="{{$prop['propertyId']}}" >
-            <span class="prop-status-small {{$prop['propertyStatus']}}">{{ $prop['propertyStatus']}}</span>
+        <div class="row" style="margin:0px;padding:4px;">
+            <a href="{{ URL::previous() }}" class="btn btn-primary">&laquo; Back</a>
+            @if( isset($prop['locked']) && $prop['locked'] == 1)
+                <span style="font-size:12px;padding:2px 4px;display:inline-block;background-color:yellow;">This property is currently under buying process.</span>
+            @endif
+            <div class="span6 pull-right" style="display:block;">
+                <div id="session-counter-bar" style="text-align:right;">
+                    Your shopping cart will expire in <span id="session-counter"></span>.
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="span3">
-        <h1 style="margin-top:0px;margin-bottom:4px;padding-left:0px;">Purchase Details</h1>
-        <h2 style="margin-top:0px;padding-left:0px;margin-bottom:4px;">ID : {{$prop['propertyId']}}</h2>
-        <h3 style="margin-top:0px;padding-left:0px;margin-bottom:4px;">
-            {{ $prop['number'].' '.$prop['address'] }}<br />
-            {{ $prop['city'].' '.$prop['state'].' '.$prop['zipCode'] }}
-        </h3>
+        <div class="row" style="margin:0px;padding:0px;padding-left:8px;">
 
-    </div>
-    <div class="span6" style="display:block;">
-
-            <?php
-                $address = $prop['number'].' '.$prop['address'].' '.$prop['city'].' '.$prop['state'].' '.$prop['zipCode'];
-            ?>
-
-        <div id="session-counter-bar" style="text-align:right;">
-            Your shopping cart will expire in <span id="session-counter"></span>.
         </div>
 
-    </div>
-    <hr>
-</div>
-<div class="row">
-    <div class="span3">
-        <h3>Quick Specs</h3>
-        <table class="table">
-            {{--
-            <tr>
-                <th colspan="2" class="h4">
+
+        <div class="row" style="margin:0px;padding:5px;">
+
+            <div class="span4 lionbars" style="margin:auto;background-color:#fff;height:490px;overflow-y:auto;overflow-x:hidden;">
+                <div id="main-img" class="img-container">
+                    <img src="{{ (isset($prop['defaultpictures']['medium_url']))?$prop['defaultpictures']['medium_url']:'' }}" alt="{{$prop['propertyId']}}" >
+                    <span class="prop-status-small {{$prop['propertyStatus']}}">{{ $prop['propertyStatus']}}</span>
+                </div>
+                <h5 style="text-align:center;">ID : {{$prop['propertyId']}}</h5>
+
+                <h3 style="margin-top:0px;margin-bottom:4px;padding-left:0px;">Purchase Details</h3>
+                <h4 style="margin-top:0px;padding-left:0px;margin-bottom:4px;">ID : {{$prop['propertyId']}}</h4>
+                <h4 style="margin-top:0px;padding-left:0px;margin-bottom:4px;">
                     {{ $prop['number'].' '.$prop['address'] }}<br />
                     {{ $prop['city'].' '.$prop['state'].' '.$prop['zipCode'] }}
-                </th>
-            </tr>
-            --}}
-            <tr>
-                <td colspan="2" style="text-align:justify;">
-                    <a class="btn"  href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$address}}&ie=UTF8&hq=&hnear={{$address}}" target="blank"><i class="icon-map-marker"></i></a>
-                    &nbsp;&nbsp;&nbsp;
-                    <a href="{{ URL::to('brochure/dl/'.$prop['_id'])}}" class="btn"  target="blank" ><i class="icon-download"></i></a>
-                    &nbsp;&nbsp;&nbsp;
-                    <a href="#myModal" role="button" class="btn" data-toggle="modal"><i class="icon-envelope"></i></a>
-                </td>
-            </tr>
-            <tr>
-                <th>Price</th>
-                <td>
-                    ${{ number_format($prop['listingPrice'],0,'.',',') }}
-                </td>
-            </tr>
-            <tr>
-                <th>FMV</th>
-                <td>
-                    ${{ number_format($prop['FMV'],0,'.',',') }}
-                </td>
-            </tr>
-            <tr>
-                <th>Monthly Rental</th>
-                <td>
-                    ${{ number_format($prop['monthlyRental'],0,'.',',') }}
-                </td>
-            </tr>
-            <tr>
-                <th>Annual Tax</th>
-                <td>
-                    ${{ $prop['tax'] }}
-                </td>
-            </tr>
-            <tr>
+                </h4>
 
-                <th>Category</th>
-                <td>
-                    {{ ucfirst(strtolower($prop['category'])) }}
-                </td>
-            </tr>
-            <tr>
 
-                <th>Lease Term</th>
-                <td>
-                    {{ $prop['leaseTerms'] }} month(s)
-                </td>
-
-            </tr>
-            <tr>
-
-                <th>Lease Start Date</th>
-                <td>
-                    {{ $prop['leaseStartDate'] }}
-                </td>
-
-            </tr>
-            <tr>
-
-                <th>Type</th>
-                <td>
-                    {{ $prop['type'] }}
-                </td>
-            </tr>
-            <tr>
-
-                <th>Year Built</th>
-                <td>
-                    {{ $prop['yearBuilt'] }}
-                </td>
-
-            </tr>
-            <tr>
-
-                <th>Size</th>
-                <td>
-                    {{ number_format($prop['houseSize'],0) }} sqft
-                </td>
-
-            </tr>
-            <tr>
-
-                <th>Lot Size</th>
-                <td>
-                    @if( $prop['lotSize'] < 100)
-                    {{ number_format($prop['lotSize'] * 43560,0) }} sqft
-                    @else
-                    {{ $prop['lotSize'] }} sqft
-                    @endif
-                </td>
-
-            </tr>
-            <tr>
-
-                <th>Bed</th>
-                <td>
-                    {{ $prop['bed'] }}
-                </td>
-            </tr>
-            <tr>
-
-                <th>Bath</th>
-                <td>
-                    {{ $prop['bath'] }}
-                </td>
-            </tr>
-            {{--
-            <tr>
-
-                <th>Garage</th>
-                <td>
-                    {{ $prop['garage'] }}
-                </td>
-            </tr>
-            <tr>
-
-                <th>Pool</th>
-                <td>
-                    {{ $prop['pool'] }}
-                </td>
-            </tr>
-
-            --}}
-
-            @if($prop['typeOfConstruction'] != '')
-            <tr>
-
-                <th>Construction</th>
-                <td>
-                    {{ $prop['typeOfConstruction'] }}
-                </td>
-
-            </tr>
-            @endif
-            <tr>
-
-                <th>Parcel #</th>
-                <td>
-                    {{ $prop['parcelNumber'] }}
-                </td>
-
-            </tr>
-        </table>
-
-        <h3>Description</h3>
-        {{ $prop['description']}}
-    </div>
-    <div class="span9">
-        {{ HTML::style('css/wizard-custom.css') }}
-
-            <style type="text/css">
-                .bwizard-steps li {
-                    display: inline-block;
-                    position: relative;
-                    margin-right: 5px;
-                    padding: 12px 17px 10px 30px;
-                    background: #cfcfcf;
-                    line-height: 18px;
-                    list-style: none;
-                    zoom: 1;
-                    width: 26%;
-                }
-
-                input.error, select.error{
-                    border: 1px solid red;
-                    background-color: orange;
-                }
-            </style>
-
-                <div id="rootwizard" style="width: 645px;">
-                    <ul>
-                        <li><a href="#tab1" data-toggle="tab">Sales & Contact Information</a></li>
-                        <li><a href="#tab2" data-toggle="tab">Funding & Title Information</a></li>
-                        <li><a href="#tab3" data-toggle="tab">Financial Information</a></li>
-                    </ul>
+                <h3>Quick Specs</h3>
+                <table class="table">
                     {{--
+                    <tr>
+                        <th colspan="2" class="h4">
+                            {{ $prop['number'].' '.$prop['address'] }}<br />
+                            {{ $prop['city'].' '.$prop['state'].' '.$prop['zipCode'] }}
+                        </th>
+                    </tr>
+                    --}}
+                    <tr>
+                        <td colspan="2" style="text-align:justify;">
+                            <a class="btn"  href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$address}}&ie=UTF8&hq=&hnear={{$address}}" target="blank"><i class="icon-map-marker"></i></a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a href="{{ URL::to('brochure/dl/'.$prop['_id'])}}" class="btn"  target="blank" ><i class="icon-download"></i></a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a href="#myModal" role="button" class="btn" data-toggle="modal"><i class="icon-envelope"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Price</th>
+                        <td>
+                            ${{ number_format($prop['listingPrice'],0,'.',',') }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>FMV</th>
+                        <td>
+                            ${{ number_format($prop['FMV'],0,'.',',') }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Monthly Rental</th>
+                        <td>
+                            ${{ number_format($prop['monthlyRental'],0,'.',',') }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Annual Tax</th>
+                        <td>
+                            ${{ $prop['tax'] }}
+                        </td>
+                    </tr>
+                    <tr>
 
-                    <div id="bar" class="progress progress-striped active">
-                      <div class="bar"></div>
-                    </div>
+                        <th>Category</th>
+                        <td>
+                            {{ ucfirst(strtolower($prop['category'])) }}
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <th>Lease Term</th>
+                        <td>
+                            {{ $prop['leaseTerms'] }} month(s)
+                        </td>
+
+                    </tr>
+                    <tr>
+
+                        <th>Lease Start Date</th>
+                        <td>
+                            {{ $prop['leaseStartDate'] }}
+                        </td>
+
+                    </tr>
+                    <tr>
+
+                        <th>Type</th>
+                        <td>
+                            {{ $prop['type'] }}
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <th>Year Built</th>
+                        <td>
+                            {{ $prop['yearBuilt'] }}
+                        </td>
+
+                    </tr>
+                    <tr>
+
+                        <th>Size</th>
+                        <td>
+                            {{ number_format($prop['houseSize'],0) }} sqft
+                        </td>
+
+                    </tr>
+                    <tr>
+
+                        <th>Lot Size</th>
+                        <td>
+                            @if( $prop['lotSize'] < 100)
+                            {{ number_format($prop['lotSize'] * 43560,0) }} sqft
+                            @else
+                            {{ $prop['lotSize'] }} sqft
+                            @endif
+                        </td>
+
+                    </tr>
+                    <tr>
+
+                        <th>Bed</th>
+                        <td>
+                            {{ $prop['bed'] }}
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <th>Bath</th>
+                        <td>
+                            {{ $prop['bath'] }}
+                        </td>
+                    </tr>
+                    {{--
+                    <tr>
+
+                        <th>Garage</th>
+                        <td>
+                            {{ $prop['garage'] }}
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <th>Pool</th>
+                        <td>
+                            {{ $prop['pool'] }}
+                        </td>
+                    </tr>
 
                     --}}
 
-                    {{ Former::open_horizontal('property/process')->id('orderform')}}
+                    @if($prop['typeOfConstruction'] != '')
+                    <tr>
 
-                    {{ Former::hidden('update')->value($update) }}
-                    {{ Former::hidden('trx_id')->value($trx_id) }}
+                        <th>Construction</th>
+                        <td>
+                            {{ $prop['typeOfConstruction'] }}
+                        </td>
 
-                    {{ Former::hidden('propObjectId')->value($prop['_id']) }}
-                    {{ Former::hidden('propertyId')->value($prop['propertyId']) }}
+                    </tr>
+                    @endif
+                    <tr>
+
+                        <th>Parcel #</th>
+                        <td>
+                            {{ $prop['parcelNumber'] }}
+                        </td>
+
+                    </tr>
+                </table>
+
+                <h3>Description</h3>
+                {{ $prop['description']}}
+
+            </div>
+            <div class="span8">
+                {{ HTML::style('css/wizard-custom.css') }}
+
+                    <style type="text/css">
+                        .bwizard-steps li {
+                            display: inline-block;
+                            position: relative;
+                            margin-right: 5px;
+                            padding: 12px 17px 10px 30px;
+                            background: #cfcfcf;
+                            line-height: 18px;
+                            list-style: none;
+                            zoom: 1;
+                            width: 26%;
+                        }
+
+                        input.error, select.error{
+                            border: 1px solid red;
+                            background-color: orange;
+                        }
+                    </style>
+
+                        <div id="rootwizard" style="width: 633px;display:block;">
+                            <ul>
+                                <li><a href="#tab1" data-toggle="tab">Sales & Contact Information</a></li>
+                                <li><a href="#tab2" data-toggle="tab">Funding & Title Information</a></li>
+                                <li><a href="#tab3" data-toggle="tab">Financial Information</a></li>
+                            </ul>
+                            {{--
+
+                            <div id="bar" class="progress progress-striped active">
+                              <div class="bar"></div>
+                            </div>
+
+                            --}}
+
+                            {{ Former::open_horizontal('property/process')->id('orderform')}}
+
+                            {{ Former::hidden('update')->value($update) }}
+                            {{ Former::hidden('trx_id')->value($trx_id) }}
+
+                            {{ Former::hidden('propObjectId')->value($prop['_id']) }}
+                            {{ Former::hidden('propertyId')->value($prop['propertyId']) }}
 
 
-                    <div class="tab-content">
-                        <div class="tab-pane" id="tab1">
-                            <div class="row">
-                                <div class="span4">
-                                    {{ Former::hidden('buyerId')->id('buyerId')}}
-                                    {{ Former::text('customerId','Customer ID')->class('span1 autoid')->help('Leave blank for new buyer') }}
-                                    {{ Former::select('salutation')->options(Config::get('kickstart.salutation'))->label('Salutation')->class('span1') }}
-                                    {{ Former::text('firstname','First Name *')->class('span3 autofirstname')->id('firstname') }}
-                                    {{ Former::text('lastname','Last Name *')->class('span3 autolastname')->id('lastname') }}
-                                    {{ Former::text('company','Company / Entity *')->class('span3')->id('company') }}
-                                    {{ Former::text('phone','Telephone *')->class('span3')->id('phone') }}
-                                    {{ Former::text('email','Email Address *')->class('span3 autoemail')->id('email') }}
+                            <div class="tab-content">
+                                <div class="tab-pane" id="tab1">
+                                    <div class="row">
+                                        <div class="span4">
+                                            {{ Former::hidden('buyerId')->id('buyerId')}}
+                                            {{ Former::text('customerId','Customer ID')->class('span1 autoid')->help('Leave blank for new buyer') }}
+                                            {{ Former::select('salutation')->options(Config::get('kickstart.salutation'))->label('Salutation')->class('span1') }}
+                                            {{ Former::text('firstname','First Name *')->class('span3 autofirstname')->id('firstname') }}
+                                            {{ Former::text('lastname','Last Name *')->class('span3 autolastname')->id('lastname') }}
+                                            {{ Former::text('company','Company / Entity *')->class('span3')->id('company') }}
+                                            {{ Former::text('phone','Telephone *')->class('span3')->id('phone') }}
+                                            {{ Former::text('email','Email Address *')->class('span3 autoemail')->id('email') }}
 
-                                </div>
-                                <div class="span4">
-                                    {{ Former::text('number','Number *')->id('number')->class('span1') }}
-                                    {{ Former::text('address','Street Address *')->id('address') }}
-                                    {{ Former::text('address_2','')->id('address_2') }}
-                                    {{ Former::text('city','City *')->id('city') }}
-                                    {{ Former::select('countryOfOrigin')->options(Config::get('country.countries'))->label('Country')->id('country') }}
-                                    <div class="us" style="display:none;">
-                                        {{ Former::select('state')->class('us')->options(Config::get('country.us_states'))->label('State')->style('display:none;')->id('us_states') }}
-                                    </div>
-                                    <div class="au" style="display:none;">
-                                        {{ Former::select('state')->class('au')->options(Config::get('country.aus_states'))->label('State')->style('display:none;')->id('au_states') }}
-                                    </div>
-                                    <div class="outside">
-                                        {{ Former::text('state','State / Province')->class('outside')->id('other_state') }}
-                                    </div>
+                                        </div>
+                                        <div class="span4">
+                                            {{ Former::text('number','Number *')->id('number')->class('span1') }}
+                                            {{ Former::text('address','Street Address *')->id('address') }}
+                                            {{ Former::text('address_2','')->id('address_2') }}
+                                            {{ Former::text('city','City *')->id('city') }}
+                                            {{ Former::select('countryOfOrigin')->options(Config::get('country.countries'))->label('Country')->id('country') }}
+                                            <div class="us" style="display:none;">
+                                                {{ Former::select('state')->class('us')->options(Config::get('country.us_states'))->label('State')->style('display:none;')->id('us_states') }}
+                                            </div>
+                                            <div class="au" style="display:none;">
+                                                {{ Former::select('state')->class('au')->options(Config::get('country.aus_states'))->label('State')->style('display:none;')->id('au_states') }}
+                                            </div>
+                                            <div class="outside">
+                                                {{ Former::text('state','State / Province')->class('outside')->id('other_state') }}
+                                            </div>
 
-                                    {{ Former::text('zipCode','ZIP / Postal Code')->id('zip') }}
+                                            {{ Former::text('zipCode','ZIP / Postal Code')->id('zip') }}
 
-                                    {{ Former::hidden('agentId')->value( Auth::user()->_id ) }}
-                                    {{ Former::hidden('agentName')->value( Auth::user()->firstname.' '.Auth::user()->lastname ) }}
-                                    {{--
-                                    <div class="control-group" style="margin-top:100px;">
-                                        <label for="agentName" style="font-weight:bolder;" class="control-label">Agent Name</label>
-                                        <div class="controls" style="line-height:27px;font-size:12px;padding-left:5px;">
-                                            {{ Auth::user()->firstname.' '.Auth::user()->lastname}}
+                                            {{ Former::hidden('agentId')->value( Auth::user()->_id ) }}
+                                            {{ Former::hidden('agentName')->value( Auth::user()->firstname.' '.Auth::user()->lastname ) }}
+                                            {{--
+                                            <div class="control-group" style="margin-top:100px;">
+                                                <label for="agentName" style="font-weight:bolder;" class="control-label">Agent Name</label>
+                                                <div class="controls" style="line-height:27px;font-size:12px;padding-left:5px;">
+                                                    {{ Auth::user()->firstname.' '.Auth::user()->lastname}}
+                                                </div>
+                                            </div>
+
+                                            --}}
+                                            <table class="table table-bordered table-striped" style="margin-left:85px;width:220px;">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Agent : </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            {{ Auth::user()->firstname.' '.Auth::user()->lastname}}
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
                                         </div>
                                     </div>
-
-                                    --}}
-                                    <table class="table table-bordered table-striped" style="margin-left:85px;width:220px;">
+                                </div>
+                                <div class="tab-pane" id="tab2">
+                                        {{ Former::select('fundingMethod')->options(Config::get('ia.funding_method'))->label('Funding Method') }}
+                                        <h5>Primary Purchaser Information</h5>
+                                        {{ Former::text('legalName','Legal Name for Title') }}
+                                        {{ Former::select('entityType')->options(Config::get('ia.entity_type'))->label('Entity Type')->id('entity_type') }}
+                                        <div id="entity_source" style="display:none;">
+                                        {{ Former::select('entitySource')->options(Config::get('ia.entity_source'))->label('Entity Source') }}
+                                        </div>
+                                </div>
+                                {{ Former::framework('Nude')}}
+                                <?php
+                                    $prop['tax'] = str_replace(array(',','.'), '', $prop['tax']);
+                                ?>
+                                <div class="tab-pane" id="tab3">
+                                    <table class="table table-bordered table-striped" id="finance" >
                                         <thead>
                                             <tr>
-                                                <th>Agent : </th>
+                                                <th></th>
+                                                <th class="span3"></th>
+                                                <th style="text-align:center;" class="span2">Amount</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>
-                                                    {{ Auth::user()->firstname.' '.Auth::user()->lastname}}
+                                                <td>Sale Price</td>
+                                                <td></td>
+                                                <td>{{ $prop['listingPrice'] }}
+                                                    {{ Former::hidden('listingPrice')->value($prop['listingPrice'] )->id('listingPrice') }}
                                                 </td>
                                             </tr>
+                                            <tr>
+                                                <td class="form-inline">{{ Former::text('code1','Code')->class('span1') }}</td>
+                                                <td>
+                                                    {{ Former::select('adjustmentType1')->options(Config::get('ia.adjustment_type'))->label('')->class('span2') }} <span id="more_code" class="more">Add More</span>
+                                                </td>
+                                                <td>
+                                                    {{ Former::text('adjustment1','')->label('')->class('span2 tp')->id('adjustment1') }}
+                                                </td>
+                                            </tr>
+                                            <tr id="code_2" style="display:none;">
+                                                <td class="form-inline">{{ Former::text('code2','Code')->class('span1') }}</td>
+                                                <td>
+                                                    {{ Former::select('adjustmentType2')->options(Config::get('ia.adjustment_type'))->label('')->class('span2') }}
+                                                </td>
+                                                <td>
+                                                    {{ Former::text('adjustment2','')->label('')->class('span2 tp')->id('adjustment2') }}
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Annual Insurance Premium</td>
+                                                <td></td>
+                                                <td>{{ $prop['insurance'] }}
+                                                    {{ Former::hidden('insurance')->value($prop['insurance'] )->id('insurance') }}
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tax Adjustment</td>
+                                                <td></td>
+                                                <td>{{ $prop['tax'] }}
+                                                    {{ Former::hidden('tax')->value( $prop['tax'] )->id('tax') }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Closing Cost</td>
+                                                <td></td>
+                                                <td>{{ Former::text('closingCost','')->label('')->class('span2 tp')->id('closingCost') }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><h4>Total Purchase Price</h4></td>
+                                                <td></td>
+                                                <td><h4 id="txt_total_purchase"></h4>
+                                                    {{ Former::hidden('total_purchase')->id('total_purchase')}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Earnest Money 1</td>
+                                                <td>
+                                                    {{ Former::select('earnestMoneyType1')->options(Config::get('ia.funding_method'))->label('')->class('span2') }} <span id="more_earnest" class="more">Add More</span>
+                                                </td>
+                                                <td>{{ Former::text('earnestMoney1','')->label('')->class('span2 tp') }}</td>
+                                            </tr>
+                                            <tr id="earnest_2" style="display:none;">
+                                                <td>Earnest Money 2</td>
+                                                <td>
+                                                    {{ Former::select('earnestMoneyType2')->options(Config::get('ia.funding_method'))->label('')->class('span2') }}
+                                                </td>
+                                                <td>{{ Former::text('earnestMoney2','')->label('')->class('span2 tp') }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Client Remaining Balance (Cash)</td>
+                                                <td></td>
+                                                <td><span id="txt_remaining_balance"></span>
+                                                    {{ Former::hidden('remaining_balance')->id('remaining_balance')}}
+                                                </td>
+                                            </tr>
+
+                                            <tr id="loan_proceed">
+                                                <td>Loan<br /><span class="help">*not including origination fee or reserves.</span></td>
+                                                <td>
+                                                    {{ Former::text('loanProceedPct','')->id('loanProceedPct')->label('')->class('span1 tp') }} %
+                                                </td>
+                                                <td>
+                                                    {{ Former::text('loanProceed','')->id('loanProceed')->label('')->class('span2') }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><h3>Total Payment</h3></td>
+                                                <td></td>
+                                                <td><span id="txt_total_payment"></span>
+                                                    {{ Former::hidden('total_payment')->id('total_payment')}}
+                                                </td>
+                                            </tr>
+
                                         </tbody>
                                     </table>
 
+
                                 </div>
+                                <ul class="pager wizard">
+                                    <li class="previous first" style="display:none;"><a href="#"><i class="icon-chevron-left"></i></a></li>
+                                    <li class="previous"><a href="#"><i class="icon-chevron-left"></i></a></li>
+                                    <li class="next" ><a href="#"><i class="icon-chevron-right"></i></a></li>
+                                    <li class="next finish" id="process" style="display:none;"><a href="" style="font-size:20px;"><i class="icon-ok"></i></a></li>
+                                </ul>
                             </div>
-                        </div>
-                        <div class="tab-pane" id="tab2">
-                                {{ Former::select('fundingMethod')->options(Config::get('ia.funding_method'))->label('Funding Method') }}
-                                <h5>Primary Purchaser Information</h5>
-                                {{ Former::text('legalName','Legal Name for Title') }}
-                                {{ Former::select('entityType')->options(Config::get('ia.entity_type'))->label('Entity Type')->id('entity_type') }}
-                                <div id="entity_source" style="display:none;">
-                                {{ Former::select('entitySource')->options(Config::get('ia.entity_source'))->label('Entity Source') }}
-                                </div>
-                        </div>
-                        {{ Former::framework('Nude')}}
-                        <?php
-                            $prop['tax'] = str_replace(array(',','.'), '', $prop['tax']);
-                        ?>
-                        <div class="tab-pane" id="tab3">
-                            <table class="table table-bordered table-striped" id="finance" >
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th class="span3"></th>
-                                        <th style="text-align:center;" class="span2">Amount</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Sale Price</td>
-                                        <td></td>
-                                        <td>{{ $prop['listingPrice'] }}
-                                            {{ Former::hidden('listingPrice')->value($prop['listingPrice'] )->id('listingPrice') }}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="form-inline">{{ Former::text('code1','Code')->class('span1') }}</td>
-                                        <td>
-                                            {{ Former::select('adjustmentType1')->options(Config::get('ia.adjustment_type'))->label('')->class('span2') }} <span id="more_code" class="more">Add More</span>
-                                        </td>
-                                        <td>
-                                            {{ Former::text('adjustment1','')->label('')->class('span2 tp')->id('adjustment1') }}
-                                        </td>
-                                    </tr>
-                                    <tr id="code_2" style="display:none;">
-                                        <td class="form-inline">{{ Former::text('code2','Code')->class('span1') }}</td>
-                                        <td>
-                                            {{ Former::select('adjustmentType2')->options(Config::get('ia.adjustment_type'))->label('')->class('span2') }}
-                                        </td>
-                                        <td>
-                                            {{ Former::text('adjustment2','')->label('')->class('span2 tp')->id('adjustment2') }}
-                                        </td>
-                                    </tr>
 
-                                    <tr>
-                                        <td>Annual Insurance Premium</td>
-                                        <td></td>
-                                        <td>{{ $prop['insurance'] }}
-                                            {{ Former::hidden('insurance')->value($prop['insurance'] )->id('insurance') }}
-
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tax Adjustment</td>
-                                        <td></td>
-                                        <td>{{ $prop['tax'] }}
-                                            {{ Former::hidden('tax')->value( $prop['tax'] )->id('tax') }}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Closing Cost</td>
-                                        <td></td>
-                                        <td>{{ Former::text('closingCost','')->label('')->class('span2 tp')->id('closingCost') }}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><h4>Total Purchase Price</h4></td>
-                                        <td></td>
-                                        <td><h4 id="txt_total_purchase"></h4>
-                                            {{ Former::hidden('total_purchase')->id('total_purchase')}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Earnest Money 1</td>
-                                        <td>
-                                            {{ Former::select('earnestMoneyType1')->options(Config::get('ia.funding_method'))->label('')->class('span2') }} <span id="more_earnest" class="more">Add More</span>
-                                        </td>
-                                        <td>{{ Former::text('earnestMoney1','')->label('')->class('span2 tp') }}</td>
-                                    </tr>
-                                    <tr id="earnest_2" style="display:none;">
-                                        <td>Earnest Money 2</td>
-                                        <td>
-                                            {{ Former::select('earnestMoneyType2')->options(Config::get('ia.funding_method'))->label('')->class('span2') }}
-                                        </td>
-                                        <td>{{ Former::text('earnestMoney2','')->label('')->class('span2 tp') }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Client Remaining Balance (Cash)</td>
-                                        <td></td>
-                                        <td><span id="txt_remaining_balance"></span>
-                                            {{ Former::hidden('remaining_balance')->id('remaining_balance')}}
-                                        </td>
-                                    </tr>
-
-                                    <tr id="loan_proceed">
-                                        <td>Loan<br /><span class="help">*not including origination fee or reserves.</span></td>
-                                        <td>
-                                            {{ Former::text('loanProceedPct','')->id('loanProceedPct')->label('')->class('span1 tp') }} %
-                                        </td>
-                                        <td>
-                                            {{ Former::text('loanProceed','')->id('loanProceed')->label('')->class('span2') }}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><h3>Total Payment</h3></td>
-                                        <td></td>
-                                        <td><span id="txt_total_payment"></span>
-                                            {{ Former::hidden('total_payment')->id('total_payment')}}
-                                        </td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-
+                            {{ Former::close() }}
 
                         </div>
-                        <ul class="pager wizard">
-                            <li class="previous first" style="display:none;"><a href="#"><i class="icon-chevron-left"></i></a></li>
-                            <li class="previous"><a href="#"><i class="icon-chevron-left"></i></a></li>
-                            <li class="next" ><a href="#"><i class="icon-chevron-right"></i></a></li>
-                            <li class="next finish" id="process" style="display:none;"><a href="" style="font-size:20px;"><i class="icon-ok"></i></a></li>
-                        </ul>
-                    </div>
+            </div>
 
-                    {{ Former::close() }}
-
-                </div>
+        </div>
 
 
-    </div>
-</div>
+    </div><!-- end span -->
+</div><!-- end row -->
+
+
 
         <script type="text/javascript">
 

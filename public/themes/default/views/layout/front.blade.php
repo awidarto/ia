@@ -18,6 +18,8 @@
 
         {{ HTML::style('css/blueimp-gallery.min.css') }}
 
+        {{ HTML::style('css/lionbars.css') }}
+
         {{ HTML::style('css/custom-theme/jquery-ui-1.10.3.custom.css')}}
 
 		{{-- HTML::style('bootstrap/css/bootswatch.css') --}}
@@ -137,7 +139,7 @@
     </div><!-- /container -->
     <div id="footer">
         <div class="container">
-            <p class="muted credit">Copyright &copy; 2013 - Investors Alliance</p>
+            <p class="muted credit">Copyright &copy; 2013 - Investors Alliance USA Property | Terms & Conditions | Privacy Policy</p>
         </div>
     </div>
 </div>
@@ -161,6 +163,8 @@
 
         {{ HTML::script('js/blueimp-gallery.min.js') }}
         {{ HTML::script('js/jquery.blueimp-gallery.min.js') }}
+
+        {{ HTML::script('js/jquery.lionbars.0.3.min.js') }}
 
         <script type="text/javascript">
             var base = '{{ URL::to('/')}}/';

@@ -19,6 +19,15 @@
 
 {{ HTML::style('css/jquery.bxslider.css')}}
 
+<style type="text/css">
+.bx-wrapper .bx-viewport{
+    -webkit-box-shadow: 3px 4px 15px 4px rgba(0,0,0,0.75);
+    -moz-box-shadow: 3px 4px 15px 4px rgba(0,0,0,0.75);
+    box-shadow: 3px 4px 15px 4px rgba(0,0,0,0.75);
+}
+
+</style>
+
 {{ HTML::script('js/jquery.easing.1.3.js') }}
 {{ HTML::script('js/jquery.touchSwipe.min.js') }}
 {{ HTML::script('js/jquery.bxslider.min.js') }}

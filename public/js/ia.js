@@ -1,4 +1,6 @@
 $(document).ready(function(){
+        $('.lionbars').lionbars();
+
         $( '.autoid' ).autocomplete({
             source: base + 'ajax/buyerid',
             select: function(event, ui){
