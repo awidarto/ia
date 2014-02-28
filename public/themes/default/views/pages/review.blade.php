@@ -145,371 +145,375 @@
     }
 
 </style>
+    <?php
+        $address = $prop['number'].' '.$prop['address'].' '.$prop['city'].' '.$prop['state'].' '.$prop['zipCode'];
+    ?>
 
-<h1>
-    <a href="{{ URL::previous() }}" class="btn btn-primary">&laquo; Back</a>
-</h1>
+<div class="row" style="padding-bottom:0px;margin-top:10px;padding-top:15px;">
+    <div class="span12 shadows" style="margin:auto;background-color:#fff;height:480px;">
 
-<div class="row">
-    <div class="span2">
-        <div id="main-img" class="img-container">
-            <img src="{{ (isset($prop['defaultpictures']['medium_url']))?$prop['defaultpictures']['medium_url']:'' }}" alt="{{$prop['propertyId']}}" >
-            <span class="prop-status-small {{$prop['propertyStatus']}}">{{ $prop['propertyStatus']}}</span>
-        </div>
-    </div>
-    <div class="span3">
-        <h1 style="margin-top:0px;margin-bottom:4px;padding-left:0px;">Purchase Details</h1>
-        <h2 style="margin-top:0px;padding-left:0px;margin-bottom:4px;">ID : {{$prop['propertyId']}}</h2>
-        <h3 style="margin-top:0px;padding-left:0px;margin-bottom:4px;">
-            {{ $prop['number'].' '.$prop['address'] }}<br />
-            {{ $prop['city'].' '.$prop['state'].' '.$prop['zipCode'] }}
-        </h3>
 
-    </div>
-    <div class="span6" style="display:block;">
 
-            <?php
-                $address = $prop['number'].' '.$prop['address'].' '.$prop['city'].' '.$prop['state'].' '.$prop['zipCode'];
-            ?>
-    </div>
-    <hr>
-</div>
-<div class="row">
-    <div class="span3">
-        <h3>Quick Specs</h3>
-        <table class="table">
-            {{--
-            <tr>
-                <th colspan="2" class="h4">
+        <div class="row" style="margin:0px;padding:5px;">
+
+            <div class="span3 lionbars" style="margin:auto;background-color:#fff;height:470px;overflow-y:auto;overflow-x:hidden;">
+                <div id="main-img" class="img-container">
+                    <img src="{{ (isset($prop['defaultpictures']['medium_url']))?$prop['defaultpictures']['medium_url']:'' }}" alt="{{$prop['propertyId']}}" >
+                    <span class="prop-status-small {{$prop['propertyStatus']}}">{{ $prop['propertyStatus']}}</span>
+                </div>
+                <h5 style="text-align:center;">ID : {{$prop['propertyId']}}</h5>
+
+                <h3 style="margin-top:0px;margin-bottom:4px;padding-left:0px;">Purchase Details</h3>
+                <h4 style="margin-top:0px;padding-left:0px;margin-bottom:4px;">ID : {{$prop['propertyId']}}</h4>
+                <h4 style="margin-top:0px;padding-left:0px;margin-bottom:4px;">
                     {{ $prop['number'].' '.$prop['address'] }}<br />
                     {{ $prop['city'].' '.$prop['state'].' '.$prop['zipCode'] }}
-                </th>
-            </tr>
-            --}}
-            <tr>
-                <td colspan="2" style="text-align:justify;">
-                    <a class="btn"  href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$address}}&ie=UTF8&hq=&hnear={{$address}}" target="blank"><i class="icon-map-marker"></i></a>
-                    &nbsp;&nbsp;&nbsp;
-                    <a href="{{ URL::to('brochure/dl/'.$prop['_id'])}}" class="btn"  target="blank" ><i class="icon-download"></i></a>
-                    &nbsp;&nbsp;&nbsp;
-                    <a href="#myModal" role="button" class="btn" data-toggle="modal"><i class="icon-envelope"></i></a>
-                </td>
-            </tr>
-            <tr>
-                <th>Price</th>
-                <td>
-                    ${{ number_format($prop['listingPrice'],0,'.',',') }}
-                </td>
-            </tr>
-            <tr>
-                <th>FMV</th>
-                <td>
-                    ${{ number_format($prop['FMV'],0,'.',',') }}
-                </td>
-            </tr>
-            <tr>
-                <th>Monthly Rental</th>
-                <td>
-                    ${{ number_format($prop['monthlyRental'],0,'.',',') }}
-                </td>
-            </tr>
-            <tr>
-                <th>Annual Tax</th>
-                <td>
-                    ${{ $prop['tax'] }}
-                </td>
-            </tr>
-            <tr>
+                </h4>
 
-                <th>Category</th>
-                <td>
-                    {{ ucfirst(strtolower($prop['category'])) }}
-                </td>
-            </tr>
-            <tr>
 
-                <th>Lease Term</th>
-                <td>
-                    {{ $prop['leaseTerms'] }} month(s)
-                </td>
+                <h3>Quick Specs</h3>
+                <table class="table">
+                    {{--
+                    <tr>
+                        <th colspan="2" class="h4">
+                            {{ $prop['number'].' '.$prop['address'] }}<br />
+                            {{ $prop['city'].' '.$prop['state'].' '.$prop['zipCode'] }}
+                        </th>
+                    </tr>
+                    --}}
+                    <tr>
+                        <td colspan="2" style="text-align:justify;">
+                            <a class="btn"  href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$address}}&ie=UTF8&hq=&hnear={{$address}}" target="blank"><i class="icon-map-marker"></i></a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a href="{{ URL::to('brochure/dl/'.$prop['_id'])}}" class="btn"  target="blank" ><i class="icon-download"></i></a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a href="#myModal" role="button" class="btn" data-toggle="modal"><i class="icon-envelope"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Price</th>
+                        <td>
+                            ${{ number_format($prop['listingPrice'],0,'.',',') }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>FMV</th>
+                        <td>
+                            ${{ number_format($prop['FMV'],0,'.',',') }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Monthly Rental</th>
+                        <td>
+                            ${{ number_format($prop['monthlyRental'],0,'.',',') }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Annual Tax</th>
+                        <td>
+                            ${{ $prop['tax'] }}
+                        </td>
+                    </tr>
+                    <tr>
 
-            </tr>
-            <tr>
+                        <th>Category</th>
+                        <td>
+                            {{ ucfirst(strtolower($prop['category'])) }}
+                        </td>
+                    </tr>
+                    <tr>
 
-                <th>Lease Start Date</th>
-                <td>
-                    {{ $prop['leaseStartDate'] }}
-                </td>
+                        <th>Lease Term</th>
+                        <td>
+                            {{ $prop['leaseTerms'] }} month(s)
+                        </td>
 
-            </tr>
-            <tr>
+                    </tr>
+                    <tr>
 
-                <th>Type</th>
-                <td>
-                    {{ $prop['type'] }}
-                </td>
-            </tr>
-            <tr>
+                        <th>Lease Start Date</th>
+                        <td>
+                            {{ $prop['leaseStartDate'] }}
+                        </td>
 
-                <th>Year Built</th>
-                <td>
-                    {{ $prop['yearBuilt'] }}
-                </td>
+                    </tr>
+                    <tr>
 
-            </tr>
-            <tr>
+                        <th>Type</th>
+                        <td>
+                            {{ $prop['type'] }}
+                        </td>
+                    </tr>
+                    <tr>
 
-                <th>Size</th>
-                <td>
-                    {{ number_format($prop['houseSize'],0) }} sqft
-                </td>
+                        <th>Year Built</th>
+                        <td>
+                            {{ $prop['yearBuilt'] }}
+                        </td>
 
-            </tr>
-            <tr>
+                    </tr>
+                    <tr>
 
-                <th>Lot Size</th>
-                <td>
-                    @if( $prop['lotSize'] < 100)
-                    {{ number_format($prop['lotSize'] * 43560,0) }} sqft
-                    @else
-                    {{ $prop['lotSize'] }} sqft
+                        <th>Size</th>
+                        <td>
+                            {{ number_format($prop['houseSize'],0) }} sqft
+                        </td>
+
+                    </tr>
+                    <tr>
+
+                        <th>Lot Size</th>
+                        <td>
+                            @if( $prop['lotSize'] < 100)
+                            {{ number_format($prop['lotSize'] * 43560,0) }} sqft
+                            @else
+                            {{ $prop['lotSize'] }} sqft
+                            @endif
+                        </td>
+
+                    </tr>
+                    <tr>
+
+                        <th>Bed</th>
+                        <td>
+                            {{ $prop['bed'] }}
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <th>Bath</th>
+                        <td>
+                            {{ $prop['bath'] }}
+                        </td>
+                    </tr>
+                    {{--
+                    <tr>
+
+                        <th>Garage</th>
+                        <td>
+                            {{ $prop['garage'] }}
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <th>Pool</th>
+                        <td>
+                            {{ $prop['pool'] }}
+                        </td>
+                    </tr>
+
+                    --}}
+
+                    @if($prop['typeOfConstruction'] != '')
+                    <tr>
+
+                        <th>Construction</th>
+                        <td>
+                            {{ $prop['typeOfConstruction'] }}
+                        </td>
+
+                    </tr>
                     @endif
-                </td>
+                    <tr>
 
-            </tr>
-            <tr>
+                        <th>Parcel #</th>
+                        <td>
+                            {{ $prop['parcelNumber'] }}
+                        </td>
 
-                <th>Bed</th>
-                <td>
-                    {{ $prop['bed'] }}
-                </td>
-            </tr>
-            <tr>
+                    </tr>
+                </table>
 
-                <th>Bath</th>
-                <td>
-                    {{ $prop['bath'] }}
-                </td>
-            </tr>
-            {{--
-            <tr>
-
-                <th>Garage</th>
-                <td>
-                    {{ $prop['garage'] }}
-                </td>
-            </tr>
-            <tr>
-
-                <th>Pool</th>
-                <td>
-                    {{ $prop['pool'] }}
-                </td>
-            </tr>
-
-            --}}
-
-            @if($prop['typeOfConstruction'] != '')
-            <tr>
-
-                <th>Construction</th>
-                <td>
-                    {{ $prop['typeOfConstruction'] }}
-                </td>
-
-            </tr>
-            @endif
-            <tr>
-
-                <th>Parcel #</th>
-                <td>
-                    {{ $prop['parcelNumber'] }}
-                </td>
-
-            </tr>
-        </table>
-
-        <h3>Description</h3>
-        {{ $prop['description']}}
-    </div>
-    <div class="span9">
-        <h2>Property ID : {{ $prop['propertyId']}}</h2>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th colspan="2">Purchaser Details</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th>Name</th>
-                    <td>{{$trx['firstname'].' '.$trx['lastname']}}</td>
-                </tr>
-                <tr>
-                    <th>Address</th>
-                    <td>{{ $trx['address'].' '.(( isset($trx['address_1']) && $trx['address_1'] != '')?$trx['address_1'].' ':'' ).$trx['state'].' '.$trx['zipCode'].' '.$trx['countryOfOrigin'] }}</td>
-                </tr>
-                <tr>
-                    <th>Company</th>
-                    <td>{{ $trx['company']}}</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th colspan="4">Property Details</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th>Property Address</th>
-                    <td colspan="3">{{ $address}}</td>
-                </tr>
-                <tr>
-                    <th>Lease Start Date</th>
-                    <td>{{ $prop['leaseStartDate']}}</td>
-                    <th>Lease Terms</th>
-                    <td>{{ $prop['leaseTerms']}}</td>
-                </tr>
-                <tr>
-                    <th>Monthly Rent Amount</th>
-                    <td>${{ number_format($prop['monthlyRental'],0)}}</td>
-                    <th>Section 8 Lease</th>
-                    <td>{{ $prop['section8']}}</td>
-                </tr>
-                <tr>
-                    <th>Purchased with</th>
-                    <td class="h4">{{ $trx['fundingMethod']}}</td>
-                    <th>Property Manager</th>
-                    <td>{{$prop['propertyManager']}}</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <?php
-            $prop['tax'] = str_replace(array(',','.'), '', $prop['tax']);
-        ?>
-        <table class="table table-bordered table-striped" id="finance" >
-            <thead>
-                <tr>
-                    <th>Price</th>
-                    <th style="text-align:center;" class="span2">Amount</th>
-                    <th style="text-align:center;" class="span2">Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Sale Price</td>
-                    <td>${{ number_format($prop['listingPrice'],0,'.',',')}}</td>
-                    <td>${{ number_format($prop['listingPrice'],0,'.',',')}}</td>
-                </tr>
-                <tr>
-                    <td>{{ $trx['adjustmentType1'] }}</td>
-                    <td class="curr">${{ number_format($trx['adjustment1'],0,'.',',')}}</td>
-                    <td>${{ number_format($prop['listingPrice'] + $trx['adjustment1'],0,'.',',')}}</td>
-                </tr>
-                <tr>
-                    <td>{{ $trx['adjustmentType1'] }}</td>
-                    <td class="curr">${{ number_format($trx['adjustment2'],0,'.',',')}}</td>
-                    <td>${{ number_format($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'],0,'.',',')}}</td>
-                </tr>
-                <tr>
-                    <td>Annual Insurance Premium</td>
-                    <td class="curr">${{ number_format($prop['insurance'],0,'.',',')}}</td>
-                    <td>${{ number_format($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'],0,'.',',')}}</td>
-
-                </tr>
-                <tr>
-                    <td>Tax Adjustment</td>
-                    <td class="curr">${{ number_format($prop['tax'],0,'.',',')}}</td>
-                    <td>${{ number_format($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'] + $prop['tax'],0,'.',',')}}</td>
-                </tr>
-                <tr>
-                    <td>Closing Cost</td>
-                    <td class="curr">${{ number_format($trx['closingCost'],0,'.',',')}}</td>
-                    <td>${{ number_format($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'] + $prop['tax'] + $trx['closingCost'],0,'.',',')}}</td>
-                </tr>
-                <tr>
-                    <td><h4>Total Purchase Price</h4></td>
-                    <td></td>
-                    <td><h4 id="total_purchase">
-                        ${{ number_format($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'] + $prop['tax'] + $trx['closingCost'],0,'.',',')}}
-                        </h4>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <table class="table table-bordered table-striped" id="finance" >
-            <thead>
-                <tr>
-                    <th colspan="2">Cash and Earnest Money</th>
-                    <th style="text-align:center;" class="span2">Amount</th>
-                    <th style="text-align:center;" class="span2">Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td colspan="2">Cash Proceeds</td>
-                    <td class="curr">${{ number_format( ($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'] + $prop['tax'] + $trx['closingCost']),0,'.',',')}}</td>
-                    <td>${{ number_format( ($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'] + $prop['tax'] + $trx['closingCost']) ,0,'.',',')}}</td>
-                </tr>
-                <tr>
-                    <td>Earnest Money Deposit 1</td>
-                    <td class="curr">{{ $trx['earnestMoneyType1']}}</td>
-                    <td class="curr">${{ number_format($trx['earnestMoney1'],0,'.',',')}}</td>
-                    <td>${{ number_format( ($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'] + $prop['tax'] + $trx['closingCost']) - $trx['earnestMoney1'] ,0,'.',',')}}</td>
-                </tr>
-                <tr>
-                    <td>Earnest Money Deposit 2</td>
-                    <td class="curr">{{ $trx['earnestMoneyType2']}}</td>
-                    <td class="curr">${{ number_format($trx['earnestMoney2'],0,'.',',')}}</td>
-                    <td>${{ number_format( ($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'] + $prop['tax'] + $trx['closingCost']) - ($trx['earnestMoney1'] + $trx['earnestMoney2']) ,0,'.',',')}}</td>
-                </tr>
-                <tr>
-                    <td>Loan</td>
-                    <td class="curr">{{ ($trx['loanProceedPct'] == 0)?'':$trx['loanProceedPct'].'%' }}</td>
-                    <td class="curr">${{ number_format($trx['loanProceed'],0,'.',',')}}</td>
-                    <td>${{ number_format(($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'] + $prop['tax'] + $trx['closingCost']) - ($trx['earnestMoney1'] + $trx['earnestMoney2'] + $trx['loanProceed']),0,'.',',') }}</td>
-                </tr>
-
-                <tr>
-                    <td colspan="3"><h4>Remaining Balance Due</h4></td>
-                    <td><h4>
-                        ${{ number_format(($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'] + $prop['tax'] + $trx['closingCost']) - ($trx['earnestMoney1'] + $trx['earnestMoney2'] + $trx['loanProceed']),0,'.',',') }}
-                        </h4>
-                    </td>
-                </tr>
-
-            </tbody>
-        </table>
-
-        <div class="row">
-            <div class="span8">
-                {{ Former::framework('TwitterBootstrap')}}
-                <h4>Review and Submit</h4>
-                {{ Former::open_horizontal('property/commit')}}
-
-                {{ Former::hidden('trx_id',$trx['_id'])}}
-
-                <p>
-                    Please review the summary above. By Entering your name below you are electronically signing and agreeing to the purchase agreement found here.
-                    Click "Edit" to revise your current transaction or click "Proceed" to process your order.
-                </p>
-                {{ Former::hidden('legalName')->value($trx['legalName']) }}
-                {{-- Former::text('signature','Signature') --}}
-
-                {{ HTML::link('property/update/'.$trx['_id'],'&laquo; Edit',array('class'=>'btn btn-success  btn-large'))}}
-                {{ Former::submit('Proceed &raquo;')->class('btn btn-primary btn-large pull-right')}}
-                {{ Former::close()}}
+                <h3>Description</h3>
+                {{ $prop['description']}}
 
             </div>
+
+            <div class="span9 lionbars" style="margin:auto;background-color:#fff;height:470px;overflow-y:auto;overflow-x:hidden;">
+                <h2>Property ID : {{ $prop['propertyId']}}</h2>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th colspan="2">Purchaser Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>Name</th>
+                            <td>{{$trx['firstname'].' '.$trx['lastname']}}</td>
+                        </tr>
+                        <tr>
+                            <th>Address</th>
+                            <td>{{ $trx['address'].' '.(( isset($trx['address_1']) && $trx['address_1'] != '')?$trx['address_1'].' ':'' ).$trx['state'].' '.$trx['zipCode'].' '.$trx['countryOfOrigin'] }}</td>
+                        </tr>
+                        <tr>
+                            <th>Company</th>
+                            <td>{{ $trx['company']}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th colspan="4">Property Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>Property Address</th>
+                            <td colspan="3">{{ $address}}</td>
+                        </tr>
+                        <tr>
+                            <th>Lease Start Date</th>
+                            <td>{{ $prop['leaseStartDate']}}</td>
+                            <th>Lease Terms</th>
+                            <td>{{ $prop['leaseTerms']}}</td>
+                        </tr>
+                        <tr>
+                            <th>Monthly Rent Amount</th>
+                            <td>${{ number_format($prop['monthlyRental'],0)}}</td>
+                            <th>Section 8 Lease</th>
+                            <td>{{ $prop['section8']}}</td>
+                        </tr>
+                        <tr>
+                            <th>Purchased with</th>
+                            <td class="h4">{{ $trx['fundingMethod']}}</td>
+                            <th>Property Manager</th>
+                            <td>{{$prop['propertyManager']}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <?php
+                    $prop['tax'] = str_replace(array(',','.'), '', $prop['tax']);
+                ?>
+                <table class="table table-bordered table-striped" id="finance" >
+                    <thead>
+                        <tr>
+                            <th>Price</th>
+                            <th style="text-align:center;" class="span2">Amount</th>
+                            <th style="text-align:center;" class="span2">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Sale Price</td>
+                            <td>${{ number_format($prop['listingPrice'],0,'.',',')}}</td>
+                            <td>${{ number_format($prop['listingPrice'],0,'.',',')}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ $trx['adjustmentType1'] }}</td>
+                            <td class="curr">${{ number_format($trx['adjustment1'],0,'.',',')}}</td>
+                            <td>${{ number_format($prop['listingPrice'] + $trx['adjustment1'],0,'.',',')}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ $trx['adjustmentType1'] }}</td>
+                            <td class="curr">${{ number_format($trx['adjustment2'],0,'.',',')}}</td>
+                            <td>${{ number_format($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'],0,'.',',')}}</td>
+                        </tr>
+                        <tr>
+                            <td>Annual Insurance Premium</td>
+                            <td class="curr">${{ number_format($prop['insurance'],0,'.',',')}}</td>
+                            <td>${{ number_format($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'],0,'.',',')}}</td>
+
+                        </tr>
+                        <tr>
+                            <td>Tax Adjustment</td>
+                            <td class="curr">${{ number_format($prop['tax'],0,'.',',')}}</td>
+                            <td>${{ number_format($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'] + $prop['tax'],0,'.',',')}}</td>
+                        </tr>
+                        <tr>
+                            <td>Closing Cost</td>
+                            <td class="curr">${{ number_format($trx['closingCost'],0,'.',',')}}</td>
+                            <td>${{ number_format($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'] + $prop['tax'] + $trx['closingCost'],0,'.',',')}}</td>
+                        </tr>
+                        <tr>
+                            <td><h4>Total Purchase Price</h4></td>
+                            <td></td>
+                            <td><h4 id="total_purchase">
+                                ${{ number_format($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'] + $prop['tax'] + $trx['closingCost'],0,'.',',')}}
+                                </h4>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="table table-bordered table-striped" id="finance" >
+                    <thead>
+                        <tr>
+                            <th colspan="2">Cash and Earnest Money</th>
+                            <th style="text-align:center;" class="span2">Amount</th>
+                            <th style="text-align:center;" class="span2">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="2">Cash Proceeds</td>
+                            <td class="curr">${{ number_format( ($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'] + $prop['tax'] + $trx['closingCost']),0,'.',',')}}</td>
+                            <td>${{ number_format( ($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'] + $prop['tax'] + $trx['closingCost']) ,0,'.',',')}}</td>
+                        </tr>
+                        <tr>
+                            <td>Earnest Money Deposit 1</td>
+                            <td class="curr">{{ $trx['earnestMoneyType1']}}</td>
+                            <td class="curr">${{ number_format($trx['earnestMoney1'],0,'.',',')}}</td>
+                            <td>${{ number_format( ($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'] + $prop['tax'] + $trx['closingCost']) - $trx['earnestMoney1'] ,0,'.',',')}}</td>
+                        </tr>
+                        <tr>
+                            <td>Earnest Money Deposit 2</td>
+                            <td class="curr">{{ $trx['earnestMoneyType2']}}</td>
+                            <td class="curr">${{ number_format($trx['earnestMoney2'],0,'.',',')}}</td>
+                            <td>${{ number_format( ($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'] + $prop['tax'] + $trx['closingCost']) - ($trx['earnestMoney1'] + $trx['earnestMoney2']) ,0,'.',',')}}</td>
+                        </tr>
+                        <tr>
+                            <td>Loan</td>
+                            <td class="curr">{{ ($trx['loanProceedPct'] == 0)?'':$trx['loanProceedPct'].'%' }}</td>
+                            <td class="curr">${{ number_format($trx['loanProceed'],0,'.',',')}}</td>
+                            <td>${{ number_format(($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'] + $prop['tax'] + $trx['closingCost']) - ($trx['earnestMoney1'] + $trx['earnestMoney2'] + $trx['loanProceed']),0,'.',',') }}</td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="3"><h4>Remaining Balance Due</h4></td>
+                            <td><h4>
+                                ${{ number_format(($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'] + $prop['tax'] + $trx['closingCost']) - ($trx['earnestMoney1'] + $trx['earnestMoney2'] + $trx['loanProceed']),0,'.',',') }}
+                                </h4>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+                <div class="row">
+                    <div class="span8">
+                        {{ Former::framework('TwitterBootstrap')}}
+                        <h4>Review and Submit</h4>
+                        {{ Former::open_horizontal('property/commit')}}
+
+                        {{ Former::hidden('trx_id',$trx['_id'])}}
+
+                        <p>
+                            Please review the summary above. By Entering your name below you are electronically signing and agreeing to the purchase agreement found here.
+                            Click "Edit" to revise your current transaction or click "Proceed" to process your order.
+                        </p>
+                        {{ Former::hidden('legalName')->value($trx['legalName']) }}
+                        {{-- Former::text('signature','Signature') --}}
+
+                        {{ HTML::link('property/update/'.$trx['_id'],'&laquo; Edit',array('class'=>'btn btn-success  btn-large'))}}
+                        {{ Former::submit('Proceed &raquo;')->class('btn btn-primary btn-large pull-right')}}
+                        {{ Former::close()}}
+
+                    </div>
+                </div>
+
+            </div>
+
         </div>
 
-    </div>
-</div>
+
+    </div><!-- end span -->
+</div><!-- end row -->
+
+
 
         <script type="text/javascript">
 

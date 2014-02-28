@@ -176,7 +176,7 @@
 
         <div class="row" style="margin:0px;padding:5px;">
 
-            <div class="span4 lionbars" style="margin:auto;background-color:#fff;height:490px;overflow-y:auto;overflow-x:hidden;">
+            <div class="span4 lionbars" style="margin:auto;background-color:#fff;height:520px;overflow-y:auto;overflow-x:hidden;">
                 <div id="main-img" class="img-container">
                     <img src="{{ (isset($prop['defaultpictures']['medium_url']))?$prop['defaultpictures']['medium_url']:'' }}" alt="{{$prop['propertyId']}}" >
                     <span class="prop-status-small {{$prop['propertyStatus']}}">{{ $prop['propertyStatus']}}</span>
