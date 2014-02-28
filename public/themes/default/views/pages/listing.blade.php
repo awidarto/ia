@@ -204,7 +204,7 @@
             </ul>
         </div>
 
-        <div class="row" style="overflow-y:auto;height:400px;overflow-x:hidden;padding:0px;">
+        <div class="row" style="overflow-y:auto;height:415px;overflow-x:hidden;padding:0px;">
             <div class="span12" style="margin-left:0px;">
                 <ul id="listing">
                 @foreach($properties as $p)
