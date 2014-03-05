@@ -93,7 +93,7 @@ td.curr{
     padding-right: 15px;
     padding-bottom: 5px;
     padding-left: 15px;
-    color: #737373;
+    color: #b7b7b7;
     text-decoration: none;
     text-shadow: none;
     border:none;
@@ -114,6 +114,14 @@ td.curr{
     border-bottom: 3px solid red;
 }
 
+.navbar .nav>li>a:focus, .navbar .nav>li>a:hover {
+    color: #000;
+    text-decoration: none;
+    background-color: transparent;
+    border: none;
+    border-bottom: 3px solid orange;
+
+}
 #overview h1{
     font-size: 36px;
 }
@@ -405,9 +413,9 @@ a.thumblink{
     background-color: #bd1022;
     padding: 0px 0px;
     min-height: 460px;
-    height: 100%;
     margin-bottom: 0px;
     width: 100%;
+    display: block;
 
 }
 

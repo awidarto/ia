@@ -17,7 +17,7 @@
 
         <div class="row" style="margin:0px;padding:5px;">
 
-            <div class="span3 lionbars" style="margin:auto;background-color:#fff;height:430px;overflow-y:auto;overflow-x:hidden;">
+            <div class="span3" style="margin:auto;background-color:#fff;height:430px;overflow-y:auto;overflow-x:hidden;">
                 <ul class="nav nav-list bs-docs-sidenav" style="width: 200px;top: 140px;">
                   <li><a href="#recent-orders"><i class="icon-chevron-right"></i> Recent Orders</a></li>
                   <li><a href="#buyer-list"><i class="icon-chevron-right"></i> Buyer List</a></li>
@@ -67,7 +67,6 @@
                             ?>
                         </tr>
                         @endforeach
-                    @endif
                         <tr>
                             <td></td>
                             <td></td>
@@ -77,6 +76,13 @@
                             <td></td>
                             <td></td>
                         </tr>
+                    @else
+                        <tr>
+                            <td colspan="9">
+                                You have no transaction at the moment.
+                            </td>
+                        </tr>
+                    @endif
                     </tbody>
                 </table>
                 <h3 id="buyer-list">Buyers List</h3>
@@ -109,6 +115,12 @@
                             </td>
                         </tr>
                         @endforeach
+                    @else
+                        <tr>
+                            <td colspan="8">
+                                You have no buyer contact at the moment.
+                            </td>
+                        </tr>
                     @endif
                     </tbody>
                 </table>

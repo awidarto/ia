@@ -59,7 +59,6 @@
                 padding-top: 10px;
                 padding:0px 0px;
                 min-height: 460px;
-                height: 450px;
                 margin-bottom: 0px;
                 width: 1070px;
                 border-left: thin solid #eee;
@@ -87,7 +86,7 @@
                 #main-content{
                     overflow-y:auto;
                     overflow-x:hidden;
-                    height: 570px;
+                    min-height: 570px;
                 }
 
                 #main-content h1 {
@@ -165,6 +164,7 @@
     <h3>Login</h3>
   </div>
   <div class="modal-body">
+        <?php Former::framework('TwitterBootstrap')?>
         {{Former::open_horizontal('login','POST',array('class'=>''))}}
             @if (Session::get('loginError'))
                 <div class="alert alert-danger">{{ Session::get('loginError') }}</div>

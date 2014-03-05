@@ -18,13 +18,17 @@
     display: inline-block;
     min-width: 25%;
     position: absolute;
-    bottom: 10px;
+    top: 0px;
     right: 0px;
     font-weight: bold;
     padding: 2px 4px;
     text-transform: uppercase;
 }
 
+.new{
+    background-color: #3bc57a;
+    display: block;
+}
 
 .booked{
     background-color: yellow;
@@ -32,11 +36,31 @@
 }
 
 .reserved{
-    background-color: red;
+    background-color: #db4f04;
     color: white;
 }
 
 .sold{
-    background-color: brown;
+    background-color: #c3151f;
+    color: white;
+}
+
+.under .contract , .under-contract{
+    background-color: #70393e;
+    color: white;
+}
+
+.featured{
+    background-color: #8cb914;
+    color: white;
+}
+
+.pending{
+    background-color: #014983;
+    color: white;
+}
+
+.prelisted{
+    background-color: #7e5424;
     color: white;
 }

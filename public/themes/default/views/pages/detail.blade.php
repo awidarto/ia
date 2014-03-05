@@ -79,9 +79,9 @@
 
     table th{
         font-weight: bold;
-        width: 100px;
         background-color: #eee;
         border-color: transparent;
+        text-transform: uppercase;
     }
 
     table th.h4{
@@ -89,12 +89,15 @@
     }
 
     .btn-buy{
-        font-size: 24px;
+        font-size: 22px;
+        color:#F00;
     }
 
-    i.icon-download , i.icon-map-marker, i.icon-envelope{
-        font-size: 20px;
+    .btn{
+        width: 20px;
+        height:24px;
     }
+
 
     ul.thumbnails_grid{
         list-style: none;
@@ -105,15 +108,20 @@
         float:left;
     }
 
-    ul.thumbnails_grid li a, #main-img {
+    ul.thumbnails_grid li a{
         display: block;
-        padding: 4px;
-        margin:4px;
-        border:thin solid #eef;
+        margin-right:4px;
+        margin-bottom:4px;
+    }
+
+    #main-img {
+        display: block;
+        padding: 0px;
+        margin:0px;
     }
 
     ul.thumbnails_grid li a img{
-        width:120px;
+        width:145px;
         height:auto;
     }
 
@@ -126,6 +134,31 @@
         margin-top: 15px;
         border-top: thin solid #eef;
         padding: 10px 4px;
+    }
+
+    #main-content{
+        display: block;
+    }
+
+    .button-row{
+        text-align:right;
+        line-height:28px;
+        font-size:20px;
+    }
+
+    .button-row a{
+        font-size:26px;
+        display: inline-block;
+        padding: 2px;
+        margin-right: 10px;
+    }
+
+    i.icon-download , i.icon-map-marker, i.icon-envelope{
+
+    }
+
+    a.back-btn{
+        font-size: 14px;
     }
 
 </style>
@@ -145,14 +178,12 @@
 ?>
 
 <div class="row" style="padding-bottom:0px;margin-top:10px;padding-top:35px;">
-    <div class="span12  shadows" style="margin:auto;background-color:#fff;height:460px;">
+    <div class="span12  shadows" style="margin:auto;background-color:#fff;">
 
         <div class="subnav row" id="filter-bar" style="background-color: #fff;padding:0px;margin:5px;">
-            <ul class="nav nav-pills span5" style="padding-left:0px;margin-bottom:2px;" >
-                <li>
-                    <a href="{{ URL::previous() }}" class="btn btn-primary">&laquo; Back</a>
-                </li>
-            </ul>
+            <a href="{{ URL::to('listing') }}" class="back-btn">
+                <i class="icon-chevron-left"></i> Back to Listing
+            </a>
             @if( isset($prop['locked']) && $prop['locked'] == 1)
                 <span style="font-size:12px;margin-left:4px;padding:2px 4px;display:inline-block;background-color:yellow;">This property is currently under buying process.</span>
             @endif
@@ -167,35 +198,39 @@
                 $urlbuy = URL::to('property/buy/'.$prop['_id']);
             }
         ?>
-            <div class="span4 pull-right" style="text-align:right;">
-                <a class="btn"  href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$address}}&ie=UTF8&hq=&hnear={{$address}}" target="blank"><i class="icon-map-marker"></i></a>
-                &nbsp;&nbsp;&nbsp;
-                <a href="{{ URL::to('brochure/dl/'.$prop['_id'])}}" class="btn"  target="blank" ><i class="icon-download"></i></a>
-                &nbsp;&nbsp;&nbsp;
-                <a href="#myModal" role="button" class="btn" data-toggle="modal"><i class="icon-envelope"></i></a>
-
-                &nbsp;&nbsp;
-
-                <a href="{{ $urlbuy }}" class="btn btn-primary btn-buy" style="bottom:0px;"><i class="icon-shopping-cart"></i></a>
-            </div>
 
         </div>
 
 
     <div class="row" style="margin:0px;padding:5px;">
-        <div class="span4 lionbars" style="margin:auto;background-color:#fff;height:405px;overflow-y:auto;overflow-x:hidden;padding-right:4px;">
+        <div class="span6 " style="margin:auto;background-color:#fff;overflow-y:auto;overflow-x:hidden;padding-right:4px;">
             <div id="main-img" class="img-container">
-                <img src="{{ (isset($prop['defaultpictures']['medium_url']))?$prop['defaultpictures']['medium_url']:'' }}" alt="{{$prop['propertyId']}}" >
+                <img src="{{ (isset($prop['defaultpictures']['large_url']))?$prop['defaultpictures']['large_url']:'' }}" alt="{{$prop['propertyId']}}" >
                 <span class="prop-status-small {{$prop['propertyStatus']}}">{{ $prop['propertyStatus']}}</span>
             </div>
-            <h5 style="text-align:center;">ID : {{$prop['propertyId']}}</h5>
+                <div class="span3">
+                    <h3 style="display:inline-block;">Property ID : {{$prop['propertyId']}}</h3>
+                </div>
+                <div class="span3 button-row" style="">
+                    <a  href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$address}}&ie=UTF8&hq=&hnear={{$address}}" target="blank"><i class="icon-map-marker"></i></a>
+
+                    <a href="{{ URL::to('brochure/dl/'.$prop['_id'])}}"  target="blank" ><i class="icon-download"></i></a>
+
+                    <a href="#myModal" role="button" data-toggle="modal"><i class="icon-envelope"></i></a>
+
+                    <a href="{{ $urlbuy }}" class="btn-buy" style="bottom:0px;"><i class="icon-shopping-cart"></i></a>
+                </div>
+
 
             <table class="table">
                 <tr>
-                    <th colspan="2" class="h4">
+                    <th>
+                        Address
+                    </th>
+                    <td>
                         {{ $prop['number'].' '.$prop['address'] }}<br />
                         {{ $prop['city'].' '.$prop['state'].' '.$prop['zipCode'] }}
-                    </th>
+                    </td>
                 </tr>
                 {{--
                 <tr>
@@ -335,7 +370,7 @@
             </table>
 
         </div>
-            <div class="span8 lionbars" style="margin:auto;background-color:#fff;height:405px;overflow-y:auto;overflow-x:hidden;padding-right:4px;">
+            <div class="span6 " style="margin:auto;background-color:#fff;overflow-x:hidden;padding-right:4px;">
                 <ul class="thumbnails_grid">
                     @foreach($prop['files'] as $f )
                         <li>
@@ -378,12 +413,7 @@
                 </style>
 
                 <div id="map-box">
-                    <div id="map-container">
-                        <a class="btn"  href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$address}}&ie=UTF8&hq=&hnear={{$address}}" target="blank">
-                            <img src="http://maps.googleapis.com/maps/api/staticmap?center={{ $address }}&zoom=13&size=260x370&maptype=roadmap&markers=color:{{ $color }}%7Clabel:{{ $label }}%7C{{ $address }}&sensor=false" style="float:left"/>
-                        </a>
-                    </div>
-                    <table class="table table-bordered" id="fin" style="width:300px;float:right;">
+                    <table class="table" id="fin" style="width:100%;">
                         <thead>
                             <tr>
                                 <th colspan="2" class="header">
@@ -506,6 +536,14 @@
                         });
 
                     </script>
+
+                    <div id="map-container">
+                        <a class="btn"  href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$address}}&ie=UTF8&hq=&hnear={{$address}}" target="blank">
+                            <img src="http://maps.googleapis.com/maps/api/staticmap?center={{ $address }}&zoom=13&size=420x250&maptype=roadmap&markers=color:{{ $color }}%7Clabel:{{ $label }}%7C{{ $address }}&sensor=false" style="float:left"/>
+                        </a>
+                    </div>
+
+
                 </div>
             </div>
     </div>
