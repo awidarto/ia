@@ -23,7 +23,7 @@ CONTACT US
 ?>
     <!-- Navbar
         ================================================== -->
-<div class="navbar">
+<div class="navbar" style="margin-left: -100px;">
     <div class="navbar-inner">
      <div class="container">
          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -32,7 +32,7 @@ CONTACT US
              <span class="icon-bar"></span>
          </a>
          <div class="nav-collapse collapse" id="main-menu">
-            <ul class="nav" id="main-menu-left">
+            <ul class="nav" id="main-menu-left" style="margin-top: 4px;">
                 <li {{ sa('/') }} ><a href="{{ URL::to('/') }}" >Home</a></li>
                 <li {{ sa('property/listing') }} >
                     @if(Auth::check())
