@@ -10,9 +10,9 @@
     ul#listing li .thumb{
         display: block;
         margin: 4px;
-        padding: 5px;
+        padding: 0px;
         border: thin solid #ccc;
-        width: 210px;
+        width: 166px;
         text-align: center;
     }
 
@@ -211,11 +211,11 @@
                     <li>
                         <div class="thumb span4" id="{{$p['_id']}}">
                             <a href="{{ URL::to('property/detail/'.$p['_id']) }}" class="thumblink">
-                                <h5>ID : {{$p['propertyId']}}</h5>
                                 <div class="img-container">
                                     <img src="{{ (isset($p['defaultpictures']['medium_url']))?$p['defaultpictures']['medium_url']:'' }}" alt="{{$p['propertyId']}}" >
                                     <span class="prop-status {{$p['propertyStatus']}}">{{ $p['propertyStatus']}}</span>
                                 </div>
+                                <h5>ID : {{$p['propertyId']}}</h5>
                                 <h5>{{ $p['city'].','.$p['state'] }}</h5>
                                 <h4>${{ number_format($p['listingPrice'],0,'.',',') }}</h4>
                                 <h6>Monthly Rent : ${{ number_format($p['monthlyRental'],0,'.',',') }}</h6>
