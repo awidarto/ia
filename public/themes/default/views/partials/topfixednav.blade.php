@@ -33,7 +33,7 @@ CONTACT US
          </a>
          <div class="nav-collapse collapse" id="main-menu">
             <ul class="nav" id="main-menu-left" style="margin-top: 4px;">
-                <li {{ sa('/') }} ><a href="{{ URL::to('/') }}" >Home</a></li>
+                <li {{ sa('/') }} {{ sa('dashboard') }} ><a href="{{ URL::to('/') }}" >Home</a></li>
                 <li {{ sa('property/listing') }} >
                     @if(Auth::check())
                         <a href="{{ URL::to('property/listing') }}" >Property</a>
