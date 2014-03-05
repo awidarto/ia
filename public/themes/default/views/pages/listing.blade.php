@@ -23,6 +23,7 @@
     ul#listing li .thumb h6
     {
         margin: 0px 0px;
+        color: #666;
     }
 
     #filter-bar .nav-pills{
