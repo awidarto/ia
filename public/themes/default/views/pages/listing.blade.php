@@ -206,7 +206,7 @@
         </div>
 
         <div class="row" style="margin:0px;padding:0px;padding-left:8px;">
-            <div class="span12 lionbars" style="overflow-y:auto;height:410px;width:100%;margin:0px;">
+            <div class="span12" style="overflow-y:auto;height:410px;width:100%;margin:0px;">
                 <ul id="listing">
                 @foreach($properties as $p)
                     <li>
