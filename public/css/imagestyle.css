@@ -6,7 +6,7 @@
     display: inline-block;
     min-width: 25%;
     position: absolute;
-    bottom: 10px;
+    top: 0px;
     right: 0px;
     font-size: 12px;
     font-weight: bold;
