@@ -209,7 +209,7 @@
                 <ul id="listing">
                 @foreach($properties as $p)
                     <li>
-                        <div class="thumb span5" id="{{$p['_id']}}">
+                        <div class="thumb span4" id="{{$p['_id']}}">
                             <a href="{{ URL::to('property/detail/'.$p['_id']) }}" class="thumblink">
                                 <h5>ID : {{$p['propertyId']}}</h5>
                                 <div class="img-container">
