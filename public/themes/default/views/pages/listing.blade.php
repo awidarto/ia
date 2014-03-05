@@ -5,6 +5,7 @@
     ul#listing{
         list-style: none;
         margin: 0px;
+        margin-left: 40px;
     }
 
     ul#listing li .thumb{
@@ -14,7 +15,7 @@
         border: 0px solid #ccc;
         width: 166px;
         text-align: center;
-        margin-right: 55px;
+        margin-right: 50px;
     }
 
     ul#listing li .thumb h4,
