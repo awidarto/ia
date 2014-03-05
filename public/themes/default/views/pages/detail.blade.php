@@ -408,7 +408,7 @@
 
                             ?>
                             <tr>
-                                <th class="h5">Purchase Price</th><td class="h5">${{ Ks::us( $prop['listingPrice'])}}</td>
+                                <th>Purchase Price</th><td>${{ Ks::us( $prop['listingPrice'])}}</td>
                                 <input type="hidden" value="{{ $prop['listingPrice'] }}" id="purchasePrice" >
                             </tr>
                             <tr>

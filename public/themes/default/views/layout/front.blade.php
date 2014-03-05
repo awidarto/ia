@@ -30,6 +30,7 @@
         {{ HTML::script('js/jquery-ui/js/jquery-ui-1.10.3.custom.min.js')}}
 
         {{ HTML::style('bootstrap/css/app.css') }}
+        {{-- HTML::style('bootstrap/css/bootstrap-wide.css') --}}
 
         <style type="text/css">
 
@@ -48,19 +49,33 @@
                 margin: 0 auto -60px;
             }
 
+            #top-container{
+                width:1070px;
+                border-left: thin solid #eee;
+                border-right: thin solid #eee;
+            }
 
             #main-content{
                 padding-top: 10px;
                 padding:0px 0px;
                 min-height: 460px;
-                height: 460px;
+                height: 450px;
                 margin-bottom: 0px;
+                width: 1070px;
+                border-left: thin solid #eee;
+                border-right: thin solid #eee;
             }
 
             #main-content h1{
                 margin-top: 20px;
                 margin-bottom: 20px;
                 padding-left: 10px;
+            }
+
+            #footer .container{
+                width:1070px;
+                border-left: thin solid #eee;
+                border-right: thin solid #eee;
             }
 
             @media (max-height: 768px){
@@ -114,13 +129,13 @@
 
     <!-- Masthead
     ================================================== -->
-    <div class="container">
+    <div class="container" id="top-container">
         <header class="jumbotron subhead" id="overview">
             <div class="row">
                 <div class="span4">
                     <a href="{{ URL::to('/')}}" >{{ HTML::image('images/ialogo-med.png','Investors Alliance',array('class'=>'img-responsive' ) ) }}</a>
                 </div>
-                <div class="span8">
+                <div class="span8 pull-right">
                     <div class="pull-right" id="main-menu-right">
                         @include('partials.identity')
                     </div>
@@ -144,6 +159,28 @@
     </div>
 </div>
 
+<div id="loginModal" class="modal hide fade" style="width:250px;margin-left:-125px;">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Login</h3>
+  </div>
+  <div class="modal-body">
+        {{Former::open_horizontal('login','POST',array('class'=>''))}}
+            @if (Session::get('loginError'))
+                <div class="alert alert-danger">{{ Session::get('loginError') }}</div>
+                     <button type="button" class="close" data-dismiss="alert"></button>
+            @endif
+            {{ Former::text('email','Email')->class('span2') }}
+
+            {{ Former::password('password','Password')->class('span2') }}
+
+            {{-- Former::checkbox('remember-me')->label('')->text('Remember Me')->value('remember-me') --}}
+
+            {{ Former::submit('Login')->class('btn btn-primary pull-right') }}
+
+        {{ Former::close() }}
+  </div>
+</div>
 <!-- Footer
 ==================================================
 <div id="footer" class="container">

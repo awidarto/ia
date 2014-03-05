@@ -54,7 +54,7 @@ class PropertyController extends BaseController {
         //count=40&order=asc&page=3&sort=State&type=TRIPLEX
 
         $page = (Input::get('page') == '')?'0':Input::get('page');
-        $perpage = (Input::get('count') == '')?'20':Input::get('count');
+        $perpage = (Input::get('count') == '')?'8':Input::get('count');
         $order = (Input::get('order') == '')?'desc':Input::get('order');
         $sort = (Input::get('sort') == '')?'listingPrice':Input::get('sort');
         $filter = (Input::get('type') == '')?'all':Input::get('type');
