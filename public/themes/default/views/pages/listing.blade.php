@@ -11,16 +11,17 @@
         display: block;
         margin: 4px;
         padding: 0px;
-        border: thin solid #ccc;
+        border: 0px solid #ccc;
         width: 166px;
         text-align: center;
+        margin-right: 55px;
     }
 
     ul#listing li .thumb h4,
     ul#listing li .thumb h5,
     ul#listing li .thumb h6
     {
-        margin: 4px 0px;
+        margin: 0px 0px;
     }
 
     #filter-bar .nav-pills{
