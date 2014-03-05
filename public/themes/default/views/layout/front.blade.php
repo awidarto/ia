@@ -132,7 +132,7 @@
         <header class="jumbotron subhead" id="overview">
             <div class="row">
                 <div class="span4">
-                    <a href="{{ URL::to('/')}}" >{{ HTML::image('images/ialogo-med.png','Investors Alliance',array('class'=>'img-responsive' ) ) }}</a>
+                    <a style="margin-left:66px;" href="{{ URL::to('/')}}" >{{ HTML::image('images/ialogo-med.png','Investors Alliance',array('class'=>'img-responsive' ) ) }}</a>
                 </div>
                 <div class="span8 pull-right">
                     <div class="pull-right" id="main-menu-right">

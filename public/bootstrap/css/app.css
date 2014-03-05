@@ -90,13 +90,16 @@ td.curr{
     float: none;
     padding: 5px 15px 5px;
     padding-top: 5px;
-    padding-right: 15px;
+    padding-right: 0px;
     padding-bottom: 5px;
-    padding-left: 15px;
-    color: #b7b7b7;
+    padding-left: 0px;
+    margin-left: 15px;
+    color: #a4a4a4;
     text-decoration: none;
     text-shadow: none;
+    font-size: 13px;
     border:none;
+    border-bottom: 4px solid transparent;
 }
 
 .navbar .nav>li a{
@@ -111,7 +114,7 @@ td.curr{
     -moz-box-shadow: none;
     box-shadow: none;
     border:none;
-    border-bottom: 3px solid red;
+    border-bottom: 4px solid red;
 }
 
 .navbar .nav>li>a:focus, .navbar .nav>li>a:hover {
@@ -119,7 +122,7 @@ td.curr{
     text-decoration: none;
     background-color: transparent;
     border: none;
-    border-bottom: 3px solid orange;
+    border-bottom: 4px solid red;
 
 }
 #overview h1{
