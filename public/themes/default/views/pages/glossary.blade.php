@@ -1,14 +1,18 @@
 @extends('layout.front')
 
 @section('content')
-<div class="row" style="padding-bottom:0px;margin-top:10px;padding-top:35px;">
-    <div class="span12  shadows" style="margin:auto;background-color:#fff;height:460px;">
+
+<div id="content-block">
+    <div id="content-container" class="shadow" style="margin-bottom: 6px;" >
+
+<div class="row">
+    <div class="">
         <div class="row" style="margin:0px;padding:0px;">
             <h1 class="page-header">Glossary</h1>
         </div>
 
         <div class="row" style="margin:0px;padding:0px;padding-left:8px;">
-            <div class="span12 lionbars" style="overflow-y:auto;height:410px;width:100%;margin:0px;">
+            <div class="span12 lionbars" style="overflow-y:auto;height:340px;width:100%;margin:0px;margin-right:4px;">
                 @foreach($faqcats as $fc)
                     <h3 id="{{ $fc['slug']}}">{{ $fc['title']}}</h3>
                         <ul style="margin-left:10px;">
@@ -22,6 +26,9 @@
                 @endforeach
             </div>
         </div>
+
+    </div>
+</div>
 
     </div>
 </div>

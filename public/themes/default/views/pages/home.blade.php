@@ -5,17 +5,20 @@
 <style type="text/css">
 
 </style>
-            <!-- if there are login errors, show them here -->
-    <div class="row" style="padding-bottom:0px;margin-top:10px;padding-top:65px;">
-        <div class="span12" style="margin:auto">
-            <ul class="bxslider" style="margin:0px;padding:0px;" >
-              <li><img src="{{ URL::to('/')}}/images/dummy/banner1.png" /></li>
-              <li><img src="{{ URL::to('/')}}/images/dummy/banner2.png" /></li>
-              <li><img src="{{ URL::to('/')}}/images/dummy/banner1.png" /></li>
-              <li><img src="{{ URL::to('/')}}/images/dummy/banner2.png" /></li>
-            </ul>
-        </div>
+<div id="content-block">
+    <div id="content-container" style="margin-bottom: 6px;background-color:transparent;" >
+                <ul class="bxslider">
+                  <li><img src="{{ URL::to('/')}}/images/dummy/banner1.png" /></li>
+                  <li><img src="{{ URL::to('/')}}/images/dummy/banner2.png" /></li>
+                  <li><img src="{{ URL::to('/')}}/images/dummy/banner1.png" /></li>
+                  <li><img src="{{ URL::to('/')}}/images/dummy/banner2.png" /></li>
+                </ul>
     </div>
+</div>
+
+
+
+            <!-- if there are login errors, show them here -->
 
 {{ HTML::style('css/jquery.bxslider.css')}}
 

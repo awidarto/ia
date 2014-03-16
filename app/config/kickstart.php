@@ -9,5 +9,6 @@ return array(
             'Mr'=>'Mr',
             'Mrs'=>'Mrs',
             'Ms'=>'Ms',
-        )
+        ),
+    'pagination_max_count'=>10 // use odd number for better visual consistency
 );

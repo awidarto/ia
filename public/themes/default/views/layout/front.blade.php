@@ -12,7 +12,7 @@
 			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
 
-		{{ HTML::style('bootstrap/css/bootstrap.min.css') }}
+		{{ HTML::style('bootstrap/css/bootstrap.css') }}
 		{{-- HTML::style('bootstrap/css/bootstrap-responsive.min.css') --}}
 		{{ HTML::style('font-awesome/css/font-awesome.min.css') }}
 
@@ -58,11 +58,11 @@
             #main-content{
                 padding-top: 10px;
                 padding:0px 0px;
-                min-height: 460px;
+                max-height: 460px;
                 margin-bottom: 0px;
-                width: 1070px;
                 border-left: thin solid #eee;
                 border-right: thin solid #eee;
+                background:url({{ URL::to('/');}}/images/skyline-bg.jpg) top center no-repeat;
             }
 
             #main-content h1{
@@ -71,10 +71,40 @@
                 padding-left: 10px;
             }
 
+            #content-block{
+                width: 1070px;
+                height: 460px;
+                padding: 0px;
+                max-height: 460px;
+                overflow: hidden;
+                margin-right: auto;
+                margin-left: auto;
+                display: block;
+            }
+
+            #content-container{
+                position:relative;
+                width: auto;
+                height: auto;
+                margin: 22px;
+                min-height: 400px;
+                background-color: white;
+                display: block;
+            }
+
             #footer .container{
                 width:1070px;
                 border-left: thin solid #eee;
                 border-right: thin solid #eee;
+            }
+
+            .white-text{
+                color: white;
+                display: inline-block;
+            }
+
+            .sel-label{
+                padding-bottom: 10px;
             }
 
             @media (max-height: 768px){
@@ -86,7 +116,7 @@
                 #main-content{
                     overflow-y:auto;
                     overflow-x:hidden;
-                    min-height: 570px;
+                    /*min-height: 570px;*/
                 }
 
                 #main-content h1 {
@@ -147,10 +177,9 @@
 
 
     <div class="container" id="main-content">
-        <div class="container">
-            @yield('content')
-        </div>
+        @yield('content')
     </div><!-- /container -->
+
     <div id="footer">
         <div class="container">
             <p class="muted credit">Copyright &copy; 2013 - Investors Alliance USA Property | Terms & Conditions | Privacy Policy</p>
