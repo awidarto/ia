@@ -448,7 +448,7 @@
                     }
 
                     table#fin input[type="text"]{
-                        width:80%;
+                        width:95%;
                         text-align: right;
                         margin: 0px;
                         padding: 2px;
