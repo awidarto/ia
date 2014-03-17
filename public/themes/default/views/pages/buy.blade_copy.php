@@ -142,21 +142,6 @@
         font-size: 13px;
     }
 
-    table#finance th,table#finance td{
-        line-height: 15px;
-        padding-top: 1px;
-        padding-bottom: 1px;
-    }
-
-    table#finance{
-        font-size: 11px;
-    }
-
-    table#finance h3,table#finance h4{
-        margin-top: 2px;
-        margin-bottom: 2px;
-    }
-
     span.more{
         cursor: pointer;
         text-decoration: underline;
@@ -167,33 +152,31 @@
         overflow-y:hidden;
     }
 
-    .form-horizontal .control-group {
-        margin-bottom: 4px;
-    }
-
-    .pager {
-        margin: 0px 0;
-        text-align: center;
-        list-style: none;
-    }
-
-    ul.bwizard-steps {
-        display: inline-block;
-        margin: 0;
-        padding: 0;
-        background: transparent #fff;
-        margin-bottom: 2px;
-        width: 100%;
-    }
-
 </style>
 {{ HTML::style('css/imagestyle.css')}}
 
-<div id="content-block">
-    <div id="content-container" class="shadows" style="margin-bottom: 6px;" >
-        <div class="row">
-            <div class="span5 lionbars" style="overflow-y:auto;height:400px;max-height:400px;">
+<div class="row" style="padding-bottom:0px;margin-top:10px;padding-top:15px;">
+    <div class="span12 shadows" style="margin:auto;background-color:#fff;height:570px;">
 
+        <div class="row" style="margin:0px;padding:4px;">
+            <a href="{{ URL::previous() }}" class="btn btn-primary">&laquo; Back</a>
+            @if( isset($prop['locked']) && $prop['locked'] == 1)
+                <span style="font-size:12px;padding:2px 4px;display:inline-block;background-color:yellow;">This property is currently under buying process.</span>
+            @endif
+            <div class="span6 pull-right" style="display:block;">
+                <div id="session-counter-bar" style="text-align:right;">
+                    Your shopping cart will expire in <span id="session-counter"></span>.
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin:0px;padding:0px;padding-left:8px;">
+
+        </div>
+
+
+        <div class="row" style="margin:0px;padding:5px;">
+
+            <div class="span4 lionbars" style="margin:auto;background-color:#fff;height:520px;overflow-y:auto;overflow-x:hidden;">
                 <div id="main-img" class="img-container">
                     <img src="{{ (isset($prop['defaultpictures']['medium_url']))?$prop['defaultpictures']['medium_url']:'' }}" alt="{{$prop['propertyId']}}" >
                     <span class="prop-status-small {{$prop['propertyStatus']}}">{{ $prop['propertyStatus']}}</span>
@@ -364,7 +347,6 @@
                 <h3>Description</h3>
                 {{ $prop['description']}}
 
-
             </div>
             <div class="span8">
                 {{ HTML::style('css/wizard-custom.css') }}
@@ -379,7 +361,7 @@
                             line-height: 18px;
                             list-style: none;
                             zoom: 1;
-                            width: 24%;
+                            width: 26%;
                         }
 
                         input.error, select.error{
@@ -388,7 +370,7 @@
                         }
                     </style>
 
-                        <div id="rootwizard" style="width: 624px;display:block;">
+                        <div id="rootwizard" style="width: 633px;display:block;">
                             <ul>
                                 <li><a href="#tab1" data-toggle="tab">Sales & Contact Information</a></li>
                                 <li><a href="#tab2" data-toggle="tab">Funding & Title Information</a></li>
@@ -486,10 +468,10 @@
                                     $prop['tax'] = str_replace(array(',','.'), '', $prop['tax']);
                                 ?>
                                 <div class="tab-pane" id="tab3">
-                                    <table class="table table-striped" id="finance" >
+                                    <table class="table table-bordered table-striped" id="finance" >
                                         <thead>
                                             <tr>
-                                                <th class="span2"></th>
+                                                <th></th>
                                                 <th class="span3"></th>
                                                 <th style="text-align:center;" class="span2">Amount</th>
                                             </tr>
@@ -609,40 +591,6 @@
                             {{ Former::close() }}
 
                         </div>
-
-            </div>
-        </div><!-- end row -->
-
-    </div>
-</div>
-
-
-
-<div class="row" style="padding-bottom:0px;margin-top:10px;padding-top:15px;">
-    <div class="span12 shadows" style="margin:auto;background-color:#fff;height:570px;">
-
-        <div class="row" style="margin:0px;padding:4px;">
-            <a href="{{ URL::previous() }}" class="btn btn-primary">&laquo; Back</a>
-            @if( isset($prop['locked']) && $prop['locked'] == 1)
-                <span style="font-size:12px;padding:2px 4px;display:inline-block;background-color:yellow;">This property is currently under buying process.</span>
-            @endif
-            <div class="span6 pull-right" style="display:block;">
-                <div id="session-counter-bar" style="text-align:right;">
-                    Your shopping cart will expire in <span id="session-counter"></span>.
-                </div>
-            </div>
-        </div>
-        <div class="row" style="margin:0px;padding:0px;padding-left:8px;">
-
-        </div>
-
-
-        <div class="row" style="margin:0px;padding:5px;">
-
-            <div class="span4 lionbars" style="margin:auto;background-color:#fff;height:520px;overflow-y:auto;overflow-x:hidden;">
-
-            </div>
-            <div class="span8">
             </div>
 
         </div>

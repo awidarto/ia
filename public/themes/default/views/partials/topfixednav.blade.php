@@ -42,7 +42,7 @@ CONTACT US
                     @endif
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Investor Info <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Investors <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li {{ sa('page/view/buying-process') }} ><a href="{{ URL::to('page/view/buying-process') }}" >Buying Process</a></li>
                         <li {{ sa('page/view/markets') }} ><a href="{{ URL::to('page/view/markets') }}" >Markets</a></li>

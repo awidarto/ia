@@ -34,7 +34,7 @@ CONTACT US
                     <ul class="nav">
                         <li {{ sa('/') }} ><a href="{{ URL::to('property/listing') }}" >Home</a></li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Investor Info <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Investors <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li {{ sa('/') }} ><a href="{{ URL::to('page/view/buying-process') }}" >Buying Process</a></li>
                                 <li {{ sa('/') }} ><a href="{{ URL::to('page/view/markets') }}" >Markets</a></li>
