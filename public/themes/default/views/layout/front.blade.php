@@ -147,8 +147,19 @@
             }
 
     </style>
+    <script type="text/javascript">
 
+        $(document).ready(function(){
+            var doAuth = {{ (Session::get('failAuth') == false )?'false':'true' }};
+            if(doAuth){
+                popLogin();
+            }
 
+            function popLogin(){
+                $('#loginModal').modal('show');
+            }
+        });
+    </script>
 </head>
 
 <body class="preview" id="top" data-spy="scroll" data-target=".subnav" data-offset="80" cz-shortcut-listen="true" style="margin-top: 0px;">

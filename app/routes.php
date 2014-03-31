@@ -352,7 +352,7 @@ Route::get('register',function(){
     return View::make('realia/registration')->with('featured',$featured);
 });
 
-Route::get('account/create',function(){
+Route::get('signup',function(){
     Theme::setCurrentTheme(Prefs::getActiveTheme() );
     Former::framework('TwitterBootstrap');
 
@@ -446,7 +446,8 @@ Route::post('login',function(){
 
         Event::fire('log.a',array('login','login',Input::get('email'),'validation fail'));
 
-        return Redirect::to('login')->withErrors($validator);
+        Session::flash('failAuth', true);
+        return Redirect::to('/')->withErrors($validator);
     } else {
 
         $userfield = Config::get('kickstart.user_field');

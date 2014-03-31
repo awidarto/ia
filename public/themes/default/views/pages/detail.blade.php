@@ -255,7 +255,7 @@
 
             </div>
             <div class="span4" style="padding: 30px 8px 0px 8px;">
-                    <table class="table" style="border:thin solid black;">
+                    <table class="table" style="border:thin solid black;margin-bottom:0px;">
                         <tr>
                             <th style="text-align:left;font-style:italic;font-size:14px;font-weight:bold;">
                                 Property Info
@@ -466,7 +466,7 @@
 
                 </style>
 
-                <table class="table" id="fin" style="width:100%;">
+                <table class="table" id="fin" style="width:100%;margin-bottom:0px;">
                     <thead>
                         <tr>
                             <th colspan="2" class="header" style="text-align:left;font-style:italic;font-size:16px;font-weight:bold;">
