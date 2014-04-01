@@ -141,17 +141,17 @@ td.curr{
 .dropdown-menu {
     position: absolute;
     top: 100%;
-    left: 0;
+    left: 15px;
     z-index: 1000;
     display: none;
     float: left;
     min-width: 160px;
-    padding: 5px 0;
-    margin: 2px 0 0;
+    padding: 0px 0;
+    margin: 0px 0 0;
     list-style: none;
     background-color: #fff;
-    border: 1px solid #ccc;
-    border: 1px solid rgba(0,0,0,0.2);
+    border: 1px solid red;
+    /*border: 1px solid rgba(0,0,0,0.2);*/
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
     border-radius: 0px;
@@ -163,6 +163,51 @@ td.curr{
     background-clip: padding-box;
 }
 
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus,
+.dropdown-submenu:hover > a,
+.dropdown-submenu:focus > a {
+    color: #ffffff;
+    text-decoration: none;
+    background-color: red;
+}
+
+
+.dropdown-menu > li > a:hover > [class^="icon-"],
+.dropdown-menu > li > a:focus > [class^="icon-"],
+.dropdown-menu > li > a:hover > [class*=" icon-"],
+.dropdown-menu > li > a:focus > [class*=" icon-"],
+.dropdown-menu > .active > a > [class^="icon-"],
+.dropdown-menu > .active > a > [class*=" icon-"],
+.dropdown-submenu:hover > a > [class^="icon-"],
+.dropdown-submenu:focus > a > [class^="icon-"],
+.dropdown-submenu:hover > a > [class*=" icon-"],
+.dropdown-submenu:focus > a > [class*=" icon-"] {
+  background-image: none;
+}
+
+.navbar .nav > li > .dropdown-menu:before {
+    position: absolute;
+    top: -7px;
+    left: 9px;
+    display: none;
+    border-right: 7px solid transparent;
+    border-bottom: 7px solid #ccc;
+    border-left: 7px solid transparent;
+    border-bottom-color: rgba(0, 0, 0, 0.2);
+    content: '';
+}
+
+.navbar .nav > li > .dropdown-menu:after {
+    position: absolute;
+    top: -6px;
+    left: 10px;
+    display: none;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid #ffffff;
+    border-left: 6px solid transparent;
+    content: '';
+}
 
 #overview h1{
     font-size: 36px;
