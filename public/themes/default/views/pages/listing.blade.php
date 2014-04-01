@@ -81,6 +81,11 @@
         color:#ccc;
     }
 
+    ul#ordering li a:hover{
+        text-decoration: underline;
+        background-color: transparent;
+    }
+
 </style>
 {{ HTML::style('css/imagestyle.css')}}
 <?php

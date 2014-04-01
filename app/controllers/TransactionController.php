@@ -142,7 +142,7 @@ class TransactionController extends BaseController {
 
     }
 
-    public function missingMethod($parameter){
+    public function missingMethod($parameter = array()){
 
     }
 

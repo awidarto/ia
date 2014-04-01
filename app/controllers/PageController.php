@@ -50,7 +50,7 @@ class PageController extends BaseController {
         return View::make('pages.pagereader')->with('content',$page);
     }
 
-    public function missingMethod($parameter){
+    public function missingMethod($param = array()){
 
     }
 

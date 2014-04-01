@@ -694,7 +694,7 @@ class TableController extends Controller {
         \Laravel\CLI\Command::run(array('notify'));
     }
 
-    public function missingMethod($param)
+    public function missingMethod($param = array())
     {
         //print_r($param);
     }

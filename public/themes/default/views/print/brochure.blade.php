@@ -79,6 +79,7 @@
         }
 
         .clear{
+            min-height: 1px;
             clear: both;
         }
 

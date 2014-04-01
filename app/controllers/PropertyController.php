@@ -363,7 +363,7 @@ class PropertyController extends BaseController {
 
     }
 
-    public function missingMethod($parameter){
+    public function missingMethod($parameter = array()){
 
     }
 

@@ -111,7 +111,7 @@ Route::get('pr/print/{id}',function($id){
     //return $content;
 
     //return PDF::loadView('print.pr',array('prop'=>$prop, 'trx'=>$trx, 'agent'=>$agent))
-        //->stream('download.pdf');
+    //    ->stream('download.pdf');
 });
 
 
@@ -490,9 +490,13 @@ Route::post('login',function(){
 
                 Event::fire('log.a',array('login','login',Input::get('email'),'auth fail'));
 
+                Session::flash('failAuth', true);
+                return Redirect::to('/')->withErrors($validator);
+                /*
                 return Redirect::to('login')
                     ->withErrors($validator)
                     ->withInput(Input::except('password'));
+                */
             }
 
         } else {
