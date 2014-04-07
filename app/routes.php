@@ -30,14 +30,15 @@ Route::controller('ajax', 'AjaxController');
 Route::get('/',function(){
 
     if(Auth::check()){
-        return Redirect::to('dashboard');
-    }else{
+        //return Redirect::to('dashboard');
         Theme::setCurrentTheme(Prefs::getActiveTheme() );
         Former::framework('TwitterBootstrap');
 
         $featured = Property::where('tags','like','%featured%')->get()->toArray();
 
         return View::make('pages.home')->with('featured',$featured);
+    }else{
+        return Redirect::to('login');
     }
 
 });
@@ -427,7 +428,7 @@ Route::get('login',function(){
 
     $featured = Property::where('tags','like','%featured%')->get()->toArray();
 
-    return View::make('login')->with('featured',$featured);
+    return View::make('homelogin')->with('featured',$featured);
 });
 
 Route::post('login',function(){

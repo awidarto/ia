@@ -32,6 +32,8 @@
         {{ HTML::style('bootstrap/css/app.css') }}
         {{-- HTML::style('bootstrap/css/bootstrap-wide.css') --}}
 
+        {{ HTML::style('font-awesome/css/font-awesome.min.css') }}
+
         <style type="text/css">
 
             html,

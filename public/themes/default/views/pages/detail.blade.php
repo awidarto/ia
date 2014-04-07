@@ -59,18 +59,23 @@
         text-align: left;
         border-top: 1px solid #FFF;
         vertical-align: top;*/
-        border: none;
+        border-top: thin solid white;
         padding: 2px 4px;
-        line-height: 14px;
+        line-height: 13px;
         font-size: 11px;
     }
 
     .table th{
         min-width: 120px;
+        border-right: thin solid white;
     }
 
     .table tr{
         border: none;
+    }
+
+    table.table{
+        border: thin solid black;
     }
 
     table{
@@ -85,7 +90,9 @@
 
     table td{
         min-width: 80px;
+        background-color: #eee;
         border-color: transparent;
+        border-top: thin solid #fff;
     }
 
     table th{
@@ -255,13 +262,12 @@
 
             </div>
             <div class="span4" style="padding: 30px 8px 0px 8px;">
-                    <table class="table" style="border:thin solid black;margin-bottom:0px;">
+                <div style="border:thin solid black;margin-bottom:0px;display:block;">
+                    <table class="table" style="border:thin solid transparent;margin-bottom:0px;">
                         <tr>
-                            <th style="text-align:left;font-style:italic;font-size:14px;font-weight:bold;">
+                            <th colspan="2" style="text-align:left;font-style:italic;font-size:14px;font-weight:bold;">
                                 Property Info
                             </th>
-                            <td>
-                            </td>
                         </tr>
                         <tr>
                             <th>
@@ -409,6 +415,8 @@
 
                     </table>
 
+                </div>
+
                     <div>
                         <a href="#myModal" role="button" data-toggle="modal"><img src="{{ URL::to('/')}}/images/email.png" /></a>
                         &nbsp;&nbsp;
@@ -440,11 +448,13 @@
                     table#fin td{
                         background: transparent;
                         line-height:14px;
+                        border: none;
                     }
 
                     table#fin th.header{
                         text-align: left;
                         font-size: 14px;
+                        border: none;
                     }
 
                     table#fin input[type="text"]{
@@ -461,7 +471,13 @@
                     table#fin tr.yield th, table#fin tr.yield td{
                         color:white;
                         font-size: 14px;
-                        font-weight: bold;
+                        font-weight: normal;
+                        border: none;
+                    }
+
+                    table#fin th{
+                        font-weight: normal;
+                        border: none;
                     }
 
                 </style>
@@ -469,7 +485,7 @@
                 <table class="table" id="fin" style="width:100%;margin-bottom:0px;">
                     <thead>
                         <tr>
-                            <th colspan="2" class="header" style="text-align:left;font-style:italic;font-size:16px;font-weight:bold;">
+                            <th colspan="2" class="header" style="text-align:left;font-style:italic;font-size:16px;font-weight:normal;">
                                 Financial Calculator
                             </th>
                         </tr>
