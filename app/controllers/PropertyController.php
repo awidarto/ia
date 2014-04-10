@@ -65,10 +65,6 @@ class PropertyController extends BaseController {
         $total_all = Property::count();
 
         if($filter == 'all'){
-            $properties = Property::where('propertyStatus','!=','offline')
-                            ->orderBy($sort,$order)->skip($skip)->take($perpage)->get();
-            $total_found = Property::where('propertyStatus','!=','offline')
-                            ->count();
 
             if(Auth::user()->prop_access == 'filtered'){
                 if(Auth::user()->filter_principal != '' && Auth::user()->filter_state != ''){
@@ -104,11 +100,10 @@ class PropertyController extends BaseController {
                                     ->count();
                 }
             }else{
+
                 $properties = Property::where('propertyStatus','!=','offline')
-                                ->where('type','=',$filter)
                                 ->orderBy($sort,$order)->skip($skip)->take($perpage)->get();
                 $total_found = Property::where('propertyStatus','!=','offline')
-                                ->where('type','=',$filter)
                                 ->count();
 
             }
