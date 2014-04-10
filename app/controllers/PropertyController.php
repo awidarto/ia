@@ -181,7 +181,7 @@ class PropertyController extends BaseController {
 
         $currentcount = count($properties->toArray());
 
-        $paging = ceil($total_found / $perpage);
+        $paging = floor($total_found / $perpage);
 
         Event::fire('cleanup');
 
