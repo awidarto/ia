@@ -64,101 +64,120 @@ class PropertyController extends BaseController {
 
         $total_all = Property::count();
 
+        $query = array();
+
         if($filter == 'all'){
 
             if(Auth::user()->prop_access == 'filtered'){
                 if(Auth::user()->filter_principal != '' && Auth::user()->filter_state != ''){
+                    /*
                     $properties = Property::where('propertyStatus','!=','offline')
                                     ->where('principal',Auth::user()->filter_principal)
                                     ->where('state',Auth::user()->filter_state)
+                                    ->where('assigned_user',Auth::user()->_id)
                                     ->orderBy($sort,$order)->skip($skip)->take($perpage)->get();
-                    $total_found = Property::where('propertyStatus','!=','offline')
-                                    ->where('principal',Auth::user()->filter_principal)
-                                    ->where('state',Auth::user()->filter_state)
-                                    ->count();
+                    */
+
+                    $query = array(
+                                'propertyStatus'=>array('$ne'=>'offline'),
+                                '$or'=>array(
+                                        array(
+                                            'state'=>Auth::user()->filter_state,
+                                            'principal'=>Auth::user()->filter_principal
+                                            ),
+                                        array('assigned_user'=>Auth::user()->id)
+                                    )
+                            );
+
                 }
 
                 if(Auth::user()->filter_principal == '' && Auth::user()->filter_state != ''){
-                    $properties = Property::where('propertyStatus','!=','offline')
-                                    //->where('principal',Auth::user()->filter_principal)
-                                    ->where('state',Auth::user()->filter_state)
-                                    ->orderBy($sort,$order)->skip($skip)->take($perpage)->get();
-                    $total_found = Property::where('propertyStatus','!=','offline')
-                                    //->where('principal',Auth::user()->filter_principal)
-                                    ->where('state',Auth::user()->filter_state)
-                                    ->count();
+                    $query = array(
+                                'propertyStatus'=>array('$ne'=>'offline'),
+                                '$or'=>array(
+                                        array(
+                                            'state'=>Auth::user()->filter_state
+                                            ),
+                                        array('assigned_user'=>Auth::user()->id)
+                                    )
+                            );
                 }
 
                 if(Auth::user()->filter_principal != '' && Auth::user()->filter_state == ''){
-                    $properties = Property::where('propertyStatus','!=','offline')
-                                    ->where('principal',Auth::user()->filter_principal)
-                                    //->where('state',Auth::user()->filter_state)
-                                    ->orderBy($sort,$order)->skip($skip)->take($perpage)->get();
-                    $total_found = Property::where('propertyStatus','!=','offline')
-                                    ->where('principal',Auth::user()->filter_principal)
-                                    //->where('state',Auth::user()->filter_state)
-                                    ->count();
+                    $query = array(
+                                'propertyStatus'=>array('$ne'=>'offline'),
+                                '$or'=>array(
+                                        array(
+                                            'principal'=>Auth::user()->filter_principal
+                                            ),
+                                        array('assigned_user'=>Auth::user()->id)
+                                    )
+                            );
                 }
+
             }else{
 
-                $properties = Property::where('propertyStatus','!=','offline')
-                                ->orderBy($sort,$order)->skip($skip)->take($perpage)->get();
-                $total_found = Property::where('propertyStatus','!=','offline')
-                                ->count();
+                $query = array(
+                            'propertyStatus'=>array('$ne'=>'offline')
+                        );
 
             }
-
 
         }else{
             if(Auth::user()->prop_access == 'filtered'){
                 if(Auth::user()->filter_principal != '' && Auth::user()->filter_state != ''){
-                    $properties = Property::where('propertyStatus','!=','offline')
-                                    ->where('type','=',$filter)
-                                    ->where('principal',Auth::user()->filter_principal)
-                                    ->where('state',Auth::user()->filter_state)
-                                    ->orderBy($sort,$order)->skip($skip)->take($perpage)->get();
-                    $total_found = Property::where('propertyStatus','!=','offline')
-                                    ->where('type','=',$filter)
-                                    ->where('principal',Auth::user()->filter_principal)
-                                    ->where('state',Auth::user()->filter_state)
-                                    ->count();
+                    $query = array(
+                                'propertyStatus'=>array('$ne'=>'offline'),
+                                'type'=>$filter,
+                                '$or'=>array(
+                                        array(
+                                            'state'=>Auth::user()->filter_state,
+                                            'principal'=>Auth::user()->filter_principal
+                                            ),
+                                        array('assigned_user'=>Auth::user()->id)
+                                    )
+                            );
                 }
 
                 if(Auth::user()->filter_principal == '' && Auth::user()->filter_state != ''){
-                    $properties = Property::where('propertyStatus','!=','offline')
-                                    ->where('type','=',$filter)
-                                    //->where('principal',Auth::user()->filter_principal)
-                                    ->where('state',Auth::user()->filter_state)
-                                    ->orderBy($sort,$order)->skip($skip)->take($perpage)->get();
-                    $total_found = Property::where('propertyStatus','!=','offline')
-                                    ->where('type','=',$filter)
-                                    //->where('principal',Auth::user()->filter_principal)
-                                    ->where('state',Auth::user()->filter_state)
-                                    ->count();
+                    $query = array(
+                                'propertyStatus'=>array('$ne'=>'offline'),
+                                'type'=>$filter,
+                                '$or'=>array(
+                                        array(
+                                            'state'=>Auth::user()->filter_state
+                                            ),
+                                        array('assigned_user'=>Auth::user()->id)
+                                    )
+                            );
                 }
 
                 if(Auth::user()->filter_principal != '' && Auth::user()->filter_state == ''){
-                    $properties = Property::where('propertyStatus','!=','offline')
-                                    ->where('type','=',$filter)
-                                    ->where('principal',Auth::user()->filter_principal)
-                                    //->where('state',Auth::user()->filter_state)
-                                    ->orderBy($sort,$order)->skip($skip)->take($perpage)->get();
-                    $total_found = Property::where('propertyStatus','!=','offline')
-                                    ->where('type','=',$filter)
-                                    ->where('principal',Auth::user()->filter_principal)
-                                    //->where('state',Auth::user()->filter_state)
-                                    ->count();
+                    $query = array(
+                                'propertyStatus'=>array('$ne'=>'offline'),
+                                'type'=>$filter,
+                                '$or'=>array(
+                                        array(
+                                            'principal'=>Auth::user()->filter_principal
+                                            ),
+                                        array('assigned_user'=>Auth::user()->id)
+                                    )
+                            );
                 }
             }else{
-                $properties = Property::where('propertyStatus','!=','offline')
-                                ->where('type','=',$filter)
-                                ->orderBy($sort,$order)->skip($skip)->take($perpage)->get();
-                $total_found = Property::where('propertyStatus','!=','offline')
-                                ->where('type','=',$filter)
-                                ->count();
+
+                $query = array(
+                            'propertyStatus'=>array('$ne'=>'offline'),
+                            'type'=>$filter,
+                        );
 
             }
         }
+
+
+        $properties = Property::whereRaw($query)->orderBy($sort,$order)->skip($skip)->take($perpage)->get();
+
+        $total_found = Property::whereRaw($query)->count();
 
         $currentcount = count($properties->toArray());
 
