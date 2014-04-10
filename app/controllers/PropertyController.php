@@ -115,7 +115,7 @@ class PropertyController extends BaseController {
 
 
         }else{
-            if(Auth::user()->prop_access == '' || Auth::user()->prop_access == 'all_access'){
+            if(Auth::user()->prop_access == 'filtered'){
                 if(Auth::user()->filter_principal != '' && Auth::user()->filter_state != ''){
                     $properties = Property::where('propertyStatus','!=','offline')
                                     ->where('type','=',$filter)
