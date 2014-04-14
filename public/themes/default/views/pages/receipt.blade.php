@@ -166,6 +166,13 @@
         text-decoration: underline;
     }
 
+    a.back-btn{
+        font-size: 11px;
+        text-transform: uppercase;
+        color: #aaa;
+        line-height: 14px;
+    }
+
 </style>
 
             <?php
@@ -178,8 +185,14 @@
         <div class="row">
 
             <div class="span4" style="overflow-y:hidden;height:400px;max-height:400px;">
-                    <h4>
-                        PURCHASE RECEIPT</h4>
+                    <div class="subnav row" id="filter-bar" style="background-color: #fff;padding:0px;margin:5px;position:relative;">
+                        <a href="{{ URL::to('property/listing') }}" class="back-btn">
+                            <i class="icon-chevron-left"></i> Back to Listing
+                        </a>
+
+                        <span style="display:inline-block;position:absolute;right:0;text-transform:uppercase;font-size:12px;font-weight:bold;">PURCHASE RECEIPT</span>
+
+                    </div>
 
                     <div>
                         <a href="#myModal" role="button" data-toggle="modal"><img src="{{ URL::to('/')}}/images/email.png" /></a>

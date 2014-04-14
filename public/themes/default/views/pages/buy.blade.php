@@ -216,6 +216,12 @@
         font-size: 32px;
     }
 
+    a.back-btn{
+        font-size: 11px;
+        text-transform: uppercase;
+        color: #aaa;
+    }
+
 </style>
 {{ HTML::style('css/imagestyle.css')}}
 
@@ -226,9 +232,15 @@
 
 
             <div class="span4" style="overflow-y:hidden;height:400px;max-height:400px;">
-                    <h4>
-                        <a href="{{ URL::previous() }}" class="btn btn-primary">&laquo; Back</a>
-                        ID : {{$prop['propertyId']}}</h4>
+                <div class="subnav row" id="filter-bar" style="background-color: #fff;padding:0px;margin:5px;position:relative;">
+                    <a href="{{ URL::to('property/listing') }}" class="back-btn">
+                        <i class="icon-chevron-left"></i> Back to Listing
+                    </a>
+
+                    <span style="display:inline-block;position:absolute;right:0;text-transform:uppercase;font-size:12px;">Property ID : {{$prop['propertyId']}}</span>
+
+                </div>
+
 
                     <div>
                         <a href="#myModal" role="button" data-toggle="modal"><img src="{{ URL::to('/')}}/images/email.png" /></a>
