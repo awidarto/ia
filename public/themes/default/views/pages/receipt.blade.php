@@ -361,9 +361,10 @@
 
 
         <h1 style="padding-left:0px;">Purchase Receipt</h1>
-        <a href="{{ URL::to('pr/print/'.$trx['_id'])}}" class="btn receipt" target="new" ><i class="icon-print"></i></a>
-        <a href="{{ URL::to('pr/dl/'.$trx['_id'])}}"  class="btn receipt"  target="new" ><i class="icon-download"></i></a>
-        <a href="#myModalReceipt" role="button" class="btn receipt" data-toggle="modal"><i class="icon-envelope"></i></a>
+
+        <a href="#myModalReceipt" role="button" class="receipt" data-toggle="modal"><img src="{{ URL::to('/')}}/images/email.png" /></a>&nbsp;&nbsp;&nbsp;
+        <a href="{{ URL::to('pr/dl/'.$trx['_id'])}}"  class="receipt"  target="new" ><img src="{{ URL::to('/')}}/images/download.png" /></a>&nbsp;&nbsp;&nbsp;
+        <a href="{{ URL::to('pr/print/'.$trx['_id'])}}" class="receipt" target="new" ><img src="{{ URL::to('/')}}/images/print.png" /></a>
 
         <div class="row" style="padding-left:0px;">
             <div class="span4" style="padding-left:0px;">
