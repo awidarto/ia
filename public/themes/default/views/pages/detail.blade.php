@@ -105,11 +105,6 @@
         background-color: transparent;
     }
 
-    .btn{
-        width: 20px;
-        height:24px;
-    }
-
 
     ul.thumbnails_grid{
         list-style: none;

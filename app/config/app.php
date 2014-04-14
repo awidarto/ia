@@ -150,6 +150,7 @@ return array(
         'Intervention\Helper\StringServiceProvider',
         'AlexWhitman\ViewThemes\ViewThemesServiceProvider',
         'Barryvdh\DomPDF\ServiceProvider',
+        'Barryvdh\Snappy\ServiceProvider',
         'Nitmedia\Wkhtml2pdf\Wkhtml2pdfServiceProvider',
 	),
 
@@ -262,8 +263,9 @@ return array(
         'Image'           => 'Intervention\Image\Facades\Image',
         'Theme'           => 'AlexWhitman\ViewThemes\ThemeFacade',
         'Carbon'          => 'Carbon\Carbon',
-        'PDF'             => 'Barryvdh\DomPDF\Facade',
-        //'PDF'             => 'Nitmedia\Wkhtml2pdf\Facades\Wkhtml2pdf',
+        //'PDF'           => 'Barryvdh\DomPDF\Facade',
+        'PDF'             => 'Barryvdh\Snappy\Facades\SnappyPdf',
+        'XPDF'             => 'Nitmedia\Wkhtml2pdf\Facades\Wkhtml2pdf',
 
 	),
 

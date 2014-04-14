@@ -14,7 +14,9 @@
         "intervention/helper": "dev-master",
         "intervention/validation": "dev-master",
         "alexwhitman/view-themes": "dev-master",
-        "barryvdh/laravel-dompdf": "dev-master"
+        "barryvdh/laravel-dompdf": "dev-master",
+        "knplabs/knp-snappy": "*",
+        "barryvdh/laravel-snappy": "dev-master"
 	},
 	"autoload": {
 		"classmap": [
