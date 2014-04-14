@@ -350,10 +350,6 @@
                         ?>
                     @endif
 
-                    <?php
-
-                    ?>
-
                     @for($p = $pstart;$p < $pend;$p++)
                         <li class="{{ ms('page',$p , 0) }}" >
                             <a href="{{ mg(array('page'=>$p))}}" >

@@ -80,6 +80,61 @@ class PropertyController extends BaseController {
 
                     $query = array(
                                 'propertyStatus'=>array('$ne'=>'offline'),
+                                'state'=>Auth::user()->filter_state,
+                                'principal'=>Auth::user()->filter_principal
+                            );
+
+                }
+
+                if(Auth::user()->filter_principal == '' && Auth::user()->filter_state != ''){
+                    $query = array(
+                                'propertyStatus'=>array('$ne'=>'offline'),
+                                'state'=>Auth::user()->filter_state
+                            );
+                }
+
+                if(Auth::user()->filter_principal != '' && Auth::user()->filter_state == ''){
+                    $query = array(
+                                'propertyStatus'=>array('$ne'=>'offline'),
+                                'principal'=>Auth::user()->filter_principal
+                            );
+                }
+
+            }else if(Auth::user()->prop_access == 'filtered_and_individual'){
+
+                if(Auth::user()->filter_principal != '' && Auth::user()->filter_state != ''){
+
+                    $query = array(
+                                'propertyStatus'=>array('$ne'=>'offline'),
+                                'state'=>Auth::user()->filter_state,
+                                'principal'=>Auth::user()->filter_principal,
+                                'assigned_user'=>Auth::user()->id
+                            );
+
+                }
+
+                if(Auth::user()->filter_principal == '' && Auth::user()->filter_state != ''){
+                    $query = array(
+                                'propertyStatus'=>array('$ne'=>'offline'),
+                                'state'=>Auth::user()->filter_state,
+                                'assigned_user'=>Auth::user()->id
+                            );
+                }
+
+                if(Auth::user()->filter_principal != '' && Auth::user()->filter_state == ''){
+                    $query = array(
+                                'propertyStatus'=>array('$ne'=>'offline'),
+                                'principal'=>Auth::user()->filter_principal,
+                                'assigned_user'=>Auth::user()->id
+                            );
+                }
+
+            }else if(Auth::user()->prop_access == 'filtered_or_individual'){
+
+                if(Auth::user()->filter_principal != '' && Auth::user()->filter_state != ''){
+
+                    $query = array(
+                                'propertyStatus'=>array('$ne'=>'offline'),
                                 '$or'=>array(
                                         array(
                                             'state'=>Auth::user()->filter_state,
@@ -126,6 +181,75 @@ class PropertyController extends BaseController {
         }else{
             if(Auth::user()->prop_access == 'filtered'){
                 if(Auth::user()->filter_principal != '' && Auth::user()->filter_state != ''){
+                    /*
+                    $properties = Property::where('propertyStatus','!=','offline')
+                                    ->where('principal',Auth::user()->filter_principal)
+                                    ->where('state',Auth::user()->filter_state)
+                                    ->where('assigned_user',Auth::user()->_id)
+                                    ->orderBy($sort,$order)->skip($skip)->take($perpage)->get();
+                    */
+
+                    $query = array(
+                                'propertyStatus'=>array('$ne'=>'offline'),
+                                'type'=>$filter,
+                                'state'=>Auth::user()->filter_state,
+                                'principal'=>Auth::user()->filter_principal
+                            );
+
+                }
+
+                if(Auth::user()->filter_principal == '' && Auth::user()->filter_state != ''){
+                    $query = array(
+                                'propertyStatus'=>array('$ne'=>'offline'),
+                                'type'=>$filter,
+                                'state'=>Auth::user()->filter_state
+                            );
+                }
+
+                if(Auth::user()->filter_principal != '' && Auth::user()->filter_state == ''){
+                    $query = array(
+                                'propertyStatus'=>array('$ne'=>'offline'),
+                                'type'=>$filter,
+                                'principal'=>Auth::user()->filter_principal
+                            );
+                }
+
+            }else if(Auth::user()->prop_access == 'filtered_and_individual'){
+
+                if(Auth::user()->filter_principal != '' && Auth::user()->filter_state != ''){
+
+                    $query = array(
+                                'propertyStatus'=>array('$ne'=>'offline'),
+                                'type'=>$filter,
+                                'state'=>Auth::user()->filter_state,
+                                'principal'=>Auth::user()->filter_principal,
+                                'assigned_user'=>Auth::user()->id
+                            );
+
+                }
+
+                if(Auth::user()->filter_principal == '' && Auth::user()->filter_state != ''){
+                    $query = array(
+                                'propertyStatus'=>array('$ne'=>'offline'),
+                                'type'=>$filter,
+                                'state'=>Auth::user()->filter_state,
+                                'assigned_user'=>Auth::user()->id
+                            );
+                }
+
+                if(Auth::user()->filter_principal != '' && Auth::user()->filter_state == ''){
+                    $query = array(
+                                'propertyStatus'=>array('$ne'=>'offline'),
+                                'type'=>$filter,
+                                'principal'=>Auth::user()->filter_principal,
+                                'assigned_user'=>Auth::user()->id
+                            );
+                }
+
+            }else if(Auth::user()->prop_access == 'filtered_or_individual'){
+
+                if(Auth::user()->filter_principal != '' && Auth::user()->filter_state != ''){
+
                     $query = array(
                                 'propertyStatus'=>array('$ne'=>'offline'),
                                 'type'=>$filter,
@@ -137,6 +261,7 @@ class PropertyController extends BaseController {
                                         array('assigned_user'=>Auth::user()->id)
                                     )
                             );
+
                 }
 
                 if(Auth::user()->filter_principal == '' && Auth::user()->filter_state != ''){
@@ -164,6 +289,7 @@ class PropertyController extends BaseController {
                                     )
                             );
                 }
+
             }else{
 
                 $query = array(

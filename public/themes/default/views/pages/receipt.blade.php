@@ -42,6 +42,11 @@
         padding-left: 60px;
     }
 
+    h4{
+        margin-top: 2px;
+        margin-bottom: 2px;
+    }
+
     .h4{
         font-size: 16px;
         font-weight: bold;
@@ -60,9 +65,25 @@
     .table th, .table td {
         /*padding: 8px;
         text-align: left;
-        vertical-align: top;*/
-        line-height: 16px;
         border-top: 1px solid #FFF;
+        vertical-align: top;*/
+        border-top: thin solid white;
+        padding: 2px 4px;
+        line-height: 13px;
+        font-size: 11px;
+    }
+
+    .table th{
+        min-width: 120px;
+        border-right: thin solid white;
+    }
+
+    .table tr{
+        border: none;
+    }
+
+    table.table{
+        border: thin solid black;
     }
 
     table{
@@ -77,12 +98,13 @@
 
     table td{
         min-width: 80px;
+        background-color: #eee;
         border-color: transparent;
+        border-top: thin solid #fff;
     }
 
     table th{
         font-weight: bold;
-        width: 100px;
         background-color: #eee;
         border-color: transparent;
     }
@@ -151,187 +173,179 @@
             ?>
 
 
-<div class="row" style="padding-bottom:0px;margin-top:10px;padding-top:15px;">
-    <div class="span12 shadows" style="margin:auto;background-color:#fff;height:480px;">
+<div id="content-block">
+    <div id="content-container" class="shadows" style="margin-bottom: 6px;" >
+        <div class="row">
 
+            <div class="span4" style="overflow-y:hidden;height:400px;max-height:400px;">
+                    <h4>
+                        PURCHASE RECEIPT</h4>
 
+                    <div>
+                        <a href="#myModal" role="button" data-toggle="modal"><img src="{{ URL::to('/')}}/images/email.png" /></a>
+                        &nbsp;&nbsp;
+                        <a href="{{ URL::to('brochure/dl/'.$prop['_id'])}}"  target="blank" ><img src="{{ URL::to('/')}}/images/download.png" /></a>
+                        &nbsp;&nbsp;
+                        <a  href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$address}}&ie=UTF8&hq=&hnear={{$address}}" target="blank"><img src="{{ URL::to('/')}}/images/marker.png" /></a>
 
-        <div class="row" style="margin:0px;padding:5px;">
+                    </div>
 
-            <div class="span3 lionbars" style="margin:auto;background-color:#fff;height:470px;overflow-y:auto;overflow-x:hidden;padding-right:4px;">
-                <div id="main-img" class="img-container">
-                    <img src="{{ (isset($prop['defaultpictures']['medium_url']))?$prop['defaultpictures']['medium_url']:'' }}" alt="{{$prop['propertyId']}}" >
-                    <span class="prop-status-small {{$prop['propertyStatus']}}">{{ $prop['propertyStatus']}}</span>
-                </div>
-                <h5 style="text-align:center;">ID : {{$prop['propertyId']}}</h5>
+                    <table class="table" style="border:thin solid transparent;margin-bottom:0px;">
+                        <tr>
+                            <th colspan="2" style="text-align:left;font-style:italic;font-size:14px;font-weight:bold;">
+                                Property Info
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                Address
+                            </th>
+                            <td>
+                                {{ $prop['number'].' '.$prop['address'] }}<br />
+                                {{ $prop['city'].' '.$prop['state'].' '.$prop['zipCode'] }}
+                            </td>
+                        </tr>
+                        {{--
+                        <tr>
+                            <td colspan="2" style="text-align:justify;">
+                                <a class="btn"  href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$address}}&ie=UTF8&hq=&hnear={{$address}}" target="blank"><i class="icon-map-marker"></i></a>
+                                &nbsp;&nbsp;&nbsp;
+                                <a href="{{ URL::to('brochure/dl/'.$prop['_id'])}}" class="btn"  target="blank" ><i class="icon-download"></i></a>
+                                &nbsp;&nbsp;&nbsp;
+                                <a href="#myModal" role="button" class="btn" data-toggle="modal"><i class="icon-envelope"></i></a>
 
-                <h3 style="margin-top:0px;margin-bottom:4px;padding-left:0px;">Purchase Details</h3>
-                <h4 style="margin-top:0px;padding-left:0px;margin-bottom:4px;">ID : {{$prop['propertyId']}}</h4>
-                <h4 style="margin-top:0px;padding-left:0px;margin-bottom:4px;">
-                    {{ $prop['number'].' '.$prop['address'] }}<br />
-                    {{ $prop['city'].' '.$prop['state'].' '.$prop['zipCode'] }}
-                </h4>
+                            </td>
+                        </tr>
+                        --}}
+                        <tr>
+                            <th>Price</th>
+                            <td>
+                                ${{ number_format($prop['listingPrice'],0,'.',',') }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>FMV</th>
+                            <td>
+                                ${{ number_format($prop['FMV'],0,'.',',') }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Monthly Rent</th>
+                            <td>
+                                ${{ number_format($prop['monthlyRental'],0,'.',',') }}
+                            </td>
+                        </tr>
+                        <tr>
 
+                            <th>Type</th>
+                            <td>
+                                {{ $prop['type'] }}
+                            </td>
+                        </tr>
+                        <tr>
 
-                <h3>Quick Specs</h3>
-                <table class="table">
-                    {{--
-                    <tr>
-                        <th colspan="2" class="h4">
-                            {{ $prop['number'].' '.$prop['address'] }}<br />
-                            {{ $prop['city'].' '.$prop['state'].' '.$prop['zipCode'] }}
-                        </th>
-                    </tr>
-                    --}}
-                    <tr>
-                        <td colspan="2" style="text-align:justify;">
-                            <a class="btn"  href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$address}}&ie=UTF8&hq=&hnear={{$address}}" target="blank"><i class="icon-map-marker"></i></a>
-                            &nbsp;&nbsp;&nbsp;
-                            <a href="{{ URL::to('brochure/dl/'.$prop['_id'])}}" class="btn"  target="blank" ><i class="icon-download"></i></a>
-                            &nbsp;&nbsp;&nbsp;
-                            <a href="#myModal" role="button" class="btn" data-toggle="modal"><i class="icon-envelope"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Price</th>
-                        <td>
-                            ${{ number_format($prop['listingPrice'],0,'.',',') }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>FMV</th>
-                        <td>
-                            ${{ number_format($prop['FMV'],0,'.',',') }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Monthly Rental</th>
-                        <td>
-                            ${{ number_format($prop['monthlyRental'],0,'.',',') }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Annual Tax</th>
-                        <td>
-                            ${{ $prop['tax'] }}
-                        </td>
-                    </tr>
-                    <tr>
+                            <th>Bed</th>
+                            <td>
+                                {{ $prop['bed'] }}
+                            </td>
+                        </tr>
+                        <tr>
 
-                        <th>Category</th>
-                        <td>
-                            {{ ucfirst(strtolower($prop['category'])) }}
-                        </td>
-                    </tr>
-                    <tr>
+                            <th>Bath</th>
+                            <td>
+                                {{ $prop['bath'] }}
+                            </td>
+                        </tr>
+                        <tr>
 
-                        <th>Lease Term</th>
-                        <td>
-                            {{ $prop['leaseTerms'] }} month(s)
-                        </td>
+                            <th>Size</th>
+                            <td>
+                                {{ number_format($prop['houseSize'],0) }} sqft
+                            </td>
 
-                    </tr>
-                    <tr>
+                        </tr>
+                        <tr>
 
-                        <th>Lease Start Date</th>
-                        <td>
-                            {{ $prop['leaseStartDate'] }}
-                        </td>
+                            <th>Lot Size</th>
+                            <td>
+                                @if( $prop['lotSize'] < 100)
+                                {{ number_format($prop['lotSize'] * 43560,0) }} sqft
+                                @else
+                                {{ $prop['lotSize'] }} sqft
+                                @endif
+                            </td>
 
-                    </tr>
-                    <tr>
+                        </tr>
+                        <tr>
 
-                        <th>Type</th>
-                        <td>
-                            {{ $prop['type'] }}
-                        </td>
-                    </tr>
-                    <tr>
+                            <th>Year Built</th>
+                            <td>
+                                {{ $prop['yearBuilt'] }}
+                            </td>
 
-                        <th>Year Built</th>
-                        <td>
-                            {{ $prop['yearBuilt'] }}
-                        </td>
+                        </tr>
+                        <tr>
 
-                    </tr>
-                    <tr>
-
-                        <th>Size</th>
-                        <td>
-                            {{ number_format($prop['houseSize'],0) }} sqft
-                        </td>
-
-                    </tr>
-                    <tr>
-
-                        <th>Lot Size</th>
-                        <td>
-                            @if( $prop['lotSize'] < 100)
-                            {{ number_format($prop['lotSize'] * 43560,0) }} sqft
+                            @if($prop['typeOfConstruction'] == '')
+                                <th>Property Manager</th>
+                                <td>
+                                    {{ $prop['propertyManager'] }}
+                                </td>
                             @else
-                            {{ $prop['lotSize'] }} sqft
+                                <th>Construction</th>
+                                <td>
+                                    {{ $prop['typeOfConstruction'] }}
+                                </td>
                             @endif
-                        </td>
 
-                    </tr>
-                    <tr>
+                        </tr>
 
-                        <th>Bed</th>
-                        <td>
-                            {{ $prop['bed'] }}
-                        </td>
-                    </tr>
-                    <tr>
+                        <tr>
 
-                        <th>Bath</th>
-                        <td>
-                            {{ $prop['bath'] }}
-                        </td>
-                    </tr>
-                    {{--
-                    <tr>
+                            <th>Parcel #</th>
+                            <td>
+                                {{ $prop['parcelNumber'] }}
+                            </td>
 
-                        <th>Garage</th>
-                        <td>
-                            {{ $prop['garage'] }}
-                        </td>
-                    </tr>
-                    <tr>
+                        </tr>
 
-                        <th>Pool</th>
-                        <td>
-                            {{ $prop['pool'] }}
-                        </td>
-                    </tr>
+                        <tr>
 
-                    --}}
+                            <th>Category</th>
+                            <td>
+                                {{ ucfirst(strtolower($prop['category'])) }}
+                            </td>
+                        </tr>
+                        <tr>
 
-                    @if($prop['typeOfConstruction'] != '')
-                    <tr>
+                            <th>Lease Term</th>
+                            <td>
+                                {{ $prop['leaseTerms'] }} month(s)
+                            </td>
 
-                        <th>Construction</th>
-                        <td>
-                            {{ $prop['typeOfConstruction'] }}
-                        </td>
+                        </tr>
+                        <tr>
 
-                    </tr>
-                    @endif
-                    <tr>
+                            <th>Lease Start Date</th>
+                            <td>
+                                {{ $prop['leaseStartDate'] }}
+                            </td>
 
-                        <th>Parcel #</th>
-                        <td>
-                            {{ $prop['parcelNumber'] }}
-                        </td>
+                        </tr>
+                        <tr>
 
-                    </tr>
-                </table>
+                            <th>Annual Tax</th>
+                            <td>
+                                ${{ $prop['tax'] }}
+                            </td>
+                        </tr>
 
-                <h3>Description</h3>
-                {{ $prop['description']}}
+                    </table>
 
             </div>
 
-            <div class="span9 lionbars" style="margin:auto;background-color:#fff;height:470px;overflow-y:auto;overflow-x:hidden;padding-right:4px;">
+            <div class="span8 lionbars" style="margin:auto;background-color:#fff;height:380px;width:670px;overflow-y:auto;overflow-x:hidden;padding-right:14px;margin-left:20px;">
+
 
         <h1 style="padding-left:0px;">Purchase Receipt</h1>
         <a href="{{ URL::to('pr/print/'.$trx['_id'])}}" class="btn receipt" target="new" ><i class="icon-print"></i></a>

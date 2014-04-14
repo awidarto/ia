@@ -196,6 +196,9 @@
     <div id="footer">
         <div class="container">
             <p class="muted credit">Copyright &copy; 2013 - Investors Alliance USA Property | Terms & Conditions | Privacy Policy</p>
+            <p class="" style="font-size:10px;color:#ccc;text-align:justify;padding:0px 10px;">
+                <strong>DISCLAIMER:</strong> All properties are sold as is, no warranties are offered by Investors Alliance (you may choose to purchase a home warranty from a 3rd party). Each property is different, and buyers may conduct their own due diligence before finalizing a purchase. Investors Alliance offers no guarantee of any kind regarding a specific property's performance, return on investment, or capitalization rate. Prior to undertaking any real estate transaction, you may consult your own accounting, legal and tax advisors to evaluate the risks, consequences and suitability of that transaction.
+            </p>
         </div>
     </div>
 </div>

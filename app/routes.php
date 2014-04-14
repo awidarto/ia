@@ -183,6 +183,23 @@ Route::get('pdf',function(){
     $html2pdf->Output('exemple.pdf','D');
 });
 
+Route::post('affiliate',function(){
+    $enquiry = Input::get();
+    $enpost = new Enquiry();
+
+    foreach ($enquiry as $key => $value) {
+        $enpost->{$key} = $value;
+    }
+
+    $enpost->type = 'affiliate';
+    $enpost->save();
+
+    Session::set('enquiryMessage',  'Thank you for your interest, we will contact you soon.');
+
+    return Redirect::to('/');
+
+});
+
 Route::get('tdate',function(){
     print Carbon::now()->subDays(10);
 });

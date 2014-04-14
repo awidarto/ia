@@ -6,37 +6,66 @@
 
 
         <div class="row">
-            <div >
-                <div class="row" style="margin:0px;padding:0px;">
-                    <h1 class="page-header">Login</h1>
-                </div>
-                <div class="row" style="margin:0px;padding:0px;padding-left:8px;">
-                    <div class="span12" style="overflow-y:auto;height:340px;width:100%;margin:0px;margin-right:4px;">
-                            <div class="offset4" style="margin-top:35px;border:thin solid #eee;padding:15px;width:300px;text-align:center;" >
-                                {{Former::open_horizontal('login','POST',array('class'=>''))}}
+            <div style="padding-left: 60px;">
+                <div class="row" style="font-style:italic;">
+                    <div class="span6" >
+                        {{--
+                <div class="row" style="margin:0px;padding:0px;padding-left:8px;" >
+                    <div class="span5" style="overflow-y:auto;height:340px;margin:0px;margin-right:4px;">
+
+                            <div class="" style="margin-top:35px;border:thin solid #eee;padding:15px;width:300px;text-align:center;" >
+
+                            </div>
+                        --}}
+
+                                <h4><img src="{{ URL::to('/')}}/images/ic-login.png"> Please login to continue</h4>
+
+                                {{Former::open_horizontal('login','POST',array('class'=>'span4'))}}
                                     @if (Session::get('loginError'))
                                         <div class="alert alert-danger">{{ Session::get('loginError') }}</div>
                                              <button type="button" class="close" data-dismiss="alert"></button>
                                     @endif
-                                    {{ Former::text('email','Email')->class('span2') }}
+                                    {{ Former::text('email','Email')->class('span3') }}
 
-                                    {{ Former::password('password','Password')->class('span2') }}
+                                    {{ Former::password('password','Password')->class('span3') }}
 
                                     {{-- Former::checkbox('remember-me')->label('')->text('Remember Me')->value('remember-me') --}}
 
-                                    {{ Former::submit('Login')->class('btn btn-primary offset1') }}
+                                    {{ Former::submit('Login')->class('btn btn-primary pull-right') }}
 
                                 {{ Former::close() }}
 
-                            </div>
-
-                        <div style="padding-top:50px;">
-                            <p class="" style="font-size:10px;color:#ccc;text-align:justify;">
-                                <strong>DISCLAIMER:</strong> All properties are sold as is, no warranties are offered by Investors Alliance (you may choose to purchase a home warranty from a 3rd party). Each property is different, and buyers may conduct their own due diligence before finalizing a purchase. Investors Alliance offers no guarantee of any kind regarding a specific property's performance, return on investment, or capitalization rate. Prior to undertaking any real estate transaction, you may consult your own accounting, legal and tax advisors to evaluate the risks, consequences and suitability of that transaction.
-                            </p>
-                        </div>
-
                         <!--insert grid-->
+                    </div>
+                    <div class="span6" >
+                        {{--
+                    <div class="span5" style="overflow-y:auto;height:340px;width:100%;margin:0px;margin-right:4px;">
+                        --}}
+                                <h4><img src="{{ URL::to('/')}}/images/ic-affiliate.png"> Affiliate Request Form</h4>
+
+                                @if(Session::get('enquiryMessage'))
+                                        <div class="alert alert-info">{{ Session::get('enquiryMessage') }}</div>
+                                             <button type="button" class="close" data-dismiss="alert"></button>
+                                        <?php Session::forget('enquiryMessage'); ?>
+                                @else
+                                    {{Former::open_horizontal('affiliate','POST',array('class'=>'span5'))}}
+                                        {{ Former::text('fullname','Full Name')->class('span4') }}
+
+                                        {{ Former::text('email','Email')->class('span4') }}
+
+                                        {{ Former::text('phone','Phone Number')->class('span4') }}
+
+                                        {{ Former::textarea('message','Message')->class('span4')->style('height:80px;') }}
+
+                                        {{-- Former::checkbox('remember-me')->label('')->text('Remember Me')->value('remember-me') --}}
+
+                                        {{ Former::submit('Submit')->class('btn btn-primary pull-right') }}
+
+                                    {{ Former::close() }}
+
+                                @endif
+
+
                     </div>
                 </div>
 

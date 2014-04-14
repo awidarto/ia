@@ -45,6 +45,11 @@
         padding-left: 60px;
     }
 
+    h4{
+        margin-top: 2px;
+        margin-bottom: 2px;
+    }
+
     .h4{
         font-size: 16px;
         font-weight: bold;
@@ -63,9 +68,25 @@
     .table th, .table td {
         /*padding: 8px;
         text-align: left;
-        vertical-align: top;*/
-        line-height: 16px;
         border-top: 1px solid #FFF;
+        vertical-align: top;*/
+        border-top: thin solid white;
+        padding: 2px 4px;
+        line-height: 13px;
+        font-size: 11px;
+    }
+
+    .table th{
+        min-width: 120px;
+        border-right: thin solid white;
+    }
+
+    .table tr{
+        border: none;
+    }
+
+    table.table{
+        border: thin solid black;
     }
 
     table{
@@ -80,12 +101,13 @@
 
     table td{
         min-width: 80px;
+        background-color: #eee;
         border-color: transparent;
+        border-top: thin solid #fff;
     }
 
     table th{
         font-weight: bold;
-        width: 100px;
         background-color: #eee;
         border-color: transparent;
     }
@@ -99,7 +121,11 @@
     }
 
     i.icon-download , i.icon-map-marker, i.icon-envelope{
-        font-size: 26px;
+        font-size: 32px;
+    }
+
+    a i.icon-download , a i.icon-map-marker,a i.icon-envelope{
+        font-size: 48px;
     }
 
     ul.thumbnails_grid{
@@ -186,13 +212,198 @@
         width: 100%;
     }
 
+    a.bt-action{
+        font-size: 32px;
+    }
+
 </style>
 {{ HTML::style('css/imagestyle.css')}}
 
 <div id="content-block">
     <div id="content-container" class="shadows" style="margin-bottom: 6px;" >
         <div class="row">
-            <div class="span5 lionbars" style="overflow-y:auto;height:400px;max-height:400px;">
+
+
+
+            <div class="span4" style="overflow-y:hidden;height:400px;max-height:400px;">
+                    <h4>
+                        <a href="{{ URL::previous() }}" class="btn btn-primary">&laquo; Back</a>
+                        ID : {{$prop['propertyId']}}</h4>
+
+                    <div>
+                        <a href="#myModal" role="button" data-toggle="modal"><img src="{{ URL::to('/')}}/images/email.png" /></a>
+                        &nbsp;&nbsp;
+                        <a href="{{ URL::to('brochure/dl/'.$prop['_id'])}}"  target="blank" ><img src="{{ URL::to('/')}}/images/download.png" /></a>
+                        &nbsp;&nbsp;
+                        <a  href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$address}}&ie=UTF8&hq=&hnear={{$address}}" target="blank"><img src="{{ URL::to('/')}}/images/marker.png" /></a>
+
+                    </div>
+                    {{--
+
+                    <div>
+                        <a class="bt-action" href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$address}}&ie=UTF8&hq=&hnear={{$address}}" target="blank"><i class="icon-map-marker"></i></a>
+                        &nbsp;&nbsp;&nbsp;
+                        <a class="bt-action" href="{{ URL::to('brochure/dl/'.$prop['_id'])}}" target="blank" ><i class="icon-download"></i></a>
+                        &nbsp;&nbsp;&nbsp;
+                        <a class="bt-action" href="#myModal" role="button" data-toggle="modal"><i class="icon-envelope"></i></a>
+
+                    </div>
+                    --}}
+
+                    <table class="table" style="border:thin solid transparent;margin-bottom:0px;">
+                        <tr>
+                            <th colspan="2" style="text-align:left;font-style:italic;font-size:14px;font-weight:bold;">
+                                Property Info
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                Address
+                            </th>
+                            <td>
+                                {{ $prop['number'].' '.$prop['address'] }}<br />
+                                {{ $prop['city'].' '.$prop['state'].' '.$prop['zipCode'] }}
+                            </td>
+                        </tr>
+                        {{--
+                        <tr>
+                            <td colspan="2" style="text-align:justify;">
+                                <a class="btn"  href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$address}}&ie=UTF8&hq=&hnear={{$address}}" target="blank"><i class="icon-map-marker"></i></a>
+                                &nbsp;&nbsp;&nbsp;
+                                <a href="{{ URL::to('brochure/dl/'.$prop['_id'])}}" class="btn"  target="blank" ><i class="icon-download"></i></a>
+                                &nbsp;&nbsp;&nbsp;
+                                <a href="#myModal" role="button" class="btn" data-toggle="modal"><i class="icon-envelope"></i></a>
+
+                            </td>
+                        </tr>
+                        --}}
+                        <tr>
+                            <th>Price</th>
+                            <td>
+                                ${{ number_format($prop['listingPrice'],0,'.',',') }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>FMV</th>
+                            <td>
+                                ${{ number_format($prop['FMV'],0,'.',',') }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Monthly Rent</th>
+                            <td>
+                                ${{ number_format($prop['monthlyRental'],0,'.',',') }}
+                            </td>
+                        </tr>
+                        <tr>
+
+                            <th>Type</th>
+                            <td>
+                                {{ $prop['type'] }}
+                            </td>
+                        </tr>
+                        <tr>
+
+                            <th>Bed</th>
+                            <td>
+                                {{ $prop['bed'] }}
+                            </td>
+                        </tr>
+                        <tr>
+
+                            <th>Bath</th>
+                            <td>
+                                {{ $prop['bath'] }}
+                            </td>
+                        </tr>
+                        <tr>
+
+                            <th>Size</th>
+                            <td>
+                                {{ number_format($prop['houseSize'],0) }} sqft
+                            </td>
+
+                        </tr>
+                        <tr>
+
+                            <th>Lot Size</th>
+                            <td>
+                                @if( $prop['lotSize'] < 100)
+                                {{ number_format($prop['lotSize'] * 43560,0) }} sqft
+                                @else
+                                {{ $prop['lotSize'] }} sqft
+                                @endif
+                            </td>
+
+                        </tr>
+                        <tr>
+
+                            <th>Year Built</th>
+                            <td>
+                                {{ $prop['yearBuilt'] }}
+                            </td>
+
+                        </tr>
+                        <tr>
+
+                            @if($prop['typeOfConstruction'] == '')
+                                <th>Property Manager</th>
+                                <td>
+                                    {{ $prop['propertyManager'] }}
+                                </td>
+                            @else
+                                <th>Construction</th>
+                                <td>
+                                    {{ $prop['typeOfConstruction'] }}
+                                </td>
+                            @endif
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Parcel #</th>
+                            <td>
+                                {{ $prop['parcelNumber'] }}
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Category</th>
+                            <td>
+                                {{ ucfirst(strtolower($prop['category'])) }}
+                            </td>
+                        </tr>
+                        <tr>
+
+                            <th>Lease Term</th>
+                            <td>
+                                {{ $prop['leaseTerms'] }} month(s)
+                            </td>
+
+                        </tr>
+                        <tr>
+
+                            <th>Lease Start Date</th>
+                            <td>
+                                {{ $prop['leaseStartDate'] }}
+                            </td>
+
+                        </tr>
+                        <tr>
+
+                            <th>Annual Tax</th>
+                            <td>
+                                ${{ $prop['tax'] }}
+                            </td>
+                        </tr>
+
+                    </table>
+
+
+                    {{--
 
                 <div id="main-img" class="img-container">
                     <img src="{{ (isset($prop['defaultpictures']['medium_url']))?$prop['defaultpictures']['medium_url']:'' }}" alt="{{$prop['propertyId']}}" >
@@ -210,14 +421,12 @@
 
                 <h3>Quick Specs</h3>
                 <table class="table">
-                    {{--
                     <tr>
                         <th colspan="2" class="h4">
                             {{ $prop['number'].' '.$prop['address'] }}<br />
                             {{ $prop['city'].' '.$prop['state'].' '.$prop['zipCode'] }}
                         </th>
                     </tr>
-                    --}}
                     <tr>
                         <td colspan="2" style="text-align:justify;">
                             <a class="btn"  href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$address}}&ie=UTF8&hq=&hnear={{$address}}" target="blank"><i class="icon-map-marker"></i></a>
@@ -323,7 +532,6 @@
                             {{ $prop['bath'] }}
                         </td>
                     </tr>
-                    {{--
                     <tr>
 
                         <th>Garage</th>
@@ -338,8 +546,6 @@
                             {{ $prop['pool'] }}
                         </td>
                     </tr>
-
-                    --}}
 
                     @if($prop['typeOfConstruction'] != '')
                     <tr>
@@ -364,9 +570,10 @@
                 <h3>Description</h3>
                 {{ $prop['description']}}
 
+                --}}
 
             </div>
-            <div class="span8">
+            <div class="span8" style="padding-left:10px;">
                 {{ HTML::style('css/wizard-custom.css') }}
 
                     <style type="text/css">
@@ -387,6 +594,17 @@
                             background-color: orange;
                         }
                     </style>
+
+                        <div class="row" style="margin:0px;padding:4px;">
+                            <div class="" style="display:block;">
+                                @if( isset($prop['locked']) && $prop['locked'] == 1)
+                                    <span style="font-size:12px;padding:2px 4px;display:inline-block;background-color:yellow;">This property is currently under buying process.</span>
+                                @endif
+                                <div id="session-counter-bar" style="text-align:right;display:inline-block">
+                                    Your shopping cart will expire in <span id="session-counter"></span>.
+                                </div>
+                            </div>
+                        </div>
 
                         <div id="rootwizard" style="width: 624px;display:block;">
                             <ul>
