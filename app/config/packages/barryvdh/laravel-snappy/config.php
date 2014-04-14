@@ -5,7 +5,7 @@ return array(
 
     'pdf' => array(
         'enabled' => true,
-        'binary' => '/opt/wk2html/bin/wkhtmltopdf-0.9.9-OS-X.i368',
+        'binary' => '/opt/wk2html/bin/wkhtmltopdf',
         'options' => array(),
     ),
     'image' => array(
