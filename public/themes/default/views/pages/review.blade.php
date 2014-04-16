@@ -413,6 +413,7 @@
 
                 <?php
                     $prop['tax'] = str_replace(array(',','.'), '', $prop['tax']);
+                    $prop['tax'] = (double) $prop['tax'];
                 ?>
                 <table class="table table-bordered table-striped" id="finance" >
                     <thead>
@@ -446,7 +447,7 @@
                         </tr>
                         <tr>
                             <td>Tax Adjustment</td>
-                            <td class="curr">${{ number_format($prop['tax'],0,'.',',')}}</td>
+                            <td class="curr">${{ number_format((int)$prop['tax'],0,'.',',')}}</td>
                             <td>${{ number_format($prop['listingPrice'] + $trx['adjustment1'] + $trx['adjustment2'] + $prop['insurance'] + $prop['tax'],0,'.',',')}}</td>
                         </tr>
                         <tr>

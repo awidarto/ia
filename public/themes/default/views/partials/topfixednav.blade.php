@@ -36,9 +36,9 @@ CONTACT US
                 <li {{ sa('/') }} {{ sa('dashboard') }} ><a href="{{ URL::to('/') }}" >Home</a></li>
                 <li {{ sa('property/listing') }} >
                     @if(Auth::check())
-                        <a href="{{ URL::to('property/listing') }}" >Property</a>
+                        <a href="{{ URL::to('property/listing') }}" >Properties</a>
                     @else
-                        <a href="#loginModal" data-toggle="modal" data-target="#loginModal"  >Property</a>
+                        <a href="#loginModal" data-toggle="modal" data-target="#loginModal"  >Properties</a>
                     @endif
                 </li>
                 <li class="dropdown">
