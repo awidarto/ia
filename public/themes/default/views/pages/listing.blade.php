@@ -256,7 +256,7 @@
                                 <div class="thumb span3" id="{{$p['_id']}}">
                                     <a href="{{ URL::to('property/detail/'.$p['_id']) }}" class="thumblink">
                                         <div class="img-container">
-                                            <img src="{{ (isset($p['defaultpictures']['medium_url']))?$p['defaultpictures']['medium_url']:'' }}" alt="{{$p['propertyId']}}" >
+                                            <img src="{{ (isset($p['defaultpictures']['medium_url']))?$p['defaultpictures']['medium_url']:URL::to('images').'/no-photo.jpg' }}" alt="{{$p['propertyId']}}" >
                                             <span class="prop-status {{$p['propertyStatus']}}">{{ $p['propertyStatus']}}</span>
                                         </div>
                                         <h5>ID : {{$p['propertyId']}}</h5>
