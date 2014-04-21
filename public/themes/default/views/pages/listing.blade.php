@@ -260,7 +260,7 @@
                                             <span class="prop-status {{$p['propertyStatus']}}">{{ $p['propertyStatus']}}</span>
                                         </div>
                                         <h5>ID : {{$p['propertyId']}}</h5>
-                                        <h5>{{ ucwords( strtolower()  ) .' '. strtoupper($p['state']) }}</h5>
+                                        <h5>{{ ucwords( strtolower($p['city'])  ) .' '. strtoupper($p['state']) }}</h5>
                                         <h4>${{ number_format($p['listingPrice'],0,'.',',') }}</h4>
                                     </a>
                                 </div>
