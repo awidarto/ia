@@ -279,9 +279,9 @@
 <!-- bottom filter -->
 
     <div class="subnav row" id="filter-bar" style="background-color: transparent;padding:0px;padding-left:22px;margin:0px;">
-        <span class="span3">
+        <span class="span3" style="width:230px;">
             <span class="white-text sel-label">See</span>
-            <select class="span1" id="typeselect" name="type">
+            <select class="span1" id="typeselect" name="type" style="width:75px;">
                 @foreach(array_merge(array('all'=>'All'),Config::get('ia.type')) as $k=>$t)
                     <?php
                         $url = mg(array('type'=>$k,'page'=>0));
