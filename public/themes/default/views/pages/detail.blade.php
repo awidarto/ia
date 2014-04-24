@@ -180,6 +180,10 @@
         color: #aaa;
     }
 
+    .note{
+        font-size: 9px;
+        line-height: 9px;
+    }
 </style>
 {{ HTML::style('css/imagestyle.css')}}
 
@@ -344,9 +348,9 @@
                             <th>Lot Size</th>
                             <td>
                                 @if( $prop['lotSize'] < 100)
-                                {{ number_format($prop['lotSize'] * 43560,0) }} sqft
+                                {{ Ks::us($prop['lotSize'] * 43560) }} sqft
                                 @else
-                                {{ $prop['lotSize'] }} sqft
+                                {{ Ks::us($prop['lotSize']) }} sqft
                                 @endif
                             </td>
 
@@ -431,7 +435,7 @@
                     </div>
 
             </div>
-            <div class="span4" style="padding: 30px 0px;">
+            <div class="span4" style="padding: 8px 0px;">
                 <style type="text/css">
                     table#fin{
                         border: thin solid black;
@@ -524,13 +528,16 @@
                             <input type="hidden" value="{{ $annualRental }}" id="annualRental">
                         </tr>
                         <tr>
-                            <th>Taxes</th><td><input class="calc"  type="text" value="{{str_replace(array(',','.'),'',$prop['tax']) }}" id="tax"></td>
+                            <th>Taxes*</th><td><input class="calc"  type="text" value="{{str_replace(array(',','.'),'',$prop['tax']) }}" id="tax"></td>
                         </tr>
                         <tr>
-                            <th>Insurance</th><td><input  class="calc" type="text" value="{{$prop['insurance']}}" id="insurance"></td>
+                            <th>Insurance**</th><td><input  class="calc" type="text" value="{{$prop['insurance']}}" id="insurance"></td>
                         </tr>
                         <tr>
-                            <th>Property Management</th><td><span class="pull-left" ><input  class="calc" style="width:20px" type="text" value="10" id="propFeePct">%</span> <span id="propManagementFee">${{ $propManagementFee}}</span></td>
+                            <th>Property Management</th><td><span class="pull-left" ><input  class="calc" style="width:20px" type="text" value="10" id="propFeePct">%</span> <span id="propManagementFee">{{ Ks::usd($propManagementFee)}}</span></td>
+                        </tr>
+                        <tr>
+                            <th>HOA</th><td><span class="pull-left" >{{ Ks::usd($prop['HOA'])}}</span> <span id="propManagementFee">{{ Ks::usd($prop['HOA'] * 12)}}</span></td>
                         </tr>
                         <tr>
                             <th>Maintenance Allowance</th><td><span class="pull-left" ><input  class="calc" style="width:20px" type="text" value="0" id="maintenanceAllowancePct">%</span> <span id="maintenanceAllowance">${{ Ks::us($maintenanceAllowance) }}</span></td>
@@ -553,6 +560,7 @@
                     </tbody>
 
                 </table>
+                <span class="note">* Approximately to latest current year available<br />** Approximately</span>
 
                 <script type="text/javascript">
                     function notNan(v){

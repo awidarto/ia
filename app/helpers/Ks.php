@@ -54,7 +54,13 @@ class Ks {
     }
 
     public static function us($in){
+        //$in = str_replace(array(',','.'), '', $in);
         return number_format((double) $in,0,'.',',');
+    }
+
+    public static function usdec($in){
+        //$in = str_replace(array(',','.'), '', $in);
+        return number_format((double) $in,1,'.',',');
     }
 
 }
