@@ -59,7 +59,7 @@ class PropertyController extends BaseController {
         $perpage = (Input::get('count') == '')?'8':Input::get('count');
         $order = (Input::get('order') == '')?'desc':Input::get('order');
         //$sort = (Input::get('sort') == '')?'listingPrice':Input::get('sort');
-        $sort = (Input::get('sort') == '')?'createdDate':Input::get('sort');
+        $sort = (Input::get('sort') == '')?'propertyId':Input::get('sort');
         $filter = (Input::get('type') == '')?'all':Input::get('type');
 
         $page = (is_null($page))?0:$page;

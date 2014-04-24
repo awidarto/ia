@@ -1,12 +1,29 @@
+1. Video link -> use lightbox -> hosting ?
+2. Filter by state bisa multiple
+3. Deskripsi tambahan untuk brosur
+4. Xls import preview
+5. Search
+6. nophoto -> "Photo coming soon"
+
+
 22 Apr 2014
 
-DONE 1. Kalau buka dari depan di properties kenapa selalu muncul IA 10373 di pertama?Tolong tampilan dibuat berdasarkan data terbaru.
+DONE 1. Kalau buka dari depan di properties kenapa selalu muncul IA 10373 di pertama?Tolong tampilan dibuat berdasarkan data terbaru.-> by ID
+
 DONE 2. Untuk agent tolong ditambahkan filter baru yaitu available atau sudah sold atau keduanya.
-DONE 3. Untuk tampilan properties untuk tulisan lot size jika diatas 1000 tidak ada komanya, begitu juga dengan di financial calculator untuk taxes, dan insurance, dan property management. -> tax dan insurance : input box
-DONE 4. Di financial calculator tolong dibawah property management ditambahkan HOA 2 kolom, kolom sisi kiri nilai perbulan dan sisi kanan pertahunnya.
+
+DONE 3. Untuk tampilan properties untuk tulisan lot size jika diatas 1000 tidak ada komanya, begitu juga dengan di financial calculator untuk taxes, dan insurance, dan property management. -> tax dan insurance : input box -> pake javascript
+
+DONE 4. Di financial calculator tolong dibawah property management ditambahkan HOA 2 kolom, kolom sisi kiri nilai perbulan dan sisi kanan pertahunnya. -> HOA form box -> kiri monthly, kanan annual, yg di admin == annual
+
 DONE 5. Tampilan properties dibawah sort by begitu klik state,price,type terpotong tulisannya.
+
 * 6. Untuk ukuran foto yang bisa diupload sebaiknya ukuran brp?
 DONE 7. Kalau foto asalnya potrait terpotong tampilannya.
+
 DONE 8. Di financial calculator tambahkan * di tax dan ** di insurance dengan keterangan * approximately to the latest current year aavilable dan ** approximately.
+
 9. Pak Djonny menanyakan desain untuk tulisan sold kapan bisa ada?
+
 DONE 10.Jika sehabis lihat 1 properties di page 2 dst klik back to listing selalu balik ke page 1, harusnya balik ke page terakhir yang di klik.
+

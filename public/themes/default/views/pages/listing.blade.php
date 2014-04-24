@@ -293,7 +293,7 @@
             </select>
 
             <span class="white-text sel-label">Sort by</span>
-            <select class="span1" id="sorter" name="type">
+            <select class="span1" id="sorter" name="type" style="width:75px;">
                 @foreach(array_merge(array('all'=>'All'),Config::get('ia.sort')) as $k=>$t)
                     <?php
                         $url = mg(array('sort'=>$k));
@@ -301,7 +301,6 @@
                     ?>
                     <option value="{{ $url }}" {{ $selected }} >{{$t}}</option>
                 @endforeach
-
             </select>
 
         </span>
