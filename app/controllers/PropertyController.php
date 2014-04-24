@@ -53,6 +53,8 @@ class PropertyController extends BaseController {
         //print_r(Auth::user());
         //count=40&order=asc&page=3&sort=State&type=TRIPLEX
 
+        Session::put('backlink',URL::full());
+
         $page = (Input::get('page') == '')?'0':Input::get('page');
         $perpage = (Input::get('count') == '')?'8':Input::get('count');
         $order = (Input::get('order') == '')?'desc':Input::get('order');
@@ -269,7 +271,11 @@ class PropertyController extends BaseController {
             $page = null;
         }
 
-        return View::make('pages.detail')->with('prop',$page);
+        $backlink = Session::get('backlink',URL::to('property/listing'));
+
+        return View::make('pages.detail')
+            ->with('backlink',$backlink)
+            ->with('prop',$page);
     }
 
     public function getBuy($id = null){

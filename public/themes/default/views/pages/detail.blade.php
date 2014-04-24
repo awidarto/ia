@@ -130,6 +130,13 @@
         display: block;
         padding: 0px;
         margin:0px;
+        max-height: 260px;
+        overflow: hidden;
+    }
+
+    #main-img img{
+        width: 100%;
+        height:auto;
     }
 
     #map-container{
@@ -194,7 +201,7 @@
         <div class="row">
             <div class="span5">
                 <div class="subnav row" id="filter-bar" style="background-color: #fff;padding:0px;margin:5px;position:relative;">
-                    <a href="{{ URL::to('property/listing') }}" class="back-btn">
+                    <a href="{{ $backlink }}" class="back-btn">
                         <i class="icon-chevron-left"></i> Back to Listing
                     </a>
 
