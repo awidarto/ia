@@ -180,9 +180,10 @@
         color: #aaa;
     }
 
-    .note{
+    p.note{
         font-size: 9px;
-        line-height: 9px;
+        line-height: 12px;
+        margin-bottom: 0px;
     }
 </style>
 {{ HTML::style('css/imagestyle.css')}}
@@ -224,7 +225,7 @@
                 </div>
 
                 <div id="main-img" class="img-container">
-                    <img src="{{ (isset($prop['defaultpictures']['full_url']))?$prop['defaultpictures']['full_url']:'' }}" alt="{{$prop['propertyId']}}" >
+                    <img src="{{ (isset($prop['defaultpictures']['full_url']))?$prop['defaultpictures']['full_url']:URL::to('images/no-photo-md.jpg') }}" alt="{{$prop['propertyId']}}" >
                     <span class="prop-status-small {{$prop['propertyStatus']}}">{{ $prop['propertyStatus']}}</span>
                     @if( isset($prop['locked']) && $prop['locked'] == 1)
                         <span style="position:absolute;font-size:12px;padding:2px 4px;display:block;background-color:yellow;bottom:0px;">This property is currently under buying process.</span>
@@ -517,7 +518,7 @@
                             <input type="hidden" value="{{ $prop['listingPrice'] }}" id="purchasePrice" >
                         </tr>
                         <tr>
-                            <th>Monthly Rent</th><td><input class="calc" type="text" value="{{$prop['monthlyRental']}}" id="monthlyRental"></td>
+                            <th>Monthly Rent</th><td><input class="calc" type="text" value="{{$prop['monthlyRental']}}" data-symbol="$ " data-thousands="," data-decimal="." id="monthlyRental"></td>
                         </tr>
                         <tr>
                             <th>Annual Rent</th><td id="txt_annualRental">${{ Ks::us($annualRental) }}</td>
@@ -537,7 +538,7 @@
                             <th>Property Management</th><td><span class="pull-left" ><input  class="calc" style="width:20px" type="text" value="10" id="propFeePct">%</span> <span id="propManagementFee">{{ Ks::usd($propManagementFee)}}</span></td>
                         </tr>
                         <tr>
-                            <th>HOA</th><td><span class="pull-left" >{{ Ks::usd($prop['HOA'])}}</span> <span id="propManagementFee">{{ Ks::usd($prop['HOA'] * 12)}}</span></td>
+                            <th>HOA</th><td><span class="pull-left" ><input  class="calc" style="width:40px" type="text" value="{{ $prop['HOA'] / 12 }}" id="HOA"></span> <span><input  class="calc" style="width:40px" type="text" value="{{ $prop['HOA'] }}" id="HOAannual"></span></td>
                         </tr>
                         <tr>
                             <th>Maintenance Allowance</th><td><span class="pull-left" ><input  class="calc" style="width:20px" type="text" value="0" id="maintenanceAllowancePct">%</span> <span id="maintenanceAllowance">${{ Ks::us($maintenanceAllowance) }}</span></td>
@@ -560,7 +561,7 @@
                     </tbody>
 
                 </table>
-                <span class="note">* Approximately to latest current year available<br />** Approximately</span>
+                <p class="note">* Approximately to latest current year available<br />** Approximately</p>
 
                 <script type="text/javascript">
                     function notNan(v){
@@ -587,6 +588,10 @@
                         var purchasePrice = {{ $prop['listingPrice']}};
                         var monthlyRental = notNan($('#monthlyRental').val());
 
+                        var HOA = notNan( $('#HOA').val() );
+
+                        var HOAannual = notNan( $('#HOAannual').val() );
+
                         var tax = notNan($('#tax').val());
                         var insurance = notNan($('#insurance').val());
 
@@ -595,7 +600,7 @@
                         var maintenanceAllowance = annualRental *  ( notNan($('#maintenanceAllowancePct').val()) / 100 );
                         var vacancyAllowance = annualRental *  ( notNan($('#vacancyAllowancePct').val()) / 100 );
 
-                        var totalExpense = notNan(propManagementFee) + notNan(maintenanceAllowance) + notNan(vacancyAllowance) + tax + insurance;
+                        var totalExpense = notNan(propManagementFee) + notNan(maintenanceAllowance) + notNan(vacancyAllowance) + tax + insurance + HOAannual;
 
                         var netAnnualCashFlow = annualRental - totalExpense;
                         var netMonthlyCashFlow = netAnnualCashFlow / 12;
@@ -616,6 +621,9 @@
 
                     });
 
+                    $(document).ready(function(){
+
+                    });
                 </script>
 
             </div>
