@@ -561,7 +561,7 @@
                     </tbody>
 
                 </table>
-                <p class="note">* Approximately to latest current year available<br />** Approximately</p>
+                <p class="note">*&nbsp;&nbsp; Approximately to latest current year available<br />** Approximately</p>
 
                 <script type="text/javascript">
                     function notNan(v){
@@ -650,11 +650,6 @@
                 </script>
 
             </div>
-
-
-
-
-
 
         </div><!-- end row -->
 
