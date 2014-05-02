@@ -4,7 +4,7 @@
 }
 .prop-status{
     display: inline-block;
-    min-width: 25%;
+    /*min-width: 25%;*/
     position: absolute;
     top: 0px;
     right: 0px;
@@ -16,7 +16,7 @@
 
 .prop-status-small{
     display: inline-block;
-    min-width: 25%;
+    /*min-width: 25%;*/
     position: absolute;
     top: 0px;
     right: 0px;
@@ -41,8 +41,25 @@
 }
 
 .sold{
-    background-color: #c3151f;
+    margin-top:4px;
+    background-color: transparent;
     color: white;
+    background: url(../images/sold.png) no-repeat;
+    background-size: 48px 48px;
+    width: 48px;
+    height: 48px;
+    text-indent: -1000em;
+}
+
+.available{
+    margin-top:4px;
+    background-color: transparent;
+    color: white;
+    background: url(../images/available.png) no-repeat;
+    background-size: 48px 48px;
+    width: 48px;
+    height: 48px;
+    text-indent: -1000em;
 }
 
 .under .contract , .under-contract{
