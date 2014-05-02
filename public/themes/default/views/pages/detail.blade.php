@@ -408,7 +408,7 @@
 
                             <th>Lease Start Date</th>
                             <td>
-                                {{ date('M, jS Y', strtotime($prop['leaseStartDate']))  }}
+                                {{ ($prop['leaseStartDate'] == '-')?date('M, jS Y', strtotime($prop['leaseStartDate'])):'-'  }}
                             </td>
 
                         </tr>

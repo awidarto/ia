@@ -1,10 +1,11 @@
 @if(Auth::check())
         <a href="{{ URL::to('dashboard') }}">Welcome {{ Auth::user()->firstname.' '.Auth::user()->lastname }}</a> | <a href="{{ URL::to('logout') }}">LOGOUT</a>
 @else
-        <a href="#loginModal" data-toggle="modal" data-target="#loginModal" >LOGIN</a> | <a href="{{ URL::to('/') }}/signup">SIGN UP</a>
+        <a href="#loginModal" data-toggle="modal" data-target="#loginModal" >LOGIN</a>
 
     {{--
-        <li><a href="{{ URL::to('/') }}/register">Registration</a></li>
+ | <a href="{{ URL::to('/') }}/signup">SIGN UP</a>
+         <li><a href="{{ URL::to('/') }}/register">Registration</a></li>
 
     <h2>LOGIN / SIGN UP</h2>
     <div class="span12" style="padding:0px;">
