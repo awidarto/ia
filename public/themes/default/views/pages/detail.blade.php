@@ -408,7 +408,7 @@
 
                             <th>Lease Start Date</th>
                             <td>
-                                {{ $prop['leaseStartDate'] }}
+                                {{ date('M, jS Y', strtotime($prop['leaseStartDate']))  }}
                             </td>
 
                         </tr>
@@ -416,7 +416,7 @@
 
                             <th>Annual Tax</th>
                             <td>
-                                ${{ $prop['tax'] }}
+                                {{ Ks::usd( $prop['tax']) }}
                             </td>
                         </tr>
 
