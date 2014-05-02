@@ -584,21 +584,34 @@
                         return output;
                     }
 
+                    $('.calc').on('focus',function(){
+                        if($('#HOA').is(':focus')){
+                            var HOA = notNan( $('#HOA').val() );
+                            $('#HOAannual').val( parseInt(HOA) * 12  );
+                        }else if($('#HOAannual').is(':focus')){
+                            var HOAannual = notNan( $('#HOAannual').cleanVal() );
+                            $('#HOA').val( parseFloat(HOAannual) / 12 );
+                        }else{
+                            $('#HOA').val( parseInt($('#HOAannual').cleanVal()) / 12 );
+                        }
+
+                    });
+
                     $('.calc').on('keyup',function(){
                         var purchasePrice = {{ $prop['listingPrice']}};
-                        var monthlyRental = notNan($('#monthlyRental').val());
+                        var monthlyRental = notNan($('#monthlyRental').cleanVal());
 
-                        var HOA = notNan( $('#HOA').val() );
+                        var HOA = notNan( $('#HOA').cleanVal() );
 
-                        var HOAannual = notNan( $('#HOAannual').val() );
+                        var HOAannual = notNan( $('#HOAannual').cleanVal() );
 
                         var tax = notNan($('#tax').val());
                         var insurance = notNan($('#insurance').val());
 
                         var annualRental = 12 * monthlyRental;
-                        var propManagementFee = annualRental * ( notNan($('#propFeePct').val()) / 100 );
-                        var maintenanceAllowance = annualRental *  ( notNan($('#maintenanceAllowancePct').val()) / 100 );
-                        var vacancyAllowance = annualRental *  ( notNan($('#vacancyAllowancePct').val()) / 100 );
+                        var propManagementFee = annualRental * ( notNan($('#propFeePct').cleanVal()) / 100 );
+                        var maintenanceAllowance = annualRental *  ( notNan($('#maintenanceAllowancePct').cleanVal()) / 100 );
+                        var vacancyAllowance = annualRental *  ( notNan($('#vacancyAllowancePct').cleanVal()) / 100 );
 
                         var totalExpense = notNan(propManagementFee) + notNan(maintenanceAllowance) + notNan(vacancyAllowance) + tax + insurance + HOAannual;
 
@@ -619,10 +632,20 @@
 
                         $('#calcROI').html(roi + '%');
 
+                        if($('#HOA').is(':focus')){
+                            var HOA = notNan( $('#HOA').cleanVal() );
+                            $('#HOAannual').val( parseInt(HOA) * 12  );
+                        }else if($('#HOAannual').is(':focus')){
+                            var HOAannual = notNan( $('#HOAannual').cleanVal() );
+                            $('#HOA').val( parseFloat(HOAannual) / 12 );
+                        }else{
+                            $('#HOA').val( parseInt($('#HOAannual').cleanVal()) / 12 );
+                        }
+
                     });
 
                     $(document).ready(function(){
-
+                        $('input.calc').mask('000,000,000,000,000', {reverse: true});
                     });
                 </script>
 

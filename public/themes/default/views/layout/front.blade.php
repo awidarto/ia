@@ -256,7 +256,7 @@
 
         {{ HTML::script('js/jquery.lionbars.0.3.min.js') }}
 
-        {{ HTML::script('js/jquery.maskMoney.min.js') }}
+        {{ HTML::script('js/jquery.mask.min.js') }}
 
 
         <script type="text/javascript">
