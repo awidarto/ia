@@ -538,7 +538,7 @@
                             <th>Property Management</th><td><span class="pull-left" ><input  class="calc" style="width:20px" type="text" value="10" id="propFeePct">%</span> <span id="propManagementFee">{{ Ks::usd($propManagementFee)}}</span></td>
                         </tr>
                         <tr>
-                            <th>HOA</th><td><span class="pull-left" ><input  class="calc" style="width:40px" type="text" value="{{ $prop['HOA'] / 12 }}" id="HOA"></span> <span><input  class="calc" style="width:40px" type="text" value="{{ $prop['HOA'] }}" id="HOAannual"></span></td>
+                            <th>HOA</th><td><span class="pull-left" ><input  class="calc" style="width:40px" type="text" value="{{ $prop['HOA'] / 12 }}" id="HOAmonthly"></span> <span><input  class="calc" style="width:40px" type="text" value="{{ $prop['HOA'] }}" id="HOAannual"></span></td>
                         </tr>
                         <tr>
                             <th>Maintenance Allowance</th><td><span class="pull-left" ><input  class="calc" style="width:20px" type="text" value="0" id="maintenanceAllowancePct">%</span> <span id="maintenanceAllowance">${{ Ks::us($maintenanceAllowance) }}</span></td>
@@ -584,34 +584,36 @@
                         return output;
                     }
 
+
                     $('.calc').on('focus',function(){
-                        if($('#HOA').is(':focus')){
-                            var HOA = notNan( $('#HOA').val() );
-                            $('#HOAannual').val( parseInt(HOA) * 12  );
+                        if($('#HOAmonthly').is(':focus')){
+                            var HOAmonthly = notNan( $('#HOAmonthly').val() );
+                            $('#HOAannual').val( parseInt(HOAmonthly) * 12  );
                         }else if($('#HOAannual').is(':focus')){
-                            var HOAannual = notNan( $('#HOAannual').cleanVal() );
-                            $('#HOA').val( parseFloat(HOAannual) / 12 );
+                            var HOAannual = notNan( $('#HOAannual').val() );
+                            $('#HOAmonthly').val( parseFloat(HOAannual) / 12 );
                         }else{
-                            $('#HOA').val( parseInt($('#HOAannual').cleanVal()) / 12 );
+                            $('#HOAmonthly').val( parseInt($('#HOAannual').val()) / 12 );
                         }
 
                     });
 
+
                     $('.calc').on('keyup',function(){
                         var purchasePrice = {{ $prop['listingPrice']}};
-                        var monthlyRental = notNan($('#monthlyRental').cleanVal());
+                        var monthlyRental = notNan($('#monthlyRental').val());
 
-                        var HOA = notNan( $('#HOA').cleanVal() );
+                        var HOA = notNan( $('#HOA').val() );
 
-                        var HOAannual = notNan( $('#HOAannual').cleanVal() );
+                        var HOAannual = notNan( $('#HOAannual').val() );
 
                         var tax = notNan($('#tax').val());
                         var insurance = notNan($('#insurance').val());
 
                         var annualRental = 12 * monthlyRental;
-                        var propManagementFee = annualRental * ( notNan($('#propFeePct').cleanVal()) / 100 );
-                        var maintenanceAllowance = annualRental *  ( notNan($('#maintenanceAllowancePct').cleanVal()) / 100 );
-                        var vacancyAllowance = annualRental *  ( notNan($('#vacancyAllowancePct').cleanVal()) / 100 );
+                        var propManagementFee = annualRental * ( notNan($('#propFeePct').val()) / 100 );
+                        var maintenanceAllowance = annualRental *  ( notNan($('#maintenanceAllowancePct').val()) / 100 );
+                        var vacancyAllowance = annualRental *  ( notNan($('#vacancyAllowancePct').val()) / 100 );
 
                         var totalExpense = notNan(propManagementFee) + notNan(maintenanceAllowance) + notNan(vacancyAllowance) + tax + insurance + HOAannual;
 
@@ -633,19 +635,19 @@
                         $('#calcROI').html(roi + '%');
 
                         if($('#HOA').is(':focus')){
-                            var HOA = notNan( $('#HOA').cleanVal() );
-                            $('#HOAannual').val( parseInt(HOA) * 12  );
+                            var HOAmonthly = notNan( $('#HOAmonthly').val() );
+                            $('#HOAannual').val( parseInt(HOAmonthly) * 12  );
                         }else if($('#HOAannual').is(':focus')){
-                            var HOAannual = notNan( $('#HOAannual').cleanVal() );
-                            $('#HOA').val( parseFloat(HOAannual) / 12 );
+                            var HOAannual = notNan( $('#HOAannual').val() );
+                            $('#HOAmonthly').val( parseFloat(HOAannual) / 12 );
                         }else{
-                            $('#HOA').val( parseInt($('#HOAannual').cleanVal()) / 12 );
+                            $('#HOAmonthly').val( parseInt($('#HOAannual').val()) / 12 );
                         }
 
                     });
 
                     $(document).ready(function(){
-                        $('input.calc').mask('000,000,000,000,000', {reverse: true});
+                        //$('input.calc').mask('000,000,000,000,000', {reverse: true});
                     });
                 </script>
 
