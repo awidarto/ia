@@ -373,7 +373,7 @@
         </div>
 
 
-        <div class="span2 pull-right white-text" style="width:100px;" >
+        <div class="span2 pull-right white-text" style="width:110px;" >
             Items {{ ($current * $perpage) + 1 }} to {{ ( $current * $perpage ) + $currentcount }} of {{$total}}{{-- total (Filtered from {{$alltotal}} entries) --}}
         </div>
 
