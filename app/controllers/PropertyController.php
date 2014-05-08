@@ -306,17 +306,19 @@ class PropertyController extends BaseController {
         if($page){
             $page = $page->toArray();
 
+            print_r($page);
+
             //
-            if( //!$this->checkDate($page['leaseStartDate'])
-                 $page['leaseStartDate'] == 0
+            if( !$this->checkDate($page['leaseStartDate'])
+                || $page['leaseStartDate'] == 0
                 || $page['leaseStartDate'] == '-'
                 || $page['leaseStartDate'] == '' ){
 
-                $page['leaseStartDate'] == false;
+                $page['leaseStartDate'] = false;
             }
 
-            if(strtolower($page['category']) == 'vacant - rent ready'){
-                $page['leaseStartDate'] == false;
+            if(strtoupper($page['category']) != 'TENANTED'){
+                $page['leaseStartDate'] = false;
             }
 
         }else{
