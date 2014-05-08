@@ -77,6 +77,12 @@
                     <table style="margin:0px;margin-top:10px;" >
                         <tbody>
                             <tr>
+                                <th class="item">Property ID</th>
+                                <td>
+                                    {{$prop['propertyId']}}
+                                </td>
+                            </tr>
+                            <tr>
                                 <th class="item">Address</th>
                                 <td>
                                     <span class="title-span">{{$prop['number'].' '.$prop['address']}}</span>
