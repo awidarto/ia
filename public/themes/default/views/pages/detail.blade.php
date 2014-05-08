@@ -400,7 +400,11 @@
 
                             <th>Lease Term</th>
                             <td>
-                                {{ $prop['leaseTerms'] }} month(s)
+                                @if($prop['leaseTerms'] == '-' || $prop['leaseTerms'] == '')
+                                    -
+                                @else
+                                    {{ $prop['leaseTerms'] }} month(s)
+                                @endif
                             </td>
 
                         </tr>
