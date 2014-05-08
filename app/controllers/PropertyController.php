@@ -315,7 +315,7 @@ class PropertyController extends BaseController {
                 $page['leaseStartDate'] == false;
             }
 
-            if($page['category'] != 'TENANTED'){
+            if(strtolower($page['category']) == 'vacant - rent ready'){
                 $page['leaseStartDate'] == false;
             }
 
