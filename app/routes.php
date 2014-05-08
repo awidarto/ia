@@ -655,8 +655,14 @@ Route::post('clogin',function(){
 
 
 Route::get('logout',function(){
+    if(isset(Auth::user()->email)){
+        $useremail = Auth::user()->email;
+    }else{
+        $useremail = 'session expired';
+    }
 
-    Event::fire('log.a',array('logout','logout',Auth::user()->email,'logout'));
+    Event::fire('log.a',array('logout','logout',$useremail,'logout'));
+
     Auth::logout();
     return Redirect::to('/');
 });

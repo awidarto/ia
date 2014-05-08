@@ -305,6 +305,16 @@ class PropertyController extends BaseController {
 
         if($page){
             $page = $page->toArray();
+
+            //
+            if( !$this->checkDate($page['leaseStartDate'])
+                || $page['leaseStartDate'] == 0
+                || $page['leaseStartDate'] == '-'
+                || $page['leaseStartDate'] == '' ){
+
+                $page['leaseStartDate'] == false;
+            }
+
         }else{
             $page = null;
         }
@@ -571,6 +581,15 @@ class PropertyController extends BaseController {
 
     public function getTransactions(){
 
+    }
+
+    public function checkDate($string){
+        $date = date_parse($string);
+        if ($date["error_count"] == 0 && checkdate($date["month"], $date["day"], $date["year"])){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public function missingMethod($parameter = array()){
