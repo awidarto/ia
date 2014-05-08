@@ -312,12 +312,12 @@
             </ul>
         </div>
 
-        <div class="span3 form-inline">
+        <div class="span3 form-inline" style="width:190px">
                 <input name="search" id="search" placeholder="search" style="width:105px" />
                 <span class="btn" id="do-search">search</span>
         </div>
 
-        <div class="pagination pagination-centered span4" style="color:#fff;">
+        <div class="pagination pagination-centered span4" style="color:#fff;width:320px;">
             <ul>
                 <?php
                     $prev = ($current - 1 < 0 )?0:($current - 1);
