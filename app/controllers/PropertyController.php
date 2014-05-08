@@ -307,7 +307,7 @@ class PropertyController extends BaseController {
             $page = $page->toArray();
 
             //
-            if( !$this->checkDate($page['leaseStartDate'])
+            if( //!$this->checkDate($page['leaseStartDate'])
                 || $page['leaseStartDate'] == 0
                 || $page['leaseStartDate'] == '-'
                 || $page['leaseStartDate'] == '' ){
