@@ -315,6 +315,10 @@ class PropertyController extends BaseController {
                 $page['leaseStartDate'] == false;
             }
 
+            if($page['category'] != 'TENANTED'){
+                $page['leaseStartDate'] == false;
+            }
+
         }else{
             $page = null;
         }
