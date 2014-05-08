@@ -306,7 +306,7 @@ class PropertyController extends BaseController {
         if($page){
             $page = $page->toArray();
 
-            print_r($page);
+            //print_r($page);
 
             //
             if( !$this->checkDate($page['leaseStartDate'])
