@@ -621,7 +621,7 @@
                         var HOAannual = notNan( $('#HOAannual').val() );
                         var HOAmonthly = notNan( $('#HOAmonthly').val() );
 
-                        if($('#HOA').is(':focus')){
+                        if($('#HOAmonthly').is(':focus')){
                             $('#HOAannual').val( parseFloat(HOAmonthly * 12).toFixed(2)  );
                         }else if($('#HOAannual').is(':focus')){
                             $('#HOAmonthly').val( parseFloat(HOAannual  / 12 ).toFixed(2) );
