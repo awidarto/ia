@@ -622,11 +622,11 @@
                         var HOAmonthly = notNan( $('#HOAmonthly').val() );
 
                         if($('#HOAmonthly').is(':focus')){
-                            $('#HOAannual').val( parseFloat(HOAmonthly * 12).toFixed(2)  );
+                            $('#HOAannual').val( parseFloat(HOAmonthly * 12).toFixed(1)  );
                         }else if($('#HOAannual').is(':focus')){
-                            $('#HOAmonthly').val( parseFloat(HOAannual  / 12 ).toFixed(2) );
+                            $('#HOAmonthly').val( parseFloat(HOAannual  / 12 ).toFixed(1) );
                         }else{
-                            $('#HOAmonthly').val( parseFloat($('#HOAannual').val()  / 12).toFixed(2) );
+                            $('#HOAmonthly').val( parseFloat($('#HOAannual').val()  / 12).toFixed(1) );
                         }
 
                         var tax = notNan($('#tax').val());
