@@ -542,7 +542,7 @@
                             <th>Property Management</th><td><span class="pull-left" ><input  class="calc" style="width:20px" type="text" value="10" id="propFeePct">%</span> <span id="propManagementFee">{{ Ks::usd($propManagementFee)}}</span></td>
                         </tr>
                         <tr>
-                            <th>HOA</th><td><span class="pull-left" ><input  class="calc" style="width:40px" type="text" value="{{ $prop['HOA'] / 12 }}" id="HOAmonthly"></span> <span><input  class="calc" style="width:40px" type="text" value="{{ $prop['HOA'] }}" id="HOAannual"></span></td>
+                            <th>HOA</th><td><span class="pull-left" ><input  class="calc" style="width:40px" type="text" value="{{ number_format( ($prop['HOA'] / 12) , 1, '.', '') }}" id="HOAmonthly"></span> <span><input  class="calc" style="width:40px" type="text" value="{{ $prop['HOA'] }}" id="HOAannual"></span></td>
                         </tr>
                         <tr>
                             <th>Maintenance Allowance</th><td><span class="pull-left" ><input  class="calc" style="width:20px" type="text" value="0" id="maintenanceAllowancePct">%</span> <span id="maintenanceAllowance">${{ Ks::us($maintenanceAllowance) }}</span></td>
