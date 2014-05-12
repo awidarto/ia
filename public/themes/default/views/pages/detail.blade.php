@@ -588,7 +588,7 @@
                         return output;
                     }
 
-
+                    /*
                     $('.calc').on('focus',function(){
                         if($('#HOAmonthly').is(':focus')){
                             var HOAmonthly = notNan( $('#HOAmonthly').val() );
@@ -601,15 +601,17 @@
                         }
 
                     });
-
+                    */
 
                     $('.calc').on('keyup',function(){
                         var purchasePrice = {{ $prop['listingPrice']}};
                         var monthlyRental = notNan($('#monthlyRental').val());
 
+                        /*
                         var HOA = notNan( $('#HOA').val() );
 
                         var HOAannual = notNan( $('#HOAannual').val() );
+                        */
 
                         var tax = notNan($('#tax').val());
                         var insurance = notNan($('#insurance').val());
@@ -640,12 +642,12 @@
 
                         if($('#HOA').is(':focus')){
                             var HOAmonthly = notNan( $('#HOAmonthly').val() );
-                            $('#HOAannual').val( parseInt(HOAmonthly) * 12  );
+                            $('#HOAannual').val( parseFloat(HOAmonthly) * 12  );
                         }else if($('#HOAannual').is(':focus')){
                             var HOAannual = notNan( $('#HOAannual').val() );
                             $('#HOAmonthly').val( parseFloat(HOAannual) / 12 );
                         }else{
-                            $('#HOAmonthly').val( parseInt($('#HOAannual').val()) / 12 );
+                            $('#HOAmonthly').val( parseFloat($('#HOAannual').val()) / 12 );
                         }
 
                     });

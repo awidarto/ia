@@ -317,7 +317,7 @@
                 <span class="btn" id="do-search">search</span>
         </div>
 
-        <div class="pagination pagination-centered span4" style="color:#fff;width:320px;">
+        <div class="pagination pagination-centered span4" style="color:#fff;width:320px;text-align:center">
             <ul>
                 <?php
                     $prev = ($current - 1 < 0 )?0:($current - 1);
