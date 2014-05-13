@@ -31,12 +31,9 @@ Route::get('/',function(){
 
     if(Auth::check()){
         //return Redirect::to('dashboard');
-        Theme::setCurrentTheme(Prefs::getActiveTheme() );
-        Former::framework('TwitterBootstrap');
+        $slides = Homeslider::where('publishing','published')->orderby('sequence','asc')->get();
 
-        $featured = Property::where('tags','like','%featured%')->get()->toArray();
-
-        return View::make('pages.home')->with('featured',$featured);
+        return View::make('pages.home')->with('slides',$slides);
     }else{
         return Redirect::to('login');
     }

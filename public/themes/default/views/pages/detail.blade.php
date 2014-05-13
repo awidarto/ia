@@ -568,6 +568,18 @@
                 <p class="note">*&nbsp;&nbsp; Approximately to latest current year available<br />** Approximately</p>
 
                 <script type="text/javascript">
+
+                    Number.prototype.formatMoney = function(c, d, t){
+                        var n = this,
+                            c = isNaN(c = Math.abs(c)) ? 2 : c,
+                            d = d == undefined ? "." : d,
+                            t = t == undefined ? "," : t,
+                            s = n < 0 ? "-" : "",
+                            i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "",
+                            j = (j = i.length) > 3 ? j % 3 : 0;
+                           return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+                         };
+
                     function notNan(v){
                         if(v == '' || v == null || typeof v === "undefined" || isNaN(v) ){
                             v = 0;
@@ -588,41 +600,15 @@
                         return output;
                     }
 
-                    /*
-                    $('.calc').on('focus',function(){
-                        if($('#HOAmonthly').is(':focus')){
-                            var HOAmonthly = notNan( $('#HOAmonthly').val() );
-                            $('#HOAannual').val( parseInt(HOAmonthly) * 12  );
-                        }else if($('#HOAannual').is(':focus')){
-                            var HOAannual = notNan( $('#HOAannual').val() );
-                            $('#HOAmonthly').val( parseFloat(HOAannual) / 12 );
-                        }else{
-                            $('#HOAmonthly').val( parseInt($('#HOAannual').val()) / 12 );
-                        }
-
-                    });
-                    */
-
                     $('.calc').on('keyup',function(){
                         var purchasePrice = {{ $prop['listingPrice']}};
                         var monthlyRental = notNan($('#monthlyRental').val());
-                        /*
-                        if($('#HOA').is(':focus')){
-                            var HOAmonthly = notNan( $('#HOAmonthly').val() );
-                            $('#HOAannual').val( parseFloat(HOAmonthly * 12).toFixed(2)  );
-                        }else if($('#HOAannual').is(':focus')){
-                            var HOAannual = notNan( $('#HOAannual').val() );
-                            $('#HOAmonthly').val( parseFloat(HOAannual  / 12 ).toFixed(2) );
-                        }else{
-                            $('#HOAmonthly').val( parseFloat($('#HOAannual').val()  / 12).toFixed(2) );
-                        }
-                        */
 
                         var HOAannual = notNan( $('#HOAannual').val() );
                         var HOAmonthly = notNan( $('#HOAmonthly').val() );
 
                         if($('#HOAmonthly').is(':focus')){
-                            $('#HOAannual').val( parseFloat(HOAmonthly * 12).toFixed(1)  );
+                            $('#HOAannual').val( parseFloat(HOAmonthly * 12).toFixed(1) );
                         }else if($('#HOAannual').is(':focus')){
                             $('#HOAmonthly').val( parseFloat(HOAannual  / 12 ).toFixed(1) );
                         }else{
@@ -653,6 +639,10 @@
                         $('#totalExpense').html('$' + cf(totalExpense));
                         $('#netAnnualCashFlow').html('$' + cf(netAnnualCashFlow));
                         $('#netMonthlyCashFlow').html('$' + cf(netMonthlyCashFlow));
+
+                        if($('#monthlyRental').is(':focus')){
+                            $('#monthlyRental').val( monthlyRental.formatMoney(0) );
+                        }
 
                         $('#calcROI').html(roi + '%');
 

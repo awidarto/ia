@@ -287,7 +287,10 @@ class PropertyController extends BaseController {
 
         $paging = floor($total_found / $perpage);
 
+        $q = json_encode($query);
+
         Event::fire('cleanup');
+        Event::fire('log.a',array('property','list',Auth::user()->email,$q));
 
         return View::make('pages.listing')
             ->with('properties',$properties)
@@ -327,6 +330,15 @@ class PropertyController extends BaseController {
 
         $backlink = Session::get('backlink',URL::to('property/listing'));
 
+        $p = json_encode(array(
+            'propertyId'=>$page['propertyId'],
+            'number'=>$page['number'],
+            'address'=>$page['address'],
+            'city'=>$page['city'],
+            'state'=>$page['state']
+         ));
+        Event::fire('log.a',array('property','detail',Auth::user()->email,$p));
+
         return View::make('pages.detail')
             ->with('backlink',$backlink)
             ->with('prop',$page);
@@ -351,6 +363,16 @@ class PropertyController extends BaseController {
         }else{
             $prop = null;
         }
+
+        $p = json_encode(array(
+            'propertyId'=>$property['propertyId'],
+            'number'=>$property['number'],
+            'address'=>$property['address'],
+            'city'=>$property['city'],
+            'state'=>$property['state']
+         ));
+        Event::fire('log.a',array('property','buy',Auth::user()->email,$p));
+
 
         if($prop['propertyStatus'] == 'reserved'){
             if(isset($prop['reservedBy']) && $prop['reservedBy'] == Auth::user()->_id){
@@ -475,7 +497,15 @@ class PropertyController extends BaseController {
                 $trx->{$k} = $v;
             }
 
+
             if($trx->save()){
+
+                $p = json_encode(array(
+                    'trx_id'=>$trx->_id,
+                    'buyer_id'=>$buyer['buyerId']->toString()
+                 ));
+                Event::fire('log.a',array('property','processbuy',Auth::user()->email,$p));
+
                 return Redirect::to('property/review/'.$trx->_id)->with('notify_success','Order saved successfully');
             }else{
                 return Redirect::to('property/review')->with('notify_success','Order saving failed');
