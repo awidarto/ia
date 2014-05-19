@@ -15,7 +15,7 @@
 
                       <li>
                         <div style="width:979px;height:373px;min-width:979px;min-height:373px;">
-                          <object width="970" height="370"><param value="http://www.youtube.com/v/{{$slide->youtubeUrl}}&showsearch=0&rel=0&fs=1&autoplay=1&amp;ap=%2526fmt%3D18" name="movie" /><param value="window" name="wmode" /><param value="true" name="allowFullScreen" /><embed width="970" height="370" wmode="window" allowfullscreen="true" type="application/x-shockwave-flash" src="http://www.youtube.com/v/{{$slide->youtubeUrl}}&showsearch=0&fs=1&rel=0&autoplay=1&amp;ap=%2526fmt%3D18"></embed></object>
+                          <object width="970" height="370"><param value="http://www.youtube.com/v/{{$slide->youtubeUrl}}&showsearch=0&rel=0&fs=1&autoplay=0&amp;ap=%2526fmt%3D18" name="movie" /><param value="window" name="wmode" /><param value="true" name="allowFullScreen" /><embed width="970" height="370" wmode="window" allowfullscreen="true" type="application/x-shockwave-flash" src="http://www.youtube.com/v/{{$slide->youtubeUrl}}&showsearch=0&fs=1&rel=0&autoplay=0&amp;ap=%2526fmt%3D18"></embed></object>
                         </div>
                       </li>
 
@@ -31,7 +31,7 @@
                     @elseif($slide->slidetype == 'videocontent' )
                         <div style="width:979px;height:373px;min-width:979px;min-height:373px;">
                           <div style="width:45%;height:370px;float:left;margin-right:30px;">
-                            <object width="480" height="370"><param value="http://www.youtube.com/v/{{$slide->youtubeUrl}}&showsearch=0&rel=0&fs=1&autoplay=1&amp;ap=%2526fmt%3D18" name="movie" /><param value="window" name="wmode" /><param value="true" name="allowFullScreen" /><embed width="480" height="370" wmode="window" allowfullscreen="true" type="application/x-shockwave-flash" src="http://www.youtube.com/v/{{$slide->youtubeUrl}}&showsearch=0&fs=1&rel=0&autoplay=1&amp;ap=%2526fmt%3D18"></embed></object>
+                            <object width="480" height="370"><param value="http://www.youtube.com/v/{{$slide->youtubeUrl}}&showsearch=0&rel=0&fs=1&autoplay=0&amp;ap=%2526fmt%3D18" name="movie" /><param value="window" name="wmode" /><param value="true" name="allowFullScreen" /><embed width="480" height="370" wmode="window" allowfullscreen="true" type="application/x-shockwave-flash" src="http://www.youtube.com/v/{{$slide->youtubeUrl}}&showsearch=0&fs=1&rel=0&autoplay=0&amp;ap=%2526fmt%3D18"></embed></object>
                           </div>
                           <div style="width:45%;height:370px;float:left;">
                             {{ $slide->content }}
