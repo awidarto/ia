@@ -168,6 +168,47 @@
             window.location = $('#sorter').val();
         });
 
+        $('#do-search').on('click',function(){
+            var current = $('#sfull').val();
+            var term = $('#search').val();
+
+            console.log(current);
+
+            if(current.indexOf('s=') > 0){
+                if(current.indexOf('?') >= 0){
+                    var q = current.split('?');
+                    var req = q[1];
+                    var curr = req.split('&');
+                    console.log(curr);
+                    var t = '';
+                    for(i = 0; i < curr.length; i++){
+                        t = curr[i];
+                        if(t.indexOf('s=') >= 0 ){
+                            curr.splice(i,1);
+                        }
+                        if(t.indexOf('page=') >= 0 ){
+                            curr.splice(i,1);
+                        }
+
+                    }
+
+                    console.log(curr);
+                    curr.push('s=' + term);
+                    curr.push('page=0');
+                    console.log(curr);
+                    var creq = curr.join('&');
+                    var nexturl = '{{ URL::to('property/listing')}}?' + creq;
+                    console.log(nexturl);
+
+                }
+
+            }else{
+                var nexturl = current + '&s=' + term;
+            }
+
+            window.location = nexturl;
+
+        });
 
         /*
         $('.thumb').on('click',function(e){
@@ -314,7 +355,7 @@
         </div>
 
         <div class="span3 form-inline" style="width:190px">
-            <input type="hidden" name="sfull" value="{{ URL::full() }}" />
+            <input type="hidden" name="sfull" id="sfull" value="{{ URL::full() }}" />
             <input name="s" id="search" placeholder="search" style="width:105px" />
             <input type="submit" class="btn" id="do-search" />
         </div>

@@ -79,6 +79,15 @@ class PropertyController extends BaseController {
             $or = array();
             $and = array();
 
+            if($search != ''){
+                $sval = new MongoRegex('/'.$search.'/i');
+                $or_search[] = array('state'=>$sval);
+                $or_search[] = array('propertyId'=>$sval);
+                $or_search[] = array('city'=>$sval);
+                $or_search[] = array('listingPrice'=>$sval);
+                $and[] = array('$or'=>$or_search);
+            }
+
             if(Auth::user()->prop_access == 'filtered'){
 
                 if(isset(Auth::user()->filter_principal) && Auth::user()->filter_principal != ''){
@@ -326,6 +335,15 @@ class PropertyController extends BaseController {
 
             $or = array();
             $and = array();
+
+            if($search != ''){
+                $sval = new MongoRegex('/'.$search.'/i');
+                $or_search[] = array('state'=>$sval);
+                $or_search[] = array('propertyId'=>$sval);
+                $or_search[] = array('city'=>$sval);
+                $or_search[] = array('listingPrice'=>$sval);
+                $and[] = array('$or'=>$or_search);
+            }
 
             if(Auth::user()->prop_access == 'filtered'){
 
