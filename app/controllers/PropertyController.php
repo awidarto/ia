@@ -81,11 +81,11 @@ class PropertyController extends BaseController {
 
             if(Auth::user()->prop_access == 'filtered'){
 
-                if(Auth::user()->filter_principal != ''){
+                if(isset(Auth::user()->filter_principal) && Auth::user()->filter_principal != ''){
                     $q['principal'] = Auth::user()->filter_principal;
                 }
 
-                if(Auth::user()->filter_state != ''){
+                if(isset(Auth::user()->filter_state) && Auth::user()->filter_state != ''){
                     $states = explode(',',Auth::user()->filter_state);
 
                     if(is_array($states) && count($states) > 1){
@@ -99,7 +99,7 @@ class PropertyController extends BaseController {
                     }
                 }
 
-                if(Auth::user()->filter_propmanager != ''){
+                if( isset(Auth::user()->filter_propmanager) &&  Auth::user()->filter_propmanager != ''){
                     $states = explode(';',Auth::user()->filter_propmanager);
 
                     if(is_array($states) && count($states) > 1){
@@ -113,8 +113,8 @@ class PropertyController extends BaseController {
                     }
                 }
 
-                if(Auth::user()->filter_status != ''){
-                    if(Auth::user()->filter_status == 'both'){
+                if( isset(Auth::user()->filter_status) && Auth::user()->filter_status != ''){
+                    if(isset(Auth::user()->filter_status) && Auth::user()->filter_status == 'both'){
                         $or_status[] = array('propertyStatus'=>'sold');
                         $or_status[] = array('propertyStatus'=>'available');
                         $and[] = array('$or'=>$or_status);
@@ -137,11 +137,11 @@ class PropertyController extends BaseController {
 
                 $q['assigned_user'] = Auth::user()->id;
 
-                if(Auth::user()->filter_principal != ''){
+                if(isset(Auth::user()->filter_principal) && Auth::user()->filter_principal != ''){
                     $q['principal'] = Auth::user()->filter_principal;
                 }
 
-                if(Auth::user()->filter_state != ''){
+                if(isset(Auth::user()->filter_state) && Auth::user()->filter_state != ''){
                     $states = explode(',',Auth::user()->filter_state);
 
                     if(is_array($states) && count($states) > 1){
@@ -155,7 +155,7 @@ class PropertyController extends BaseController {
                     }
                 }
 
-                if(Auth::user()->filter_propmanager != ''){
+                if(isset(Auth::user()->filter_propmanager) && Auth::user()->filter_propmanager != ''){
                     $states = explode(';',Auth::user()->filter_propmanager);
 
                     if(is_array($states) && count($states) > 1){
@@ -169,8 +169,8 @@ class PropertyController extends BaseController {
                     }
                 }
 
-                if(Auth::user()->filter_status != ''){
-                    if(Auth::user()->filter_status == 'both'){
+                if(isset(Auth::user()->filter_status) && Auth::user()->filter_status != ''){
+                    if(isset(Auth::user()->filter_status) && Auth::user()->filter_status == 'both'){
                         $or_status[] = array('propertyStatus'=>'sold');
                         $or_status[] = array('propertyStatus'=>'available');
                         $and[] = array('$or'=>$or_status);
@@ -193,11 +193,11 @@ class PropertyController extends BaseController {
 
                 $or[] = array('assigned_user'=>Auth::user()->id);
 
-                if(Auth::user()->filter_principal != ''){
+                if(isset(Auth::user()->filter_principal) && Auth::user()->filter_principal != ''){
                     $and['principal'] = Auth::user()->filter_principal;
                 }
 
-                if(Auth::user()->filter_state != ''){
+                if(isset(Auth::user()->filter_state) && Auth::user()->filter_state != ''){
                     $states = explode(',',Auth::user()->filter_state);
 
                     if(is_array($states) && count($states) > 1){
@@ -211,7 +211,7 @@ class PropertyController extends BaseController {
                     }
                 }
 
-                if(Auth::user()->filter_propmanager != ''){
+                if(isset(Auth::user()->filter_propmanager) && Auth::user()->filter_propmanager != ''){
                     $states = explode(';',Auth::user()->filter_propmanager);
 
                     if(is_array($states) && count($states) > 1){
@@ -225,8 +225,8 @@ class PropertyController extends BaseController {
                     }
                 }
 
-                if(Auth::user()->filter_status != ''){
-                    if(Auth::user()->filter_status == 'both'){
+                if(isset(Auth::user()->filter_status) && Auth::user()->filter_status != ''){
+                    if(isset(Auth::user()->filter_status) && Auth::user()->filter_status == 'both'){
                         $or_status[] = array('propertyStatus'=>'sold');
                         $or_status[] = array('propertyStatus'=>'available');
                         $and[] = array('$or'=>$or_status);
@@ -274,11 +274,11 @@ class PropertyController extends BaseController {
 
             if(Auth::user()->prop_access == 'filtered'){
 
-                if(Auth::user()->filter_principal != ''){
+                if(isset(Auth::user()->filter_principal) && Auth::user()->filter_principal != ''){
                     $q['principal'] = Auth::user()->filter_principal;
                 }
 
-                if(Auth::user()->filter_state != ''){
+                if(isset(Auth::user()->filter_state) && Auth::user()->filter_state != ''){
                     $states = explode(',',Auth::user()->filter_state);
 
                     if(is_array($states) && count($states) > 1){
@@ -292,7 +292,7 @@ class PropertyController extends BaseController {
                     }
                 }
 
-                if(Auth::user()->filter_propmanager != ''){
+                if(isset(Auth::user()->filter_propmanager) && Auth::user()->filter_propmanager != ''){
                     $states = explode(';',Auth::user()->filter_propmanager);
 
                     if(is_array($states) && count($states) > 1){
@@ -307,8 +307,8 @@ class PropertyController extends BaseController {
                 }
 
 
-                if(Auth::user()->filter_status != ''){
-                    if(Auth::user()->filter_status == 'both'){
+                if(isset(Auth::user()->filter_status) && Auth::user()->filter_status != ''){
+                    if(isset(Auth::user()->filter_status) && Auth::user()->filter_status == 'both'){
                         $or_status[] = array('propertyStatus'=>'sold');
                         $or_status[] = array('propertyStatus'=>'available');
                         $and[] = array('$or'=>$or_status);
@@ -331,11 +331,11 @@ class PropertyController extends BaseController {
 
                 $q['assigned_user'] = Auth::user()->id;
 
-                if(Auth::user()->filter_principal != ''){
+                if(isset(Auth::user()->filter_principal) && Auth::user()->filter_principal != ''){
                     $q['principal'] = Auth::user()->filter_principal;
                 }
 
-                if(Auth::user()->filter_state != ''){
+                if(isset(Auth::user()->filter_state) && Auth::user()->filter_state != ''){
                     $states = explode(',',Auth::user()->filter_state);
 
                     if(is_array($states) && count($states) > 1){
@@ -349,7 +349,7 @@ class PropertyController extends BaseController {
                     }
                 }
 
-                if(Auth::user()->filter_propmanager != ''){
+                if(isset(Auth::user()->filter_propmanager) && Auth::user()->filter_propmanager != ''){
                     $states = explode(';',Auth::user()->filter_propmanager);
 
                     if(is_array($states) && count($states) > 1){
@@ -364,8 +364,8 @@ class PropertyController extends BaseController {
                 }
 
 
-                if(Auth::user()->filter_status != ''){
-                    if(Auth::user()->filter_status == 'both'){
+                if(isset(Auth::user()->filter_status) && Auth::user()->filter_status != ''){
+                    if(isset(Auth::user()->filter_status) && Auth::user()->filter_status == 'both'){
                         $or[] = array('propertyStatus'=>'sold');
                         $or[] = array('propertyStatus'=>'available');
                         $and[] = array('$or'=>$or);
@@ -388,11 +388,11 @@ class PropertyController extends BaseController {
 
                 $or[] = array('assigned_user'=>Auth::user()->id);
 
-                if(Auth::user()->filter_principal != ''){
+                if(isset(Auth::user()->filter_principal) && Auth::user()->filter_principal != ''){
                     $and['principal'] = Auth::user()->filter_principal;
                 }
 
-                if(Auth::user()->filter_state != ''){
+                if(isset(Auth::user()->filter_state) && Auth::user()->filter_state != ''){
                     $states = explode(',',Auth::user()->filter_state);
 
                     if(is_array($states) && count($states) > 1){
@@ -406,7 +406,7 @@ class PropertyController extends BaseController {
                     }
                 }
 
-                if(Auth::user()->filter_propmanager != ''){
+                if(isset(Auth::user()->filter_propmanager) && Auth::user()->filter_propmanager != ''){
                     $states = explode(';',Auth::user()->filter_propmanager);
 
                     if(is_array($states) && count($states) > 1){
@@ -421,8 +421,8 @@ class PropertyController extends BaseController {
                 }
 
 
-                if(Auth::user()->filter_status != ''){
-                    if(Auth::user()->filter_status == 'both'){
+                if(isset(Auth::user()->filter_status) && Auth::user()->filter_status != ''){
+                    if(isset(Auth::user()->filter_status) && Auth::user()->filter_status == 'both'){
                         $or_status[] = array('propertyStatus'=>'sold');
                         $or_status[] = array('propertyStatus'=>'available');
                         $and[] = array('$or'=>$or_status);
