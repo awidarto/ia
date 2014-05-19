@@ -62,6 +62,8 @@ class PropertyController extends BaseController {
         $sort = (Input::get('sort') == '')?'propertyId':Input::get('sort');
         $filter = (Input::get('type') == '')?'all':Input::get('type');
 
+        $search = (Input::get('s') == '')?'':Input::get('s');
+
         $page = (is_null($page))?0:$page;
         $skip = $page * $perpage;
 
@@ -74,6 +76,9 @@ class PropertyController extends BaseController {
             $q = array();
             $q['propertyStatus'] = array('$ne'=>'offline');
 
+            $or = array();
+            $and = array();
+
             if(Auth::user()->prop_access == 'filtered'){
 
                 if(Auth::user()->filter_principal != ''){
@@ -81,18 +86,49 @@ class PropertyController extends BaseController {
                 }
 
                 if(Auth::user()->filter_state != ''){
-                    $q['state'] = Auth::user()->filter_state;
+                    $states = explode(',',Auth::user()->filter_state);
+
+                    if(is_array($states) && count($states) > 1){
+                        $or_state = array();
+                        foreach($states as $state){
+                            $or_state[] = array('state'=>$state);
+                        }
+                        $and[] = array('$or'=>$or_state);
+                    }else{
+                        $q['state'] = Auth::user()->filter_state;
+                    }
+                }
+
+                if(Auth::user()->filter_propmanager != ''){
+                    $states = explode(';',Auth::user()->filter_propmanager);
+
+                    if(is_array($states) && count($states) > 1){
+                        $or_propmanager = array();
+                        foreach($states as $manager){
+                            $or_propmanager[] = array('propertyManager'=>$manager);
+                        }
+                        $and[] = array('$or'=>$or_propmanager);
+                    }else{
+                        $q['state'] = Auth::user()->filter_propmanager;
+                    }
                 }
 
                 if(Auth::user()->filter_status != ''){
                     if(Auth::user()->filter_status == 'both'){
-                        $q['$or'] = array(
-                                array('propertyStatus'=>'sold'),
-                                array('propertyStatus'=>'available')
-                            );
+                        $or_status[] = array('propertyStatus'=>'sold');
+                        $or_status[] = array('propertyStatus'=>'available');
+                        $and[] = array('$or'=>$or_status);
                     }else{
                         $q['propertyStatus'] = Auth::user()->filter_status;
                     }
+                }
+
+                if(count($and) > 0){
+                    $q['$and'] = $and;
+                }
+
+                if(count($or) > 0){
+                    $q['$or'] = $or;
                 }
 
                 $query = $q;
@@ -106,50 +142,106 @@ class PropertyController extends BaseController {
                 }
 
                 if(Auth::user()->filter_state != ''){
-                    $q['state'] = Auth::user()->filter_state;
+                    $states = explode(',',Auth::user()->filter_state);
+
+                    if(is_array($states) && count($states) > 1){
+                        $or_state = array();
+                        foreach($states as $state){
+                            $or_state[] = array('state'=>$state);
+                        }
+                        $and[] = array('$or'=>$or_state);
+                    }else{
+                        $q['state'] = Auth::user()->filter_state;
+                    }
+                }
+
+                if(Auth::user()->filter_propmanager != ''){
+                    $states = explode(';',Auth::user()->filter_propmanager);
+
+                    if(is_array($states) && count($states) > 1){
+                        $or_propmanager = array();
+                        foreach($states as $manager){
+                            $or_propmanager[] = array('propertyManager'=>$manager);
+                        }
+                        $and[] = array('$or'=>$or_propmanager);
+                    }else{
+                        $q['state'] = Auth::user()->filter_propmanager;
+                    }
                 }
 
                 if(Auth::user()->filter_status != ''){
                     if(Auth::user()->filter_status == 'both'){
-                        $q['$or'] = array(
-                                array('propertyStatus'=>'sold'),
-                                array('propertyStatus'=>'available')
-                            );
+                        $or_status[] = array('propertyStatus'=>'sold');
+                        $or_status[] = array('propertyStatus'=>'available');
+                        $and[] = array('$or'=>$or_status);
                     }else{
                         $q['propertyStatus'] = Auth::user()->filter_status;
                     }
+                }
+
+                if(count($and) > 0){
+                    $q['$and'] = $and;
+                }
+
+                if(count($or) > 0){
+                    $q['$or'] = $or;
                 }
 
                 $query = $q;
 
             }else if(Auth::user()->prop_access == 'filtered_or_individual'){
 
-                $or = array();
-
                 $or[] = array('assigned_user'=>Auth::user()->id);
-
-                $and = array();
 
                 if(Auth::user()->filter_principal != ''){
                     $and['principal'] = Auth::user()->filter_principal;
                 }
 
                 if(Auth::user()->filter_state != ''){
-                    $and['state'] = Auth::user()->filter_state;
+                    $states = explode(',',Auth::user()->filter_state);
+
+                    if(is_array($states) && count($states) > 1){
+                        $or_state = array();
+                        foreach($states as $state){
+                            $or_state[] = array('state'=>$state);
+                        }
+                        $and[] = array('$or'=>$or_state);
+                    }else{
+                        $q['state'] = Auth::user()->filter_state;
+                    }
+                }
+
+                if(Auth::user()->filter_propmanager != ''){
+                    $states = explode(';',Auth::user()->filter_propmanager);
+
+                    if(is_array($states) && count($states) > 1){
+                        $or_propmanager = array();
+                        foreach($states as $manager){
+                            $or_propmanager[] = array('propertyManager'=>$manager);
+                        }
+                        $and[] = array('$or'=>$or_propmanager);
+                    }else{
+                        $q['state'] = Auth::user()->filter_propmanager;
+                    }
                 }
 
                 if(Auth::user()->filter_status != ''){
                     if(Auth::user()->filter_status == 'both'){
-                        $or[] = array('propertyStatus'=>'sold');
-                        $or[] = array('propertyStatus'=>'available');
+                        $or_status[] = array('propertyStatus'=>'sold');
+                        $or_status[] = array('propertyStatus'=>'available');
+                        $and[] = array('$or'=>$or_status);
                     }else{
                         $q['propertyStatus'] = Auth::user()->filter_status;
                     }
                 }
 
-                $or[] = $and;
+                if(count($and) > 0){
+                    $q['$and'] = $and;
+                }
 
-                $q['$or'] = $or;
+                if(count($or) > 0){
+                    $q['$or'] = $or;
+                }
 
                 $query = $q;
 
@@ -177,6 +269,8 @@ class PropertyController extends BaseController {
             $q['propertyStatus'] = array('$ne'=>'offline');
             $q['type'] = $filter;
 
+            $or = array();
+            $and = array();
 
             if(Auth::user()->prop_access == 'filtered'){
 
@@ -185,18 +279,50 @@ class PropertyController extends BaseController {
                 }
 
                 if(Auth::user()->filter_state != ''){
-                    $q['state'] = Auth::user()->filter_state;
+                    $states = explode(',',Auth::user()->filter_state);
+
+                    if(is_array($states) && count($states) > 1){
+                        $or_state = array();
+                        foreach($states as $state){
+                            $or_state[] = array('state'=>$state);
+                        }
+                        $and[] = array('$or'=>$or_state);
+                    }else{
+                        $q['state'] = Auth::user()->filter_state;
+                    }
                 }
+
+                if(Auth::user()->filter_propmanager != ''){
+                    $states = explode(';',Auth::user()->filter_propmanager);
+
+                    if(is_array($states) && count($states) > 1){
+                        $or_propmanager = array();
+                        foreach($states as $manager){
+                            $or_propmanager[] = array('propertyManager'=>$manager);
+                        }
+                        $and[] = array('$or'=>$or_propmanager);
+                    }else{
+                        $q['state'] = Auth::user()->filter_propmanager;
+                    }
+                }
+
 
                 if(Auth::user()->filter_status != ''){
                     if(Auth::user()->filter_status == 'both'){
-                        $q['$or'] = array(
-                                array('propertyStatus'=>'sold'),
-                                array('propertyStatus'=>'available')
-                            );
+                        $or_status[] = array('propertyStatus'=>'sold');
+                        $or_status[] = array('propertyStatus'=>'available');
+                        $and[] = array('$or'=>$or_status);
                     }else{
                         $q['propertyStatus'] = Auth::user()->filter_status;
                     }
+                }
+
+                if(count($and) > 0){
+                    $q['$and'] = $and;
+                }
+
+                if(count($or) > 0){
+                    $q['$or'] = $or;
                 }
 
                 $query = $q;
@@ -210,50 +336,108 @@ class PropertyController extends BaseController {
                 }
 
                 if(Auth::user()->filter_state != ''){
-                    $q['state'] = Auth::user()->filter_state;
+                    $states = explode(',',Auth::user()->filter_state);
+
+                    if(is_array($states) && count($states) > 1){
+                        $or_state = array();
+                        foreach($states as $state){
+                            $or_state[] = array('state'=>$state);
+                        }
+                        $and[] = array('$or'=>$or_state);
+                    }else{
+                        $q['state'] = Auth::user()->filter_state;
+                    }
                 }
+
+                if(Auth::user()->filter_propmanager != ''){
+                    $states = explode(';',Auth::user()->filter_propmanager);
+
+                    if(is_array($states) && count($states) > 1){
+                        $or_propmanager = array();
+                        foreach($states as $manager){
+                            $or_propmanager[] = array('propertyManager'=>$manager);
+                        }
+                        $and[] = array('$or'=>$or_propmanager);
+                    }else{
+                        $q['state'] = Auth::user()->filter_propmanager;
+                    }
+                }
+
 
                 if(Auth::user()->filter_status != ''){
                     if(Auth::user()->filter_status == 'both'){
-                        $q['$or'] = array(
-                                array('propertyStatus'=>'sold'),
-                                array('propertyStatus'=>'available')
-                            );
+                        $or[] = array('propertyStatus'=>'sold');
+                        $or[] = array('propertyStatus'=>'available');
+                        $and[] = array('$or'=>$or);
                     }else{
                         $q['propertyStatus'] = Auth::user()->filter_status;
                     }
+                }
+
+                if(count($and) > 0){
+                    $q['$and'] = $and;
+                }
+
+                if(count($or) > 0){
+                    $q['$or'] = $or;
                 }
 
                 $query = $q;
 
             }else if(Auth::user()->prop_access == 'filtered_or_individual'){
 
-                $or = array();
-
                 $or[] = array('assigned_user'=>Auth::user()->id);
-
-                $and = array();
 
                 if(Auth::user()->filter_principal != ''){
                     $and['principal'] = Auth::user()->filter_principal;
                 }
 
                 if(Auth::user()->filter_state != ''){
-                    $and['state'] = Auth::user()->filter_state;
+                    $states = explode(',',Auth::user()->filter_state);
+
+                    if(is_array($states) && count($states) > 1){
+                        $or_state = array();
+                        foreach($states as $state){
+                            $or_state[] = array('state'=>$state);
+                        }
+                        $and[] = array('$or'=>$or_state);
+                    }else{
+                        $q['state'] = Auth::user()->filter_state;
+                    }
                 }
+
+                if(Auth::user()->filter_propmanager != ''){
+                    $states = explode(';',Auth::user()->filter_propmanager);
+
+                    if(is_array($states) && count($states) > 1){
+                        $or_propmanager = array();
+                        foreach($states as $manager){
+                            $or_propmanager[] = array('propertyManager'=>$manager);
+                        }
+                        $and[] = array('$or'=>$or_propmanager);
+                    }else{
+                        $q['state'] = Auth::user()->filter_propmanager;
+                    }
+                }
+
 
                 if(Auth::user()->filter_status != ''){
                     if(Auth::user()->filter_status == 'both'){
-                        $or[] = array('propertyStatus'=>'sold');
-                        $or[] = array('propertyStatus'=>'available');
+                        $or_status[] = array('propertyStatus'=>'sold');
+                        $or_status[] = array('propertyStatus'=>'available');
+                        $and[] = array('$or'=>$or_status);
                     }else{
                         $q['propertyStatus'] = Auth::user()->filter_status;
                     }
                 }
 
-                $or[] = $and;
+                if(count($and) > 0){
+                    $q['$and'] = $and;
+                }
 
-                $q['$or'] = $or;
+                if(count($or) > 0){
+                    $q['$or'] = $or;
+                }
 
                 $query = $q;
 

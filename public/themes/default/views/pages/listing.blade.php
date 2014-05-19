@@ -168,6 +168,7 @@
             window.location = $('#sorter').val();
         });
 
+
         /*
         $('.thumb').on('click',function(e){
             console.log(this.id);
@@ -313,8 +314,9 @@
         </div>
 
         <div class="span3 form-inline" style="width:190px">
-                <input name="search" id="search" placeholder="search" style="width:105px" />
-                <span class="btn" id="do-search">search</span>
+            <input type="hidden" name="sfull" value="{{ URL::full() }}" />
+            <input name="s" id="search" placeholder="search" style="width:105px" />
+            <input type="submit" class="btn" id="do-search" />
         </div>
 
         <div class="pagination pagination-centered span4" style="color:#fff;width:320px;text-align:center">
