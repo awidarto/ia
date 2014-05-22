@@ -311,7 +311,7 @@ class PropertyController extends BaseController {
 
             }else if(Auth::user()->prop_access == 'individual'){
 
-                $query = array(
+                $q= array(
                             'propertyStatus'=>array('$ne'=>'offline'),
                             'assigned_user'=>Auth::user()->id
                         );
@@ -324,10 +324,12 @@ class PropertyController extends BaseController {
                     $q['$or'] = $or;
                 }
 
+                $query = $q;
+
 
             }else{
 
-                $query = array(
+                $q = array(
                             'propertyStatus'=>array('$ne'=>'offline')
                         );
 
@@ -338,6 +340,8 @@ class PropertyController extends BaseController {
                 if(count($or) > 0){
                     $q['$or'] = $or;
                 }
+
+                $query = $q;
 
             }
 
@@ -586,7 +590,7 @@ class PropertyController extends BaseController {
 
             }else if(Auth::user()->prop_access == 'individual'){
 
-                $query = array(
+                $q = array(
                             'propertyStatus'=>array('$ne'=>'offline'),
                             'type'=>$filter,
                             'assigned_user'=>Auth::user()->id
@@ -600,10 +604,11 @@ class PropertyController extends BaseController {
                     $q['$or'] = $or;
                 }
 
+                $query = $q;
 
             }else{
 
-                $query = array(
+                $q = array(
                             'propertyStatus'=>array('$ne'=>'offline'),
                             'type'=>$filter,
 
@@ -616,6 +621,8 @@ class PropertyController extends BaseController {
                 if(count($or) > 0){
                     $q['$or'] = $or;
                 }
+
+                $query = $q;
 
             }
 
