@@ -604,6 +604,8 @@ class PropertyController extends BaseController {
         Event::fire('cleanup');
         Event::fire('log.a',array('property','list',Auth::user()->email,$q));
 
+        $current_request = str_replace(array(URL::current(),'?'), '', URL::full());
+
         return View::make('pages.listing')
             ->with('properties',$properties)
             ->with('total',$total_found)
@@ -611,6 +613,7 @@ class PropertyController extends BaseController {
             ->with('current',$page)
             ->with('perpage',$perpage)
             ->with('currentcount',$currentcount)
+            ->with('current_request',$current_request)
             ->with('paging',$paging);
     }
 

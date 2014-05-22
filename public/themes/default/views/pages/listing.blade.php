@@ -94,7 +94,10 @@
     }
 
 </style>
+
+
 {{ HTML::style('css/imagestyle.css')}}
+
 <?php
 
     function mg($newparam){
@@ -151,8 +154,6 @@
     $(document).ready(function(){
         var current_session = '{{ Session::get('reservedId')}}';
 
-        console.log('id ' + current_session);
-
         $('#perpage').on('change',function(){
             console.log($('#perpage').val());
             window.location = $('#perpage').val();
@@ -169,47 +170,44 @@
         });
 
         $('#do-search').on('click',function(){
-            var current = $('#sfull').val();
-            var term = $('#search').val();
-
-            console.log(current);
-
-            if(current.indexOf('s=') > 0){
-                if(current.indexOf('?') >= 0){
-                    var q = current.split('?');
-                    var req = q[1];
-                    var curr = req.split('&');
-                    console.log(curr);
-                    var t = '';
-                    for(i = 0; i < curr.length; i++){
-                        t = curr[i];
-                        if(t.indexOf('s=') >= 0 ){
-                            curr.splice(i,1);
-                        }
-                        if(t.indexOf('page=') >= 0 ){
-                            curr.splice(i,1);
-                        }
-
-                    }
-
-                    console.log(curr);
-                    curr.push('s=' + term);
-                    curr.push('page=0');
-                    console.log(curr);
-                    var creq = curr.join('&');
-                    var nexturl = '{{ URL::to('property/listing')}}?' + creq;
-                    console.log(nexturl);
-
-                }
-
-            }else{
-                var nexturl = current + '&s=' + term;
-            }
-
-            window.location = nexturl;
-
+            do_search();
         });
 
+        $('#search').on('keyup',function(ev){
+            console.log(ev.keyCode);
+            if(ev.keyCode == '13'){
+                do_search();
+            }
+        });
+
+
+        function do_search(){
+            var current = $('#sfull').val();
+            var req = $('#sreq').val();
+            var term = $('#search').val();
+
+            var curr = req.split('&');
+            var nreq = [];
+
+            if(req != '' && req.indexOf('s=') >= 0 && curr.length > 0){
+                for(i = 0; i < curr.length; i++){
+                    t = curr[i];
+                    if(t.indexOf('s=') >= 0 ){
+                        nreq.push('s=' + term);
+                    }else{
+                        nreq.push(t);
+                    }
+                }
+            }else{
+                nreq.push('s=' + term);
+            }
+
+            var creq = nreq.join('&');
+
+            var nexturl = '{{ URL::to('property/listing')}}?' + creq;
+
+            window.location = nexturl;
+        }
         /*
         $('.thumb').on('click',function(e){
             console.log(this.id);
@@ -356,7 +354,9 @@
 
         <div class="span3 form-inline" style="width:190px">
             <input type="hidden" name="sfull" id="sfull" value="{{ URL::full() }}" />
-            <input name="s" id="search" placeholder="search" style="width:105px" />
+            <input type="hidden" name="scurr" id="scurr" value="{{ URL::current() }}" />
+            <input type="hidden" name="sreq" id="sreq" value="{{ $current_request }}" />
+            <input name="s" id="search" placeholder="search" value="{{ Input::get('s')}}" style="width:105px" />
             <input type="submit" class="btn" id="do-search" />
         </div>
 
