@@ -316,12 +316,28 @@ class PropertyController extends BaseController {
                             'assigned_user'=>Auth::user()->id
                         );
 
+                if(count($and) > 0){
+                    $q['$and'] = $and;
+                }
+
+                if(count($or) > 0){
+                    $q['$or'] = $or;
+                }
+
 
             }else{
 
                 $query = array(
                             'propertyStatus'=>array('$ne'=>'offline')
                         );
+
+                if(count($and) > 0){
+                    $q['$and'] = $and;
+                }
+
+                if(count($or) > 0){
+                    $q['$or'] = $or;
+                }
 
             }
 
@@ -576,6 +592,14 @@ class PropertyController extends BaseController {
                             'assigned_user'=>Auth::user()->id
                         );
 
+                if(count($and) > 0){
+                    $q['$and'] = $and;
+                }
+
+                if(count($or) > 0){
+                    $q['$or'] = $or;
+                }
+
 
             }else{
 
@@ -584,6 +608,14 @@ class PropertyController extends BaseController {
                             'type'=>$filter,
 
                         );
+
+                if(count($and) > 0){
+                    $q['$and'] = $and;
+                }
+
+                if(count($or) > 0){
+                    $q['$or'] = $or;
+                }
 
             }
 
