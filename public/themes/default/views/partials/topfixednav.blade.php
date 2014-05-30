@@ -36,7 +36,13 @@ CONTACT US
                 <li {{ sa('/') }} {{ sa('dashboard') }} ><a href="{{ URL::to('/') }}" >Home</a></li>
                 <li {{ sa('property/listing') }} >
                     @if(Auth::check())
-                        <a href="{{ URL::to('property/listing') }}" >Properties</a>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Properties <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li {{ sa('property/listing/available') }} ><a href="{{ URL::to('property/listing/available') }}" >Available</a></li>
+                                <li {{ sa('property/listing/sold') }} ><a href="{{ URL::to('property/listing/sold') }}" >Sold</a></li>
+                            </ul>
+                        </li>
                     @else
                         <a href="#loginModal" data-toggle="modal" data-target="#loginModal"  >Properties</a>
                     @endif

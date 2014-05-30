@@ -43,9 +43,27 @@ class PageController extends BaseController {
 
         if($page){
             $page = $page->toArray();
+
+            $p = json_encode(array(
+                'id'=>$page['_id'],
+                'title'=>$page['title'],
+                'slug'=>$page['slug'],
+                'category'=>$page['category'],
+                'tags'=>$page['tags']
+             ));
+
         }else{
             $page = null;
+
+            $p = json_encode(array(
+                'slug'=>$slug,
+                'result'=>'page not exist'
+             ));
         }
+
+        $actor = (isset(Auth::user()->email))?Auth::user()->email:'guest';
+
+        Event::fire('log.a',array('page','view',$actor,$p));
 
         return View::make('pages.pagereader')->with('content',$page);
     }

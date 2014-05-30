@@ -48,10 +48,11 @@ class PropertyController extends BaseController {
         return View::make('pages.pagelist')->with('pages',$pages);
     }
 
-    public function getListing()
+    public function getListing($prefilter = null)
     {
         //print_r(Auth::user());
         //count=40&order=asc&page=3&sort=State&type=TRIPLEX
+
 
         Session::put('backlink',URL::full());
 
@@ -71,6 +72,7 @@ class PropertyController extends BaseController {
 
         $query = array();
 
+
         if($filter == 'all'){
 
             $q = array();
@@ -78,6 +80,10 @@ class PropertyController extends BaseController {
 
             $or = array();
             $and = array();
+
+            if(!is_null($prefilter)){
+                $and[] = array('propertyStatus'=>$prefilter);
+            }
 
             if($search != ''){
                 $sval = new MongoRegex('/'.$search.'/i');
@@ -355,6 +361,10 @@ class PropertyController extends BaseController {
 
             $or = array();
             $and = array();
+
+            if(!is_null($prefilter)){
+                $and[] = array('propertyStatus'=>$prefilter);
+            }
 
             if($search != ''){
                 $sval = new MongoRegex('/'.$search.'/i');
@@ -641,11 +651,17 @@ class PropertyController extends BaseController {
         $q = json_encode($query);
 
         Event::fire('cleanup');
-        Event::fire('log.a',array('property','list',Auth::user()->email,$q));
+
+        if($search == ''){
+            Event::fire('log.a',array('property','list',Auth::user()->email,$q));
+        }else{
+            Event::fire('log.a',array('property','search',Auth::user()->email,$q));
+        }
 
         $current_request = str_replace(array(URL::current(),'?'), '', URL::full());
 
         return View::make('pages.listing')
+            ->with('pageurl',URL::current())
             ->with('properties',$properties)
             ->with('total',$total_found)
             ->with('alltotal',$total_all)

@@ -204,7 +204,7 @@
 
             var creq = nreq.join('&');
 
-            var nexturl = '{{ URL::to('property/listing')}}?' + creq;
+            var nexturl = '{{ URL::to( $pageurl )}}?' + creq;
 
             window.location = nexturl;
         }

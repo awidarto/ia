@@ -46,21 +46,55 @@ Route::get('page','PageController@getIndex');
 
 Route::get('contact','ContactController@getAdd');
 
-Route::get('brochure/dl/{id}/{d?}',function($id, $d = null){
+Route::get('brochure/dl/{id}/{d?}',function($id, $type = null){
 
     $prop = Property::find($id)->toArray();
 
+    $type = (is_null($type))?'pdf':$type;
+
+    $tmpl = Template::where('type','brochure')->where('status','active')->first();
+
+    $template = $tmpl->template;
+
+    $nophotolrg = URL::to('images/no-photo-lrg.jpg');
+    $nophoto = URL::to('images/no-photo.jpg');
+    $nophotomd = URL::to('images/no-photo-md.jpg');
+
+        if(isset($prop['defaultpictures'])){
+            $d = $prop['defaultpictures'];
+            $d['brchead'] = (isset($d['brchead']) && $d['brchead'] != '')?$d['brchead']:$nophotolrg;
+            $d['brc1'] = ( isset($d['brc1']) && $d['brc1'] != '')?$d['brc1']:$nophotomd;
+            $d['brc2'] = ( isset($d['brc2']) && $d['brc2'] != '')?$d['brc2']:$nophotomd;
+            $d['brc3'] = ( isset($d['brc3']) && $d['brc3'] != '')?$d['brc3']:$nophotomd;
+        }else{
+            $d = array();
+            $d['brchead'] = $nophoto;
+            $d['brc1'] = $nophotomd;
+            $d['brc2'] = $nophotomd;
+            $d['brc3'] = $nophotomd;
+        }
+
+    $prop['defaultpictures'] = $d;
+
     //return View::make('print.brochure')->with('prop',$prop)->render();
 
-    if(!is_null($d)){
-        $content = View::make('print.brochure')->with('prop',$prop)->render();
+    if(!is_null($type) && $type != 'pdf'){
+        $content = View::make('brochuretmpl.'.$template)->with('prop',$prop)->render();
 
         return $content;
     }else{
         //return PDF::loadView('print.brochure',array('prop'=>$prop))
         //    ->stream('download.pdf');
+        $p = json_encode(array(
+            'propertyId'=>$prop['propertyId'],
+            'number'=>$prop['number'],
+            'address'=>$prop['address'],
+            'city'=>$prop['city'],
+            'state'=>$prop['state']
+         ));
+        Event::fire('log.a',array('brochure','download',Auth::user()->email,$p));
 
-        return PDF::loadView('print.brochure', array('prop'=>$prop))
+        return PDF::loadView('brochuretmpl.'.$template, array('prop'=>$prop))
                     ->setOption('margin-top', '0mm')
                     ->setOption('margin-left', '0mm')
                     ->setOption('margin-right', '0mm')
@@ -78,11 +112,32 @@ Route::post('brochure/mail/{id}',function($id){
 
     $prop = Property::find($id)->toArray();
 
-    //$content = View::make('print.brochure')->with('prop',$prop)->render();
+    $tmpl = Template::where('type','brochure')->where('status','active')->first();
 
-    //$brochurepdf =  PDF::loadView('print.brochure',array('prop'=>$prop))->output();
+    $template = $tmpl->template;
 
-    $brochurepdf = PDF::loadView('print.brochure', array('prop'=>$prop))
+    $nophotolrg = URL::to('images/no-photo-lrg.jpg');
+    $nophoto = URL::to('images/no-photo.jpg');
+    $nophotomd = URL::to('images/no-photo-md.jpg');
+
+        if(isset($prop['defaultpictures'])){
+            $d = $prop['defaultpictures'];
+            $d['brchead'] = (isset($d['brchead']) && $d['brchead'] != '')?$d['brchead']:$nophotolrg;
+            $d['brc1'] = ( isset($d['brc1']) && $d['brc1'] != '')?$d['brc1']:$nophotomd;
+            $d['brc2'] = ( isset($d['brc2']) && $d['brc2'] != '')?$d['brc2']:$nophotomd;
+            $d['brc3'] = ( isset($d['brc3']) && $d['brc3'] != '')?$d['brc3']:$nophotomd;
+        }else{
+            $d = array();
+            $d['brchead'] = $nophoto;
+            $d['brc1'] = $nophotomd;
+            $d['brc2'] = $nophotomd;
+            $d['brc3'] = $nophotomd;
+        }
+
+    $prop['defaultpictures'] = $d;
+
+
+    $brochurepdf = PDF::loadView('brochuretmpl.'.$template, array('prop'=>$prop))
                     ->setOption('margin-top', '0mm')
                     ->setOption('margin-left', '0mm')
                     ->setOption('margin-right', '0mm')
@@ -113,6 +168,15 @@ Route::post('brochure/mail/{id}',function($id){
 
         $message->attach(public_path().'/storage/pdf/'.$prop['propertyId'].'.pdf');
     });
+
+    $p = json_encode(array(
+        'propertyId'=>$prop['propertyId'],
+        'number'=>$prop['number'],
+        'address'=>$prop['address'],
+        'city'=>$prop['city'],
+        'state'=>$prop['state']
+     ));
+    Event::fire('log.a',array('brochure','email',Auth::user()->email,$p));
 
     print json_encode(array('result'=>'OK'));
 
@@ -208,20 +272,6 @@ Route::post('pr/mail/{id}',function($id){
 });
 
 
-Route::get('pdf',function(){
-    $content = "
-    <page>
-        <h1>Exemple d'utilisation</h1>
-        <br>
-        Ceci est un <b>exemple d'utilisation</b>
-        de <a href='http://html2pdf.fr/'>HTML2PDF</a>.<br>
-    </page>";
-
-    $html2pdf = new HTML2PDF();
-    $html2pdf->WriteHTML($content);
-    $html2pdf->Output('exemple.pdf','D');
-});
-
 Route::post('affiliate',function(){
     $enquiry = Input::get();
     $enpost = new Enquiry();
@@ -232,6 +282,25 @@ Route::post('affiliate',function(){
 
     $enpost->type = 'affiliate';
     $enpost->save();
+
+    $enquiry['type'] = 'Affiliate';
+    $enquiry['en_message'] = $enquiry['message'];
+    unset($enquiry['message']);
+
+    Mail::send('emails.enquirynotification',$enquiry, function($message) use ($enquiry, &$enquiry){
+
+        $recipient = Options::get('enquiry_receiver_email');
+
+        $recipients = explode(',',$recipient);
+
+        $message->to($recipients);
+
+        $message->subject('Investors Alliance - Enquiry');
+
+        $message->cc('support@propinvestorsalliance.com');
+
+    });
+
 
     Session::set('enquiryMessage',  'Thank you for your interest, we will contact you soon.');
 
@@ -287,23 +356,34 @@ Route::get('faq',function(){
         $faqarray[$f['category']][] = $f;
     }
 
+        $p = json_encode(array(
+            'title'=>'FAQ',
+        ));
+        $actor = (isset(Auth::user()->email))?Auth::user()->email:'guest';
+
+        Event::fire('log.a',array('faq','view',$actor,$p));
+
     return View::make('pages.faq')->with('faqs',$faqarray)->with('faqcats',$faqcats);
 });
 
 Route::get('glossary',function(){
     Theme::setCurrentTheme(Prefs::getActiveTheme() );
 
-    $faqs = Faq::get()->toArray();
+        $faqs = Glossary::orderBy('title','asc')->get()->toArray();
 
-    $faqcats = Faqcat::get()->toArray();
+        if(count($faqs) == 0){
+            $faqs = null;
+        }
 
-    $faqarray = array();
+        $p = json_encode(array(
+            'title'=>'Glossary',
+         ));
 
-    foreach($faqs as $f){
-        $faqarray[$f['category']][] = $f;
-    }
+        $actor = (isset(Auth::user()->email))?Auth::user()->email:'guest';
 
-    return View::make('pages.glossary')->with('faqs',$faqarray)->with('faqcats',$faqcats);
+        Event::fire('log.a',array('glossary','view',$actor,$p));
+
+    return View::make('pages.glossary')->with('faqs',$faqs)->with('faqcats',Config::get('site.alphanumeric'));
 });
 
 
@@ -338,6 +418,12 @@ Route::get('dashboard', array('before'=>'auth', function(){
 Route::get('changepass',function(){
     Theme::setCurrentTheme(Prefs::getActiveTheme() );
     Former::framework('TwitterBootstrap');
+
+        $p = json_encode(array(
+            'title'=>'Change Password',
+         ));
+
+        Event::fire('log.a',array('pass','change',Auth::user()->email,$p));
 
     return View::make('pages.changepass');
 });
@@ -385,11 +471,14 @@ Route::post('changepass',function(){
             });
 
 
-            Event::fire('log.a',array('create account','createaccount',Input::get('email'),'validation fail'));
+            Event::fire('log.a',array('change password','changepass',Input::get('email'),'password changed'));
             //Event::fire('product.createformadmin',array($obj['_id'],$passwordRandom,$obj['conventionPaymentStatus']));
             return Redirect::to('changepass')->with('notify_success', 'Password Changed');
         }else{
             Session::flash('loginError', 'Failed to change password');
+
+            Event::fire('log.a',array('change password','changepass',Input::get('email'),'fail to change password'));
+
             return Redirect::to('dashboard')->with('notify_success',ucfirst(Str::singular($controller_name)).' saving failed');
         }
 
@@ -419,6 +508,8 @@ Route::get('signup',function(){
     foreach($agents as $agent){
         $agent_select[$agent['_id']] = $agent['firstname'].' '.$agent['lastname'];
     }
+
+    Event::fire('log.a',array('signup','createaccount','guest','initiate signup'));
 
     return View::make('pages.createaccount')->with('agents',$agent_select);
 });
@@ -458,15 +549,15 @@ Route::post('account/create',function(){
 
 
         if($obj = $model->insert($data)){
-            Event::fire('log.a',array('create account','createaccount',Input::get('email'),'validation fail'));
+            Event::fire('log.a',array('create account','createaccount',Input::get('email'),'account created'));
             //Event::fire('product.createformadmin',array($obj['_id'],$passwordRandom,$obj['conventionPaymentStatus']));
             return Redirect::to('account/success');
         }else{
+
+            Event::fire('log.a',array('create account','createaccount',Input::get('email'),'fail to create account'));
+
             return Redirect::to($this->backlink)->with('notify_success',ucfirst(Str::singular($controller_name)).' saving failed');
         }
-
-
-
 
     }
 
@@ -475,6 +566,7 @@ Route::post('account/create',function(){
 });
 
 Route::get('account/success',function(){
+    Event::fire('log.a',array('create account','createaccount','landingpage','account created'));
     return View::make('pages.createaccountsuccess');
 });
 
