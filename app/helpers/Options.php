@@ -29,16 +29,16 @@ class Options {
             $option->save();
             return $value;
         }else{
-            return '';
+            return '';//return empty string
         }
     }
 
-    public static function get($varname, $value = null){
+    public static function get($varname, $defvalue = null){
         $opt = Option::where('varname', $varname)->first();
         if($opt){
             return $opt->value;
         }else{
-            return (is_null($value))?'':$value;
+            return (is_null($value))?'':$defvalue;//return specified default value
         }
     }
 
