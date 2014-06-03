@@ -369,7 +369,7 @@ Route::get('faq',function(){
 Route::get('glossary',function(){
     Theme::setCurrentTheme(Prefs::getActiveTheme() );
 
-        $faqs = Glossary::orderBy('title','asc')->get()->toArray();
+        $faqs = Glossary::orderBy('category','asc')->get()->toArray();
 
         if(count($faqs) == 0){
             $faqs = null;

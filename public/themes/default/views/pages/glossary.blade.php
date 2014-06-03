@@ -20,17 +20,19 @@
                         @if(is_null($faqs))
 
                         @else
-                            @foreach($faqcats as $fc)
-                                <h3 id="{{ $fc['slug']}}">{{ $fc['title']}}</h3>
-                                    <ul style="margin-left:10px;">
-                                        @foreach($faqs[$fc['title']] as $faq)
-                                            <h4>{{ $faq['title']}}</h4>
-                                            <div>
-                                                {{ $faq['body']}}
-                                            </div>
-                                        @endforeach
-                                    </ul>
-                            @endforeach
+                            <?php $lastcat = '';?>
+
+                                @foreach($faqs as $fc)
+                                    @if( isset($fc['category']) && $lastcat != $fc['category'])
+                                    <h3 id="{{ $fc['category']}}">{{ $fc['category']}}</h3>
+                                    @endif
+                                    <h4>{{ $fc['title']}}</h4>
+                                    <div>
+                                        {{ $fc['body']}}
+                                    </div>
+                                    <?php $lastcat = (isset($fc['category']))?$fc['category']:$lastcat;?>
+                                @endforeach
+
                         @endif
             </div>
         </div>

@@ -14,10 +14,12 @@
 
         <div class="row" style="margin:0px;padding:0px;padding-left:8px;">
             <div class="span12 lionbars" style="overflow-y:auto;height:340px;width:100%;margin:0px;margin-right:4px;">
-                @foreach($faqcats as $fc)
-                    <h3 id="{{ $fc['slug']}}">{{ $fc['title']}}</h3>
+
+                {{-- print_r($faqs); die();--}}
+                @foreach($faqs as $fc=>$fi)
+                    <h3 id="{{ $fc }}">{{ $fc }}</h3>
                         <ul style="margin-left:10px;">
-                            @foreach($faqs[$fc['title']] as $faq)
+                            @foreach($fi as $faq)
                                 <h4>{{ $faq['title']}}</h4>
                                 <div>
                                     {{ $faq['body']}}
