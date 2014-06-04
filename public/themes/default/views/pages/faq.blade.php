@@ -17,7 +17,7 @@
 
                 {{-- print_r($faqs); die();--}}
                 @foreach($faqs as $fc=>$fi)
-                    <h3 id="{{ $fc }}">{{ $fc }}</h3>
+                    <h3 id="{{ $fc }}">{{ ucwords($fc) }}</h3>
                         <ul style="margin-left:10px;">
                             @foreach($fi as $faq)
                                 <h4>{{ $faq['title']}}</h4>

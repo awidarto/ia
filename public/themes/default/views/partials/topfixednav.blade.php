@@ -55,12 +55,12 @@ CONTACT US
                         <li {{ sa('page/view/how-to-invest') }} ><a href="{{ URL::to('page/view/how-to-invest') }}" >How To Invest</a></li>
                         <li {{ sa('page/view/preferred-customer') }} ><a href="{{ URL::to('page/view/preferred-customer') }}" >Preferred Customer</a></li>
                         <li {{ sa('page/view/research') }} ><a href="{{ URL::to('page/view/research') }}" >Research</a></li>
+                        <li {{ sa('faq') }} ><a href="{{ URL::to('faq') }}" >FAQ</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">News <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li {{ sa('faq') }} ><a href="{{ URL::to('faq') }}" >FAQ</a></li>
                         <li {{ sa('glossary') }} ><a href="{{ URL::to('glossary') }}" >Glossary</a></li>
                     </ul>
                 </li>
