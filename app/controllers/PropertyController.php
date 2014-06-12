@@ -48,6 +48,68 @@ class PropertyController extends BaseController {
         return View::make('pages.pagelist')->with('pages',$pages);
     }
 
+    public function numberSearch($search = '')
+    {
+
+        $sval = new MongoRegex('/'.$search.'/i');
+
+        $sign = null;
+        $str = $search;
+
+        $qstr = trim(str_replace(array('<','>','='), '', $str));
+
+        $qval = (double)$qstr;
+
+        if($search == ''){
+            return 0;
+        }
+
+        if(strpos($str, "<=") !== false){
+            $sign = '$lte';
+        }elseif(strpos($str, ">=") !== false){
+            $sign = '$gte';
+        }elseif(strpos($str, ">") !== false){
+            $sign = '$gt';
+        }elseif(stripos($str, "<") !== false){
+            $sign = '$lt';
+        }
+
+        //print $sign;
+        if(is_null($sign)){
+            $qval = $qval;
+        }else{
+            $qval = array($sign=>$qval);
+        }
+
+        return $qval;
+
+    }
+
+    public function prepareNumberSearch($search)
+    {
+        if(is_array($this->numberSearch($search))){
+            $qp = $this->numberSearch($search);
+            $qs = key($qp);
+            $qv = $qp[key($qp)];
+
+            $fs = Auth::user()->price_sign;
+            $fv = Auth::user()->filter_price;
+
+            if(($fs == '&lt' && $qs == '$lt') || ($fs == '$lte' && $qs == '$lte')){
+                if($fv < $qv){
+                    return $this->numberSearch($search);
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+
+    }
+
     public function getListing($prefilter = null)
     {
         //print_r(Auth::user());
@@ -64,6 +126,7 @@ class PropertyController extends BaseController {
         $filter = (Input::get('type') == '')?'all':Input::get('type');
 
         $search = (Input::get('s') == '')?'':Input::get('s');
+        $searchscope = (Input::get('sc') == '')?'':Input::get('sc');
 
         $page = (is_null($page))?0:$page;
         $skip = $page * $perpage;
@@ -72,6 +135,7 @@ class PropertyController extends BaseController {
 
         $query = array();
 
+        $is_search = false;
 
         if($filter == 'all'){
 
@@ -87,11 +151,25 @@ class PropertyController extends BaseController {
 
             if($search != ''){
                 $sval = new MongoRegex('/'.$search.'/i');
-                $or_search[] = array('state'=>$sval);
-                $or_search[] = array('propertyId'=>$sval);
-                $or_search[] = array('city'=>$sval);
-                $or_search[] = array('listingPrice'=>$sval);
-                $and[] = array('$or'=>$or_search);
+                //if($searchscope == '' || $searchscope == 'all'){
+                    $or_search[] = array('state'=>$sval);
+                    $or_search[] = array('propertyId'=>$sval);
+                    $or_search[] = array('city'=>$sval);
+
+                    if( (Auth::user()->prop_access == 'filtered'
+                            || Auth::user()->prop_access == 'filtered_and_individual'
+                            || Auth::user()->prop_access == 'filtered_or_individual'
+                        ) && isset(Auth::user()->price_sign) && Auth::user()->price_sign != '')
+                    {
+                        $is_search = $this->prepareNumberSearch($search);
+                    }else{
+                        $or_search[] = array('listingPrice'=>$this->numberSearch($search));
+                    }
+
+                    $and[] = array('$or'=>$or_search);
+                /*}else{
+
+                }*/
             }
 
             if(Auth::user()->prop_access == 'filtered'){
@@ -139,7 +217,13 @@ class PropertyController extends BaseController {
                 }
 
                 if( isset(Auth::user()->price_sign) && Auth::user()->price_sign != ''){
-                    $price_line = array('listingPrice'=>array(Auth::user()->price_sign => Auth::user()->filter_price));
+
+                    if($is_search){
+                        $price_line = array('listingPrice'=>$is_search);
+                    }else{
+                        $price_line = array('listingPrice'=>array(Auth::user()->price_sign => Auth::user()->filter_price));
+                    }
+
                     if( Auth::user()->price_sign2 != '' &&  Auth::user()->price_sign2 != '' && Auth::user()->price_rel != '' &&  Auth::user()->price_rel != '-'){
                         $price_line2 = array('listingPrice'=>array(Auth::user()->price_sign2 => Auth::user()->filter_price2));
                         if( Auth::user()->price_rel == 'OR'){

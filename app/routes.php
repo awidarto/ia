@@ -40,6 +40,10 @@ Route::get('/',function(){
 
 });
 
+Route::get('testmenu',function(){
+
+});
+
 Route::get('page/cat/{slug}','PageController@getCat');
 Route::get('page/view/{slug}','PageController@getView');
 Route::get('page','PageController@getIndex');
@@ -94,13 +98,15 @@ Route::get('brochure/dl/{id}/{d?}',function($id, $type = null){
          ));
         Event::fire('log.a',array('brochure','download',Auth::user()->email,$p));
 
+        $tmpl = $tmpl->toArray();
+
         return PDF::loadView('brochuretmpl.'.$template, array('prop'=>$prop))
-                    ->setOption('margin-top', '0mm')
-                    ->setOption('margin-left', '0mm')
-                    ->setOption('margin-right', '0mm')
-                    ->setOption('margin-bottom', '0mm')
-                    ->setOption('dpi',200)
-                    ->setPaper('A4')
+                    ->setOption('margin-top', $tmpl['margin-top'])
+                    ->setOption('margin-left', $tmpl['margin-left'])
+                    ->setOption('margin-right', $tmpl['margin-right'])
+                    ->setOption('margin-bottom', $tmpl['margin-bottom'])
+                    ->setOption('dpi',$tmpl['dpi'])
+                    ->setPaper($tmpl['paper-size'])
                     ->stream($prop['propertyId'].'.pdf');
 
         //return PDF::html('print.brochure',array('prop' => $prop), 'download.pdf');
@@ -136,14 +142,15 @@ Route::post('brochure/mail/{id}',function($id){
 
     $prop['defaultpictures'] = $d;
 
+    $tmpl = $tmpl->toArray();
 
     $brochurepdf = PDF::loadView('brochuretmpl.'.$template, array('prop'=>$prop))
-                    ->setOption('margin-top', '0mm')
-                    ->setOption('margin-left', '0mm')
-                    ->setOption('margin-right', '0mm')
-                    ->setOption('margin-bottom', '0mm')
-                    ->setOption('dpi',200)
-                    ->setPaper('A4')
+                    ->setOption('margin-top', $tmpl['margin-top'])
+                    ->setOption('margin-left', $tmpl['margin-left'])
+                    ->setOption('margin-right', $tmpl['margin-right'])
+                    ->setOption('margin-bottom', $tmpl['margin-bottom'])
+                    ->setOption('dpi',$tmpl['dpi'])
+                    ->setPaper($tmpl['paper-size'])
                     ->output();
 
 

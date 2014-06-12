@@ -266,7 +266,6 @@ return array(
         //'PDF'           => 'Barryvdh\DomPDF\Facade',
         'PDF'             => 'Barryvdh\Snappy\Facades\SnappyPdf',
         'XPDF'             => 'Nitmedia\Wkhtml2pdf\Facades\Wkhtml2pdf',
-
 	),
 
 );
