@@ -152,9 +152,6 @@ class PropertyController extends BaseController {
             if($search != ''){
                 $sval = new MongoRegex('/'.$search.'/i');
                 //if($searchscope == '' || $searchscope == 'all'){
-                    $or_search[] = array('state'=>$sval);
-                    $or_search[] = array('propertyId'=>$sval);
-                    $or_search[] = array('city'=>$sval);
 
                     if( (Auth::user()->prop_access == 'filtered'
                             || Auth::user()->prop_access == 'filtered_and_individual'
@@ -165,6 +162,13 @@ class PropertyController extends BaseController {
                     }else{
                         $or_search[] = array('listingPrice'=>$this->numberSearch($search));
                     }
+
+                    if($is_search == false){
+                        $or_search[] = array('state'=>$sval);
+                        $or_search[] = array('propertyId'=>$sval);
+                        $or_search[] = array('city'=>$sval);
+                    }
+
 
                     $and[] = array('$or'=>$or_search);
                 /*}else{

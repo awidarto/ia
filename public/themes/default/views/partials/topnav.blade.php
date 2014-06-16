@@ -42,6 +42,11 @@ CONTACT US
                                 <li {{ sa('/') }} ><a href="{{ URL::to('page/view/preferred-customer') }}" >Preferred Customer</a></li>
                                 <li {{ sa('/') }} ><a href="{{ URL::to('page/view/research') }}" >Research</a></li>
                                 <li {{ sa('/') }} ><a href="{{ URL::to('faq') }}" >FAQ</a></li>
+                                @foreach( Prefs::getChildPage('investors')->toArray() as $mitem )
+                                    <?php $slug = $mitem['slug'] ?>
+                                    <?php $title = $mitem['title'] ?>
+                                    <li {{ sa('/page/view/'.$slug ) }} ><a href="{{ URL::to('faq') }}" >{{ $title }}</a></li>
+                                @endforeach
                             </ul>
                         </li>
                         <li class="dropdown">

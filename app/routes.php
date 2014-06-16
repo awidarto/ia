@@ -80,10 +80,22 @@ Route::get('brochure/dl/{id}/{d?}',function($id, $type = null){
 
     $prop['defaultpictures'] = $d;
 
+    $contact = array();
+
+    if(Auth::check()){
+        $contact['fullname'] = Auth::user()->firstname.' '.Auth::user()->lastname;
+        $contact['email'] = Auth::user()->email;
+        $contact['mobile'] = Auth::user()->mobile;
+    }else{
+        $contact['fullname'] = Options::get('brochure_default_name');
+        $contact['email'] = Options::get('brochure_default_email');
+        $contact['mobile'] = Options::get('brochure_default_mobile');
+    }
+
     //return View::make('print.brochure')->with('prop',$prop)->render();
 
     if(!is_null($type) && $type != 'pdf'){
-        $content = View::make('brochuretmpl.'.$template)->with('prop',$prop)->render();
+        $content = View::make('brochuretmpl.'.$template)->with('prop',$prop)->with('contact',$contact)->render();
 
         return $content;
     }else{
@@ -100,7 +112,7 @@ Route::get('brochure/dl/{id}/{d?}',function($id, $type = null){
 
         $tmpl = $tmpl->toArray();
 
-        return PDF::loadView('brochuretmpl.'.$template, array('prop'=>$prop))
+        return PDF::loadView('brochuretmpl.'.$template, array('prop'=>$prop, 'contact'=>$contact))
                     ->setOption('margin-top', $tmpl['margin-top'])
                     ->setOption('margin-left', $tmpl['margin-left'])
                     ->setOption('margin-right', $tmpl['margin-right'])

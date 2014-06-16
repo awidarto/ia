@@ -560,7 +560,7 @@
                             <th class="h6"><b>Net Monthly Cash Flow</b></th><td id="netMonthlyCashFlow">${{ Ks::us($netMonthlyCashFlow) }}</td>
                         </tr>
                         <tr class="yield">
-                            <th>ROI</th><td id="calcROI">{{ $roi }}%</td>
+                            <th>Net Rental Return</th><td id="calcROI">{{ $roi }}%</td>
                         </tr>
                     </tbody>
 

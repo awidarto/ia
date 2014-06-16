@@ -93,6 +93,15 @@
         font-weight: normal;
     }
 
+    #advanced-link{
+        cursor: pointer;
+        color: white;
+        margin-left: 5px;
+    }
+
+.form-horizontal .no-label  .controls {
+        margin-left: 0px;
+    }
 </style>
 
 
@@ -178,6 +187,10 @@
             if(ev.keyCode == '13'){
                 do_search();
             }
+        });
+
+        $('#advanced-link').on('click',function(){
+            $('#searchModal').modal();
         });
 
 
@@ -352,12 +365,13 @@
             </ul>
         </div>
 
-        <div class="span3 form-inline" style="width:190px">
+        <div class="span3 form-inline" style="width:205px">
             <input type="hidden" name="sfull" id="sfull" value="{{ URL::full() }}" />
             <input type="hidden" name="scurr" id="scurr" value="{{ URL::current() }}" />
             <input type="hidden" name="sreq" id="sreq" value="{{ $current_request }}" />
             <input name="s" id="search" placeholder="search" value="{{ Input::get('s')}}" style="width:105px" />
-            <input type="submit" class="btn" id="do-search" />
+            <button type="submit" class="btn" id="do-search"><i class="icon-search"></i></button>
+            <span id="advanced-link" >advanced</span>
         </div>
 
         <div class="pagination pagination-centered span4" style="color:#fff;width:320px;text-align:center">
@@ -416,8 +430,8 @@
         </div>
 
 
-        <div class="span2 pull-right white-text" style="width:110px;" >
-            Items {{ ($current * $perpage) + 1 }} to {{ ( $current * $perpage ) + $currentcount }} of {{$total}}{{-- total (Filtered from {{$alltotal}} entries) --}}
+        <div class="span2 pull-right white-text" style="width:75px;" >
+            {{ ($current * $perpage) + 1 }} to {{ ( $current * $perpage ) + $currentcount }} of {{$total}}{{-- total (Filtered from {{$alltotal}} entries) --}}
         </div>
 
         {{--
@@ -456,6 +470,68 @@
 <!-- end bottom filter -->
 
 
+</div>
+
+<div id="searchModal" class="modal hide fade" style="width:500px;margin-left:-125px;">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Advanced Search</h3>
+  </div>
+  <div class="modal-body">
+        <?php Former::framework('TwitterBootstrap')?>
+        {{Former::open_horizontal('login','POST',array('class'=>''))}}
+            {{ Former::text('searchword','Keyword') }}
+
+            <?php
+                $price_sign = array(
+                        ''=>'All',
+                        '='=>'=',
+                        '$gt'=>'>',
+                        '$gte'=>'>=',
+                        '$lt'=>'<',
+                        '$lte'=>'<=',
+                        );
+                $bool = array(
+                        '-'=>'none',
+                        'OR'=>'OR',
+                        'AND'=>'AND'
+                    );
+                $scope = array(
+                    ''=>'All Field',
+                        'city'=>'City',
+                        'state'=>'State',
+                        'propertyId'=>'Property ID'
+                    );
+            ?>
+            <div class="row-fluid form-horizontal">
+                {{ Former::select('searchscope', 'Scope')->options($scope)->class('span6') }}
+            </div>
+            <div class="row-fluid form-horizontal">
+                <div class="span4">
+                    {{ Former::select('price_sign', 'Filter by Price')->options($price_sign)->class('span12') }}
+                </div>
+                <div class="span8 no-label">
+                    {{ Former::text('filter_price','')->class('span6') }}
+                </div>
+            </div>
+
+            {{ Former::select('price_rel', '')->options($bool)->class('span2')->help('relationship between two price conditions (optional)') }}
+
+            <div class="row-fluid form-horizontal">
+                <div class="span4">
+                    {{ Former::select('price_sign2', '')->options($price_sign)->class('span12') }}
+                </div>
+                <div class="span8 no-label">
+                    {{ Former::text('filter_price2','')->class('span6')->help('second price condition (optional)') }}
+                </div>
+            </div>
+
+            {{-- Former::checkbox('remember-me')->label('')->text('Remember Me')->value('remember-me') --}}
+
+            {{ Former::button('Search')->class('btn btn-primary pull-right') }}
+
+        {{ Former::close() }}
+  </div>
 </div>
 
 

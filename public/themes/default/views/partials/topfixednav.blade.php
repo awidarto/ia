@@ -20,6 +20,7 @@ ABOUT US
 CONTACT US
 */
 
+
 ?>
     <!-- Navbar
         ================================================== -->
@@ -41,6 +42,11 @@ CONTACT US
                             <ul class="dropdown-menu">
                                 <li {{ sa('property/listing/available') }} ><a href="{{ URL::to('property/listing/available') }}" >Available</a></li>
                                 <li {{ sa('property/listing/sold') }} ><a href="{{ URL::to('property/listing/sold') }}" >Sold</a></li>
+                                @foreach( Prefs::getChildPage('properties')->toArray() as $mitem )
+                                    <?php $slug = $mitem['slug'] ?>
+                                    <?php $title = $mitem['title'] ?>
+                                    <li {{ sa('/page/view/'.$slug ) }} ><a href="{{ URL::to('/page/view/'.$slug) }}" >{{ $title }}</a></li>
+                                @endforeach
                             </ul>
                         </li>
                     @else
@@ -56,15 +62,27 @@ CONTACT US
                         <li {{ sa('page/view/preferred-customer') }} ><a href="{{ URL::to('page/view/preferred-customer') }}" >Preferred Customer</a></li>
                         <li {{ sa('page/view/research') }} ><a href="{{ URL::to('page/view/research') }}" >Research</a></li>
                         <li {{ sa('faq') }} ><a href="{{ URL::to('faq') }}" >FAQ</a></li>
+                        @foreach( Prefs::getChildPage('investors')->toArray() as $mitem )
+                            <?php $slug = $mitem['slug'] ?>
+                            <?php $title = $mitem['title'] ?>
+                            <li {{ sa('/page/view/'.$slug ) }} ><a href="{{ URL::to('/page/view/'.$slug) }}" >{{ $title }}</a></li>
+                        @endforeach
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">News <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li {{ sa('glossary') }} ><a href="{{ URL::to('glossary') }}" >Glossary</a></li>
+                        @foreach( Prefs::getChildPage('news')->toArray() as $mitem )
+                            <?php $slug = $mitem['slug'] ?>
+                            <?php $title = $mitem['title'] ?>
+                            <li {{ sa('/page/view/'.$slug ) }} ><a href="{{ URL::to('/page/view/'.$slug) }}" >{{ $title }}</a></li>
+                        @endforeach
                     </ul>
                 </li>
-                <li {{ sa('page/view/contact') }} ><a href="{{ URL::to('page/view/contact') }}" >Contact</a></li>
+                @if(Auth::check() == false)
+                    <li {{ sa('page/view/contact') }} ><a href="{{ URL::to('page/view/contact') }}" >Contact</a></li>
+                @endif
             </ul>
          </div>
      </div>
