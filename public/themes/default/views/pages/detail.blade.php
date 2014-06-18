@@ -437,6 +437,14 @@
                         &nbsp;&nbsp;
                         <a href="{{ $urlbuy }}" class="btn-buy" style="bottom:0px;"><img src="{{ URL::to('/')}}/images/cart.png" /></a>
 
+                        @if(isset($prop['videoUrl']) && $prop['videoUrl'] != '')
+                            &nbsp;&nbsp;
+                            {{--
+                            <a href="https://www.youtube.com/watch?v=zi4CIXpx7Bg" type="text/html" data-youtube="zi4CIXpx7Bg" data-poster="http://img.youtube.com/vi/zi4CIXpx7Bg/0.jpg" data-gallery>LES TWINS - An Industry Ahead</a>
+                            --}}
+                            <a href="{{$prop['videoUrl']}}" class="btn-buy" type="text/html" data-youtube="{{$prop['videoId']}}" style="bottom:0px;" data-gallery ><img src="{{ URL::to('/')}}/images/ic-video-2.png" /></a>
+                        @endif
+
                     </div>
 
             </div>

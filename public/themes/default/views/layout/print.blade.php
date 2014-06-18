@@ -108,6 +108,11 @@
                 line-height: 16px;
             }
 
+            h1.page-header{
+                color: red;
+                font-size: 30px;
+            }
+
             @media (max-height: 768px){
                 .page-view{
                     overflow-y:scroll;
@@ -147,20 +152,42 @@
                 }
             }
 
+            <!--
+            @page {
+                size:8.5in 11in;
+                margin: 0mm 16mm 27mm 16mm;
+
+                @top-left {
+                    content: "first: " string(heading, first);
+                }
+                @top-center {
+                    content: "start: " string(heading, start);
+                }
+                @top-right {
+                    content: "last: " string(heading, last);
+                }
+
+                p.rh {
+                   position: running(heading);
+                }
+
+            }
+
+            -->
     </style>
 </head>
 
 <body class="preview" style="margin-top: 0px;" onload="window.print()" >
-
+<p class="rh"><i>Miranda v. Arizona</i> in Context</p>
 <div id="wrap">
 
     <!-- Masthead
     ================================================== -->
     <div class="container" id="top-container">
         <header class="jumbotron subhead" id="overview">
-            <div class="row">
-                <div class="span4">
-                    <a style="margin-left:66px;" href="{{ URL::to('/')}}" >{{ HTML::image('images/ialogo-med.png','Investors Alliance',array('class'=>'img-responsive' ) ) }}</a>
+            <div class="row-fluid">
+                <div class="span4 pull-right" style="display:block;">
+                    {{ HTML::image('images/ialogo-med.png','Investors Alliance',array('class'=>'img-responsive' ) ) }}
                 </div>
                 <div class="span8 pull-right">
                 </div>
