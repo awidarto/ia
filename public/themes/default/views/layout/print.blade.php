@@ -178,7 +178,6 @@
 </head>
 
 <body class="preview" style="margin-top: 0px;" onload="window.print()" >
-<p class="rh"><i>Miranda v. Arizona</i> in Context</p>
 <div id="wrap">
 
     <!-- Masthead
