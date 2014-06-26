@@ -92,10 +92,39 @@ Route::get('brochure/dl/{id}/{d?}',function($id, $type = null){
         $contact['mobile'] = Options::get('brochure_default_mobile');
     }
 
+        $rental = (double)$prop['monthlyRental'] * 12;
+        $price = (double)$prop['listingPrice'];
+        $year = 3;
+
+        $roi = 0;
+        $initprice = $price;
+        $counter = $year;
+        $result = 0;
+        $pct = 3;
+
+        $projected = px($price, $pct, $year,$initprice,$rental ,$roi, $counter, $result);
+
+        $roi3 = $result;
+        //print 'projected ROI : '.$result;
+
+        $pct = 5;
+
+        $roi = 0;
+        $initprice = $price;
+        $counter = $year;
+        $result = 0;
+        $projected = px($price, $pct, $year,$initprice,$rental ,$roi, $counter, $result);
+
+        $roi5 = $result;
+
+
     //return View::make('print.brochure')->with('prop',$prop)->render();
 
     if(!is_null($type) && $type != 'pdf'){
-        $content = View::make('brochuretmpl.'.$template)->with('prop',$prop)->with('contact',$contact)->render();
+        $content = View::make('brochuretmpl.'.$template)->with('prop',$prop)
+                ->with('roi3',$roi3)
+                ->with('roi5',$roi5)
+                ->with('contact',$contact)->render();
 
         return $content;
     }else{
@@ -112,7 +141,7 @@ Route::get('brochure/dl/{id}/{d?}',function($id, $type = null){
 
         $tmpl = $tmpl->toArray();
 
-        return PDF::loadView('brochuretmpl.'.$template, array('prop'=>$prop, 'contact'=>$contact))
+        return PDF::loadView('brochuretmpl.'.$template, array('prop'=>$prop, 'contact'=>$contact,'roi3'=>$roi3,'roi5'=>$roi5))
                     ->setOption('margin-top', $tmpl['margin-top'])
                     ->setOption('margin-left', $tmpl['margin-left'])
                     ->setOption('margin-right', $tmpl['margin-right'])
@@ -125,6 +154,20 @@ Route::get('brochure/dl/{id}/{d?}',function($id, $type = null){
     }
 
 });
+
+function px($price, $pct, $year, $initprice,$rental ,$roi, $counter, &$result){
+    if($counter == 0){
+        return $roi;
+    }else{
+        $price = $price + ($price * ( $pct / 100));
+        $counter--;
+        $rental = $rental + $rental;
+        $roi = (($price - $initprice) + $rental )/ $initprice;
+        $result = $roi;
+        px($price, $pct, $year, $initprice, $rental, $roi ,$counter, $result);
+    }
+}
+
 
 Route::post('brochure/mail/{id}',function($id){
 
