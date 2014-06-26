@@ -27,8 +27,7 @@
 			"app/database/migrations",
 			"app/database/seeds",
 			"app/tests/TestCase.php",
-            "app/helpers",
-            "app/library"
+            "app/helpers"
 		]
 	},
 	"scripts": {
