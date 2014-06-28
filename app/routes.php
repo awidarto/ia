@@ -100,14 +100,14 @@ Route::get('brochure/dl/{id}/{d?}',function($id, $type = null){
         $initprice = $price;
         $counter = $year;
         $result = 0;
-        $pct = 3;
+        $pct = 5;
 
         $projected = px($price, $pct, $year,$initprice,$rental ,$roi, $counter, $result);
 
         $roi3 = $result;
         //print 'projected ROI : '.$result;
 
-        $pct = 5;
+        $pct = 10;
 
         $roi = 0;
         $initprice = $price;
@@ -160,10 +160,25 @@ function px($price, $pct, $year, $initprice,$rental ,$roi, $counter, &$result){
         return $roi;
     }else{
         $price = $price + ($price * ( $pct / 100));
-        $counter--;
-        $rental = $rental + $rental;
-        $roi = (($price - $initprice) + $rental )/ $initprice;
+        $mult = ($year - $counter) + 1;
+        //$rental = $rental * $mult;
+
+        $roi = (($price - $initprice) + ( $rental * $mult ) )/ $initprice;
         $result = $roi;
+        /*
+        print_r(
+            array(
+                'price'=>$price,
+                'rental'=>$rental,
+                'roi'=>$roi,
+                'result'=>$result,
+                'counter'=>$counter,
+                'year'=>$year,
+                'mult'=>$mult
+                )
+            );
+        */
+        $counter--;
         px($price, $pct, $year, $initprice, $rental, $roi ,$counter, $result);
     }
 }
@@ -195,11 +210,49 @@ Route::post('brochure/mail/{id}',function($id){
             $d['brc3'] = $nophotomd;
         }
 
+        $rental = (double)$prop['monthlyRental'] * 12;
+        $price = (double)$prop['listingPrice'];
+        $year = 3;
+
+        $roi = 0;
+        $initprice = $price;
+        $counter = $year;
+        $result = 0;
+        $pct = 5;
+
+        $projected = px($price, $pct, $year,$initprice,$rental ,$roi, $counter, $result);
+
+        $roi3 = $result;
+        //print 'projected ROI : '.$result;
+
+        $pct = 10;
+
+        $roi = 0;
+        $initprice = $price;
+        $counter = $year;
+        $result = 0;
+        $projected = px($price, $pct, $year,$initprice,$rental ,$roi, $counter, $result);
+
+        $roi5 = $result;
+
+    $contact = array();
+
+    if(Auth::check()){
+        $contact['fullname'] = Auth::user()->firstname.' '.Auth::user()->lastname;
+        $contact['email'] = Auth::user()->email;
+        $contact['mobile'] = Auth::user()->mobile;
+    }else{
+        $contact['fullname'] = Options::get('brochure_default_name');
+        $contact['email'] = Options::get('brochure_default_email');
+        $contact['mobile'] = Options::get('brochure_default_mobile');
+    }
+
+
     $prop['defaultpictures'] = $d;
 
     $tmpl = $tmpl->toArray();
 
-    $brochurepdf = PDF::loadView('brochuretmpl.'.$template, array('prop'=>$prop))
+    $brochurepdf = PDF::loadView('brochuretmpl.'.$template, array('prop'=>$prop, 'contact'=>$contact,'roi3'=>$roi3,'roi5'=>$roi5 ))
                     ->setOption('margin-top', $tmpl['margin-top'])
                     ->setOption('margin-left', $tmpl['margin-left'])
                     ->setOption('margin-right', $tmpl['margin-right'])
