@@ -152,6 +152,14 @@
 
     #main-content{
         display: block;
+        max-height: 495px;
+        height:495px;
+        background-position: bottom;
+    }
+
+    #content-block{
+        max-height: 495px;
+        height:495px;
     }
 
     .button-row{
@@ -504,7 +512,7 @@
                 <table class="table" id="fin" style="width:100%;margin-bottom:0px;">
                     <thead>
                         <tr>
-                            <th colspan="2" class="header" style="text-align:left;font-style:italic;font-size:16px;font-weight:normal;">
+                            <th colspan="2" class="header" style="text-align:left;font-style:italic;font-size:14px;font-weight:normal;">
                                 Financial Calculator
                             </th>
                         </tr>
@@ -523,6 +531,8 @@
 
                             $roi = ($netAnnualCashFlow / $prop['listingPrice']) * 100;
                             $roi = round($roi, 1, PHP_ROUND_HALF_UP);
+
+                            $projectedROI = round($prop['projectedROI'] * 100, 1, PHP_ROUND_HALF_UP).'%';
 
                         ?>
                         <tr>
@@ -570,12 +580,54 @@
                         <tr class="yield">
                             <th>Net Rental Return</th><td id="calcROI">{{ $roi }}%</td>
                         </tr>
+
+                        <tr class="yield">
+                            <th>Projected ROI</th>
+                            <td>
+                                <span class="pull-left"  style="font-size:12px;"><input  class="calc" style="width:15px" type="text" value="3" id="prYear"> yrs </span>&nbsp;<span class="pull-left" style="font-size:12px;padding-left: 4px;" ><input  class="calc" style="width:15px" type="text" value="5" id="prRate"> % </span><span class="pull-right" style="line-height:20px;"  id="prYield">{{ $projectedROI }}</span>
+                            </td>
+                        </tr>
+
                     </tbody>
 
                 </table>
+
                 <p class="note">*&nbsp;&nbsp; Approximately to latest current year available<br />** Approximately</p>
 
                 <script type="text/javascript">
+                    /* use ajax for projected ROI */
+
+                    $('#prYear').on('keyup',function(){
+                        ajaxProjected();
+                    });
+
+                    $('#prRate').on('keyup',function(){
+                        ajaxProjected();
+                    });
+
+                    function ajaxProjected(){
+                        var pryear = $('#prYear').val();
+                        var prrate = $('#prRate').val();
+                        var _id = '{{ $prop['_id'] }}';
+                        console.log(prrate);
+                        console.log(pryear);
+                        console.log(_id);
+
+                        $.post(
+                            '{{ URL::to('property/projected') }}',
+                                {
+                                    'year':pryear,
+                                    'rate':prrate,
+                                    '_id':_id
+                                },
+                                function(data){
+                                    if(data.result == 'OK'){
+                                        $('#prYield').html(data.froi);
+                                    }
+                                },'json'
+                            );
+
+                    }
 
                     Number.prototype.formatMoney = function(c, d, t){
                         var n = this,

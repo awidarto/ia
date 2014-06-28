@@ -3,7 +3,7 @@
 @section('content')
 
 <div id="content-block">
-    <div id="content-container" class="shadow" style="margin-bottom: 6px;" >
+    <div id="content-container" class="shadows" style="margin-bottom: 6px;" >
 
 
 <div class="row">

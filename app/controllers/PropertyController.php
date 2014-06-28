@@ -782,6 +782,20 @@ class PropertyController extends BaseController {
                 $page['leaseStartDate'] = false;
             }
 
+            $rental = (double)$page['monthlyRental'] * 12;
+            $price = (double)$page['listingPrice'];
+            $year = 3;
+
+            $roi = 0;
+            $initprice = $price;
+            $counter = $year;
+            $result = 0;
+            $pct = 5;
+
+            $projected = px($price, $pct, $year,$initprice,$rental ,$roi, $counter, $result);
+
+            $page['projectedROI'] = $result;
+
         }else{
             $page = null;
         }
@@ -800,6 +814,33 @@ class PropertyController extends BaseController {
         return View::make('pages.detail')
             ->with('backlink',$backlink)
             ->with('prop',$page);
+    }
+
+    public function postProjected()
+    {
+        $in = Input::get();
+
+        $_id = $in['_id'];
+
+        $prop = Property::find($_id)->toArray();
+
+        $rental = (double)$prop['monthlyRental'] * 12;
+        $price = (double)$prop['listingPrice'];
+        $year = $in['year'];
+
+        $roi = 0;
+        $initprice = $price;
+        $counter = $year;
+        $result = 0;
+        $pct = $in['rate'];
+
+        $projected = px($price, $pct, $year,$initprice,$rental ,$roi, $counter, $result);
+
+        $froi = round($result * 100, 1, PHP_ROUND_HALF_UP).'%';
+
+        return Response::json( array('result'=>'OK', 'roi'=>$result, 'froi'=>$froi ) );
+
+
     }
 
     public function getBuy($id = null){

@@ -261,12 +261,13 @@ Route::post('brochure/mail/{id}',function($id){
                     ->setPaper($tmpl['paper-size'])
                     ->output();
 
+                    $todate = date('dmYHis',time());
 
-    file_put_contents(public_path().'/storage/pdf/'.$prop['propertyId'].'.pdf', $brochurepdf);
+    file_put_contents(public_path().'/storage/pdf/'.$prop['propertyId'].'_'.$todate.'.pdf', $brochurepdf);
 
     //$mailcontent = View::make('emails.brochure')->with('prop',$prop)->render();
 
-    Mail::send('emails.brochure',$prop, function($message) use ($prop, &$prop){
+    Mail::send('emails.brochure',$prop, function($message) use ($prop, &$prop, $todate){
         $to = Input::get('to');
         $tos = explode(',', $to);
         if(is_array($tos) && count($tos) > 1){
@@ -281,7 +282,7 @@ Route::post('brochure/mail/{id}',function($id){
 
         $message->cc('support@propinvestorsalliance.com');
 
-        $message->attach(public_path().'/storage/pdf/'.$prop['propertyId'].'.pdf');
+        $message->attach(public_path().'/storage/pdf/'.$prop['propertyId'].'_'.$todate.'.pdf');
     });
 
     $p = json_encode(array(
