@@ -182,6 +182,10 @@
             do_search();
         });
 
+        $('#do_advanced_search').on('click',function(){
+            do_advanced_search();
+        });
+
         $('#search').on('keyup',function(ev){
             console.log(ev.keyCode);
             if(ev.keyCode == '13'){
@@ -199,28 +203,132 @@
             var req = $('#sreq').val();
             var term = $('#search').val();
 
-            var curr = req.split('&');
-            var nreq = [];
+            if(req != ''){
+                var curr = req.split('&');
 
-            if(req != '' && req.indexOf('s=') >= 0 && curr.length > 0){
+                curr = replace_param('s', term, curr);
+                curr = replace_param('md','sim', curr);
+
+                var creq = curr.join('&');
+
+                var nexturl = '{{ URL::to( $pageurl )}}?' + creq;
+                window.location = nexturl;
+
+            }else if( req == '' ){
+                if(term != ''){
+                    nreq = [];
+
+                    nreq.push('s=' + term);
+                    nreq.push('md=sim');
+
+                    var creq = nreq.join('&');
+                    var nexturl = '{{ URL::to( $pageurl )}}?' + creq;
+                }else{
+                    var nexturl = '{{ URL::to( $pageurl )}}';
+                }
+                window.location = nexturl;
+
+            }
+
+        }
+
+        function do_advanced_search(){
+            var current = $('#sfull').val();
+            var req = $('#sreq').val();
+            var term = $('#searchword').val();
+
+            var scope = $('#searchscope').val();
+
+            var price = $('#filter_price').val();
+            var price_sign = $('#price_sign').val();
+            var price_rel = $('#price_rel').val();
+
+            var price1 = $('#filter_price2').val();
+            var price_sign1 = $('#price_sign2').val();
+
+
+            if(req != ''){
+                var curr = req.split('&');
+
+                curr = replace_param('s', term, curr);
+                curr = replace_param('md','adv', curr);
+                curr = replace_param('sc' , scope, curr);
+                curr = replace_param('p1' , price, curr);
+                curr = replace_param('ps1' , price_sign, curr);
+                curr = replace_param('pr' , price_rel, curr);
+                curr = replace_param('p2' , price1, curr);
+                curr = replace_param('ps2' , price_sign1, curr);
+
+
+                var creq = curr.join('&');
+
+                var nexturl = '{{ URL::to( $pageurl )}}?' + creq;
+                window.location = nexturl;
+
+            }else if(req == ''){
+                if(term != '' || price != ''){
+                    nreq = [];
+                    nreq.push('s=' + term);
+                    nreq.push('md=adv');
+                    nreq.push('sc='+scope);
+                    nreq.push('p1='+price);
+                    nreq.push('ps1='+price_sign);
+                    nreq.push('pr='+price_rel);
+                    nreq.push('p2='+price1);
+                    nreq.push('ps2='+price_sign1);
+
+                    var creq = nreq.join('&');
+                    var nexturl = '{{ URL::to( $pageurl )}}?' + creq;
+                }else{
+                    var nexturl = '{{ URL::to( $pageurl )}}';
+                }
+                window.location = nexturl;
+
+            }
+
+        }
+
+        function replace_param(par, term, curr){
+            var nreq = [];
+            var curel = [];
+
+            for(i = 0; i < curr.length; i++){
+                t = curr[i];
+                vt = t.split('=');
+                if(vt[0] == par){
+                    nreq.push(par + '=' + term);
+                }else{
+                    nreq.push(t);
+                }
+                curel.push(vt[0]);
+            }
+
+            if(curel.indexOf(par) < 0){
+                nreq.push(par + '=' + term);
+            }
+
+            return nreq;
+        }
+
+        function add_param(par,term, req, nreq, curr){
+
+            if(req != '' && req.indexOf(par) >= 0 && curr.length > 0){
                 for(i = 0; i < curr.length; i++){
                     t = curr[i];
-                    if(t.indexOf('s=') >= 0 ){
-                        nreq.push('s=' + term);
+                    vt = t.split('=');
+                    if(vt[0] == par){
+                        nreq.push(par + term);
                     }else{
                         nreq.push(t);
                     }
                 }
             }else{
-                nreq.push('s=' + term);
+                nreq.push(par + term);
             }
 
-            var creq = nreq.join('&');
-
-            var nexturl = '{{ URL::to( $pageurl )}}?' + creq;
-
-            window.location = nexturl;
+            return nreq;
         }
+
         /*
         $('.thumb').on('click',function(e){
             console.log(this.id);
@@ -480,24 +588,24 @@
   <div class="modal-body">
         <?php Former::framework('TwitterBootstrap')?>
         {{Former::open_horizontal('login','POST',array('class'=>''))}}
-            {{ Former::text('searchword','Keyword') }}
+            {{ Former::text('searchword','Keyword')->value(Input::get('s')) }}
 
             <?php
                 $price_sign = array(
                         ''=>'All',
-                        '='=>'=',
+                        '$eq'=>'=',
                         '$gt'=>'>',
                         '$gte'=>'>=',
                         '$lt'=>'<',
                         '$lte'=>'<=',
                         );
                 $bool = array(
-                        '-'=>'none',
+                        ''=>'none',
                         'OR'=>'OR',
                         'AND'=>'AND'
                     );
                 $scope = array(
-                    ''=>'All Field',
+                        ''=>'All Field',
                         'city'=>'City',
                         'state'=>'State',
                         'propertyId'=>'Property ID'
@@ -528,7 +636,7 @@
 
             {{-- Former::checkbox('remember-me')->label('')->text('Remember Me')->value('remember-me') --}}
 
-            {{ Former::button('Search')->class('btn btn-primary pull-right') }}
+            {{ Former::button('Search')->id('do_advanced_search')->class('btn btn-primary pull-right') }}
 
         {{ Former::close() }}
   </div>

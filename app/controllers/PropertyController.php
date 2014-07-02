@@ -127,6 +127,7 @@ class PropertyController extends BaseController {
 
         $search = (Input::get('s') == '')?'':Input::get('s');
         $searchscope = (Input::get('sc') == '')?'':Input::get('sc');
+        $searchmode = (Input::get('md') == '')?'':Input::get('md');
 
         $page = (is_null($page))?0:$page;
         $skip = $page * $perpage;
@@ -149,32 +150,32 @@ class PropertyController extends BaseController {
                 $and[] = array('propertyStatus'=>$prefilter);
             }
 
-            if($search != ''){
+            if($search != '' && $searchmode == 'sim'){
                 $sval = new MongoRegex('/'.$search.'/i');
-                //if($searchscope == '' || $searchscope == 'all'){
+                if($is_search == false){
+                    $or_search[] = array('state'=>$sval);
+                    $or_search[] = array('propertyId'=>$sval);
+                    $or_search[] = array('city'=>$sval);
+                }
 
-                    if( (Auth::user()->prop_access == 'filtered'
-                            || Auth::user()->prop_access == 'filtered_and_individual'
-                            || Auth::user()->prop_access == 'filtered_or_individual'
-                        ) && isset(Auth::user()->price_sign) && Auth::user()->price_sign != '')
-                    {
-                        $is_search = $this->prepareNumberSearch($search);
-                    }else{
-                        $or_search[] = array('listingPrice'=>$this->numberSearch($search));
-                    }
+                $and[] = array('$or'=>$or_search);
 
-                    if($is_search == false){
+            }else if( $search != '' && $searchmode == 'adv'){
+                $sval = new MongoRegex('/'.$search.'/i');
+                if($is_search == false){
+                    if($searchscope == ''){
                         $or_search[] = array('state'=>$sval);
                         $or_search[] = array('propertyId'=>$sval);
                         $or_search[] = array('city'=>$sval);
+                    }else{
+                        $or_search[] = array($searchscope=>$sval);
                     }
+                }
 
+                $and[] = array('$or'=>$or_search);
 
-                    $and[] = array('$or'=>$or_search);
-                /*}else{
-
-                }*/
             }
+
 
             if(Auth::user()->prop_access == 'filtered'){
 

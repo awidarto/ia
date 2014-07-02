@@ -159,7 +159,7 @@
 
     #content-block{
         max-height: 495px;
-        height:495px;
+        /*height:495px;*/
     }
 
     .button-row{
@@ -443,7 +443,7 @@
                         &nbsp;&nbsp;
                         <a  href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$address}}&ie=UTF8&hq=&hnear={{$address}}" target="blank"><img src="{{ URL::to('/')}}/images/marker.png" /></a>
                         &nbsp;&nbsp;
-                        <a href="{{ $urlbuy }}" class="btn-buy" style="bottom:0px;"><img src="{{ URL::to('/')}}/images/cart.png" /></a>
+                        <a href="{{ $urlbuy }}" id="open-wizard" class="btn-buy" style="bottom:0px;"><img src="{{ URL::to('/')}}/images/cart.png" /></a>
 
                         @if(isset($prop['videoUrl']) && $prop['videoUrl'] != '')
                             &nbsp;&nbsp;
@@ -765,5 +765,6 @@
     <button class="btn btn-primary" id="sendEmail">Send</button>
   </div>
 </div>
+
 
 @stop
