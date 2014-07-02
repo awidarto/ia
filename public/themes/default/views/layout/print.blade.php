@@ -12,14 +12,13 @@
             <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
 
-        {{ HTML::style('bootstrap/css/bootstrap.css') }}
+        {{-- HTML::style('bootstrap/css/bootstrap.css') --}}
         {{-- HTML::style('bootstrap/css/bootstrap-responsive.min.css') --}}
-        {{ HTML::style('font-awesome/css/font-awesome.min.css') }}
 
         {{-- HTML::style('bootstrap/css/bootswatch.css') --}}
         {{ HTML::style('bootstrap/css/app.css') }}
 
-        {{ HTML::script('js/jquery-1.9.1.js') }}
+        {{-- HTML::script('js/jquery-1.9.1.js') --}}
 
 
         {{-- HTML::style('bootstrap/css/app.css') --}}
@@ -28,24 +27,13 @@
         {{ HTML::style('font-awesome/css/font-awesome.min.css') }}
 
         <style type="text/css">
-
-            html,
-            body {
-                height: 100%;
-                /* The html and body elements cannot have any padding or margin. */
-            }
-
-            /* Wrapper for page content to push down footer */
-            #wrap {
-                min-height: 100%;
-                height: auto !important;
-                height: 100%;
-                /* Negative indent footer by it's height */
-                margin: 0 auto -60px;
-            }
-
+            /*
+                html,
+                body {
+                    height: 100%;
+                }
             #top-container{
-                width:1070px;
+                width:960px;
             }
 
             #main-content{
@@ -64,33 +52,6 @@
                 padding-left: 10px;
             }
 
-            #content-block{
-                width: 1070px;
-                height: 460px;
-                padding: 0px;
-                max-height: 460px;
-                overflow: hidden;
-                margin-right: auto;
-                margin-left: auto;
-                display: block;
-            }
-
-            #content-container{
-                position:relative;
-                width: auto;
-                height: auto;
-                margin: 22px;
-                min-height: 400px;
-                background-color: white;
-                display: block;
-            }
-
-            #footer .container{
-                width:1070px;
-                border-left: thin solid #eee;
-                border-right: thin solid #eee;
-            }
-
             .white-text{
                 color: white;
                 display: inline-block;
@@ -100,12 +61,19 @@
                 padding-bottom: 10px;
             }
 
+
+        */
+
+
             p.credit{
                 margin-bottom: 0px;
             }
 
             p.disclaimer{
                 line-height: 16px;
+                font-size:10px;
+                color:#ccc;
+                text-align:justify;
             }
 
             h1.page-header{
@@ -113,94 +81,78 @@
                 font-size: 30px;
             }
 
-            @media (max-height: 768px){
-                .page-view{
-                    overflow-y:scroll;
-                    height: 400px;
-                }
+            .container{
+                padding:0px 30px;
+            }
 
-                #main-content{
-                    overflow-y:auto;
-                    overflow-x:hidden;
-                    /*min-height: 570px;*/
-                }
-
-                #main-content h1 {
-                    margin-top: 8px;
-                    margin-bottom: 8px;
-                    padding-left: 10px;
-                }
-
-                #main-img img{
-                    width: auto;
-                }
-
-                #main-img {
-                    display:inline-block;
-                    border : none;
-                }
-
-                #overview img{
-                    height:75px;
-                    width: auto;
-                }
-
-                [class*="span"] {
-                    float: left;
-                    min-height: 1px;
-                    margin-left: 1px;
+            @media print{
+                #footer {
+                     display: block;
+                     bottom: 0;
                 }
             }
 
-            <!--
-            @page {
-                size:8.5in 11in;
-                margin: 0mm 16mm 27mm 16mm;
-
-                @top-left {
-                    content: "first: " string(heading, first);
-                }
-                @top-center {
-                    content: "start: " string(heading, start);
-                }
-                @top-right {
-                    content: "last: " string(heading, last);
-                }
-
-                p.rh {
-                   position: running(heading);
-                }
-
-            }
-
-            -->
     </style>
 </head>
 
-<body class="preview" style="margin-top: 0px;" onload="window.print()" >
-<div id="wrap">
+<body class="preview" style="margin-top: 0px;"  onload="window.print()" >
 
-    <!-- Masthead
-    ================================================== -->
-    <div class="container" id="top-container">
-        <header class="jumbotron subhead" id="overview">
-            <div class="row-fluid">
-                <div class="span4 pull-right" style="display:block;">
-                    {{ HTML::image('images/ialogo-med.png','Investors Alliance',array('class'=>'img-responsive' ) ) }}
+    <table border="0" width="100%">
+        <thead>
+            <tr>
+                <th style="width:100%">
+                    <div class="container" id="top-container">
+                        <header class="jumbotron subhead" id="overview">
+                            <div class="row-fluid">
+                                <div class="span4 pull-right" style="display:block;">
+                                    {{ HTML::image('images/ialogo-med.png','Investors Alliance',array('class'=>'img-responsive' ) ) }}
+                                </div>
+                                <div class="span8 pull-right">
+                                </div>
+                            </div>
+                        </header>
+                    </div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="container">
+                        @yield('content')
+                    </div><!-- /container -->
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td width="100%">
+                    <table width="100%" border="0">
+                        <tr>
+                             <td colspan="4"><br>&nbsp;</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <table id="footer" width="100%">
+        <tr>
+            <td>
+                <div class="container">
+                    <p class="muted credit">Copyright &copy; 2013 - Investors Alliance USA Property | Terms & Conditions | Privacy Policy</p>
+                    <p class="disclaimer" >
+                        <strong>DISCLAIMER:</strong> While every effort is made to ensure that this information is accurate and conforms with all applicable legal requirements it is supplied in good faith as an aid to users. Investors Alliance do not warrant that it is complete, comprehensive or accurate, or commit to its being updated. In no event shall Investors Alliance be liable for any incidental, indirect, consequential or special damages of any kind, or any damages whatsoever, including, without limitation, those resulting from loss of profit, loss of contracts, goodwill, data, information, income, expected savings or business relationships, whether or not advised of the possibility of such damage, arising out of or in connection with the use of this information.
+                    </p>
+                    <p class="disclaimer">
+                        Copyright - All materials contained herein are, unless otherwise stated, the property of Investors Alliance. Reproduction or retransmission of the materials, in whole or in part, in any manner, without the prior written consent of the copyright holder, is a violation of copyright law.
+                    </p>
+                    <img src="{{ URL::to('images/ia_print_footer.png')}}" alt="footer image" />
                 </div>
-                <div class="span8 pull-right">
-                </div>
-            </div>
-        </header>
-    </div>
-
-
-    <div class="container">
-        @yield('content')
-    </div><!-- /container -->
-
-</div>
-
+            </td>
+        </tr>
+    </table>
 
 </body>
 </html>

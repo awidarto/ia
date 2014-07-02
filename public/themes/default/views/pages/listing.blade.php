@@ -616,21 +616,21 @@
             </div>
             <div class="row-fluid form-horizontal">
                 <div class="span4">
-                    {{ Former::select('price_sign', 'Filter by Price')->options($price_sign)->class('span12') }}
+                    {{ Former::select('price_sign', 'Filter by Price')->options($price_sign, Input::get('ps1'))->class('span12') }}
                 </div>
                 <div class="span8 no-label">
-                    {{ Former::text('filter_price','')->class('span6') }}
+                    {{ Former::text('filter_price','')->class('span6')->value(Input::get('p1')) }}
                 </div>
             </div>
 
-            {{ Former::select('price_rel', '')->options($bool)->class('span2')->help('relationship between two price conditions (optional)') }}
+            {{ Former::select('price_rel', '')->options($bool, Input::get('pr'))->class('span2')->help('relationship between two price conditions (optional)') }}
 
             <div class="row-fluid form-horizontal">
                 <div class="span4">
-                    {{ Former::select('price_sign2', '')->options($price_sign)->class('span12') }}
+                    {{ Former::select('price_sign2', '')->options($price_sign, Input::get('ps2'))->class('span12') }}
                 </div>
                 <div class="span8 no-label">
-                    {{ Former::text('filter_price2','')->class('span6')->help('second price condition (optional)') }}
+                    {{ Former::text('filter_price2','')->value(Input::get('p2'))->class('span6')->help('second price condition (optional)') }}
                 </div>
             </div>
 

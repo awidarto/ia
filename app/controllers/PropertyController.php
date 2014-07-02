@@ -129,6 +129,13 @@ class PropertyController extends BaseController {
         $searchscope = (Input::get('sc') == '')?'':Input::get('sc');
         $searchmode = (Input::get('md') == '')?'':Input::get('md');
 
+        $searchprice = (Input::get('p1') == '')?'':Input::get('p1');
+        $searchpricesign = (Input::get('ps1') == '')?'':Input::get('ps1');
+        $searchpricerel = (Input::get('pr') == '')?'':Input::get('pr');
+        $searchprice2 = (Input::get('p2') == '')?'':Input::get('p2');
+        $searchpricesign2 = (Input::get('ps2') == '')?'':Input::get('ps2');
+
+
         $page = (is_null($page))?0:$page;
         $skip = $page * $perpage;
 
@@ -223,11 +230,7 @@ class PropertyController extends BaseController {
 
                 if( isset(Auth::user()->price_sign) && Auth::user()->price_sign != ''){
 
-                    if($is_search){
-                        $price_line = array('listingPrice'=>$is_search);
-                    }else{
-                        $price_line = array('listingPrice'=>array(Auth::user()->price_sign => Auth::user()->filter_price));
-                    }
+                    $price_line = array('listingPrice'=>array(Auth::user()->price_sign => Auth::user()->filter_price));
 
                     if( Auth::user()->price_sign2 != '' &&  Auth::user()->price_sign2 != '' && Auth::user()->price_rel != '' &&  Auth::user()->price_rel != '-'){
                         $price_line2 = array('listingPrice'=>array(Auth::user()->price_sign2 => Auth::user()->filter_price2));
@@ -244,6 +247,31 @@ class PropertyController extends BaseController {
                     }
 
                 }
+
+                if( isset(Auth::user()->price_sign) && Auth::user()->price_sign == ''){
+
+                    if($searchpricesign != '' && $searchpricesign != '-'){
+                        $price_line = array('listingPrice'=>array($searchpricesign => (double)$searchprice));
+
+                        if( $searchpricesign2 != '' && $searchpricerel != '' &&  $searchpricerel != '-'){
+                            $price_line2 = array('listingPrice'=>array($searchpricesign2 => (double)$searchprice2));
+                            if( $searchpricerel == 'OR'){
+                                $or_price[] = $price_line;
+                                $or_price[] = $price_line2;
+                                $and[] = array('$or'=>$or_price);
+                            }else{
+                                $and[] = $price_line;
+                                $and[] = $price_line2;
+                            }
+                        }else{
+                            $and[] = $price_line;
+                        }
+
+                    }
+
+
+                }
+
 
                 if(count($and) > 0){
                     $q['$and'] = $and;
@@ -427,6 +455,34 @@ class PropertyController extends BaseController {
                 $q = array(
                             'propertyStatus'=>array('$ne'=>'offline')
                         );
+
+                if($searchpricesign != '' && $searchpricesign != '-'){
+                    if($searchpricesign == '$eq'){
+                        $price_line = array('listingPrice' => (double)$searchprice);
+                    }else{
+                        $price_line = array('listingPrice'=>array($searchpricesign => (double)$searchprice));
+                    }
+
+                    if( $searchpricesign2 != '' && $searchpricerel != '' &&  $searchpricerel != '-'){
+                        if($searchpricesign == '$eq'){
+                            $price_line2 = array('listingPrice'=> (double)$searchprice2);
+                        }else{
+                            $price_line2 = array('listingPrice'=>array($searchpricesign2 => (double)$searchprice2));
+                        }
+
+                        if( $searchpricerel == 'OR'){
+                            $or_price[] = $price_line;
+                            $or_price[] = $price_line2;
+                            $and[] = array('$or'=>$or_price);
+                        }else{
+                            $and[] = $price_line;
+                            $and[] = $price_line2;
+                        }
+                    }else{
+                        $and[] = $price_line;
+                    }
+
+                }
 
                 if(count($and) > 0){
                     $q['$and'] = $and;
@@ -712,6 +768,34 @@ class PropertyController extends BaseController {
                             'type'=>$filter,
 
                         );
+
+                if($searchpricesign != '' && $searchpricesign != '-'){
+                    if($searchpricesign == '$eq'){
+                        $price_line = array('listingPrice' => (double)$searchprice);
+                    }else{
+                        $price_line = array('listingPrice'=>array($searchpricesign => (double)$searchprice));
+                    }
+
+                    if( $searchpricesign2 != '' && $searchpricerel != '' &&  $searchpricerel != '-'){
+                        if($searchpricesign == '$eq'){
+                            $price_line2 = array('listingPrice'=> (double)$searchprice2);
+                        }else{
+                            $price_line2 = array('listingPrice'=>array($searchpricesign2 => (double)$searchprice2));
+                        }
+
+                        if( $searchpricerel == 'OR'){
+                            $or_price[] = $price_line;
+                            $or_price[] = $price_line2;
+                            $and[] = array('$or'=>$or_price);
+                        }else{
+                            $and[] = $price_line;
+                            $and[] = $price_line2;
+                        }
+                    }else{
+                        $and[] = $price_line;
+                    }
+
+                }
 
                 if(count($and) > 0){
                     $q['$and'] = $and;
