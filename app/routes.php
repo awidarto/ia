@@ -459,10 +459,18 @@ Route::get('about',function(){
     return View::make('pages.about');
 });
 
-Route::get('faq',function(){
+Route::get('faq/{print?}',function($print = null){
     Theme::setCurrentTheme(Prefs::getActiveTheme() );
 
-    $faqs = Faq::get()->toArray();
+    $search = (Input::get('s') == '')?'':Input::get('s');
+
+    if($search != ''){
+        $faqs = Faq::where('body','like','%'.$search.'%')
+            ->orderBy('category','asc')
+            ->get()->toArray();
+    }else{
+        $faqs = Faq::get()->toArray();
+    }
 
     $faqcats = Faqcat::get()->toArray();
 
@@ -472,20 +480,52 @@ Route::get('faq',function(){
         $faqarray[$f['category']][] = $f;
     }
 
-        $p = json_encode(array(
-            'title'=>'FAQ',
-        ));
-        $actor = (isset(Auth::user()->email))?Auth::user()->email:'guest';
+    $p = json_encode(array(
+        'title'=>'FAQ',
+    ));
+    $actor = (isset(Auth::user()->email))?Auth::user()->email:'guest';
 
+
+    if(is_null($print)){
         Event::fire('log.a',array('faq','view',$actor,$p));
+        return View::make('pages.faq')->with('faqs',$faqarray)->with('faqcats',$faqcats);
+    }else{
+        Event::fire('log.a',array('faq','print',$actor,$p));
+        return View::make('pages.faqprint')
+            ->with('title','FAQ')
+            ->with('faqs',$faqarray)->with('faqcats',$faqcats);
+    }
 
-    return View::make('pages.faq')->with('faqs',$faqarray)->with('faqcats',$faqcats);
+
 });
 
-Route::get('glossary',function(){
+Route::get('glossary/{print?}',function($print = null){
     Theme::setCurrentTheme(Prefs::getActiveTheme() );
 
-        $faqs = Glossary::orderBy('category','asc')->get()->toArray();
+        $search = (Input::get('s') == '')?'':Input::get('s');
+        $c = (Input::get('c') == '')?'':Input::get('c');
+
+        if($search != ''){
+            if( $c == '' || $c == 'all'){
+                $faqs = Glossary::where('body','like','%'.$search.'%')
+                    ->orderBy('category','asc')
+                    ->get()->toArray();
+            }else{
+                $faqs = Glossary::where('body','like','%'.$search.'%')
+                    ->where('category',$c)
+                    ->orderBy('category','asc')
+                    ->get()->toArray();
+            }
+        }else{
+            if( $c == '' || $c == 'all'){
+                $faqs = Glossary::orderBy('category','asc')->get()->toArray();
+            }else{
+                $faqs = Glossary::where('category',$c)
+                    ->orderBy('category','asc')
+                    ->get()->toArray();
+            }
+        }
+
 
         if(count($faqs) == 0){
             $faqs = null;
@@ -497,10 +537,17 @@ Route::get('glossary',function(){
 
         $actor = (isset(Auth::user()->email))?Auth::user()->email:'guest';
 
-        Event::fire('log.a',array('glossary','view',$actor,$p));
-
-    return View::make('pages.glossary')->with('faqs',$faqs)->with('faqcats',Config::get('site.alphanumeric'));
+        if(is_null($print)){
+            Event::fire('log.a',array('glossary','view',$actor,$p));
+            return View::make('pages.glossary')->with('faqs',$faqs)->with('faqcats',Config::get('site.alphanumeric'));
+        }else{
+            Event::fire('log.a',array('glossary','print',$actor,$p));
+            return View::make('pages.glossaryprint')
+                ->with('title','Glossary')
+                ->with('faqs',$faqs)->with('faqcats',Config::get('site.alphanumeric'));
+        }
 });
+
 
 
 Route::get('dashboard', array('before'=>'auth', function(){
