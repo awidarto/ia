@@ -915,7 +915,7 @@ Route::get('logout',function(){
         $useremail = 'session expired';
     //}
 
-    Event::fire('log.a',array('logout','logout',$useremail,'logout'));
+    //Event::fire('log.a',array('logout','logout',$useremail,'logout'));
 
     Auth::logout();
     return Redirect::to('/');
