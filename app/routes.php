@@ -907,15 +907,14 @@ Route::post('clogin',function(){
 
 
 Route::get('logout',function(){
-    /*
+
     if( Auth::check() && isset(Auth::user()->email)){
         $useremail = Auth::user()->email;
     }else{
-    */
         $useremail = 'session expired';
-    //}
+    }
 
-    //Event::fire('log.a',array('logout','logout',$useremail,'logout'));
+    Event::fire('log.a',array('logout','logout',$useremail,'logout'));
 
     Auth::logout();
     return Redirect::to('/');
