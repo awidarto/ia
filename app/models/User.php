@@ -17,15 +17,18 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 *
 	 * @var array
 	 */
-	protected $hidden = array('password');
+	protected $hidden = array('password','pass');
 
 
     public function __construct($table = null){
+        /*
         if(is_null($table)){
             $this->table = Config::get('kickstart.user_collection');
         }else{
             $this->table = $table;
         }
+        */
+        $this->table = Config::get('kickstart.user_collection');
 
     }
 
