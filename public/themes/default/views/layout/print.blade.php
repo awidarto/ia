@@ -12,11 +12,11 @@
             <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
 
-        {{-- HTML::style('bootstrap/css/bootstrap.css') --}}
+        {{ HTML::style('bootstrap/css/bootstrap.css') }}
         {{-- HTML::style('bootstrap/css/bootstrap-responsive.min.css') --}}
 
         {{-- HTML::style('bootstrap/css/bootswatch.css') --}}
-        {{ HTML::style('bootstrap/css/app.css') }}
+        {{-- HTML::style('bootstrap/css/app.css') --}}
 
         {{-- HTML::script('js/jquery-1.9.1.js') --}}
 
@@ -24,7 +24,7 @@
         {{-- HTML::style('bootstrap/css/app.css') --}}
         {{-- HTML::style('bootstrap/css/bootstrap-wide.css') --}}
 
-        {{ HTML::style('font-awesome/css/font-awesome.min.css') }}
+        {{-- HTML::style('font-awesome/css/font-awesome.min.css') --}}
 
         <style type="text/css">
             /*
@@ -63,7 +63,10 @@
 
 
         */
-
+            body{
+                font-family: arial,helvetica,sans-serif;
+                font-size: 12px;
+            }
 
             p.credit{
                 margin-bottom: 0px;
@@ -88,8 +91,32 @@
             @media print{
                 #footer {
                      display: block;
+                     position: relative;
                      bottom: 0;
                 }
+
+                tbody{
+                    display: block;
+                }
+
+                thead{
+                    display: table-header-group;
+                }
+
+                tfoot{
+                    display: table-footer-group;
+                }
+            }
+
+            @media screen{
+                thead{
+                    display: block;
+                }
+
+                tfoot{
+                    display: block;
+                }
+
             }
 
     </style>
@@ -121,21 +148,31 @@
                     <div class="container">
                         @yield('content')
                     </div><!-- /container -->
+                    <div style="height:100%;">
+
+                    </div>
                 </td>
             </tr>
         </tbody>
-        <tfoot>
+        <tfoot id="footer">
             <tr>
-                <td width="100%">
-                    <table width="100%" border="0">
-                        <tr>
-                             <td colspan="4"><br>&nbsp;</td>
-                        </tr>
-                    </table>
+                <td>
+                    <div class="container">
+                        <p class="muted credit">Copyright &copy; 2013 - Investors Alliance USA Property | Terms & Conditions | Privacy Policy</p>
+                        <p class="disclaimer" >
+                            <strong>DISCLAIMER:</strong> While every effort is made to ensure that this information is accurate and conforms with all applicable legal requirements it is supplied in good faith as an aid to users. Investors Alliance do not warrant that it is complete, comprehensive or accurate, or commit to its being updated. In no event shall Investors Alliance be liable for any incidental, indirect, consequential or special damages of any kind, or any damages whatsoever, including, without limitation, those resulting from loss of profit, loss of contracts, goodwill, data, information, income, expected savings or business relationships, whether or not advised of the possibility of such damage, arising out of or in connection with the use of this information.
+                        </p>
+                        <p class="disclaimer">
+                            Copyright - All materials contained herein are, unless otherwise stated, the property of Investors Alliance. Reproduction or retransmission of the materials, in whole or in part, in any manner, without the prior written consent of the copyright holder, is a violation of copyright law.
+                        </p>
+                        <img src="{{ URL::to('images/ia_print_footer.png')}}" alt="footer image" />
+                    </div>
                 </td>
             </tr>
         </tfoot>
     </table>
+
+    {{--
 
     <table id="footer" width="100%">
         <tr>
@@ -153,6 +190,7 @@
             </td>
         </tr>
     </table>
+    --}}
 
 </body>
 </html>

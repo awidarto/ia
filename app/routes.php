@@ -907,7 +907,7 @@ Route::post('clogin',function(){
 
 
 Route::get('logout',function(){
-    if(isset(Auth::user()->email)){
+    if( Auth::check() && isset(Auth::user()->email)){
         $useremail = Auth::user()->email;
     }else{
         $useremail = 'session expired';
