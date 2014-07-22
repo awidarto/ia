@@ -158,8 +158,11 @@
     }
 
     #content-block{
+        /*
         max-height: 495px;
-        /*height:495px;*/
+        */
+        max-height: 510px;
+        height:495px;
     }
 
     .button-row{
@@ -534,6 +537,7 @@
 
                             $projectedROI = round($prop['projectedROI'] * 100, 1, PHP_ROUND_HALF_UP).'%';
 
+                            $dollarpersq = $prop['listingPrice'] / $prop['houseSize'];
                         ?>
                         <tr>
                             <th>Purchase Price</th><td>${{ Ks::us( $prop['listingPrice'])}}</td>
@@ -579,6 +583,10 @@
                         </tr>
                         <tr class="yield">
                             <th>Net Rental Return</th><td id="calcROI">{{ $roi }}%</td>
+                        </tr>
+
+                        <tr class="yield">
+                            <th>$/sqft</th><td>${{ Ks::us($dollarpersq) }}/sqft</td>
                         </tr>
 
                         <tr class="yield">

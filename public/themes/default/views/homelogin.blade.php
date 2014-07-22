@@ -6,66 +6,53 @@
 
 
         <div class="row">
-            <div style="padding-left: 60px;">
+            <div style="padding-left: 0px;">
                 <div class="row" style="font-style:italic;">
                     <div class="span6" >
-                        {{--
-                <div class="row" style="margin:0px;padding:0px;padding-left:8px;" >
-                    <div class="span5" style="overflow-y:auto;height:340px;margin:0px;margin-right:4px;">
 
-                            <div class="" style="margin-top:35px;border:thin solid #eee;padding:15px;width:300px;text-align:center;" >
+                        <h4><img src="{{ URL::to('/')}}/images/ic-login.png"> Please login to continue</h4>
 
-                            </div>
-                        --}}
+                        {{Former::open_horizontal('login','POST',array('class'=>'span4'))}}
+                            @if (Session::get('loginError'))
+                                <div class="alert alert-danger">{{ Session::get('loginError') }}</div>
+                                     <button type="button" class="close" data-dismiss="alert"></button>
+                            @endif
+                            {{ Former::text('email','Email')->class('span3') }}
 
-                                <h4><img src="{{ URL::to('/')}}/images/ic-login.png"> Please login to continue</h4>
+                            {{ Former::password('password','Password')->class('span3') }}
 
-                                {{Former::open_horizontal('login','POST',array('class'=>'span4'))}}
-                                    @if (Session::get('loginError'))
-                                        <div class="alert alert-danger">{{ Session::get('loginError') }}</div>
-                                             <button type="button" class="close" data-dismiss="alert"></button>
-                                    @endif
-                                    {{ Former::text('email','Email')->class('span3') }}
+                            {{-- Former::checkbox('remember-me')->label('')->text('Remember Me')->value('remember-me') --}}
 
-                                    {{ Former::password('password','Password')->class('span3') }}
+                            {{ Former::submit('Login')->class('btn btn-primary pull-right') }}
 
-                                    {{-- Former::checkbox('remember-me')->label('')->text('Remember Me')->value('remember-me') --}}
-
-                                    {{ Former::submit('Login')->class('btn btn-primary pull-right') }}
-
-                                {{ Former::close() }}
+                        {{ Former::close() }}
 
                         <!--insert grid-->
                     </div>
-                    <div class="span6" >
-                        {{--
-                    <div class="span5" style="overflow-y:auto;height:340px;width:100%;margin:0px;margin-right:4px;">
-                        --}}
-                                <h4><img src="{{ URL::to('/')}}/images/ic-affiliate.png"> Affiliate Request Form</h4>
+                    <div class="span6 pull-right" >
+                        <h4><img src="{{ URL::to('/')}}/images/ic-affiliate.png"> Affiliate Request Form</h4>
 
-                                @if(Session::get('enquiryMessage'))
-                                        <div class="alert alert-info">{{ Session::get('enquiryMessage') }}</div>
-                                             <button type="button" class="close" data-dismiss="alert"></button>
-                                        <?php Session::forget('enquiryMessage'); ?>
-                                @else
-                                    {{Former::open_horizontal('affiliate','POST',array('class'=>'span5'))}}
-                                        {{ Former::text('fullname','Full Name')->class('span4') }}
+                        @if(Session::get('enquiryMessage'))
+                                <div class="alert alert-info">{{ Session::get('enquiryMessage') }}</div>
+                                     <button type="button" class="close" data-dismiss="alert"></button>
+                                <?php Session::forget('enquiryMessage'); ?>
+                        @else
+                            {{Former::open_horizontal('affiliate','POST',array('class'=>'span5'))}}
+                                {{ Former::text('fullname','Full Name')->class('span4') }}
 
-                                        {{ Former::text('email','Email')->class('span4') }}
+                                {{ Former::text('email','Email')->class('span4') }}
 
-                                        {{ Former::text('phone','Phone Number')->class('span4') }}
+                                {{ Former::text('phone','Phone Number')->class('span4') }}
 
-                                        {{ Former::textarea('message','Message')->class('span4')->style('height:80px;') }}
+                                {{ Former::textarea('message','Message')->class('span4')->style('height:80px;') }}
 
-                                        {{-- Former::checkbox('remember-me')->label('')->text('Remember Me')->value('remember-me') --}}
+                                {{-- Former::checkbox('remember-me')->label('')->text('Remember Me')->value('remember-me') --}}
 
-                                        {{ Former::submit('Submit')->class('btn btn-primary pull-right') }}
+                                {{ Former::submit('Submit')->class('btn btn-primary pull-right') }}
 
-                                    {{ Former::close() }}
+                            {{ Former::close() }}
 
-                                @endif
-
-
+                        @endif
                     </div>
                 </div>
 
