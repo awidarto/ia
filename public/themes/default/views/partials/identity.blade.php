@@ -1,7 +1,14 @@
 @if(Auth::check())
         <a href="{{ URL::to('dashboard') }}">Welcome {{ Auth::user()->firstname.' '.Auth::user()->lastname }}</a> | <a href="{{ URL::to('logout') }}">LOGOUT</a>
 @else
+        <a href="{{ URL::to('login')}}" > AFFILIATE LOGIN ONLY</a>
+
+{{--
+        link to login pop up
         <a href="#loginModal" data-toggle="modal" data-target="#loginModal" >LOGIN</a>
+
+
+    --}}
 
     {{--
  | <a href="{{ URL::to('/') }}/signup">SIGN UP</a>

@@ -29,14 +29,14 @@ Route::controller('ajax', 'AjaxController');
 
 Route::get('/',function(){
 
-    if(Auth::check()){
+    //if(Auth::check()){
         //return Redirect::to('dashboard');
         $slides = Homeslider::where('publishing','published')->orderby('sequence','asc')->get();
 
         return View::make('pages.home')->with('slides',$slides);
-    }else{
-        return Redirect::to('login');
-    }
+    //}else{
+    //    return Redirect::to('login');
+    //}
 
 });
 

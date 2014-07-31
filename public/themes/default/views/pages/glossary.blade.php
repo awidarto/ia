@@ -106,23 +106,70 @@
 
     });
 </script>
+<style type="text/css">
+    ul#alpha-nav li a{
+        color: #000;
+    }
+
+    #main-content h1 {
+        margin-top: 8px;
+        margin-bottom: 0px;
+        padding-left: 10px;
+        border: none;
+    }
+</style>
 <div id="content-block">
     <div id="content-container" class="shadow" style="margin-bottom: 6px;" >
 
         <div class="row">
             <div class="">
-                <div class="row" style="margin:0px;padding:0px;">
-                    @if(is_null($faqs))
-                        <h1 class="page-header">No Glossary Entry</h1>
-                    @else
-                        <h1 class="page-header">Glossary</h1>
-                    @endif
+                <div class="row" style="margin:0px;padding:0px;border-bottom:thin solid #eee">
+                    <div class="span5" >
+                        @if(is_null($faqs))
+                            <h1 class="page-header">No Glossary Entry</h1>
+                        @else
+                            <h1 class="page-header">Glossary</h1>
+                        @endif
+                    </div>
+                    <div class="span4 form-inline pull-right" >
+                        <input type="hidden" name="sfull" id="sfull" value="{{ URL::full() }}" />
+                        <input type="hidden" name="scurr" id="scurr" value="{{ URL::current() }}" />
+                        <input type="hidden" name="sreq" id="sreq" value="{{ str_replace(array(URL::current(),'?'), '', URL::full()) }}" />
+                        <input name="s" id="search" placeholder="search" value="{{ Input::get('s')}}" style="width:175px" />
+                        <button type="submit" class="btn" id="do-search"><i class="icon-search"></i></button>
+                    </div>
 
-                    <a href="{{ ap('glossary') }}" class="receipt pull-right" target="new" style="position:absolute;top:3px;right:10px;" ><img src="{{ URL::to('/')}}/images/print.png" /></a>
+                    <div class="span1 pull-right">
+                        <a href="{{ ap('glossary') }}" class="receipt" target="new" style="position:absolute;top:3px;right:10px;" ><img src="{{ URL::to('/')}}/images/print.png" /></a>
+                    </div>
 
                 </div>
 
                 <div class="row" style="margin:0px;padding:0px;padding-left:8px;">
+
+                    <div class="subnav row" id="filter-bar" style="background-color: transparent;padding:0px;padding-left:0px;margin:0px;">
+
+                        <div class="pagination pagination-centered" style="text-align:left">
+                            <ul id="alpha-nav">
+                                <li class="class="{{ ms('c','all' , 0) }}"" >
+                                    <a href="{{  mg(array('c'=>'all')) }}" class="prev">
+                                        All
+                                    </a>
+                                </li>
+                                @foreach( range('A','Z') as $alpha)
+                                <li class="class="{{ ms('c',$alpha , 0) }}"" >
+                                    <a href="{{  mg(array('c'=>$alpha)) }}" class="prev">
+                                        {{ $alpha }}
+                                    </a>
+                                </li>
+                                @endforeach
+                            </ul>
+                        </div>
+
+
+                    </div>
+
+
                     <div class="span12 lionbars" name="g_container" style="overflow-y:auto;height:340px;width:100%;margin:0px;margin-right:4px;" data-spy="scroll" data-target=".pagination" >
                                 @if(is_null($faqs))
 
@@ -155,45 +202,6 @@
         </div>
 
     </div> <!-- end content-container -->
-
-<!-- bottom filter -->
-
-    <div class="subnav row" id="filter-bar" style="background-color: transparent;padding:0px;padding-left:22px;margin:0px;">
-
-        <div class="span3 form-inline" style="width:205px">
-            <input type="hidden" name="sfull" id="sfull" value="{{ URL::full() }}" />
-            <input type="hidden" name="scurr" id="scurr" value="{{ URL::current() }}" />
-            <input type="hidden" name="sreq" id="sreq" value="{{ str_replace(array(URL::current(),'?'), '', URL::full()) }}" />
-            <input name="s" id="search" placeholder="search" value="{{ Input::get('s')}}" style="width:105px" />
-            <button type="submit" class="btn" id="do-search"><i class="icon-search"></i></button>
-        </div>
-
-        <div class="pagination pagination-centered" style="color:#fff;text-align:center">
-            <ul id="alpha-nav">
-                <li class="class="{{ ms('c','all' , 0) }}"" >
-                    <a href="{{  mg(array('c'=>'all')) }}" class="prev">
-                        All
-                    </a>
-                </li>
-                @foreach( range('A','Z') as $alpha)
-                <li class="class="{{ ms('c',$alpha , 0) }}"" >
-                    <a href="{{  mg(array('c'=>$alpha)) }}" class="prev">
-                        {{ $alpha }}
-                    </a>
-                </li>
-                @endforeach
-            </ul>
-        </div>
-
-
-        <div class="span2 pull-right white-text" style="width:75px;" >
-
-        </div>
-
-    </div>
-
-<!-- end bottom filter -->
-
 
 </div>
 
