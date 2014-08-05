@@ -106,6 +106,15 @@
 
     });
 </script>
+    <style type="text/css">
+        h4{
+            color:#FF0000;
+        }
+
+        .faq-body{
+            margin-bottom: 20px;
+        }
+    </style>
 
 
 <div id="content-block">
@@ -115,7 +124,7 @@
         <div class="row">
             <div >
                 <div class="row" style="margin:0px;padding:0px;">
-                    <h1 class="page-header">FAQ</h1>
+                    <h1 class="page-header">Frequently Asked Questions</h1>
                 </div>
                 <a href="{{ ap('faq') }}" class="receipt pull-right" target="new" style="position:absolute;top:3px;right:10px;" ><img src="{{ URL::to('/')}}/images/print.png" /></a>
 
@@ -124,11 +133,13 @@
 
                         {{-- print_r($faqs); die();--}}
                         @foreach($faqs as $fc=>$fi)
+                            {{--
                             <h3 id="{{ $fc }}">{{ ucwords($fc) }}</h3>
+                            --}}
                                 <ul style="margin-left:10px;">
                                     @foreach($fi as $faq)
-                                        <h4>{{ $faq['title']}}</h4>
-                                        <div>
+                                        <h4>Q. {{ $faq['title']}}</h4>
+                                        <div class="faq-body" >
                                             {{ $faq['body']}}
                                         </div>
                                     @endforeach

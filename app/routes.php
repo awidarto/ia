@@ -481,7 +481,7 @@ Route::get('faq/{print?}',function($print = null){
     }
 
     $p = json_encode(array(
-        'title'=>'FAQ',
+        'title'=>'Frequently Asked Questions',
     ));
     $actor = (isset(Auth::user()->email))?Auth::user()->email:'guest';
 
@@ -492,7 +492,7 @@ Route::get('faq/{print?}',function($print = null){
     }else{
         Event::fire('log.a',array('faq','print',$actor,$p));
         return View::make('pages.faqprint')
-            ->with('title','FAQ')
+            ->with('title','Frequently Asked Questions')
             ->with('faqs',$faqarray)->with('faqcats',$faqcats);
     }
 

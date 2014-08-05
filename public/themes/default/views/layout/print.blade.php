@@ -130,7 +130,7 @@
                 <th style="width:100%">
                     <div class="container" id="top-container">
                         <header class="jumbotron subhead" id="overview">
-                            <div class="row-fluid">
+                            <div class="row">
                                 <div class="span4 pull-right" style="display:block;">
                                     {{ HTML::image('images/ialogo-med.png','Investors Alliance',array('class'=>'img-responsive' ) ) }}
                                 </div>
