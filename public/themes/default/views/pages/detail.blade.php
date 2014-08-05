@@ -585,11 +585,11 @@
                             <th>Net Rental Return</th><td id="calcROI">{{ $roi }}%</td>
                         </tr>
 
-                        <tr class="yield">
+                        <tr>
                             <th>$/sqft</th><td>${{ Ks::us($dollarpersq) }}/sqft</td>
                         </tr>
 
-                        <tr class="yield">
+                        <tr>
                             <th>Projected ROI</th>
                             <td>
                                 <span class="pull-left"  style="font-size:12px;"><input  class="calc" style="width:15px" type="text" value="3" id="prYear"> yrs </span>&nbsp;<span class="pull-left" style="font-size:12px;padding-left: 4px;" ><input  class="calc" style="width:15px" type="text" value="5" id="prRate"> % </span><span class="pull-right" style="line-height:20px;"  id="prYield">{{ $projectedROI }}</span>
