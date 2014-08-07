@@ -128,7 +128,7 @@
                 </div>
                 <a href="{{ ap('faq') }}" class="receipt pull-right" target="new" style="position:absolute;top:3px;right:10px;" ><img src="{{ URL::to('/')}}/images/print.png" /></a>
 
-                <div class="row" style="margin:0px;padding:0px;padding-left:8px;">
+                <div class="row" style="margin:0px;padding:0px;margin-left:8px;margin-right:10px;">
                     <div class="span12 lionbars" style="overflow-y:auto;height:340px;width:100%;margin:0px;margin-right:4px;">
 
                         {{-- print_r($faqs); die();--}}
