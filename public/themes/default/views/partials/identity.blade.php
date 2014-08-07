@@ -1,5 +1,5 @@
 @if(Auth::check())
-        <a href="{{ URL::to('dashboard') }}">Welcome {{ Auth::user()->firstname.' '.Auth::user()->lastname }}</a> | <a href="{{ URL::to('logout') }}">LOGOUT</a>
+        <a href="{{ URL::to('dashboard') }}">Welcome {{ Auth::user()->firstname.' '.Auth::user()->lastname }}</a> | <a href="{{ URL::to('logout') }}">Logout</a>
 @else
         <a href="{{ URL::to('login')}}" > AFFILIATE LOGIN ONLY</a>
 
