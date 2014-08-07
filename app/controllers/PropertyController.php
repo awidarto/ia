@@ -185,7 +185,6 @@ class PropertyController extends BaseController {
 
 
             if(Auth::user()->prop_access == 'filtered'){
-
                 if(isset(Auth::user()->filter_principal) && Auth::user()->filter_principal != ''){
                     $q['principal'] = Auth::user()->filter_principal;
                 }
@@ -214,7 +213,7 @@ class PropertyController extends BaseController {
                         }
                         $and[] = array('$or'=>$or_propmanager);
                     }else{
-                        $q['state'] = Auth::user()->filter_propmanager;
+                        $q['propertyManager'] = Auth::user()->filter_propmanager;
                     }
                 }
 
@@ -315,7 +314,7 @@ class PropertyController extends BaseController {
                         }
                         $and[] = array('$or'=>$or_propmanager);
                     }else{
-                        $q['state'] = Auth::user()->filter_propmanager;
+                        $q['propertyManager'] = Auth::user()->filter_propmanager;
                     }
                 }
 
@@ -389,7 +388,7 @@ class PropertyController extends BaseController {
                         }
                         $and[] = array('$or'=>$or_propmanager);
                     }else{
-                        $q['state'] = Auth::user()->filter_propmanager;
+                        $q['propertyManager'] = Auth::user()->filter_propmanager;
                     }
                 }
 
@@ -420,7 +419,6 @@ class PropertyController extends BaseController {
                     }
 
                 }
-
 
                 if(count($and) > 0){
                     $q['$and'] = $and;
@@ -496,7 +494,7 @@ class PropertyController extends BaseController {
 
             }
 
-            //print_r($query);
+            //print_r(json_encode($query) );
 
         }else{
 
@@ -550,7 +548,7 @@ class PropertyController extends BaseController {
                         }
                         $and[] = array('$or'=>$or_propmanager);
                     }else{
-                        $q['state'] = Auth::user()->filter_propmanager;
+                        $q['propertyManager'] = Auth::user()->filter_propmanager;
                     }
                 }
 
@@ -625,7 +623,7 @@ class PropertyController extends BaseController {
                         }
                         $and[] = array('$or'=>$or_propmanager);
                     }else{
-                        $q['state'] = Auth::user()->filter_propmanager;
+                        $q['propertyManager'] = Auth::user()->filter_propmanager;
                     }
                 }
 
@@ -700,7 +698,7 @@ class PropertyController extends BaseController {
                         }
                         $and[] = array('$or'=>$or_propmanager);
                     }else{
-                        $q['state'] = Auth::user()->filter_propmanager;
+                        $q['propertyManager'] = Auth::user()->filter_propmanager;
                     }
                 }
 
