@@ -132,19 +132,19 @@
                     <div class="span12 lionbars" style="overflow-y:auto;height:340px;width:100%;margin:0px;margin-right:4px;">
 
                         {{-- print_r($faqs); die();--}}
-                        @foreach($faqs as $fc=>$fi)
+                        {{-- @foreach($faqs as $f)--}}
                             {{--
                             <h3 id="{{ $fc }}">{{ ucwords($fc) }}</h3>
                             --}}
                                 <ul style="margin-left:10px;">
-                                    @foreach($fi as $faq)
+                                    @foreach($faqs as $faq)
                                         <h4>Q. {{ $faq['title']}}</h4>
                                         <div class="faq-body" >
                                             {{ $faq['body']}}
                                         </div>
                                     @endforeach
                                 </ul>
-                        @endforeach
+                        {{--@endforeach--}}
                     </div>
                 </div>
 

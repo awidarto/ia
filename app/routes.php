@@ -466,10 +466,12 @@ Route::get('faq/{print?}',function($print = null){
 
     if($search != ''){
         $faqs = Faq::where('body','like','%'.$search.'%')
-            ->orderBy('category','asc')
+            ->orderBy('sequence','asc')
             ->get()->toArray();
     }else{
-        $faqs = Faq::get()->toArray();
+        $faqs = Faq::orderBy('sequence','asc')
+                    ->get()
+                    ->toArray();
     }
 
     $faqcats = Faqcat::get()->toArray();
@@ -488,12 +490,12 @@ Route::get('faq/{print?}',function($print = null){
 
     if(is_null($print)){
         Event::fire('log.a',array('faq','view',$actor,$p));
-        return View::make('pages.faq')->with('faqs',$faqarray)->with('faqcats',$faqcats);
+        return View::make('pages.faq')->with('faqs',$faqs)->with('faqcats',$faqcats);
     }else{
         Event::fire('log.a',array('faq','print',$actor,$p));
         return View::make('pages.faqprint')
             ->with('title','Frequently Asked Questions')
-            ->with('faqs',$faqarray)->with('faqcats',$faqcats);
+            ->with('faqs',$faqs)->with('faqcats',$faqcats);
     }
 
 

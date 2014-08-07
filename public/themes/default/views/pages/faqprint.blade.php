@@ -24,19 +24,19 @@
                     @if(is_null($faqs))
 
                     @else
-                        @foreach($faqs as $fc=>$fi)
-                            {{--
+                        {{--@foreach($faqs as $fc=>$fi)
+
                             <h3 id="{{ $fc }}">{{ ucwords($fc) }}</h3>
                             --}}
                                 <ul style="margin-left:10px;margin:bottom:20px;">
-                                    @foreach($fi as $faq)
+                                    @foreach($faqs as $faq)
                                         <h4>Q. {{ $faq['title']}}</h4>
                                         <div class="faq-body">
                                             {{ $faq['body']}}
                                         </div>
                                     @endforeach
                                 </ul>
-                        @endforeach
+                        {{--@endforeach--}}
                     @endif
 
                 </div>
