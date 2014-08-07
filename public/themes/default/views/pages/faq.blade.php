@@ -136,7 +136,7 @@
                             {{--
                             <h3 id="{{ $fc }}">{{ ucwords($fc) }}</h3>
                             --}}
-                                <ul style="margin-left:10px;">
+                                <ul style="margin-right:0px;margin-right:20px;">
                                     @foreach($faqs as $faq)
                                         <h4>Q. {{ $faq['title']}}</h4>
                                         <div class="faq-body" >
