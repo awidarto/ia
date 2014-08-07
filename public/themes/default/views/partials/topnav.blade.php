@@ -45,7 +45,7 @@ CONTACT US
                                 @foreach( Prefs::getChildPage('investors')->toArray() as $mitem )
                                     <?php $slug = $mitem['slug'] ?>
                                     <?php $title = $mitem['title'] ?>
-                                    <li {{ sa('/page/view/'.$slug ) }} ><a href="{{ URL::to('faq') }}" >{{ $title }}</a></li>
+                                    <li {{ sa('/page/view/'.$slug ) }} ><a href="{{ URL::to('/page/view/'.$slug) }}" >{{ $title }}</a></li>
                                 @endforeach
                             </ul>
                         </li>
