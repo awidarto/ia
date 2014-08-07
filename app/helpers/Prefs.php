@@ -10,7 +10,9 @@ class Prefs {
     }
 
     public static function getChildPage($parent){
-        return Page::where('menu',$parent)->orderBy('menuSeq','asc')->get();
+        return Page::where('menu',$parent)
+            ->where('status','inactive')
+            ->orderBy('menuSeq','asc')->get();
     }
 
     public static function getCategory(){
