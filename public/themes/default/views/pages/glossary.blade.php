@@ -117,6 +117,10 @@
         padding-left: 10px;
         border: none;
     }
+
+    .section{
+        margin-right:20px;
+    }
 </style>
 <div id="content-block">
     <div id="content-container" class="shadow" style="margin-bottom: 6px;" >
