@@ -11,7 +11,7 @@ class Prefs {
 
     public static function getChildPage($parent){
         return Page::where('menu',$parent)
-            ->where('status','inactive')
+            ->where('status','active')
             ->orderBy('menuSeq','asc')->get();
     }
 
