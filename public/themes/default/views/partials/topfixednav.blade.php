@@ -54,33 +54,42 @@ CONTACT US
                     @endif
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Investors <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        {{--
-                            <li {{ sa('page/view/buying-process') }} ><a href="{{ URL::to('page/view/buying-process') }}" >Buying Process</a></li>
-                            <li {{ sa('page/view/markets') }} ><a href="{{ URL::to('page/view/markets') }}" >Markets</a></li>
-                            <li {{ sa('page/view/how-to-invest') }} ><a href="{{ URL::to('page/view/how-to-invest') }}" >How To Invest</a></li>
-                            <li {{ sa('page/view/preferred-customer') }} ><a href="{{ URL::to('page/view/preferred-customer') }}" >Preferred Customer</a></li>
-                            <li {{ sa('page/view/research') }} ><a href="{{ URL::to('page/view/research') }}" >Research</a></li>
-                        --}}
-                        @foreach( Prefs::getChildPage('investors')->toArray() as $mitem )
-                            <?php $slug = $mitem['slug'] ?>
-                            <?php $title = $mitem['title'] ?>
-                            <li {{ sa('/page/view/'.$slug ) }} ><a href="{{ URL::to('/page/view/'.$slug) }}" >{{ $title }}</a></li>
-                        @endforeach
-                        <li {{ sa('faq') }} ><a href="{{ URL::to('faq') }}" >FAQ</a></li>
-                    </ul>
+                    @if(Auth::check())
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Investors <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            {{--
+                                <li {{ sa('page/view/buying-process') }} ><a href="{{ URL::to('page/view/buying-process') }}" >Buying Process</a></li>
+                                <li {{ sa('page/view/markets') }} ><a href="{{ URL::to('page/view/markets') }}" >Markets</a></li>
+                                <li {{ sa('page/view/how-to-invest') }} ><a href="{{ URL::to('page/view/how-to-invest') }}" >How To Invest</a></li>
+                                <li {{ sa('page/view/preferred-customer') }} ><a href="{{ URL::to('page/view/preferred-customer') }}" >Preferred Customer</a></li>
+                                <li {{ sa('page/view/research') }} ><a href="{{ URL::to('page/view/research') }}" >Research</a></li>
+                            --}}
+                            @foreach( Prefs::getChildPage('investors')->toArray() as $mitem )
+                                <?php $slug = $mitem['slug'] ?>
+                                <?php $title = $mitem['title'] ?>
+                                <li {{ sa('/page/view/'.$slug ) }} ><a href="{{ URL::to('/page/view/'.$slug) }}" >{{ $title }}</a></li>
+                            @endforeach
+                            <li {{ sa('faq') }} ><a href="{{ URL::to('faq') }}" >FAQ</a></li>
+                        </ul>
+                    @else
+                        <a href="#loginModal" data-toggle="modal" data-target="#loginModal"  >Investors</a>
+                    @endif
+
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">News <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        @foreach( Prefs::getChildPage('news')->toArray() as $mitem )
-                            <?php $slug = $mitem['slug'] ?>
-                            <?php $title = $mitem['title'] ?>
-                            <li {{ sa('/page/view/'.$slug ) }} ><a href="{{ URL::to('/page/view/'.$slug) }}" >{{ $title }}</a></li>
-                        @endforeach
-                        <li {{ sa('glossary') }} ><a href="{{ URL::to('glossary') }}" >Glossary</a></li>
-                    </ul>
+                    @if(Auth::check())
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">News <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            @foreach( Prefs::getChildPage('news')->toArray() as $mitem )
+                                <?php $slug = $mitem['slug'] ?>
+                                <?php $title = $mitem['title'] ?>
+                                <li {{ sa('/page/view/'.$slug ) }} ><a href="{{ URL::to('/page/view/'.$slug) }}" >{{ $title }}</a></li>
+                            @endforeach
+                            <li {{ sa('glossary') }} ><a href="{{ URL::to('glossary') }}" >Glossary</a></li>
+                        </ul>
+                    @else
+                        <a href="#loginModal" data-toggle="modal" data-target="#loginModal"  >News</a>
+                    @endif
                 </li>
                 @if(Auth::check() == false)
                     <li {{ sa('page/view/contact') }} ><a href="{{ URL::to('page/view/contact') }}" >Contact</a></li>
