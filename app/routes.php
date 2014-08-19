@@ -92,6 +92,19 @@ Route::get('brochure/dl/{id}/{d?}',function($id, $type = null){
         $contact['mobile'] = Options::get('brochure_default_mobile');
     }
 
+            $annualRental = 12*$prop['monthlyRental'];
+            $propManagementFee = $annualRental * 0.1;
+            $maintenanceAllowance = $annualRental * 0;
+            $vacancyAllowance = $annualRental * 0;
+
+            $totalExpense = $propManagementFee + $maintenanceAllowance + $vacancyAllowance + $prop['tax'] + $prop['insurance'];
+
+            $netAnnualCashFlow = $annualRental - $totalExpense;
+            $netMonthlyCashFlow = round($netAnnualCashFlow / 12, 0, PHP_ROUND_HALF_UP);
+
+            $netroi = ($netAnnualCashFlow / $prop['listingPrice']);
+
+
         $rental = (double)$prop['monthlyRental'] * 12;
         $price = (double)$prop['listingPrice'];
         $year = 3;
@@ -102,7 +115,7 @@ Route::get('brochure/dl/{id}/{d?}',function($id, $type = null){
         $result = 0;
         $pct = 5;
 
-        $projected = px($price, $pct, $year,$initprice,$rental ,$roi, $counter, $result);
+        $projected = px($price, $pct, $year,$initprice,$rental ,$roi, $counter, $netroi, $result);
 
         $roi3 = $result;
         //print 'projected ROI : '.$result;
@@ -113,7 +126,7 @@ Route::get('brochure/dl/{id}/{d?}',function($id, $type = null){
         $initprice = $price;
         $counter = $year;
         $result = 0;
-        $projected = px($price, $pct, $year,$initprice,$rental ,$roi, $counter, $result);
+        $projected = px($price, $pct, $year,$initprice,$rental ,$roi, $counter,$netroi, $result);
 
         $roi5 = $result;
 
@@ -155,7 +168,7 @@ Route::get('brochure/dl/{id}/{d?}',function($id, $type = null){
 
 });
 
-function px($price, $pct, $year, $initprice,$rental ,$roi, $counter, &$result){
+function px($price, $pct, $year, $initprice,$rental ,$roi, $counter, $netroi ,&$result){
     if($counter == 0){
         return $roi;
     }else{
@@ -163,13 +176,14 @@ function px($price, $pct, $year, $initprice,$rental ,$roi, $counter, &$result){
         $mult = ($year - $counter) + 1;
         //$rental = $rental * $mult;
 
-        $roi = (($price - $initprice) + ( $rental * $mult ) )/ $initprice;
+        $roi = (($price - $initprice) + ( $rental * $mult * $netroi ) )/ $initprice;
         $result = $roi;
         /*
         print_r(
             array(
                 'price'=>$price,
                 'rental'=>$rental,
+                'netroi'=>$netroi,
                 'roi'=>$roi,
                 'result'=>$result,
                 'counter'=>$counter,
@@ -178,8 +192,9 @@ function px($price, $pct, $year, $initprice,$rental ,$roi, $counter, &$result){
                 )
             );
         */
+
         $counter--;
-        px($price, $pct, $year, $initprice, $rental, $roi ,$counter, $result);
+        px($price, $pct, $year, $initprice, $rental, $roi ,$counter, $netroi, $result);
     }
 }
 
@@ -210,6 +225,19 @@ Route::post('brochure/mail/{id}',function($id){
             $d['brc3'] = $nophotomd;
         }
 
+            $annualRental = 12*$prop['monthlyRental'];
+            $propManagementFee = $annualRental * 0.1;
+            $maintenanceAllowance = $annualRental * 0;
+            $vacancyAllowance = $annualRental * 0;
+
+            $totalExpense = $propManagementFee + $maintenanceAllowance + $vacancyAllowance + $prop['tax'] + $prop['insurance'];
+
+            $netAnnualCashFlow = $annualRental - $totalExpense;
+            $netMonthlyCashFlow = round($netAnnualCashFlow / 12, 0, PHP_ROUND_HALF_UP);
+
+            $netroi = ($netAnnualCashFlow / $prop['listingPrice']);
+
+
         $rental = (double)$prop['monthlyRental'] * 12;
         $price = (double)$prop['listingPrice'];
         $year = 3;
@@ -220,7 +248,7 @@ Route::post('brochure/mail/{id}',function($id){
         $result = 0;
         $pct = 5;
 
-        $projected = px($price, $pct, $year,$initprice,$rental ,$roi, $counter, $result);
+        $projected = px($price, $pct, $year,$initprice,$rental ,$roi, $counter, $netroi, $result);
 
         $roi3 = $result;
         //print 'projected ROI : '.$result;
@@ -231,7 +259,7 @@ Route::post('brochure/mail/{id}',function($id){
         $initprice = $price;
         $counter = $year;
         $result = 0;
-        $projected = px($price, $pct, $year,$initprice,$rental ,$roi, $counter, $result);
+        $projected = px($price, $pct, $year,$initprice,$rental ,$roi, $counter,$netroi ,$result);
 
         $roi5 = $result;
 

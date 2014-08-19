@@ -329,6 +329,32 @@
             return nreq;
         }
 
+        /*
+        $('.thumb').on('click',function(e){
+            console.log(this.id);
+            if(current_session == this.id){
+
+            }else{
+                var calert = 'You currently have another property under process, would you like to cancel that previous process ?';
+                if(confirm(calert)){
+                    $.post('{{ URL::to('ajax/translock')}}',
+                    {
+                        lockstatus:'open',
+                        propObjectId: this.id
+                    },
+                    function(data){
+                    },
+                    'json');
+
+                }else{
+
+                }
+
+                alert();
+            }
+        });
+        */
+
     });
 </script>
 
@@ -338,6 +364,50 @@
 
         <div class="row" >
             <div class="span12" >
+
+                {{-- top pagination
+
+                <div class="row" >
+                    <div class="span4" style="margin-left:0px;" >
+                        Items {{ ($current * $perpage) + 1 }} to {{ ( $current * $perpage ) + $currentcount }} of {{$total}}{{ total (Filtered from {{$alltotal}} entries) }}
+                    </div>
+
+
+                    <div class="pagination pagination-centered span6">
+                        <ul style="margin-left:-5px;">
+                            @for($p = 0;$p < $paging;$p++)
+                                <li class="{{ ms('page',$p , 0) }}" ><a href="{{ mg(array('page'=>$p))}}" >{{$p + 1}}</a></li>
+                            @endfor
+                        </ul>
+                    </div>
+
+                    <div class="span2 pull-right form-inline">
+                        <?php
+                            $perpage = array();
+                            for($p = 1;$p < 5;$p++){
+                                $url = mg(array('count'=>$p*10));
+                                $perpage[ $url ] = $p*10;
+                            }
+                        ?>
+                        <label for="perpage">Show </label>
+                        <select class="span1" id="perpage" name="perpage">
+                            <?php
+                                $perpage = array();
+                            ?>
+                            @for($p = 2;$p < 6;$p++)
+                                <?php
+                                    $url = mg(array('count'=>$p*10));
+                                    $perpage = $p*10;
+                                    $selected = (Input::get('count') == $perpage)?'selected':'';
+                                ?>
+                                <option value="{{$url}}" {{ $selected }} >{{$perpage}}</option>
+                            @endfor
+                        </select> per page
+                    </div>
+
+                </div>
+                    --}}
+
 
                 <div class="row" style="margin:0px;padding:0px;width:1000px;">
                     <div class="span12" style="overflow-y:auto;width:100%;margin:0px;">

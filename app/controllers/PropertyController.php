@@ -865,6 +865,19 @@ class PropertyController extends BaseController {
                 $page['leaseStartDate'] = false;
             }
 
+            $annualRental = 12*$page['monthlyRental'];
+            $propManagementFee = $annualRental * 0.1;
+            $maintenanceAllowance = $annualRental * 0;
+            $vacancyAllowance = $annualRental * 0;
+
+            $totalExpense = $propManagementFee + $maintenanceAllowance + $vacancyAllowance + $page['tax'] + $page['insurance'];
+
+            $netAnnualCashFlow = $annualRental - $totalExpense;
+            $netMonthlyCashFlow = round($netAnnualCashFlow / 12, 0, PHP_ROUND_HALF_UP);
+
+            $netroi = ($netAnnualCashFlow / $page['listingPrice']);
+
+
             $rental = (double)$page['monthlyRental'] * 12;
             $price = (double)$page['listingPrice'];
             $year = 3;
@@ -875,7 +888,7 @@ class PropertyController extends BaseController {
             $result = 0;
             $pct = 5;
 
-            $projected = px($price, $pct, $year,$initprice,$rental ,$roi, $counter, $result);
+            $projected = px($price, $pct, $year,$initprice,$rental ,$roi, $counter,$netroi, $result);
 
             $page['projectedROI'] = $result;
 
@@ -907,6 +920,19 @@ class PropertyController extends BaseController {
 
         $prop = Property::find($_id)->toArray();
 
+            $annualRental = 12*$prop['monthlyRental'];
+            $propManagementFee = $annualRental * 0.1;
+            $maintenanceAllowance = $annualRental * 0;
+            $vacancyAllowance = $annualRental * 0;
+
+            $totalExpense = $propManagementFee + $maintenanceAllowance + $vacancyAllowance + $prop['tax'] + $prop['insurance'];
+
+            $netAnnualCashFlow = $annualRental - $totalExpense;
+            $netMonthlyCashFlow = round($netAnnualCashFlow / 12, 0, PHP_ROUND_HALF_UP);
+
+            $netroi = ($netAnnualCashFlow / $prop['listingPrice']);
+
+
         $rental = (double)$prop['monthlyRental'] * 12;
         $price = (double)$prop['listingPrice'];
         $year = $in['year'];
@@ -917,7 +943,7 @@ class PropertyController extends BaseController {
         $result = 0;
         $pct = $in['rate'];
 
-        $projected = px($price, $pct, $year,$initprice,$rental ,$roi, $counter, $result);
+        $projected = px($price, $pct, $year,$initprice,$rental ,$roi, $counter, $netroi ,$result);
 
         $froi = round($result * 100, 1, PHP_ROUND_HALF_UP).'%';
 
