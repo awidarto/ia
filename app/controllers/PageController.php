@@ -133,9 +133,10 @@ class PageController extends BaseController {
                 ->setOption('margin-top', '25mm')
                 ->setOption('margin-left', '10mm')
                 ->setOption('margin-right', '10mm')
-                ->setOption('margin-bottom', '57mm')
+                ->setOption('margin-bottom', '30mm')
                 ->setOption('header-html', public_path().'/printpart/header.html')
                 ->setOption('footer-html', public_path().'/printpart/footer.html')
+                ->setOption('header-spacing',5)
                 ->setOption('dpi',200)
                 ->setPaper('A4')
                 ->stream($slug.'.pdf');

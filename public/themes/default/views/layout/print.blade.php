@@ -64,8 +64,9 @@
 
         */
             body{
-                font-family: arial,helvetica,sans-serif;
-                font-size: 12px;
+                font-size: 14px;
+                line-height: 20px;
+                font-family: Arial,helvetica,sans-serif;
             }
 
             p.credit{
