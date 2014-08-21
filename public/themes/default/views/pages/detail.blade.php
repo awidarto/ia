@@ -281,7 +281,7 @@
 
 
             </div>
-            <div class="span4" style="padding: 30px 4px 0px 4px;">
+            <div class="span4" style="padding: 30px 4px 0px 4px;max-width:286px;width:286px;">
                 <div style="border:thin solid black;margin-bottom:0px;display:block;">
                     <table class="table" style="border:thin solid transparent;margin-bottom:0px;">
                         <tr>
