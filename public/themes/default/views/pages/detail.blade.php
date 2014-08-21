@@ -129,7 +129,7 @@
     #main-img {
         display: block;
         padding: 0px;
-        margin:0px;
+        margin:4px;
         max-height: 260px;
         overflow: hidden;
     }
@@ -214,7 +214,7 @@
 
 <div id="content-block">
     <div id="content-container" class="shadows" style="margin-bottom: 6px;" >
-        <div class="row">
+        <div class="row" style="padding-left:5px">
             <div class="span5">
                 <div class="subnav row" id="filter-bar" style="background-color: #fff;padding:0px;margin:5px;position:relative;">
                     <a href="{{ $backlink }}" class="back-btn">
@@ -245,7 +245,9 @@
                 </div>
                 <style type="text/css">
                 .gal-container{
+                    padding: 10px 4px;
                     padding-top: 10px;
+
                 }
 
                 .gal-scroll{
@@ -279,7 +281,7 @@
 
 
             </div>
-            <div class="span4" style="padding: 30px 8px 0px 8px;">
+            <div class="span4" style="padding: 30px 4px 0px 4px;">
                 <div style="border:thin solid black;margin-bottom:0px;display:block;">
                     <table class="table" style="border:thin solid transparent;margin-bottom:0px;">
                         <tr>
