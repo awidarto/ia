@@ -168,6 +168,40 @@ Route::get('brochure/dl/{id}/{d?}',function($id, $type = null){
 
 });
 
+Route::get('testpr',function(){
+    $result = 0;
+    $purchase = 57500;
+
+    $initprice = $purchase;
+    $nroi = 0.102;
+    $pct = 5;
+    $year = 3;
+    $counter = 3;
+
+    fv( $initprice, $pct, $year, $counter ,$result );
+
+    //print $result."\r\n";;
+
+    $proi = (($result - $purchase) + ( $purchase * $nroi * $year )) / $purchase;
+
+    //print $proi."\r\n";;
+
+});
+
+function fv($initprice, $pct, $year, $counter ,&$result){
+    if($counter == 0){
+        return $initprice;
+    }else{
+        $initprice = $initprice * ( (100 + $pct) / 100 );
+
+        //print $initprice."\r\n";
+
+        $result = $initprice;
+        $counter--;
+        fv($initprice, $pct, $year ,$counter, $result);
+    }
+}
+
 function px($price, $pct, $year, $initprice,$rental ,$roi, $counter, $netroi ,&$result){
     if($counter == 0){
         return $roi;

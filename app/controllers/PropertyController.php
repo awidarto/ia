@@ -887,10 +887,13 @@ class PropertyController extends BaseController {
             $counter = $year;
             $result = 0;
             $pct = 5;
+            $result = 0;
 
-            $projected = px($price, $pct, $year,$initprice,$rental ,$roi, $counter,$netroi, $result);
+            fv( $initprice, $pct, $year, $counter ,$result );
 
-            $page['projectedROI'] = $result;
+            $froi = (($result - $price) + ( $price * $netroi * $year )) / $price;
+
+            $page['projectedROI'] = $froi;
 
         }else{
             $page = null;
@@ -941,14 +944,21 @@ class PropertyController extends BaseController {
         $initprice = $price;
         $counter = $year;
         $result = 0;
+
+        $result = 0;
+
+        $initprice = $price;
         $pct = $in['rate'];
 
-        $projected = px($price, $pct, $year,$initprice,$rental ,$roi, $counter, $netroi ,$result);
+        fv( $initprice, $pct, $year, $counter ,$result );
 
-        $froi = round($result * 100, 1, PHP_ROUND_HALF_UP).'%';
+        $froi = (($result - $price) + ( $price * $netroi * $year )) / $price;
+
+        //$projected = px($price, $pct, $year,$initprice,$rental ,$roi, $counter, $netroi ,$result);
+
+        $froi = round($froi * 100, 1, PHP_ROUND_HALF_UP).'%';
 
         return Response::json( array('result'=>'OK', 'roi'=>$result, 'froi'=>$froi ) );
-
 
     }
 
