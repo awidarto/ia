@@ -4,7 +4,7 @@
 
 <?php
     function ap($segment){
-        return str_replace( $segment , $segment.'/print', URL::full() );
+        return str_replace( $segment , $segment.'/pdf', URL::full() );
     }
 
     function mg($newparam){

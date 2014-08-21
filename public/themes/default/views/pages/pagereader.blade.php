@@ -14,7 +14,7 @@
                         <h1 class="page-header">{{ $content['title'] }}</h1>
                     @endif
 
-                    <a href="{{ URL::to('page/print/'.$content['slug'] )}}" class="receipt pull-right" target="new" style="position:absolute;top:3px;right:10px;" ><img src="{{ URL::to('/')}}/images/print.png" /></a>
+                    <a href="{{ URL::to('page/pdf/'.$content['slug'] )}}" class="receipt pull-right" target="new" style="position:absolute;top:3px;right:10px;" ><img src="{{ URL::to('/')}}/images/print.png" /></a>
 
                 </div>
                 <div class="row" style="margin:0px;padding:0px;margin-left:8px;">

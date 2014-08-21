@@ -82,6 +82,8 @@
             h1.page-header{
                 color: red;
                 font-size: 30px;
+                margin-top: 5px;
+                margin-bottom: 5px;
             }
 
             .container{
@@ -122,54 +124,19 @@
     </style>
 </head>
 
-<body class="preview" style="margin-top: 0px;"  onload="window.print()" >
+<body class="preview" style="margin-top: 0px;"  onload="print()" >
 
     <table border="0" width="100%">
-        <thead>
-            <tr>
-                <th style="width:100%">
-                    <div class="container" id="top-container">
-                        <header class="jumbotron subhead" id="overview">
-                            <div class="row">
-                                <div class="span4 pull-right" style="display:block;">
-                                    {{ HTML::image('images/ialogo-med.png','Investors Alliance',array('class'=>'img-responsive' ) ) }}
-                                </div>
-                                <div class="span8 pull-right">
-                                </div>
-                            </div>
-                        </header>
-                    </div>
-                </th>
-            </tr>
-        </thead>
         <tbody>
             <tr>
                 <td>
                     <div class="container">
                         @yield('content')
-                    </div><!-- /container -->
-                    <div style="height:100%;">
-
                     </div>
+                    <!-- /container -->
                 </td>
             </tr>
         </tbody>
-        <tfoot id="footer">
-            <tr>
-                <td>
-                    <div class="container">
-                        <p class="muted credit">Copyright &copy; 2013 - Investors Alliance USA Property | Terms & Conditions | Privacy Policy</p>
-                        <p class="disclaimer" >
-                            <strong>DISCLAIMER:</strong> While every effort is made to ensure that this information is accurate and conforms with all applicable legal requirements it is supplied in good faith as an aid to users. Investors Alliance do not warrant that it is complete, comprehensive or accurate, or commit to its being updated. In no event shall Investors Alliance be liable for any incidental, indirect, consequential or special damages of any kind, or any damages whatsoever, including, without limitation, those resulting from loss of profit, loss of contracts, goodwill, data, information, income, expected savings or business relationships, whether or not advised of the possibility of such damage, arising out of or in connection with the use of this information.
-                        </p>
-                        <p class="disclaimer">
-                            Copyright - All materials contained herein are, unless otherwise stated, the property of Investors Alliance. Reproduction or retransmission of the materials, in whole or in part, in any manner, without the prior written consent of the copyright holder, is a violation of copyright law.
-                        </p>
-                        <img src="{{ URL::to('images/ia_print_footer.png')}}" alt="footer image" />
-                    </div>
-                </td>
-            </tr>
-        </tfoot>
     </table>
 
     {{--

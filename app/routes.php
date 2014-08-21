@@ -519,6 +519,21 @@ Route::get('faq/{print?}',function($print = null){
     if(is_null($print)){
         Event::fire('log.a',array('faq','view',$actor,$p));
         return View::make('pages.faq')->with('faqs',$faqs)->with('faqcats',$faqcats);
+    }elseif($print == 'pdf'){
+
+        Event::fire('log.a',array('faq','pdf',$actor,$p));
+        return PDF::loadView('pages.faqprint', array( 'title'=>'Frequently Asked Questions' ,'faqs'=>$faqs, 'faqcats'=>$faqcats ))
+                ->setOption('margin-top', '25mm')
+                ->setOption('margin-left', '10mm')
+                ->setOption('margin-right', '10mm')
+                ->setOption('margin-bottom', '30mm')
+                ->setOption('header-html', public_path().'/printpart/header.html')
+                ->setOption('footer-html', public_path().'/printpart/footer.html')
+                ->setOption('header-spacing',5)
+                ->setOption('dpi',200)
+                ->setPaper('A4')
+                ->stream('investors_alliance_faq.pdf');
+
     }else{
         Event::fire('log.a',array('faq','print',$actor,$p));
         return View::make('pages.faqprint')
@@ -570,6 +585,23 @@ Route::get('glossary/{print?}',function($print = null){
         if(is_null($print)){
             Event::fire('log.a',array('glossary','view',$actor,$p));
             return View::make('pages.glossary')->with('faqs',$faqs)->with('faqcats',Config::get('site.alphanumeric'));
+        }elseif($print == 'pdf'){
+
+            $faqcats = Config::get('site.alphanumeric');
+
+            Event::fire('log.a',array('glossary','pdf',$actor,$p));
+            return PDF::loadView('pages.glossaryprint', array( 'title'=>'Glossary' ,'faqs'=>$faqs, 'faqcats'=>$faqcats ))
+                ->setOption('margin-top', '25mm')
+                ->setOption('margin-left', '10mm')
+                ->setOption('margin-right', '10mm')
+                ->setOption('margin-bottom', '30mm')
+                ->setOption('header-html', public_path().'/printpart/header.html')
+                ->setOption('footer-html', public_path().'/printpart/footer.html')
+                ->setOption('header-spacing',5)
+                ->setOption('dpi',200)
+                ->setPaper('A4')
+                ->stream('investors_alliance_glossary.pdf');
+
         }else{
             Event::fire('log.a',array('glossary','print',$actor,$p));
             return View::make('pages.glossaryprint')

@@ -99,6 +99,49 @@ class PageController extends BaseController {
         return View::make('pages.pageprint')->with('content',$page);
     }
 
+    public function getPdf($slug = null){
+
+        $page = Page::where('slug','=',$slug)->first();
+
+        if($page){
+            $page = $page->toArray();
+
+            $p = json_encode(array(
+                'id'=>$page['_id'],
+                'title'=>$page['title'],
+                'slug'=>$page['slug'],
+                'category'=>$page['category'],
+                'tags'=>$page['tags']
+             ));
+
+        }else{
+            $page = null;
+
+            $p = json_encode(array(
+                'slug'=>$slug,
+                'result'=>'page not exist'
+             ));
+        }
+
+        $actor = (isset(Auth::user()->email))?Auth::user()->email:'guest';
+
+        Event::fire('log.a',array('page','pdf',$actor,$p));
+
+        //return View::make('pages.pageprint')->with('content',$page);
+
+        return PDF::loadView('pages.pageprint', array('content'=>$page))
+                ->setOption('margin-top', '25mm')
+                ->setOption('margin-left', '10mm')
+                ->setOption('margin-right', '10mm')
+                ->setOption('margin-bottom', '57mm')
+                ->setOption('header-html', public_path().'/printpart/header.html')
+                ->setOption('footer-html', public_path().'/printpart/footer.html')
+                ->setOption('dpi',200)
+                ->setPaper('A4')
+                ->stream($slug.'.pdf');
+
+    }
+
     public function missingMethod($param = array()){
 
     }
