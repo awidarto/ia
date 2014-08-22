@@ -580,7 +580,8 @@ class AdminController extends Controller {
 
 
 
-	public function postDel(){
+	public function postDel()
+    {
 		$id = Input::get('id');
 
 		$controller_name = strtolower($this->controller_name);
@@ -604,6 +605,24 @@ class AdminController extends Controller {
 
 		return Response::json($result);
 	}
+
+    public function postDupe()
+    {
+        $_id = Input::get('id');
+
+        $obj = $this->model->find($_id);
+
+        unset($obj->_id);
+        $obj->lastUpdate = new MongoDate();
+        $obj->createdDate = new MongoDate();
+
+        if($obj->save()){
+            return Response::json(array('result'=>'OK'));
+        }else{
+            return Response::json(array('result'=>'NOK'));
+        }
+
+    }
 
 	public function beforeSave($data)
 	{

@@ -105,6 +105,7 @@ Route::get('brochure/dl/{id}/{d?}',function($id, $type = null){
             $netroi = ($netAnnualCashFlow / $prop['listingPrice']);
 
 
+
         $rental = (double)$prop['monthlyRental'] * 12;
         $price = (double)$prop['listingPrice'];
         $year = 3;
@@ -115,10 +116,9 @@ Route::get('brochure/dl/{id}/{d?}',function($id, $type = null){
         $result = 0;
         $pct = 5;
 
-        $projected = px($price, $pct, $year,$initprice,$rental ,$roi, $counter, $netroi, $result);
+        fv( $initprice, $pct, $year, $counter ,$result );
 
-        $roi3 = $result;
-        //print 'projected ROI : '.$result;
+        $roi3 = (($result - $price) + ( $price * $netroi * $year )) / $price;
 
         $pct = 10;
 
@@ -126,9 +126,10 @@ Route::get('brochure/dl/{id}/{d?}',function($id, $type = null){
         $initprice = $price;
         $counter = $year;
         $result = 0;
-        $projected = px($price, $pct, $year,$initprice,$rental ,$roi, $counter,$netroi, $result);
 
-        $roi5 = $result;
+        fv( $initprice, $pct, $year, $counter ,$result );
+
+        $roi5 = (($result - $price) + ( $price * $netroi * $year )) / $price;
 
 
     //return View::make('print.brochure')->with('prop',$prop)->render();
@@ -282,10 +283,9 @@ Route::post('brochure/mail/{id}',function($id){
         $result = 0;
         $pct = 5;
 
-        $projected = px($price, $pct, $year,$initprice,$rental ,$roi, $counter, $netroi, $result);
+        fv( $initprice, $pct, $year, $counter ,$result );
 
-        $roi3 = $result;
-        //print 'projected ROI : '.$result;
+        $roi3 = (($result - $price) + ( $price * $netroi * $year )) / $price;
 
         $pct = 10;
 
@@ -293,9 +293,10 @@ Route::post('brochure/mail/{id}',function($id){
         $initprice = $price;
         $counter = $year;
         $result = 0;
-        $projected = px($price, $pct, $year,$initprice,$rental ,$roi, $counter,$netroi ,$result);
 
-        $roi5 = $result;
+        fv( $initprice, $pct, $year, $counter ,$result );
+
+        $roi5 = (($result - $price) + ( $price * $netroi * $year )) / $price;
 
     $contact = array();
 
