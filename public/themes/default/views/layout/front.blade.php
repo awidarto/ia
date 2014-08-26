@@ -25,11 +25,15 @@
 		{{-- HTML::style('bootstrap/css/bootswatch.css') --}}
 		{{ HTML::style('bootstrap/css/app.css') }}
 
+        {{ HTML::style('css/video-js.css') }}
+
+        {{ HTML::style('css/videojs-sublime-skin.min.css') }}
+
         {{ HTML::script('js/jquery-1.9.1.js') }}
 
         {{ HTML::script('js/jquery-ui/js/jquery-ui-1.10.3.custom.min.js')}}
 
-        {{ HTML::style('bootstrap/css/app.css') }}
+        {{-- HTML::style('bootstrap/css/app.css') --}}
         {{-- HTML::style('bootstrap/css/bootstrap-wide.css') --}}
 
         {{ HTML::style('font-awesome/css/font-awesome.min.css') }}
@@ -258,6 +262,8 @@
 
         {{ HTML::script('js/jquery.mask.min.js') }}
 
+        {{ HTML::script('js/video.js') }}
+        {{ HTML::script('js/youtube.js') }}
 
         <script type="text/javascript">
             var base = '{{ URL::to('/')}}/';
