@@ -263,6 +263,10 @@
         {{ HTML::script('js/jquery.mask.min.js') }}
 
         {{ HTML::script('js/video.js') }}
+        <script>
+          videojs.options.flash.swf = "{{ URL::to('/')}}/swf/video-js.swf"
+        </script>
+
         {{ HTML::script('js/youtube.js') }}
 
         <script type="text/javascript">
