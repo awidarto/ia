@@ -21,6 +21,7 @@
                 <div class="row" style="margin:0px;padding:5px;">
 
                     <div class="span3" style="margin:auto;background-color:#fff;height:340px;overflow-y:auto;overflow-x:hidden;">
+                        <h6>Welcome, {{ Auth::user()->firstname.' '.Auth::user()->lastname }}</h6>
                         <ul class="nav nav-list bs-docs-sidenav" style="width: 200px;top: 140px;">
                           <li><a href="#recent-orders"><i class="icon-chevron-right"></i> Recent Orders</a></li>
                           <li><a href="#buyer-list"><i class="icon-chevron-right"></i> Buyer List</a></li>
@@ -28,7 +29,7 @@
                         </ul>
                     </div>
                     <div class="lionbars" style="margin:auto;background-color:#fff;height:340px;overflow-y:auto;overflow-x:hidden;">
-                        <h3 id="recent-order">Recent Orders</h3>
+                        <h3 id="recent-orders">Recent Orders</h3>
                         <table class="table table-bordered table-striped table-hover">
                             <thead>
                                 <tr>
@@ -52,7 +53,7 @@
                                 <tr>
                                     <td>{{ $tx['orderNumber']}}</td>
                                     <td>{{ $tx['propertyId']}}</td>
-                                    <td>{{ Carbon::createFromFormat('Y-m-d H:i:s',$tx['createdDate'])->format('d/m/Y')}}</td>
+                                    <td>{{ Carbon::parse(date('Y-m-d H:i:s',$tx['createdDate']->sec))->format('d/m/Y')}}</td>
                                     <td>{{ $tx['firstname'].' '.$tx['lastname']}}</td>
                                     <td class="curr">{{ Ks::usd($tx['total_purchase'])}}</td>
                                     <td class="curr">{{ Ks::usd($tx['total_payment'])}}</td>
