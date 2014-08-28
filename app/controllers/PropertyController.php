@@ -1120,9 +1120,10 @@ class PropertyController extends BaseController {
 
                 $p = json_encode(array(
                     'trx_id'=>$trx->_id,
-                    'buyer_id'=>$buyer['buyerId']->toString()
+                    'buyer_id'=>$buyer['buyerId']
                  ));
-                Event::fire('log.a',array('property','processbuy',Auth::user()->email,$p));
+                $actor = Auth::user()->email;
+                Event::fire('log.a',array('property','processbuy',$actor,$p));
 
                 return Redirect::to('property/review/'.$trx->_id)->with('notify_success','Order saved successfully');
             }else{

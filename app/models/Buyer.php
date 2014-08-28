@@ -3,7 +3,7 @@ use Jenssegers\Mongodb\Model as Eloquent;
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
 
-class Buyer extends Eloquent implements UserInterface, RemindableInterface {
+class Buyer extends Eloquent {
 
     /**
      * The database table used by the model.

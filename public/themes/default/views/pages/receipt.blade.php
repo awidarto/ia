@@ -520,7 +520,7 @@
                     <td colspan="3" class="curr"><h4>Due On</h4></td>
                     <td>
                         <h4>
-                            {{ Carbon::parse($trx['createdDate'])->addDays(14)->format('d M Y')}}
+                            {{ Carbon::parse(date('Y-m-d H:i:s',$trx['createdDate']->sec) )->addDays(14)->format('d M Y')}}
                         </h4>
                     </td>
                 </tr>
