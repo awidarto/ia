@@ -529,7 +529,7 @@
                             $maintenanceAllowance = $annualRental * 0;
                             $vacancyAllowance = $annualRental * 0;
 
-                            $totalExpense = $propManagementFee + $maintenanceAllowance + $vacancyAllowance + $prop['tax'] + $prop['insurance'];
+                            $totalExpense = $propManagementFee + $maintenanceAllowance + $vacancyAllowance + $prop['tax'] + $prop['insurance'] + $prop['HOA'];
 
                             $netAnnualCashFlow = $annualRental - $totalExpense;
                             $netMonthlyCashFlow = round($netAnnualCashFlow / 12, 0, PHP_ROUND_HALF_UP);
@@ -687,6 +687,7 @@
 
                         var tax = notNan($('#tax').val());
                         var insurance = notNan($('#insurance').val());
+                        var HOAannual = notNan( $('#HOAannual').val() );
 
                         var annualRental = 12 * monthlyRental;
                         var propManagementFee = annualRental * ( notNan($('#propFeePct').val()) / 100 );
