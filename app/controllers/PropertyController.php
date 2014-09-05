@@ -154,6 +154,7 @@ class PropertyController extends BaseController {
             $and = array();
 
             if(!is_null($prefilter)){
+                $prefilter = str_replace('-', ' ', $prefilter);
                 $and[] = array('propertyStatus'=>$prefilter);
             }
 

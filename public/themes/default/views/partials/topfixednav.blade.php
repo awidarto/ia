@@ -42,6 +42,7 @@ CONTACT US
                             <ul class="dropdown-menu">
                                 <li {{ sa('property/listing/available') }} ><a href="{{ URL::to('property/listing/available') }}" >Available</a></li>
                                 <li {{ sa('property/listing/sold') }} ><a href="{{ URL::to('property/listing/sold') }}" >Sold</a></li>
+                                <li {{ sa('property/listing/under-contract') }} ><a href="{{ URL::to('property/listing/under-contract') }}" >Under Contract</a></li>
                                 @foreach( Prefs::getChildPage('properties')->toArray() as $mitem )
                                     <?php $slug = $mitem['slug'] ?>
                                     <?php $title = $mitem['title'] ?>
